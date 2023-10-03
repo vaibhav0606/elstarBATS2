@@ -19,7 +19,9 @@ function useAuth() {
     const signIn = async (values) => {
         try {
             const resp = await apiSignIn(values)
+            console.log(resp.data)
             if (resp.data) {
+                alert('ppp')
                 const { token } = resp.data
                 dispatch(onSignInSuccess(token))
                 if (resp.data.user) {
@@ -44,6 +46,8 @@ function useAuth() {
                 }
             }
         } catch (errors) {
+            alert('klll')
+            console.log(errors)
             return {
                 status: 'failed',
                 message: errors?.response?.data?.message || errors.toString(),
