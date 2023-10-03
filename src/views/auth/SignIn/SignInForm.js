@@ -14,7 +14,7 @@ import * as Yup from 'yup'
 import useAuth from 'utils/hooks/useAuth'
 
 const validationSchema = Yup.object().shape({
-    userName: Yup.string().required('Please enter your user name'),
+    username: Yup.string().required('Please enter your user name'),
     password: Yup.string().required('Please enter your password'),
     rememberMe: Yup.bool(),
 })
@@ -32,10 +32,10 @@ const SignInForm = (props) => {
     const { signIn } = useAuth()
 
     const onSignIn = async (values, setSubmitting) => {
-        const { userName, password } = values
+        const { username, password } = values
         setSubmitting(true)
 
-        const result = await signIn({ userName, password })
+        const result = await signIn({ username, password })
 
         if (result.status === 'failed') {
             setMessage(result.message)
@@ -53,7 +53,7 @@ const SignInForm = (props) => {
             )}
             <Formik
                 initialValues={{
-                    userName: 'admin',
+                    username: 'admin',
                     password: '123Qwe',
                     rememberMe: true,
                 }}
@@ -71,13 +71,13 @@ const SignInForm = (props) => {
                         <FormContainer>
                             <FormItem
                                 label="User Name"
-                                invalid={errors.userName && touched.userName}
-                                errorMessage={errors.userName}
+                                invalid={errors.username && touched.username}
+                                errorMessage={errors.username}
                             >
                                 <Field
                                     type="text"
                                     autoComplete="off"
-                                    name="userName"
+                                    name="username"
                                     placeholder="User Name"
                                     component={Input}
                                 />

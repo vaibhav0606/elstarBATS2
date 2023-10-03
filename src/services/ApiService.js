@@ -5,9 +5,11 @@ const ApiService = {
         return new Promise((resolve, reject) => {
             BaseService(param)
                 .then((response) => {
+                    alert('hhhh')
                     resolve(response)
                 })
                 .catch((errors) => {
+                    alert('hhhh')
                     reject(errors)
                 })
         })
