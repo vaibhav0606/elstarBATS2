@@ -10,6 +10,12 @@ export const protectedRoutes = [
         component: React.lazy(() => import('views/Home')),
         authority: [],
     },
+    {
+        key: 'entitymaster',
+        path: '/entity',
+        component: React.lazy(() => import('views/Entitymaster')),
+        authority: [],
+    },
     /** Example purpose only, please remove */
     {
         key: 'singleMenuItem',

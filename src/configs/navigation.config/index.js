@@ -15,6 +15,16 @@ const navigationConfig = [
         authority: [],
         subMenu: [],
     },
+    {
+        key: 'entitymaster',
+        path: '/entity',
+        title: 'Entity Master',
+        translateKey: 'nav.entitymaster',
+        icon: 'home',
+        type: NAV_ITEM_TYPE_ITEM,
+        authority: [],
+        subMenu: [],
+    },
     /** Example purpose only, please remove */
     {
         key: 'singleMenuItem',

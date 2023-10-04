@@ -1,5 +1,5 @@
 const appConfig = {
-    apiPrefix: '/api',
+    apiPrefix: 'http://103.14.97.155:3000',
     authenticatedEntryPath: '/home',
     unAuthenticatedEntryPath: '/sign-in',
     tourPath: '/',
