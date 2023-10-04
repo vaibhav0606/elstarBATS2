@@ -2,14 +2,14 @@ import { useState } from 'react'
 import {
     FormItem,
     Button,
-    Checkbox,
+    Switcher ,
     Input,
     FormContainer,
     Select,
 } from 'components/ui'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
-import { PostEntity } from 'services/ApiService2'
+import { PostEntity,PutEntity } from 'services/ApiService2'
 import { useSelector } from 'react-redux'
 
 const validationSchema = Yup.object().shape({
@@ -54,9 +54,10 @@ const options = [
     { value: '1', label: 'Active' },
 ]
 
-const EntityEdit = ({onDrawerClose}) => {
+const EntityEdit = ({onDrawerClose,editData}) => {
     const token = useSelector((state) => state.auth.session.token)
-    const signIn = async (values, token) => {
+
+    const AddEntity = async (values, token) => {
         try {
             const resp = await PostEntity(values, token)
             console.log(resp.data)
@@ -64,25 +65,44 @@ const EntityEdit = ({onDrawerClose}) => {
             return {}
         }
     }
+    const EditEntity = async (values, token) => {
+        try {
+            const resp = await PutEntity(values, token)
+            console.log(resp.data)
+        } catch (errors) {
+            return {}
+        }
+    }
+    const onSwitcherToggle = (val, e) => {
+        console.log(val, e)
+        console.log(e.target);
+    }
     return (
         <div>
             <Formik
                 initialValues={{
-                    entityname: '',
-                    CorpAddress: '',
-                    PermAddress: '',
-                    ContactPerson: '',
-                    Contact: '',
-                    IsActive: '',
-                    PANNO: '',
-                    CINNumber: '',
-                    rememberMe: false,
+                    EntityCode: editData.EntityCode,
+                    entityname: editData.EntityName,
+                    CorpAddress: editData.CorpAddress,
+                    PermAddress: editData.PermAddress,
+                    ContactPerson: editData.ContactPerson,
+                    Contact: editData.Contact,
+                    // IsActive: editData.IsActive,
+                    PANNO: editData.PANNO,
+                    CINNumber: editData.CINNumber,
+                    sell: editData.IsActive
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { resetForm, setSubmitting }) => {
                     setTimeout(() => {
                         // alert(JSON.stringify(values, null, 2))
-                        signIn(values, token)
+                        if(!editData.EntityCode)
+                        {
+                        AddEntity(values, token)
+                        }
+                        else{
+                            EditEntity(values, token)
+                        }
                         setSubmitting(false)
                         resetForm()
                         onDrawerClose(0)
@@ -98,6 +118,15 @@ const EntityEdit = ({onDrawerClose}) => {
                                     justifyContent: 'space-between',
                                 }}
                             >
+                                <Field
+                                        type="EntityCode"
+                                        autoComplete="off"
+                                        name="EntityCode"
+                                        placeholder="EntityCode name"
+                                        component={Input}
+                                        hidden
+
+                                    />
                                 <FormItem
                                     label="EntityName"
                                     invalid={
@@ -208,7 +237,7 @@ const EntityEdit = ({onDrawerClose}) => {
                                     justifyContent: 'space-between',
                                 }}
                             >
-                                <FormItem
+                                {/* <FormItem
                                     asterisk
                                     label="Select"
                                     invalid={
@@ -236,7 +265,25 @@ const EntityEdit = ({onDrawerClose}) => {
                                             />
                                         )}
                                     </Field>
-                                </FormItem>
+                                </FormItem> */}
+                                <FormItem
+                                    asterisk
+                                    label="Status"
+                                    invalid={
+                                        errors.IsActive && touched.IsActive
+                                    }
+                                    errorMessage={errors.IsActive}
+                                >
+                                     <Switcher checkedContent="active" unCheckedContent="inactive" 
+                                    //onChange={onSwitcherToggle}
+                                    name="sell"
+                                    value="Y"
+                                    checked={values.sell === "1"}
+                                    // onChange={(event, checked) => {
+                                    //   setFieldValue("sell", checked ? "1" : "0");
+                                    // }}
+                                     />
+                                    </FormItem>
                                 <FormItem
                                     label="CINNumber"
                                     invalid={
@@ -253,11 +300,6 @@ const EntityEdit = ({onDrawerClose}) => {
                                     />
                                 </FormItem>
                             </div>
-                            <FormItem>
-                                <Field name="rememberMe" component={Checkbox}>
-                                    Remember Me
-                                </Field>
-                            </FormItem>
                             <FormItem>
                                 <Button
                                     type="reset"

@@ -8,7 +8,7 @@ import {
 } from '@tanstack/react-table'
 import { apiGetSalesProducts } from 'services/SalesService'
 import { Button, Card } from 'components/ui'
-import { HiPlusCircle, HiCheckCircle } from 'react-icons/hi'
+import { HiPlusCircle, HiCheckCircle, HiOutlinePencil } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
 import EntityEdit from './EntityEdit'
 
@@ -75,6 +75,7 @@ const { Tr, Th, Td, THead, TBody, Sorter } = Table
 
 const Entitymaster = () => {
     const [isOpen, setIsOpen] = useState(false)
+    const [editData, seteditData] = useState([''])
 
     const [sorting, setSorting] = useState([])
     const [data, setdata] = useState([''])
@@ -101,7 +102,8 @@ const Entitymaster = () => {
     }
 
     const onDrawerClose = async (e,values) => {
-        const resp = await apiGetSalesProducts(values)            
+        const resp = await apiGetSalesProducts(values)  
+        seteditData([''])      
         setdata(resp.data)
         setIsOpen(false)
     }
@@ -166,9 +168,16 @@ const Entitymaster = () => {
                                                             .cell,
                                                         cell.getContext()
                                                     )}
-                                                </Td>
+                                             </Td>
+                                             
                                             )
                                         })}
+                                        <Td onClick={()=>{console.log(row.original)
+                                       seteditData(row.original)
+                                        openDrawer()}}>
+                                             <Button className="mr-2" size="sm" variant="twoTone" 
+                                             icon={<HiOutlinePencil  />}>
+                                            </Button></Td>                                       
                                     </Tr>
                                 )
                             })}
@@ -177,13 +186,13 @@ const Entitymaster = () => {
             </Card>
 
             <Drawer
-                title="Edit Entity Master"
+                title= {editData.EntityName ? "Edit Entity Master" : "Add Entity Master"}
                 isOpen={isOpen}
                 onClose={onDrawerClose}
                 onRequestClose={onDrawerClose}
                 width={600}
             >
-                <EntityEdit onDrawerClose={onDrawerClose}/>
+                <EntityEdit onDrawerClose={onDrawerClose} editData={editData}/>
             </Drawer>
         </>
     )

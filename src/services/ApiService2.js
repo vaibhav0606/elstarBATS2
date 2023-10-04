@@ -69,5 +69,43 @@ const PostEntity = (param, token) => {
             })
     })
 }
+const PutEntity = (param, token) => {
+ 
+    return new Promise((resolve, reject) => {
+        // BaseService(param)
+        console.log(param)
+        let data = JSON.stringify({
+            "EntityName": param.entityname,
+            "PermAddress": param.PermAddress,
+            "CorpAddress": param.CorpAddress,
+            "ContactPerson": param.ContactPerson,
+            "Contact": ""+param.Contact+"",
+            "IsActive": param.IsActive,
+            "PANNO": param.PANNO,
+            "CINNumber": param.CINNumber,
+        })
+       
 
-export { ApiService2, PostEntity }
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/Entitymaster/${param.EntityCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+export { ApiService2, PostEntity,PutEntity }
