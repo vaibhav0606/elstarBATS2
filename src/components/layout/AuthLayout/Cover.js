@@ -17,9 +17,7 @@ const Cover = ({ children, content, ...rest }) => {
                         Jump start your project with Elstar
                     </h3>
                     <p className="text-lg text-white opacity-80 max-w-[700px]">
-                        Elstar comes with a complete set of UI components
-                        crafted with Tailwind CSS, it fulfilled most of the use
-                        case to create modern and beautiful UI and application
+                    The product BATS is a menu driven enterprise Ad Scheduling and Billing software tailor made to the needs of broadcasters.
                     </p>
                 </div>
                 <span className="text-white">
