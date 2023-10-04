@@ -19,23 +19,22 @@ function useAuth() {
     const signIn = async (values) => {
         try {
             const resp = await apiSignIn(values)
-            console.log(resp.data)
             if (resp.data) {
-                alert('ppp')
-                const { token } = resp.data
-                dispatch(onSignInSuccess(token))
-                if (resp.data.user) {
-                    dispatch(
-                        setUser(
-                            resp.data.user || {
-                                avatar: '',
-                                userName: 'Anonymous',
-                                authority: ['USER'],
-                                email: '',
-                            }
-                        )
-                    )
-                }
+                const { access_token } = resp.data
+
+                dispatch(onSignInSuccess(access_token))
+                // if (resp.data.user) {
+                //     dispatch(
+                //         setUser(
+                //             resp.data.user || {
+                //                 avatar: 'Anonymous',
+                //                 userName: 'Anonymous',
+                //                 authority: ['USER'],
+                //                 email: 'Anonymous',
+                //             }
+                //         )
+                //     )
+                // }
                 const redirectUrl = query.get(REDIRECT_URL_KEY)
                 navigate(
                     redirectUrl ? redirectUrl : appConfig.authenticatedEntryPath
@@ -46,8 +45,6 @@ function useAuth() {
                 }
             }
         } catch (errors) {
-            alert('klll')
-            console.log(errors)
             return {
                 status: 'failed',
                 message: errors?.response?.data?.message || errors.toString(),
@@ -59,20 +56,20 @@ function useAuth() {
         try {
             const resp = await apiSignUp(values)
             if (resp.data) {
-                const { token } = resp.data
-                dispatch(onSignInSuccess(token))
-                if (resp.data.user) {
-                    dispatch(
-                        setUser(
-                            resp.data.user || {
-                                avatar: '',
-                                userName: 'Anonymous',
-                                authority: ['USER'],
-                                email: '',
-                            }
-                        )
-                    )
-                }
+                const { access_token } = resp.data
+                dispatch(onSignInSuccess(access_token))
+                // if (resp.data.user) {
+                //     dispatch(
+                //         setUser(
+                //             resp.data.user || {
+                //                 avatar: '',
+                //                 userName: 'Anonymous',
+                //                 authority: ['USER'],
+                //                 email: '',
+                //             }
+                //         )
+                //     )
+                // }
                 const redirectUrl = query.get(REDIRECT_URL_KEY)
                 navigate(
                     redirectUrl ? redirectUrl : appConfig.authenticatedEntryPath
@@ -97,10 +94,9 @@ function useAuth() {
     }
 
     const signOut = async () => {
-        await apiSignOut()
+        // await apiSignOut()
         handleSignOut()
     }
-
     return {
         authenticated: token && signedIn,
         signIn,

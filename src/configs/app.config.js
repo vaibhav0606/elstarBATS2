@@ -1,10 +1,10 @@
 const appConfig = {
-    apiPrefix: 'http://103.14.97.155:3000',
-    authenticatedEntryPath: '/app/sales/dashboard',
+    apiPrefix: '/api',
+    authenticatedEntryPath: '/home',
     unAuthenticatedEntryPath: '/sign-in',
-    tourPath: '/app/account/kyc-form',
+    tourPath: '/',
     locale: 'en',
-    enableMock: true,
+    enableMock: false,
 }
 
 export default appConfig

@@ -1,18 +1,11 @@
 import ApiService from './ApiService'
-const qs = require('qs')
-export async function apiSignIn(data3) {
-    let data2 = qs.stringify({
-        username: data3.username,
-        password: data3.password,
-    })
-    return ApiService.fetchData({
-        method: 'post',
-        maxBodyLength: Infinity,
+import ApiService2 from './ApiService2'
+
+export async function apiSignIn(data) {
+    return ApiService2.fetchData({
         url: '/login',
-        headers: {
-            // ...data2.getHeaders(),
-        },
-        data: data2,
+        method: 'post',
+        data,
     })
 }
 
