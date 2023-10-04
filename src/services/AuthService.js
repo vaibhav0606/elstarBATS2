@@ -1,5 +1,5 @@
 import ApiService from './ApiService'
-import ApiService2 from './ApiService2'
+import { ApiService2 } from './ApiService2'
 
 export async function apiSignIn(data) {
     return ApiService2.fetchData({

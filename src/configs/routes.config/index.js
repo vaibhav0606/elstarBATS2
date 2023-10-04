@@ -13,7 +13,17 @@ export const protectedRoutes = [
     {
         key: 'entitymaster',
         path: '/entity',
-        component: React.lazy(() => import('views/Entitymaster')),
+        component: React.lazy(() =>
+            import('views/Master/EntityMaster/Entitymaster')
+        ),
+        authority: [],
+    },
+    {
+        key: 'entitymaster.item1',
+        path: '/entityEdit',
+        component: React.lazy(() =>
+            import('views/Master/EntityMaster/EntityEdit')
+        ),
         authority: [],
     },
     /** Example purpose only, please remove */
