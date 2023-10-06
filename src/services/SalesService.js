@@ -8,7 +8,7 @@ export async function apiGetSalesDashboardData(data) {
     })
 }
 
-export async function apiGetSalesProducts(data) {
+export async function apiGetEntitymaster(data) {
     return ApiService.fetchData({
         url: '/Entitymaster/',
         method: 'get',

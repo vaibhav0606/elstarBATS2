@@ -1,6 +1,6 @@
 import { useState, useEffect , useMemo} from 'react'
 import { Badge, Drawer,Input,Alert } from 'components/ui'
-import { apiGetSalesProducts } from 'services/SalesService'
+import { apiGetEntitymaster } from 'services/SalesService'
 import { Button, Card } from 'components/ui'
 import { HiPlusCircle, HiOutlinePencil } from 'react-icons/hi'
 import EntityEdit from './EntityEdit'
@@ -113,7 +113,7 @@ const Entitymaster = () => {
 
     useEffect(() => {
         ;(async (values) => {
-            const resp = await apiGetSalesProducts(values)
+            const resp = await apiGetEntitymaster(values)
             console.log(resp.data);
             setdata(resp.data)
         })()
@@ -124,7 +124,7 @@ const Entitymaster = () => {
     }
 
     const onDrawerClose = async (e,values) => {
-        const resp = await apiGetSalesProducts(values)  
+        const resp = await apiGetEntitymaster(values)  
         seteditData([''])      
         setdata(resp.data)
         // console.log(resp.data);
