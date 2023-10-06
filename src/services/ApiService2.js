@@ -30,19 +30,14 @@ const ApiService2 = {
 }
 
 const PostEntity = (param, token) => {
-    // const { token } = useSelector((state) => state.auth.session)
-    // console.log(token)
-
-    return new Promise((resolve, reject) => {
-        // BaseService(param)
-        console.log(param)
+    return new Promise((resolve, reject) => {      
         let data = JSON.stringify({
             "EntityName": param.entityname,
             "PermAddress": param.PermAddress,
             "CorpAddress": param.CorpAddress,
             "ContactPerson": param.ContactPerson,
             "Contact": ""+param.Contact+"",
-            "IsActive": param.IsActive,
+            "IsActive": param.IsActive ? 1 : 0,
             "PANNO": param.PANNO,
             "CINNumber": param.CINNumber,
         })
@@ -73,14 +68,14 @@ const PutEntity = (param, token) => {
  
     return new Promise((resolve, reject) => {
         // BaseService(param)
-        console.log(param)
+        // console.log(param)
         let data = JSON.stringify({
             "EntityName": param.entityname,
             "PermAddress": param.PermAddress,
             "CorpAddress": param.CorpAddress,
             "ContactPerson": param.ContactPerson,
             "Contact": ""+param.Contact+"",
-            "IsActive": param.IsActive,
+            "IsActive": param.IsActive ? 1 : 0,
             "PANNO": param.PANNO,
             "CINNumber": param.CINNumber,
         })

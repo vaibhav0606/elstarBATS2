@@ -14,7 +14,7 @@ const TableRowSkeleton = (props) => {
                     {Array.from(new Array(columns), (_, i) => i + 0).map(
                         (col) => (
                             <Td key={`col-${col}`}>
-                                <div className="flex flex-auto items-center gap-2">
+                                <div className="flex flex-auto items-center ">
                                     {avatarInColumns.includes(col) && (
                                         <div>
                                             <Skeleton

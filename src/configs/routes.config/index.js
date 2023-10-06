@@ -26,6 +26,7 @@ export const protectedRoutes = [
         ),
         authority: [],
     },
+    
     /** Example purpose only, please remove */
     {
         key: 'singleMenuItem',

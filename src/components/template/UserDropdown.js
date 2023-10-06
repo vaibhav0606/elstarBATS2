@@ -19,8 +19,8 @@ export const UserDropdown = ({ className }) => {
         <div className={classNames(className, 'flex items-center gap-2')}>
             <Avatar size={32} shape="circle" icon={<HiOutlineUser />} />
             <div className="hidden md:block">
-                <div className="text-xs capitalize">admin</div>
-                <div className="font-bold">User01</div>
+                {/* <div className="text-xs capitalize">admin</div> */}
+                <div className="font-bold">Admin</div>
             </div>
         </div>
     )
@@ -37,9 +37,9 @@ export const UserDropdown = ({ className }) => {
                         <Avatar shape="circle" icon={<HiOutlineUser />} />
                         <div>
                             <div className="font-bold text-gray-900 dark:text-gray-100">
-                                User01
+                            Admin
                             </div>
-                            <div className="text-xs">user01@mail.com</div>
+                            {/* <div className="text-xs">user01@mail.com</div> */}
                         </div>
                     </div>
                 </Dropdown.Item>

@@ -35,14 +35,14 @@ Table.propTypes = {
     hoverable: PropTypes.bool,
     compact: PropTypes.bool,
     asElement: PropTypes.string,
-    borderlessRow: PropTypes.bool,
+    borderlessRow: true,
 }
 
 Table.defaultProps = {
     hoverable: true,
     compact: false,
     asElement: 'table',
-    borderlessRow: false,
+    borderlessRow: true,
 }
 
 export default Table
