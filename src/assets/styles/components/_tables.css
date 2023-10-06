@@ -16,7 +16,7 @@
 
         >tr {
             >td {
-                @apply px-6 py-4;
+                @apply px-6 py-1;
             }
         }
     }
@@ -24,7 +24,7 @@
     tfoot {
         >tr {
             >td {
-                @apply px-6 py-3 border-t border-gray-200 dark:border-gray-700;
+                @apply px-6 py-1 border-t border-gray-200 dark:border-gray-700;
             }
         }
     }

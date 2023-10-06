@@ -1,62 +1,26 @@
-import { useState, useEffect } from 'react'
-import { Table, Drawer } from 'components/ui'
-import {
-    flexRender,
-    getCoreRowModel,
-    getSortedRowModel,
-    useReactTable,
-} from '@tanstack/react-table'
+import { useState, useEffect , useMemo} from 'react'
+import { Badge, Drawer,Input,Alert } from 'components/ui'
 import { apiGetSalesProducts } from 'services/SalesService'
 import { Button, Card } from 'components/ui'
-import { HiPlusCircle, HiCheckCircle, HiOutlinePencil } from 'react-icons/hi'
-import { Link } from 'react-router-dom'
+import { HiPlusCircle, HiOutlinePencil } from 'react-icons/hi'
 import EntityEdit from './EntityEdit'
+import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
+import DisplayTable from 'views/Controls/DisplayTable'
 
-const columns = [
-    {
-        header: 'Entity Name',
-        accessorKey: 'EntityName',
-    },
-    {
-        header: 'Perm Address',
-        accessorKey: 'PermAddress',
-    },
-    {
-        header: 'Corp Address',
-        accessorKey: 'CorpAddress',
-    },
-    {
-        header: 'Contact Person',
-        accessorKey: 'ContactPerson',
-    },
-    {
-        header: 'Contact',
-        accessorKey: 'Contact',
-    },
-    {
-        header: 'Status',
-        accessorKey: 'IsActive',
-    },
-    {
-        header: 'PAN NO',
-        accessorKey: 'PANNO',
-    },
-    {
-        header: 'CIN Number',
-        accessorKey: 'CINNumber',
-    },
-]
-
-const headerExtraContent = (openDrawer) => {
+const headerExtraContent = (openDrawer,DebouncedInput,globalFilter,setGlobalFilter) => {
     return (
         <span className="flex items-center">
+            <span className="mr-1 mt-4  font-semibold">
+             <DebouncedInput
+                value={globalFilter ?? ''}
+                className=" solid"
+                placeholder="Search all columns..."
+                size="sm"
+                onChange={(value) => {setGlobalFilter(value)}}
+            />
+            </span>
             <span className="mr-1 font-semibold">
-                {' '}
-                {/* <Link
-                    className="block lg:inline-block md:mb-0 mb-4"
-                    to="/entityEdit"
-                > */}
-                <Button
+                           <Button
                     block
                     variant="solid"
                     size="sm"
@@ -71,31 +35,89 @@ const headerExtraContent = (openDrawer) => {
     )
 }
 
-const { Tr, Th, Td, THead, TBody, Sorter } = Table
+// const { Tr, Th, Td, THead, TBody, Sorter } = Table
 
 const Entitymaster = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [editData, seteditData] = useState([''])
-
-    const [sorting, setSorting] = useState([])
+    const [globalFilter, setGlobalFilter] = useState('')
+    const [sorting, setSorting] = useState([])    
     const [data, setdata] = useState([''])
+    const [message, setMessage] = useTimeOutMessage()
+    const [log, setlog] = useState('')
+
+    const statusColor = {
+        1: 'bg-emerald-500',
+        0: 'bg-red-500',
+    }
+
+    const columns = useMemo(
+        () => [
+        {
+            header: 'Entity Name',
+            accessorKey: 'EntityName',
+
+        },
+        {
+            header: 'Contact Person',
+            accessorKey: 'ContactPerson',
+        },
+        {
+            header: 'Contact',
+            accessorKey: 'Contact',
+        },
+        // {
+        //     header: 'Status',
+        //     accessorKey: 'IsActive',
+        //     cell: (props) => {
+        //         const row = props.row.original
+        //         return (
+        //             <div className="flex items-center">
+        //                 <Badge  className={statusColor[row.IsActive]}/>
+        //                 <span className="ml-2 rtl:mr-2 capitalize">
+        //                     {row.IsActive==1 ?'Active' : 'InActive'}
+        //                 </span>
+        //             </div>
+        //         )
+        //     },
+        // },
+        {
+            header: 'Status',
+            id: 'action',
+            cell: (props) => { const row = props.row.original
+                        return (
+                            <div className="flex items-center">
+                                <Badge  className={statusColor[row.IsActive]}/>
+                                <span className="ml-2 rtl:mr-2 capitalize">
+                                    {row.IsActive==1 ?'Active' : 'InActive'}
+                                </span>
+                            </div>
+                        )},
+        },
+    ],
+    []
+    )
+    const ActionColumn = ({ row }) => {
+    
+       
+    
+        return (
+            <div
+                className={` cursor-pointer select-none font-semibold`}
+          
+            >
+                Edit
+            </div>
+        )
+    }
+
     useEffect(() => {
         ;(async (values) => {
             const resp = await apiGetSalesProducts(values)
-            
+            console.log(resp.data);
             setdata(resp.data)
         })()
     }, [])
-    const table = useReactTable({
-        data,
-        columns,
-        state: {
-            sorting,
-        },
-        onSortingChange: setSorting,
-        getCoreRowModel: getCoreRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-    })
 
     const openDrawer = () => {
         setIsOpen(true)
@@ -105,84 +127,61 @@ const Entitymaster = () => {
         const resp = await apiGetSalesProducts(values)  
         seteditData([''])      
         setdata(resp.data)
+        // console.log(resp.data);
         setIsOpen(false)
     }
+     function DebouncedInput({
+        value: initialValue,
+        onChange,
+        debounce = 500,
+        ...props
+    }) {
+        const [value, setValue] = useState(initialValue)
 
+        useEffect(() => {
+            setValue(initialValue)
+        }, [initialValue])
+    
+        useEffect(() => {
+            const timeout = setTimeout(() => {
+                onChange(value)
+            }, debounce)
+    
+            return () => clearTimeout(timeout)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [value])
+        return (
+            <div className="flex justify-end">
+                <div className="flex items-center mb-4">
+                    <span className="mr-2">Search:</span>
+                    <Input
+                        {...props}
+                        value={value}
+                        onChange={(e) => setValue(e.target.value)}
+                    />
+                </div>
+            </div>
+        )
+    }
+  
+    
     return (
         <>
+         {message && (
+                <Alert className="mb-4" type="success" showIcon>
+                    {message}
+                </Alert>
+            )}
+            {log && (
+                <Alert className="mb-4" type="success" showIcon>
+                    {log}
+                </Alert>
+            )}
             <Card
                 header="Entity Master"
-                headerExtra={headerExtraContent(openDrawer)}
+                headerExtra={headerExtraContent(openDrawer,DebouncedInput,globalFilter,setGlobalFilter)}
             >
-                <Table>
-                    <THead>
-                        {table.getHeaderGroups().map((headerGroup) => (
-                            <Tr key={headerGroup.id}>
-                                {headerGroup.headers.map((header) => {
-                                    return (
-                                        <Th
-                                            key={header.id}
-                                            colSpan={header.colSpan}
-                                        >
-                                            {header.isPlaceholder ? null : (
-                                                <div
-                                                    {...{
-                                                        className:
-                                                            header.column.getCanSort()
-                                                                ? 'cursor-pointer select-none'
-                                                                : '',
-                                                        onClick:
-                                                            header.column.getToggleSortingHandler(),
-                                                    }}
-                                                >
-                                                    {flexRender(
-                                                        header.column.columnDef
-                                                            .header,
-                                                        header.getContext()
-                                                    )}
-                                                    {
-                                                        <Sorter
-                                                            sort={header.column.getIsSorted()}
-                                                        />
-                                                    }
-                                                </div>
-                                            )}
-                                        </Th>
-                                    )
-                                })}
-                            </Tr>
-                        ))}
-                    </THead>
-                    <TBody>
-                        {table
-                            .getRowModel()
-                            .rows.slice(0, 10)
-                            .map((row) => {
-                                return (
-                                    <Tr key={row.id}>
-                                        {row.getVisibleCells().map((cell) => {
-                                            return (
-                                                <Td key={cell.id}>
-                                                    {flexRender(
-                                                        cell.column.columnDef
-                                                            .cell,
-                                                        cell.getContext()
-                                                    )}
-                                             </Td>
-                                             
-                                            )
-                                        })}
-                                        <Td onClick={()=>{console.log(row.original)
-                                       seteditData(row.original)
-                                        openDrawer()}}>
-                                             <Button className="mr-2" size="sm" variant="twoTone" 
-                                             icon={<HiOutlinePencil  />}>
-                                            </Button></Td>                                       
-                                    </Tr>
-                                )
-                            })}
-                    </TBody>
-                </Table>
+                <DisplayTable data={data} columns={columns} sorting={sorting} globalFilter={globalFilter} setSorting={setSorting} setGlobalFilter={setGlobalFilter} seteditData={seteditData} openDrawer={openDrawer}/>
             </Card>
 
             <Drawer
@@ -192,7 +191,8 @@ const Entitymaster = () => {
                 onRequestClose={onDrawerClose}
                 width={600}
             >
-                <EntityEdit onDrawerClose={onDrawerClose} editData={editData}/>
+                  
+             <EntityEdit onDrawerClose={onDrawerClose} editData={editData} setMessage={setMessage} setlog={setlog}/>
             </Drawer>
         </>
     )

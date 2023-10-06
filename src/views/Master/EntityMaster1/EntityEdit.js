@@ -117,46 +117,18 @@ const EntityEdit = ({onDrawerClose,editData,setMessage,setlog}) => {
                 onSubmit={(values, { resetForm, setSubmitting}) => {
                     setTimeout(() => {
                         // alert(JSON.stringify(values, null, 2))
-
-                         
-
-
-
-
                         if(!editData.EntityCode)
                         {
-                            new Promise((resolve, reject) => {
-                                // BaseService(param)
-                                AddEntity (values, token)
-                                    .then((response) => {
-                                        onDrawerClose(0,0)
-                                        resolve(response)
-                                       
-                                    })
-                                    .catch((errors) => {
-                                        reject(errors)
-                                    })
-                            })
+                        AddEntity(values, token)
+                        onDrawerClose(0,0)
                         }
                         else{
-                           // EditEntity(values, token)
-                            new Promise((resolve, reject) => {
-                                // BaseService(param)
-                                setSubmitting(false)
-                                EditEntity (values, token)
-                                    .then((response) => {
-                                        onDrawerClose(0,0)
-                                        resolve(response)
-                                       
-                                    })
-                                    .catch((errors) => {
-                                        reject(errors)
-                                    })
-                            })
+                            EditEntity(values, token)
+                            onDrawerClose(0,0)
                         }
-                       
+                        setSubmitting(false)
                         resetForm()
-                         //onDrawerClose(0,0)
+                        // onDrawerClose(0,0)
                     }, 400)
                 }}
 
