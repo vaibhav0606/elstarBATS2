@@ -1,17 +1,8 @@
-import { useEffect, useState } from 'react'
-import {
-    FormItem,
-    Button,
-    Switcher ,
-    Input,
-    FormContainer,
-    Alert,
-} from 'components/ui'
+import { FormItem, Button, Switcher, Input, FormContainer } from 'components/ui'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
-import { PostEntity,PutEntity } from 'services/ApiService2'
+import { PostEntity, PutEntity } from 'services/MasterService'
 import { useSelector } from 'react-redux'
-
 
 const validationSchema = Yup.object().shape({
     entityname: Yup.string()
@@ -49,30 +40,22 @@ const validationSchema = Yup.object().shape({
     //     .matches(/^[A-Za-z0-9_-]*$/, 'Only Letters & Numbers Allowed'),
     rememberMe: Yup.bool(),
 })
-// console.log(validationSchema.fields)
 
-
-
-const EntityEdit = ({onDrawerClose,editData,setMessage,setlog}) => {
+const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
     const token = useSelector((state) => state.auth.session.token)
-   
-    
+
     const AddEntity = async (values, token) => {
         try {
             const resp = await PostEntity(values, token)
-            // console.log(resp.data)
-            // console.log(resp.data.status)
-            if (resp.data.status === 'success') {
-                setlog("success")
-                setMessage(resp.data.EntityName +" "+"Data Inserted Successfully")
+            if (resp.data.msg === 'success') {
+                setlog('success')
+                setMessage('Data Inserted Successfully')
+                return
+            } else if (resp.data.msg === 'Server Error') {
+                setlog('error')
+                setMessage('Server Error')
                 return
             }
-            else if(resp.data.detail === 'Server Error'){
-                setlog("error")
-                setMessage("Server Error")
-                return
-            }
-            
         } catch (errors) {
             return {}
         }
@@ -80,27 +63,23 @@ const EntityEdit = ({onDrawerClose,editData,setMessage,setlog}) => {
     const EditEntity = async (values, token) => {
         try {
             const resp = await PutEntity(values, token)
-             console.log(resp.data)
-            if (resp.data.status === 'Updated') {
-                setlog("success")
-                setMessage(resp.data.EntityName +" "+"Data Updated Successfully")
+            console.log(resp)
+            if (resp.data.msg === 'Updated') {
+                setlog('success')
+                setMessage('Data Updated Successfully')
+                return
+            } else if (resp.data.msg === 'Entity is Already Exists') {
+                setlog('warning')
+                setMessage(resp.data.msg)
                 return
             }
-            else if(resp.data.detail === 'Server Error'){
-                setlog("error")
-                setMessage("Server Error")
-                return
-            }
-            
         } catch (errors) {
             return {}
         }
     }
-   
+
     return (
-        
         <div>
-            
             <Formik
                 initialValues={{
                     EntityCode: editData.EntityCode,
@@ -111,57 +90,41 @@ const EntityEdit = ({onDrawerClose,editData,setMessage,setlog}) => {
                     Contact: editData.Contact,
                     PANNO: editData.PANNO,
                     CINNumber: editData.CINNumber,
-                    IsActive: editData.IsActive === 1 ? true : false ,
+                    IsActive: editData.IsActive === 1 ? true : false,
                 }}
                 validationSchema={validationSchema}
-                onSubmit={(values, { resetForm, setSubmitting}) => {
+                onSubmit={(values, { resetForm, setSubmitting }) => {
                     setTimeout(() => {
-                        // alert(JSON.stringify(values, null, 2))
-
-                         
-
-
-
-
-                        if(!editData.EntityCode)
-                        {
+                        if (!editData.EntityCode) {
                             new Promise((resolve, reject) => {
-                                // BaseService(param)
-                                AddEntity (values, token)
+                                AddEntity(values, token)
                                     .then((response) => {
-                                        onDrawerClose(0,0)
+                                        onDrawerClose(0, 0)
                                         resolve(response)
-                                       
                                     })
                                     .catch((errors) => {
                                         reject(errors)
                                     })
                             })
-                        }
-                        else{
-                           // EditEntity(values, token)
+                        } else {
                             new Promise((resolve, reject) => {
-                                // BaseService(param)
                                 setSubmitting(false)
-                                EditEntity (values, token)
+                                EditEntity(values, token)
                                     .then((response) => {
-                                        onDrawerClose(0,0)
+                                        onDrawerClose(0, 0)
                                         resolve(response)
-                                       
                                     })
                                     .catch((errors) => {
                                         reject(errors)
                                     })
                             })
                         }
-                       
+
                         resetForm()
-                         //onDrawerClose(0,0)
                     }, 400)
                 }}
-
             >
-                {({ values, touched, errors, resetForm }) => (
+                {({ values, touched, errors }) => (
                     <Form>
                         <FormContainer>
                             <div
@@ -171,14 +134,13 @@ const EntityEdit = ({onDrawerClose,editData,setMessage,setlog}) => {
                                 }}
                             >
                                 <Field
-                                        type="EntityCode"
-                                        autoComplete="off"
-                                        name="EntityCode"
-                                        placeholder="EntityCode name"
-                                        component={Input}
-                                        hidden
-
-                                    />
+                                    type="EntityCode"
+                                    autoComplete="off"
+                                    name="EntityCode"
+                                    placeholder="EntityCode name"
+                                    component={Input}
+                                    hidden
+                                />
                                 <FormItem
                                     label="EntityName"
                                     invalid={
@@ -289,48 +251,21 @@ const EntityEdit = ({onDrawerClose,editData,setMessage,setlog}) => {
                                     justifyContent: 'space-between',
                                 }}
                             >
-                                {/* <FormItem
+                                <FormItem
                                     asterisk
-                                    label="Select"
+                                    label="Status"
                                     invalid={
                                         errors.IsActive && touched.IsActive
                                     }
                                     errorMessage={errors.IsActive}
                                 >
-                                    <Field name="IsActive">
-                                        {({ field, form }) => (
-                                            <Select
-                                                field={field}
-                                                form={form}
-                                                options={options}
-                                                value={options.filter(
-                                                    (option) =>
-                                                        option.value ===
-                                                        values.IsActive
-                                                )}
-                                                onChange={(option) =>
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        option?.value
-                                                    )
-                                                }
-                                            />
-                                        )}
-                                    </Field>
-                                </FormItem> */}
-                               <FormItem
-                                asterisk
-                                label="Status"
-                                invalid={errors.IsActive && touched.IsActive}
-                                errorMessage={errors.IsActive}
-                            >
-                                <div>
-                                    <Field
-                                        name="IsActive"
-                                        component={Switcher}
-                                    />
-                                </div>
-                            </FormItem>
+                                    <div>
+                                        <Field
+                                            name="IsActive"
+                                            component={Switcher}
+                                        />
+                                    </div>
+                                </FormItem>
                                 <FormItem
                                     label="CINNumber"
                                     invalid={
@@ -348,13 +283,6 @@ const EntityEdit = ({onDrawerClose,editData,setMessage,setlog}) => {
                                 </FormItem>
                             </div>
                             <FormItem>
-                                {/* <Button
-                                    type="reset"
-                                    className="ltr:mr-2 rtl:ml-2"
-                                    onClick={() => resetdata()}
-                                >
-                                    Reset
-                                </Button> */}
                                 <Button variant="solid" type="submit">
                                     Submit
                                 </Button>
