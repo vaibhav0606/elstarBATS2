@@ -19,14 +19,22 @@ export const protectedRoutes = [
         authority: [],
     },
     {
-        key: 'entitymaster.item1',
-        path: '/entityEdit',
+        key: 'locationmaster',
+        path: '/location',
         component: React.lazy(() =>
-            import('views/Master/EntityMaster/EntityEdit')
+            import('views/Master/LocationMaster/Locationmaster')
         ),
         authority: [],
     },
-    
+    {
+        key: 'departmentmaster',
+        path: '/department',
+        component: React.lazy(() =>
+            import('views/Master/DepartmentMaster/Departmentmaster')
+        ),
+        authority: [],
+    },
+
     /** Example purpose only, please remove */
     {
         key: 'singleMenuItem',
