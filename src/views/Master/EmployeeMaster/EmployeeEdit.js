@@ -126,20 +126,15 @@ const EmployeeEdit = ({
                 {({ values, touched, errors }) => (
                     <Form>
                         <FormContainer>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
-                                <Field
-                                    type="LocationCode"
-                                    autoComplete="off"
-                                    name="LocationCode"
-                                    placeholder="LocationCode name"
-                                    component={Input}
-                                    hidden
-                                />
+                            <Field
+                                type="LocationCode"
+                                autoComplete="off"
+                                name="LocationCode"
+                                placeholder="LocationCode name"
+                                component={Input}
+                                hidden
+                            />
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <FormItem
                                     label="First Name"
                                     invalid={
@@ -156,8 +151,9 @@ const EmployeeEdit = ({
                                         component={Input}
                                     />
                                 </FormItem>
+
                                 <FormItem
-                                    label="Emp_LastName"
+                                    label="Last Name"
                                     invalid={
                                         errors.Emp_LastName &&
                                         touched.Emp_LastName
@@ -172,8 +168,9 @@ const EmployeeEdit = ({
                                         component={Input}
                                     />
                                 </FormItem>
+
                                 <FormItem
-                                    label="Emp_Code"
+                                    label="Code"
                                     invalid={
                                         errors.Emp_Code && touched.Emp_Code
                                     }
@@ -188,12 +185,7 @@ const EmployeeEdit = ({
                                     />
                                 </FormItem>
                             </div>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <FormItem
                                     label="First Name"
                                     invalid={
@@ -241,12 +233,7 @@ const EmployeeEdit = ({
                                 </FormItem>
                             </div>
 
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <FormItem
                                     label="First Name"
                                     invalid={errors.Emp_DOJ && touched.Emp_DOJ}

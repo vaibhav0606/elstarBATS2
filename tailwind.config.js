@@ -59,6 +59,9 @@ module.exports = {
             '2xl': '1536px',
         },
         extend: {
+            maxHeight: {
+                1000: '32rem',
+            },
             typography: (theme) => ({
                 DEFAULT: {
                     css: {
