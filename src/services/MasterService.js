@@ -1,6 +1,14 @@
 import ApiService from './ApiService'
 const axios = require('axios')
 
+export async function apiGetEmployeemaster(data) {
+    return ApiService.fetchData({
+        url: '/empmaster/',
+        method: 'get',
+        data,
+    })
+}
+
 export async function apiGetCurrencymaster(data) {
     return ApiService.fetchData({
         url: '/currencymaster/',
@@ -199,7 +207,6 @@ const Postdepartment = (param, token) => {
 
 const Putdepartment = (param, token) => {
     return new Promise((resolve, reject) => {
-        console.log(param.DepartmentCode)
         let data = JSON.stringify({
             DepartmentName: param.DepartmentName,
             ShortName: param.ShortName,
