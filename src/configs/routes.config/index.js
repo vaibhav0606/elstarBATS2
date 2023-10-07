@@ -11,6 +11,14 @@ export const protectedRoutes = [
         authority: [],
     },
     {
+        key: 'employeemaster',
+        path: '/employee',
+        component: React.lazy(() =>
+            import('views/Master/EmployeeMaster/Employeemaster')
+        ),
+        authority: [],
+    },
+    {
         key: 'entitymaster',
         path: '/entity',
         component: React.lazy(() =>
