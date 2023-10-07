@@ -127,12 +127,7 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                 {({ values, touched, errors }) => (
                     <Form>
                         <FormContainer>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                                 <Field
                                     type="EntityCode"
                                     autoComplete="off"
@@ -173,12 +168,7 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                     />
                                 </FormItem>
                             </div>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                                 <FormItem
                                     label="PermAddress"
                                     invalid={
@@ -212,12 +202,7 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                     />
                                 </FormItem>
                             </div>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                                 <FormItem
                                     label="Contact"
                                     invalid={errors.Contact && touched.Contact}
@@ -245,12 +230,7 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                     />
                                 </FormItem>
                             </div>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                                 <FormItem
                                     asterisk
                                     label="Status"

@@ -181,7 +181,7 @@ const Entitymaster = () => {
                 isOpen={isOpen}
                 onClose={onDrawerClose}
                 onRequestClose={onDrawerClose}
-                width={600}
+                width={window.screen.width / 1.5}
             >
                 <EntityEdit
                     onDrawerClose={onDrawerClose}
