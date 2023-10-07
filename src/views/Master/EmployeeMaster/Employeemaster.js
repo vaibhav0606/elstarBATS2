@@ -219,72 +219,79 @@ const Employee = () => {
                 onRequestClose={onDialogClose}
             >
                 <div className="flex flex-col h-full justify-between">
-                    <h5 className="mb-4">
-                        {editData.Emp_FirstName
-                            ? 'Edit Employee Master'
-                            : 'Add Employee Master'}
-                    </h5>
-
-                    <Tabs
-                        value={currentTab}
-                        onChange={(val) => setCurrentTab(val)}
+                    {/* // sm:max-h-96 */}
+                    <div
+                        className="
+                    
+                    overflow-y-auto"
                     >
-                        <TabList>
-                            <TabNav value="tab1">
-                                {editData.Emp_FirstName
-                                    ? 'Edit Employee '
-                                    : 'Add Employee '}
-                            </TabNav>
-                            <TabNav value="tab2">
-                                {editData.Emp_FirstName
-                                    ? 'Edit Login Rights '
-                                    : 'Add Login Rights  '}
-                            </TabNav>
-                            <TabNav value="tab3">
-                                {editData.Emp_FirstName
-                                    ? 'Edit Map Channel '
-                                    : 'Add Map Channel  '}
-                            </TabNav>
-                        </TabList>
-                        <div className="p-4">
-                            <TabContent value="tab1">
-                                <EmployeeEdit
-                                    onDialogClose={onDialogClose}
-                                    editData={editData}
-                                    setMessage={setMessage}
-                                    setlog={setlog}
-                                    currency={currency}
-                                />
-                            </TabContent>
-                            <TabContent value="tab2">
-                                <p>
-                                    A computer lets you make more mistakes
-                                    faster than any invention in human history
-                                    with the possible exceptions of handguns and
-                                    tequila. (Mitch Radcliffe).
-                                </p>
-                            </TabContent>
-                            <TabContent value="tab3">
-                                <p>
-                                    In C++ its harder to shoot yourself in the
-                                    foot, but when you do, you blow off your
-                                    whole leg. (Bjarne Stroustrup)
-                                </p>
-                            </TabContent>
-                        </div>
-                    </Tabs>
+                        <h5 className="mb-4">
+                            {editData.Emp_FirstName
+                                ? 'Edit Employee Master'
+                                : 'Add Employee Master'}
+                        </h5>
 
-                    <div className="text-right mt-6">
-                        <Button
-                            className="ltr:mr-2 rtl:ml-2"
-                            variant="plain"
-                            onClick={onDialogClose}
+                        <Tabs
+                            value={currentTab}
+                            onChange={(val) => setCurrentTab(val)}
                         >
-                            Cancel
-                        </Button>
-                        <Button variant="solid" onClick={onDialogOk}>
-                            Okay
-                        </Button>
+                            <TabList>
+                                <TabNav value="tab1">
+                                    {editData.Emp_FirstName
+                                        ? 'Edit Employee '
+                                        : 'Add Employee '}
+                                </TabNav>
+                                <TabNav value="tab2">
+                                    {editData.Emp_FirstName
+                                        ? 'Edit Login Rights '
+                                        : 'Add Login Rights  '}
+                                </TabNav>
+                                <TabNav value="tab3">
+                                    {editData.Emp_FirstName
+                                        ? 'Edit Map Channel '
+                                        : 'Add Map Channel  '}
+                                </TabNav>
+                            </TabList>
+                            <div className="p-4">
+                                <TabContent value="tab1">
+                                    <EmployeeEdit
+                                        onDialogClose={onDialogClose}
+                                        editData={editData}
+                                        setMessage={setMessage}
+                                        setlog={setlog}
+                                        currency={currency}
+                                    />
+                                </TabContent>
+                                <TabContent value="tab2">
+                                    <p>
+                                        A computer lets you make more mistakes
+                                        faster than any invention in human
+                                        history with the possible exceptions of
+                                        handguns and tequila. (Mitch Radcliffe).
+                                    </p>
+                                </TabContent>
+                                <TabContent value="tab3">
+                                    <p>
+                                        In C++ its harder to shoot yourself in
+                                        the foot, but when you do, you blow off
+                                        your whole leg. (Bjarne Stroustrup)
+                                    </p>
+                                </TabContent>
+                            </div>
+                        </Tabs>
+
+                        <div className="text-right mt-6">
+                            <Button
+                                className="ltr:mr-2 rtl:ml-2"
+                                variant="plain"
+                                onClick={onDialogClose}
+                            >
+                                Cancel
+                            </Button>
+                            <Button variant="solid" onClick={onDialogOk}>
+                                Okay
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </Dialog>

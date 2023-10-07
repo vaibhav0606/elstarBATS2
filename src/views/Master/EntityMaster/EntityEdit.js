@@ -168,7 +168,7 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                         type="CorpAddress"
                                         autoComplete="off"
                                         name="CorpAddress"
-                                        placeholder="CorpAddress name"
+                                        placeholder="Corp Address"
                                         component={Input}
                                     />
                                 </FormItem>
@@ -191,7 +191,7 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                         type="PermAddress"
                                         autoComplete="off"
                                         name="PermAddress"
-                                        placeholder="PermAddress name"
+                                        placeholder="Perm Address"
                                         component={Input}
                                     />
                                 </FormItem>
@@ -207,7 +207,7 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                         type="ContactPerson"
                                         autoComplete="off"
                                         name="ContactPerson"
-                                        placeholder="ContactPerson name"
+                                        placeholder="Contact Person"
                                         component={Input}
                                     />
                                 </FormItem>
@@ -227,12 +227,12 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                         type="Number"
                                         autoComplete="off"
                                         name="Contact"
-                                        placeholder="Contact name"
+                                        placeholder="Contact"
                                         component={Input}
                                     />
                                 </FormItem>
                                 <FormItem
-                                    label="PANNO"
+                                    label="PAN NO"
                                     invalid={errors.PANNO && touched.PANNO}
                                     errorMessage={errors.PANNO}
                                 >
@@ -240,7 +240,7 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                         type="PANNO"
                                         autoComplete="off"
                                         name="PANNO"
-                                        placeholder="PANNO name"
+                                        placeholder="PAN NO"
                                         component={Input}
                                     />
                                 </FormItem>
@@ -267,7 +267,7 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                     </div>
                                 </FormItem>
                                 <FormItem
-                                    label="CINNumber"
+                                    label="CIN Number"
                                     invalid={
                                         errors.CINNumber && touched.CINNumber
                                     }
@@ -277,7 +277,7 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                         type="CINNumber"
                                         autoComplete="off"
                                         name="CINNumber"
-                                        placeholder="CINNumber name"
+                                        placeholder="CIN Number"
                                         component={Input}
                                     />
                                 </FormItem>
