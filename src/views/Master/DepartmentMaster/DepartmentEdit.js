@@ -115,12 +115,7 @@ const DepartmentEdit = ({
                 {({ values, touched, errors }) => (
                     <Form>
                         <FormContainer>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                                 <Field
                                     type="DepartmentCode"
                                     autoComplete="off"
@@ -146,12 +141,7 @@ const DepartmentEdit = ({
                                     />
                                 </FormItem>
                             </div>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                                 <FormItem
                                     label="ShortName"
                                     invalid={
@@ -168,12 +158,7 @@ const DepartmentEdit = ({
                                     />
                                 </FormItem>
                             </div>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                                 <FormItem
                                     asterisk
                                     label="Status"
