@@ -222,7 +222,7 @@ const Employee = () => {
                     {/* // sm:max-h-96 */}
                     <div
                         className="
-                    
+                    max-h-96
                     overflow-y-auto"
                     >
                         <h5 className="mb-4">
