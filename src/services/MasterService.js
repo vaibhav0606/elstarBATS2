@@ -72,6 +72,74 @@ export async function apiGetEntitymaster(data) {
         data,
     })
 }
+export async function apiGetZonemaster(data) {
+    return ApiService.fetchData({
+        url: '/zonemaster/',
+        method: 'get',
+        data,
+    })
+}
+
+const Postzone = (param, token) => {
+    return new Promise((resolve, reject) => {
+        console.log(param.IsActive ? 1 : 0)
+        let data = JSON.stringify({
+            ZoneName: param.ZoneName,
+            ShortName: param.ShortName,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/zonemaster/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const Putzone = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            ZoneName: param.ZoneName,
+            ShortName: param.ShortName,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/zonemaster/${param.ZoneCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
 
 const PostEntity = (param, token) => {
     return new Promise((resolve, reject) => {
@@ -381,6 +449,146 @@ const PutEmp = (param, token) => {
     })
 }
 
+export async function apiGetRegionmaster(data) {
+    return ApiService.fetchData({
+        url: '/regionmaster/',
+        method: 'get',
+        data,
+    })
+}
+
+const PostRegion = (param, token) => {
+    return new Promise((resolve, reject) => {
+        console.log(param.IsActive ? 1 : 0)
+        let data = JSON.stringify({
+            RegionName: param.RegionName,
+            ShortName: param.ShortName,
+            ZoneCode: param.ZoneCode,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/regionmaster/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const PutRegion = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            RegionName: param.RegionName,
+            ShortName: param.ShortName,
+            ZoneCode: param.ZoneCode,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/regionmaster/${param.RegionCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+export async function apiGetTimeZonemaster(data) {
+    return ApiService.fetchData({
+        url: '/timeZonemaster/',
+        method: 'get',
+        data,
+    })
+}
+
+const PosttimeZone = (param, token) => {
+    return new Promise((resolve, reject) => {
+        console.log(param.IsActive ? 1 : 0)
+        let data = JSON.stringify({
+            TimeZoneName: param.TimeZoneName,
+            ShortName: param.ShortName,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/timeZonemaster/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const PuttimeZone = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            TimeZoneName: param.TimeZoneName,
+            ShortName: param.ShortName,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/timeZonemaster/${param.TimeZoneCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
 export {
     PostEntity,
     PutEntity,
@@ -390,4 +598,10 @@ export {
     Postdepartment,
     PostEmp,
     PutEmp,
+    Postzone,
+    Putzone,
+    PuttimeZone,
+    PosttimeZone,
+    PostRegion,
+    PutRegion,
 }

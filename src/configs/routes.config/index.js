@@ -42,6 +42,32 @@ export const protectedRoutes = [
         ),
         authority: [],
     },
+    {
+        key: 'timezonemaster',
+        path: '/timezone',
+        component: React.lazy(() =>
+            import('views/Master/TimeZoneMaster/TimeZonemaster')
+        ),
+        authority: [],
+    },
+
+    {
+        key: 'zonemaster',
+        path: '/zone',
+        component: React.lazy(() =>
+            import('views/Master/ZoneMaster/Zonemaster')
+        ),
+        authority: [],
+    },
+
+    {
+        key: 'regionmaster',
+        path: '/region',
+        component: React.lazy(() =>
+            import('views/Master/RegionMaster/RegionMaster')
+        ),
+        authority: [],
+    },
 
     /** Example purpose only, please remove */
     {
