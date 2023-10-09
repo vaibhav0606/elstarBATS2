@@ -68,6 +68,46 @@ export const protectedRoutes = [
         ),
         authority: [],
     },
+    {
+        key: 'languagemaster',
+        path: '/language',
+        component: React.lazy(() =>
+            import('views/Master/LanguageMaster/Languagemaster')
+        ),
+        authority: [],
+    },
+    {
+        key: 'modulemaster',
+        path: '/module',
+        component: React.lazy(() =>
+            import('views/Master/ModuleMaster/Modulemaster')
+        ),
+        authority: [],
+    },
+    {
+        key: 'submodulemaster',
+        path: '/submodule',
+        component: React.lazy(() =>
+            import('views/Master/SubModuleMaster/SubModulemaster')
+        ),
+        authority: [],
+    },
+    {
+        key: 'currencymaster',
+        path: '/currency',
+        component: React.lazy(() =>
+            import('views/Master/CurrencyMaster/Currencymaster')
+        ),
+        authority: [],
+    },
+    {
+        key: 'designationMaster',
+        path: '/designation',
+        component: React.lazy(() =>
+            import('views/Master/DesignationMaster/Designationmaster')
+        ),
+        authority: [],
+    },
 
     /** Example purpose only, please remove */
     {

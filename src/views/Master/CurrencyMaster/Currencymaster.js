@@ -1,12 +1,9 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
-import {
-    apiGetLocationmaster,
-    apiGetCurrencymaster,
-} from 'services/MasterService'
+import { apiGetCurrencymaster } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
 import { HiPlusCircle } from 'react-icons/hi'
-import LocationEdit from './LocationEdit'
+import CurrencyEdit from './CurrencyEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
 
@@ -37,14 +34,14 @@ const headerExtraContent = (
                     icon={<HiPlusCircle />}
                     onClick={() => openDrawer()}
                 >
-                    Add Location
+                    Add Module
                 </Button>
             </span>
         </span>
     )
 }
 
-const Locationmaster = () => {
+const Currencymaster = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [editData, seteditData] = useState([''])
     const [globalFilter, setGlobalFilter] = useState('')
@@ -62,45 +59,36 @@ const Locationmaster = () => {
     const columns = useMemo(
         () => [
             {
-                header: 'Location Name',
-                accessorKey: 'LocationName',
+                header: 'Currency Name',
+                accessorKey: 'CurrencyName',
+            },
+            {
+                header: 'Currency Image',
+                accessorKey: 'Currency_image',
+            },
+            {
+                header: 'Currency Symbol',
+                accessorKey: 'CurrencySymbol',
             },
             {
                 header: 'Short Name',
                 accessorKey: 'ShortName',
-            },
-            {
-                header: 'TimeZone Code',
-                accessorKey: 'TimeZoneCode',
-            },
-            {
-                header: 'Status',
-                id: 'action',
-                cell: (props) => {
-                    const row = props.row.original
-                    return (
-                        <div className="flex items-center">
-                            <Badge className={statusColor[row.IsActive]} />
-                            <span className="ml-2 rtl:mr-2 capitalize">
-                                {row.IsActive == 1 ? 'Active' : 'InActive'}
-                            </span>
-                        </div>
-                    )
-                },
             },
         ],
         []
     )
     useEffect(() => {
         ;(async (values) => {
-            const resp = await apiGetLocationmaster(values)
+            const resp = await apiGetCurrencymaster(values)
+            setdata(resp.data)
+        })()
+        ;(async (values) => {
             const Currency = await apiGetCurrencymaster(values)
             const formattedOptions = Currency.data.map((option) => ({
                 value: option.CurrencyCode,
                 label: option.CurrencyName,
             }))
             setCurrency(formattedOptions)
-            setdata(resp.data)
         })()
     }, [])
     const openDrawer = () => {
@@ -109,7 +97,7 @@ const Locationmaster = () => {
 
     const onDrawerClose = async (e, values) => {
         setIsOpen(false)
-        const resp = await apiGetLocationmaster(values)
+        const resp = await apiGetCurrencymaster(values)
         setdata(resp.data)
         seteditData([''])
     }
@@ -160,7 +148,7 @@ const Locationmaster = () => {
                 </Alert>
             )} */}
             <Card
-                header="Location Master"
+                header="Currency Master"
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -183,15 +171,15 @@ const Locationmaster = () => {
             <Drawer
                 title={
                     editData.LocationName
-                        ? 'Edit Location Master'
-                        : 'Add Location Master'
+                        ? 'Edit Currency Master'
+                        : 'Add Currency Master'
                 }
                 isOpen={isOpen}
                 onClose={onDrawerClose}
                 onRequestClose={onDrawerClose}
                 width={600}
             >
-                <LocationEdit
+                <CurrencyEdit
                     onDrawerClose={onDrawerClose}
                     editData={editData}
                     setMessage={setMessage}
@@ -203,4 +191,4 @@ const Locationmaster = () => {
     )
 }
 
-export default Locationmaster
+export default Currencymaster

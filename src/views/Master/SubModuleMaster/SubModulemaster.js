@@ -1,12 +1,12 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
 import {
-    apiGetLocationmaster,
-    apiGetCurrencymaster,
+    apiGetSubmodulemaster,
+    apiGetModulemaster,
 } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
 import { HiPlusCircle } from 'react-icons/hi'
-import LocationEdit from './LocationEdit'
+import SubModuleEdit from './SubModuleEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
 
@@ -37,20 +37,20 @@ const headerExtraContent = (
                     icon={<HiPlusCircle />}
                     onClick={() => openDrawer()}
                 >
-                    Add Location
+                    Add SubModule
                 </Button>
             </span>
         </span>
     )
 }
 
-const Locationmaster = () => {
+const SubModulemaster = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [editData, seteditData] = useState([''])
     const [globalFilter, setGlobalFilter] = useState('')
     const [sorting, setSorting] = useState([])
     const [data, setdata] = useState([''])
-    const [currency, setCurrency] = useState({ value: '', label: '' })
+    const [module, setModule] = useState({ value: '', label: '' })
     const [message, setMessage] = useTimeOutMessage()
     const [log, setlog] = useState('')
 
@@ -62,16 +62,30 @@ const Locationmaster = () => {
     const columns = useMemo(
         () => [
             {
-                header: 'Location Name',
-                accessorKey: 'LocationName',
+                header: 'SubModule Name',
+                accessorKey: 'SubModuleName',
+            },
+            // {
+            //     header: 'Module Name',
+            //     accessorKey: 'ModuleName',
+            // },
+            {
+                header: 'Module Name',
+                accessorKey: 'ModuleName',
+                cell: (props) => {
+                    const row = props.row.original
+                    return (
+                        <div className="flex items-center">
+                            <span className="ml-2 rtl:mr-2 capitalize">
+                                {row.module?.ModuleName}
+                            </span>
+                        </div>
+                    )
+                },
             },
             {
-                header: 'Short Name',
-                accessorKey: 'ShortName',
-            },
-            {
-                header: 'TimeZone Code',
-                accessorKey: 'TimeZoneCode',
+                header: 'IndexNum',
+                accessorKey: 'IndexNum',
             },
             {
                 header: 'Status',
@@ -93,14 +107,16 @@ const Locationmaster = () => {
     )
     useEffect(() => {
         ;(async (values) => {
-            const resp = await apiGetLocationmaster(values)
-            const Currency = await apiGetCurrencymaster(values)
-            const formattedOptions = Currency.data.map((option) => ({
-                value: option.CurrencyCode,
-                label: option.CurrencyName,
-            }))
-            setCurrency(formattedOptions)
+            const resp = await apiGetSubmodulemaster(values)
             setdata(resp.data)
+        })()
+        ;(async (values) => {
+            const Module = await apiGetModulemaster(values)
+            const formattedOptions = Module.data.map((option) => ({
+                value: option.ModuleCode,
+                label: option.ModuleName,
+            }))
+            setModule(formattedOptions)
         })()
     }, [])
     const openDrawer = () => {
@@ -109,7 +125,7 @@ const Locationmaster = () => {
 
     const onDrawerClose = async (e, values) => {
         setIsOpen(false)
-        const resp = await apiGetLocationmaster(values)
+        const resp = await apiGetSubmodulemaster(values)
         setdata(resp.data)
         seteditData([''])
     }
@@ -160,7 +176,7 @@ const Locationmaster = () => {
                 </Alert>
             )} */}
             <Card
-                header="Location Master"
+                header="SubModule Master"
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -183,24 +199,24 @@ const Locationmaster = () => {
             <Drawer
                 title={
                     editData.LocationName
-                        ? 'Edit Location Master'
-                        : 'Add Location Master'
+                        ? 'Edit SubModule Master'
+                        : 'Add SubModule Master'
                 }
                 isOpen={isOpen}
                 onClose={onDrawerClose}
                 onRequestClose={onDrawerClose}
                 width={600}
             >
-                <LocationEdit
+                <SubModuleEdit
                     onDrawerClose={onDrawerClose}
                     editData={editData}
                     setMessage={setMessage}
                     setlog={setlog}
-                    currency={currency}
+                    module={module}
                 />
             </Drawer>
         </>
     )
 }
 
-export default Locationmaster
+export default SubModulemaster
