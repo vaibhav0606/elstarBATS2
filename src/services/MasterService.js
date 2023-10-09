@@ -17,6 +17,54 @@ export async function apiGetCurrencymaster(data) {
     })
 }
 
+export async function apiGetDesignationMaster(data) {
+    return ApiService.fetchData({
+        url: '/designationMaster/',
+        method: 'get',
+        data,
+    })
+}
+
+export async function apiGetPlaceMaster(data) {
+    return ApiService.fetchData({
+        url: '/placemaster/',
+        method: 'get',
+        data,
+    })
+}
+
+export async function apiGetStateMaster(data) {
+    return ApiService.fetchData({
+        url: '/statemaster/',
+        method: 'get',
+        data,
+    })
+}
+
+export async function apiGetCountryMaster(data) {
+    return ApiService.fetchData({
+        url: '/countrymaster/',
+        method: 'get',
+        data,
+    })
+}
+
+export async function apiGetDepartmentmaster(data) {
+    return ApiService.fetchData({
+        url: '/departmentmaster/',
+        method: 'get',
+        data,
+    })
+}
+
+export async function apiGetRegionMaster(data) {
+    return ApiService.fetchData({
+        url: '/regionmaster/',
+        method: 'get',
+        data,
+    })
+}
+
 export async function apiGetEntitymaster(data) {
     return ApiService.fetchData({
         url: '/Entitymaster/',
@@ -164,14 +212,6 @@ const Putlocation = (param, token) => {
             .catch((errors) => {
                 reject(errors)
             })
-    })
-}
-
-export async function apiGetDepartmentmaster(data) {
-    return ApiService.fetchData({
-        url: '/departmentmaster/',
-        method: 'get',
-        data,
     })
 }
 
