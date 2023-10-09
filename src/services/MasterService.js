@@ -275,6 +275,112 @@ const Putdepartment = (param, token) => {
     })
 }
 
+const PostEmp = (param, token) => {
+    return new Promise((resolve, reject) => {
+        console.log(param)
+        let data = JSON.stringify({
+            Emp_FirstName: param.Emp_FirstName,
+            Emp_LastName: param.Emp_LastName,
+            Emp_Code: param.Emp_Code,
+            Emp_Email: param.Emp_Email,
+            Emp_Addr1: param.Emp_Addr1,
+            Emp_Addr2: param.Emp_Addr2,
+            PlaceCode: param.CityCode,
+            StateCode: param.StateCode,
+            CountryCode: param.CountryCode,
+            Emp_Contact1: '' + param.Emp_Contact1 + '',
+            Emp_Contact2: '' + param.Emp_Contact2 + '',
+            Emp_Grade: param.Emp_Grade,
+            Emp_DOB: param.Emp_DOB,
+            Emp_DOJ: param.Emp_DOJ,
+            Emp_DOL: param.Emp_DOL,
+            Emp_BloodGroup: param.Emp_BloodGroup,
+            Emp_Image: '1.jpg',
+            DepartmentCode: param.DepartmentCode,
+            DesignationCode: param.DesignationCode,
+            ReportingTo: 0,
+            Emp_Description: param.Emp_Description,
+            RegionCode: param.RegionCode,
+            Emp_Addr1: 'string',
+            Emp_Addr2: 'string',
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/empmaster/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const PutEmp = (param, token) => {
+    return new Promise((resolve, reject) => {
+        console.log(param)
+        let data = JSON.stringify({
+            Emp_FirstName: param.Emp_FirstName,
+            Emp_LastName: param.Emp_LastName,
+            Emp_Code: param.Emp_Code,
+            Emp_Email: param.Emp_Email,
+            Emp_Addr1: param.Emp_Addr1,
+            Emp_Addr2: param.Emp_Addr2,
+            PlaceCode: param.CityCode,
+            StateCode: param.StateCode,
+            CountryCode: param.CountryCode,
+            Emp_Contact1: '' + param.Emp_Contact1 + '',
+            Emp_Contact2: '' + param.Emp_Contact2 + '',
+            Emp_Grade: param.Emp_Grade,
+            Emp_DOB: param.Emp_DOB,
+            Emp_DOJ: param.Emp_DOJ,
+            Emp_DOL: param.Emp_DOL,
+            Emp_BloodGroup: param.Emp_BloodGroup,
+            Emp_Image: '1.jpg',
+            DepartmentCode: param.DepartmentCode,
+            DesignationCode: param.DesignationCode,
+            ReportingTo: 0,
+            Emp_Description: param.Emp_Description,
+            RegionCode: param.RegionCode,
+            Emp_Addr1: 'string',
+            Emp_Addr2: 'string',
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/empmaster/${param.EmployeeCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
 export {
     PostEntity,
     PutEntity,
@@ -282,4 +388,6 @@ export {
     Putlocation,
     Putdepartment,
     Postdepartment,
+    PostEmp,
+    PutEmp,
 }
