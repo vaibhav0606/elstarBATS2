@@ -589,6 +589,434 @@ const PuttimeZone = (param, token) => {
     })
 }
 
+export async function apiGetCountrymaster(data) {
+    return ApiService.fetchData({
+        url: '/countrymaster/',
+        method: 'get',
+        data,
+    })
+}
+
+export async function apiGetLanguagemaster(data) {
+    return ApiService.fetchData({
+        url: '/languagemaster/',
+        method: 'get',
+        data,
+    })
+}
+
+const Postlanguage = (param, token) => {
+    return new Promise((resolve, reject) => {
+        console.log(param)
+        let data = JSON.stringify({
+            LanguageName: param.LanguageName,
+            CountryCode: param.CountryCode,
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/languagemaster/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const Putlanguage = (param, token) => {
+    return new Promise((resolve, reject) => {
+        console.log(param.Country)
+
+        let data = JSON.stringify({
+            LanguageName: param.LanguageName,
+            CountryCode: param.CountryCode,
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/languagemaster/${param.LanguageCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+export async function apiGetModulemaster(data) {
+    return ApiService.fetchData({
+        url: '/modulemaster/',
+        method: 'get',
+        data,
+    })
+}
+
+const Postmodule = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            ModuleName: param.ModuleName,
+            IndexNum: param.IndexNum,
+            ModuleImage: 'string',
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/modulemaster/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const Putmodule = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            ModuleName: param.ModuleName,
+            IndexNum: param.IndexNum,
+            ModuleImage: '1.png',
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/modulemaster/${param.ModuleCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+export async function apiGetSubmodulemaster(data) {
+    return ApiService.fetchData({
+        url: '/submodulemaster/',
+        method: 'get',
+        data,
+    })
+}
+
+const PostSubmodule = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            SubModuleName: param.SubModuleName,
+            IndexNum: param.IndexNum,
+            ModuleCode: param.ModuleCode,
+            SubModuleImage: 'string',
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/submodulemaster/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const PutSubmodule = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            SubModuleName: param.SubModuleName,
+            IndexNum: param.IndexNum,
+            ModuleCode: param.ModuleCode,
+            IsActive: param.IsActive ? 1 : 0,
+            SubModuleImage: '1.png',
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/submodulemaster/${param.SubModuleCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const Postcurrency = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            CurrencyName: param.CurrencyName,
+            Currency_image: 'string',
+            CurrencySymbol: param.CurrencySymbol,
+            ShortName: param.ShortName,
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/currencymaster/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const Putcurrency = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            CurrencyName: param.CurrencyName,
+            Currency_image: '1.png',
+            CurrencySymbol: param.CurrencySymbol,
+            ShortName: param.ShortName,
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/currencymaster/${param.CurrencyCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+export async function apiGetDesignationmaster(data) {
+    return ApiService.fetchData({
+        url: '/designationMaster/',
+        method: 'get',
+        data,
+    })
+}
+
+const Postdesignation = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            DesignationName: param.DesignationName,
+            ShortName: param.ShortName,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/designationMaster/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const Putdesignation = (param, token) => {
+    return new Promise((resolve, reject) => {
+        console.log(param.DesignationCode)
+        let data = JSON.stringify({
+            DesignationName: param.DesignationName,
+            ShortName: param.ShortName,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/designationMaster/${param.DesignationCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+export async function apiGetChannelmaster(data) {
+    return ApiService.fetchData({
+        url: '/channelmaster/',
+        method: 'get',
+        data,
+    })
+}
+
+const Postchannel = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            ChannelName: param.ChannelName,
+            ShortName: param.ShortName,
+            Channel_Image: '1.png',
+            ChannelGenre: param.ChannelGenre,
+            ChannelContentType: param.ChannelContentType,
+            StateCode: param.StateCode,
+            GSTN_id: param.GSTN_id,
+            SACCode: param.SACCode,
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/channelmaster/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const Putchannel = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            ChannelName: param.ChannelName,
+            ShortName: param.ShortName,
+            Channel_Image: '1.png',
+            ChannelGenre: param.ChannelGenre,
+            ChannelContentType: param.ChannelContentType,
+            StateCode: param.StateCode,
+            GSTN_id: param.GSTN_id,
+            SACCode: param.SACCode,
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/channelmaster/${param.ChannelCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
 export {
     PostEntity,
     PutEntity,
@@ -604,4 +1032,16 @@ export {
     PosttimeZone,
     PostRegion,
     PutRegion,
+    Postlanguage,
+    Putlanguage,
+    Postmodule,
+    Putmodule,
+    PostSubmodule,
+    PutSubmodule,
+    Postcurrency,
+    Putcurrency,
+    Postdesignation,
+    Putdesignation,
+    Postchannel,
+    Putchannel,
 }

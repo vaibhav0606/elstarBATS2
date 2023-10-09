@@ -1,12 +1,12 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
 import {
-    apiGetLocationmaster,
-    apiGetCurrencymaster,
+    apiGetLanguagemaster,
+    apiGetCountrymaster,
 } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
 import { HiPlusCircle } from 'react-icons/hi'
-import LocationEdit from './LocationEdit'
+import LanguageEdit from './LanguageEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
 
@@ -44,7 +44,7 @@ const headerExtraContent = (
     )
 }
 
-const Locationmaster = () => {
+const Languagemaster = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [editData, seteditData] = useState([''])
     const [globalFilter, setGlobalFilter] = useState('')
@@ -62,27 +62,18 @@ const Locationmaster = () => {
     const columns = useMemo(
         () => [
             {
-                header: 'Location Name',
-                accessorKey: 'LocationName',
+                header: 'Language Name',
+                accessorKey: 'LanguageName',
             },
             {
-                header: 'Short Name',
-                accessorKey: 'ShortName',
-            },
-            {
-                header: 'TimeZone Code',
-                accessorKey: 'TimeZoneCode',
-            },
-            {
-                header: 'Status',
-                id: 'action',
+                header: 'Country Name',
+                accessorKey: 'CountryName',
                 cell: (props) => {
                     const row = props.row.original
                     return (
                         <div className="flex items-center">
-                            <Badge className={statusColor[row.IsActive]} />
                             <span className="ml-2 rtl:mr-2 capitalize">
-                                {row.IsActive == 1 ? 'Active' : 'InActive'}
+                                {row.Country?.CountryName}
                             </span>
                         </div>
                     )
@@ -93,11 +84,12 @@ const Locationmaster = () => {
     )
     useEffect(() => {
         ;(async (values) => {
-            const resp = await apiGetLocationmaster(values)
-            const Currency = await apiGetCurrencymaster(values)
+            const resp = await apiGetLanguagemaster(values)
+            const Currency = await apiGetCountrymaster(values)
+
             const formattedOptions = Currency.data.map((option) => ({
-                value: option.CurrencyCode,
-                label: option.CurrencyName,
+                value: option.CountryCode,
+                label: option.CountryName,
             }))
             setCurrency(formattedOptions)
             setdata(resp.data)
@@ -109,7 +101,7 @@ const Locationmaster = () => {
 
     const onDrawerClose = async (e, values) => {
         setIsOpen(false)
-        const resp = await apiGetLocationmaster(values)
+        const resp = await apiGetLanguagemaster(values)
         setdata(resp.data)
         seteditData([''])
     }
@@ -160,7 +152,7 @@ const Locationmaster = () => {
                 </Alert>
             )} */}
             <Card
-                header="Location Master"
+                header="Language Master"
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -182,16 +174,16 @@ const Locationmaster = () => {
 
             <Drawer
                 title={
-                    editData.LocationName
-                        ? 'Edit Location Master'
-                        : 'Add Location Master'
+                    editData.LanguageName
+                        ? 'Edit Language Master'
+                        : 'Add Language Master'
                 }
                 isOpen={isOpen}
                 onClose={onDrawerClose}
                 onRequestClose={onDrawerClose}
                 width={600}
             >
-                <LocationEdit
+                <LanguageEdit
                     onDrawerClose={onDrawerClose}
                     editData={editData}
                     setMessage={setMessage}
@@ -203,4 +195,4 @@ const Locationmaster = () => {
     )
 }
 
-export default Locationmaster
+export default Languagemaster

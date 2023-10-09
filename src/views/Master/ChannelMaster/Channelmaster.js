@@ -1,12 +1,9 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
-import {
-    apiGetLocationmaster,
-    apiGetCurrencymaster,
-} from 'services/MasterService'
+import { apiGetEntitymaster } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
 import { HiPlusCircle } from 'react-icons/hi'
-import LocationEdit from './LocationEdit'
+import EntityEdit from './ChannelEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
 
@@ -37,20 +34,19 @@ const headerExtraContent = (
                     icon={<HiPlusCircle />}
                     onClick={() => openDrawer()}
                 >
-                    Add Location
+                    Add Entity
                 </Button>
             </span>
         </span>
     )
 }
 
-const Locationmaster = () => {
+const Entitymaster = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [editData, seteditData] = useState([''])
     const [globalFilter, setGlobalFilter] = useState('')
     const [sorting, setSorting] = useState([])
     const [data, setdata] = useState([''])
-    const [currency, setCurrency] = useState({ value: '', label: '' })
     const [message, setMessage] = useTimeOutMessage()
     const [log, setlog] = useState('')
 
@@ -62,16 +58,16 @@ const Locationmaster = () => {
     const columns = useMemo(
         () => [
             {
-                header: 'Location Name',
-                accessorKey: 'LocationName',
+                header: 'Entity Name',
+                accessorKey: 'EntityName',
             },
             {
-                header: 'Short Name',
-                accessorKey: 'ShortName',
+                header: 'Contact Person',
+                accessorKey: 'ContactPerson',
             },
             {
-                header: 'TimeZone Code',
-                accessorKey: 'TimeZoneCode',
+                header: 'Contact',
+                accessorKey: 'Contact',
             },
             {
                 header: 'Status',
@@ -93,25 +89,21 @@ const Locationmaster = () => {
     )
     useEffect(() => {
         ;(async (values) => {
-            const resp = await apiGetLocationmaster(values)
-            const Currency = await apiGetCurrencymaster(values)
-            const formattedOptions = Currency.data.map((option) => ({
-                value: option.CurrencyCode,
-                label: option.CurrencyName,
-            }))
-            setCurrency(formattedOptions)
+            const resp = await apiGetEntitymaster(values)
+            // console.log(resp.data)
             setdata(resp.data)
         })()
     }, [])
+
     const openDrawer = () => {
         setIsOpen(true)
     }
 
     const onDrawerClose = async (e, values) => {
-        setIsOpen(false)
-        const resp = await apiGetLocationmaster(values)
-        setdata(resp.data)
+        const resp = await apiGetEntitymaster(values)
         seteditData([''])
+        setdata(resp.data)
+        setIsOpen(false)
     }
     function DebouncedInput({
         value: initialValue,
@@ -160,7 +152,7 @@ const Locationmaster = () => {
                 </Alert>
             )} */}
             <Card
-                header="Location Master"
+                header="Entity Master"
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -182,25 +174,24 @@ const Locationmaster = () => {
 
             <Drawer
                 title={
-                    editData.LocationName
-                        ? 'Edit Location Master'
-                        : 'Add Location Master'
+                    editData.EntityName
+                        ? 'Edit Entity Master'
+                        : 'Add Entity Master'
                 }
                 isOpen={isOpen}
                 onClose={onDrawerClose}
                 onRequestClose={onDrawerClose}
                 width={600}
             >
-                <LocationEdit
+                <EntityEdit
                     onDrawerClose={onDrawerClose}
                     editData={editData}
                     setMessage={setMessage}
                     setlog={setlog}
-                    currency={currency}
                 />
             </Drawer>
         </>
     )
 }
 
-export default Locationmaster
+export default Entitymaster

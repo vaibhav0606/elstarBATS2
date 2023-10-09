@@ -8,26 +8,18 @@ import {
 } from 'components/ui'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
-import { Postlocation, Putlocation } from 'services/MasterService'
+import { Postdesignation, Putdesignation } from 'services/MasterService'
 import { useSelector } from 'react-redux'
 
 const validationSchema = Yup.object().shape({
-    LocationName: Yup.string()
+    DesignationName: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('LocationName Required'),
+        .required('DesignationName Required'),
     ShortName: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
         .required('ShortName Required'),
-    TimeZoneCode: Yup.string()
-        .min(1, 'Too Short!')
-        .max(200, 'Too Long!')
-        .required('TimeZoneCode Required'),
-    CurrencyCode: Yup.string()
-        .min(1, 'Too Short!')
-        .max(200, 'Too Long!')
-        .required('CurrencyCode Required'),
     IsActive: Yup.string().required('IsActives Required'),
     rememberMe: Yup.bool(),
 })
@@ -35,19 +27,19 @@ const options = [
     { value: 'foo', label: 'Foo' },
     { value: 'bar', label: 'Bar' },
 ]
-const LocationEdit = ({
+const DesignationEdit = ({
     onDrawerClose,
     editData,
     setMessage,
     setlog,
-    currency,
+    designation,
 }) => {
     const token = useSelector((state) => state.auth.session.token)
     //console.log(currency)
 
-    const AddLocation = async (values, token) => {
+    const AddDesignation = async (values, token) => {
         try {
-            const resp = await Postlocation(values, token)
+            const resp = await Postdesignation(values, token)
             if (resp.data.msg === 'success') {
                 setlog('success')
                 setMessage('Data Inserted Successfully')
@@ -61,15 +53,15 @@ const LocationEdit = ({
             return {}
         }
     }
-    const EditLocation = async (values, token) => {
+    const EditDesignation = async (values, token) => {
         try {
-            const resp = await Putlocation(values, token)
+            const resp = await Putdesignation(values, token)
             console.log(resp)
             if (resp.data.msg === 'Updated') {
                 setlog('success')
                 setMessage('Data Updated Successfully')
                 return
-            } else if (resp.data.msg === 'Location is Already Exists') {
+            } else if (resp.data.msg === 'Designation is Already Exists') {
                 setlog('warning')
                 setMessage(resp.data.msg)
                 return
@@ -83,22 +75,18 @@ const LocationEdit = ({
         <div>
             <Formik
                 initialValues={{
-                    LocationCode: editData.LocationCode || '',
-                    LocationName: editData.LocationName || '',
-                    TimeZoneCode: editData.TimeZoneCode || '',
+                    DesignationCode: editData.DesignationCode || '',
+                    DesignationName: editData.DesignationName || '',
                     ShortName: editData.ShortName || '',
-                    CurrencyCode: editData.CurrencyCode || '',
 
                     IsActive: editData.IsActive === 1 ? true : false,
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { resetForm, setSubmitting }) => {
-                    console.log(values)
-                    return
                     setTimeout(() => {
-                        if (!editData.LocationCode) {
+                        if (!editData.DesignationCode) {
                             new Promise((resolve, reject) => {
-                                AddLocation(values, token)
+                                AddDesignation(values, token)
                                     .then((response) => {
                                         onDrawerClose(0, 0)
                                         resolve(response)
@@ -110,7 +98,7 @@ const LocationEdit = ({
                         } else {
                             new Promise((resolve, reject) => {
                                 setSubmitting(false)
-                                EditLocation(values, token)
+                                EditDesignation(values, token)
                                     .then((response) => {
                                         onDrawerClose(0, 0)
                                         resolve(response)
@@ -135,52 +123,29 @@ const LocationEdit = ({
                                 }}
                             >
                                 <Field
-                                    type="LocationCode"
+                                    type="DesignationCode"
                                     autoComplete="off"
-                                    name="LocationCode"
-                                    placeholder="LocationCode name"
+                                    name="DesignationCode"
+                                    placeholder="Designation Name"
                                     component={Input}
                                     hidden
                                 />
                                 <FormItem
-                                    label="LocationName"
+                                    label="Designation Name"
                                     invalid={
-                                        errors.LocationName &&
-                                        touched.LocationName
+                                        errors.DesignationName &&
+                                        touched.DesignationName
                                     }
-                                    errorMessage={errors.LocationName}
+                                    errorMessage={errors.DesignationName}
                                 >
                                     <Field
-                                        type="LocationName"
+                                        type="DesignationName"
                                         autoComplete="off"
-                                        name="LocationName"
-                                        placeholder="Location name"
+                                        name="DesignationName"
+                                        placeholder="Designation Name"
                                         component={Input}
                                     />
                                 </FormItem>
-                                <FormItem
-                                    label="TimeZoneCode"
-                                    invalid={
-                                        errors.TimeZoneCode &&
-                                        touched.TimeZoneCode
-                                    }
-                                    errorMessage={errors.TimeZoneCode}
-                                >
-                                    <Field
-                                        type="TimeZoneCode"
-                                        autoComplete="off"
-                                        name="TimeZoneCode"
-                                        placeholder="TimeZoneCode name"
-                                        component={Input}
-                                    />
-                                </FormItem>
-                            </div>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
                                 <FormItem
                                     label="ShortName"
                                     invalid={
@@ -195,42 +160,6 @@ const LocationEdit = ({
                                         placeholder="ShortName name"
                                         component={Input}
                                     />
-                                </FormItem>
-                                <FormItem
-                                    asterisk
-                                    label="Currency"
-                                    invalid={
-                                        errors.CurrencyCode &&
-                                        touched.CurrencyCode
-                                    }
-                                    errorMessage={errors.CurrencyCode}
-                                    style={{ width: '250px' }}
-                                >
-                                    <Field
-                                        name="CurrencyCode"
-                                        style={{ width: '250px' }}
-                                    >
-                                        {({ field, form }) => (
-                                            <Select
-                                                style={{ width: '250px' }}
-                                                field={field}
-                                                form={form}
-                                                className="mb-4 w-50"
-                                                options={currency}
-                                                value={currency.filter(
-                                                    (option) =>
-                                                        option.value ===
-                                                        values.CurrencyCode
-                                                )}
-                                                onChange={(option) =>
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        option?.value
-                                                    )
-                                                }
-                                            />
-                                        )}
-                                    </Field>
                                 </FormItem>
                             </div>
                             <div
@@ -268,4 +197,4 @@ const LocationEdit = ({
     )
 }
 
-export default LocationEdit
+export default DesignationEdit

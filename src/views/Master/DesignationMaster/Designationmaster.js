@@ -1,12 +1,12 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
 import {
-    apiGetLocationmaster,
+    apiGetDesignationmaster,
     apiGetCurrencymaster,
 } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
 import { HiPlusCircle } from 'react-icons/hi'
-import LocationEdit from './LocationEdit'
+import DesignationEdit from './DesignationEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
 
@@ -37,14 +37,14 @@ const headerExtraContent = (
                     icon={<HiPlusCircle />}
                     onClick={() => openDrawer()}
                 >
-                    Add Location
+                    Add Designation
                 </Button>
             </span>
         </span>
     )
 }
 
-const Locationmaster = () => {
+const Designationmaster = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [editData, seteditData] = useState([''])
     const [globalFilter, setGlobalFilter] = useState('')
@@ -62,16 +62,12 @@ const Locationmaster = () => {
     const columns = useMemo(
         () => [
             {
-                header: 'Location Name',
-                accessorKey: 'LocationName',
+                header: 'Designation Name',
+                accessorKey: 'DesignationName',
             },
             {
                 header: 'Short Name',
                 accessorKey: 'ShortName',
-            },
-            {
-                header: 'TimeZone Code',
-                accessorKey: 'TimeZoneCode',
             },
             {
                 header: 'Status',
@@ -93,7 +89,7 @@ const Locationmaster = () => {
     )
     useEffect(() => {
         ;(async (values) => {
-            const resp = await apiGetLocationmaster(values)
+            const resp = await apiGetDesignationmaster(values)
             const Currency = await apiGetCurrencymaster(values)
             const formattedOptions = Currency.data.map((option) => ({
                 value: option.CurrencyCode,
@@ -109,7 +105,7 @@ const Locationmaster = () => {
 
     const onDrawerClose = async (e, values) => {
         setIsOpen(false)
-        const resp = await apiGetLocationmaster(values)
+        const resp = await apiGetDesignationmaster(values)
         setdata(resp.data)
         seteditData([''])
     }
@@ -160,7 +156,7 @@ const Locationmaster = () => {
                 </Alert>
             )} */}
             <Card
-                header="Location Master"
+                header="Designation Master"
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -182,16 +178,16 @@ const Locationmaster = () => {
 
             <Drawer
                 title={
-                    editData.LocationName
-                        ? 'Edit Location Master'
-                        : 'Add Location Master'
+                    editData.DesignationName
+                        ? 'Edit Designation Master'
+                        : 'Add Designation Master'
                 }
                 isOpen={isOpen}
                 onClose={onDrawerClose}
                 onRequestClose={onDrawerClose}
                 width={600}
             >
-                <LocationEdit
+                <DesignationEdit
                     onDrawerClose={onDrawerClose}
                     editData={editData}
                     setMessage={setMessage}
@@ -203,4 +199,4 @@ const Locationmaster = () => {
     )
 }
 
-export default Locationmaster
+export default Designationmaster

@@ -8,46 +8,44 @@ import {
 } from 'components/ui'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
-import { Postlocation, Putlocation } from 'services/MasterService'
+import { PostSubmodule, PutSubmodule } from 'services/MasterService'
 import { useSelector } from 'react-redux'
 
 const validationSchema = Yup.object().shape({
-    LocationName: Yup.string()
-        .min(1, 'Too Short!')
+    SubModuleName: Yup.string()
+        .min(3, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('LocationName Required'),
-    ShortName: Yup.string()
-        .min(1, 'Too Short!')
-        .max(50, 'Too Long!')
-        .required('ShortName Required'),
-    TimeZoneCode: Yup.string()
-        .min(1, 'Too Short!')
-        .max(200, 'Too Long!')
-        .required('TimeZoneCode Required'),
-    CurrencyCode: Yup.string()
-        .min(1, 'Too Short!')
-        .max(200, 'Too Long!')
-        .required('CurrencyCode Required'),
+        .required('SubModuleName Required'),
+    // ModuleName: Yup.string()
+    //     .min(1, 'Too Short!')
+    //     .max(50, 'Too Long!')
+    //     .required('ModuleName Required'),
+    IndexNum: Yup.number()
+        .positive('Must be more than 0')
+        .integer('Must be more than 0')
+        .required('IndexNum Required'),
+
     IsActive: Yup.string().required('IsActives Required'),
     rememberMe: Yup.bool(),
 })
+
 const options = [
     { value: 'foo', label: 'Foo' },
     { value: 'bar', label: 'Bar' },
 ]
-const LocationEdit = ({
+const SubModuleEdit = ({
     onDrawerClose,
     editData,
     setMessage,
     setlog,
-    currency,
+    module,
 }) => {
     const token = useSelector((state) => state.auth.session.token)
     //console.log(currency)
 
-    const AddLocation = async (values, token) => {
+    const AddSubModule = async (values, token) => {
         try {
-            const resp = await Postlocation(values, token)
+            const resp = await PostSubmodule(values, token)
             if (resp.data.msg === 'success') {
                 setlog('success')
                 setMessage('Data Inserted Successfully')
@@ -61,15 +59,15 @@ const LocationEdit = ({
             return {}
         }
     }
-    const EditLocation = async (values, token) => {
+    const EditSubModule = async (values, token) => {
         try {
-            const resp = await Putlocation(values, token)
+            const resp = await PutSubmodule(values, token)
             console.log(resp)
             if (resp.data.msg === 'Updated') {
                 setlog('success')
                 setMessage('Data Updated Successfully')
                 return
-            } else if (resp.data.msg === 'Location is Already Exists') {
+            } else if (resp.data.msg === 'Submodule is Already Exists') {
                 setlog('warning')
                 setMessage(resp.data.msg)
                 return
@@ -83,22 +81,20 @@ const LocationEdit = ({
         <div>
             <Formik
                 initialValues={{
-                    LocationCode: editData.LocationCode || '',
-                    LocationName: editData.LocationName || '',
-                    TimeZoneCode: editData.TimeZoneCode || '',
-                    ShortName: editData.ShortName || '',
-                    CurrencyCode: editData.CurrencyCode || '',
+                    SubModuleCode: editData.SubModuleCode || '',
+                    SubModuleName: editData.SubModuleName || '',
+                    ModuleCode: editData.module?.ModuleCode,
+                    IndexNum: editData.IndexNum || '',
 
                     IsActive: editData.IsActive === 1 ? true : false,
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { resetForm, setSubmitting }) => {
-                    console.log(values)
-                    return
+                    console.log('submitttt')
                     setTimeout(() => {
-                        if (!editData.LocationCode) {
+                        if (!editData.SubModuleCode) {
                             new Promise((resolve, reject) => {
-                                AddLocation(values, token)
+                                AddSubModule(values, token)
                                     .then((response) => {
                                         onDrawerClose(0, 0)
                                         resolve(response)
@@ -110,7 +106,7 @@ const LocationEdit = ({
                         } else {
                             new Promise((resolve, reject) => {
                                 setSubmitting(false)
-                                EditLocation(values, token)
+                                EditSubModule(values, token)
                                     .then((response) => {
                                         onDrawerClose(0, 0)
                                         resolve(response)
@@ -135,42 +131,26 @@ const LocationEdit = ({
                                 }}
                             >
                                 <Field
-                                    type="LocationCode"
+                                    type="SubModuleCode"
                                     autoComplete="off"
-                                    name="LocationCode"
-                                    placeholder="LocationCode name"
+                                    name="SubModuleCode"
+                                    placeholder="SubModule name"
                                     component={Input}
                                     hidden
                                 />
                                 <FormItem
-                                    label="LocationName"
+                                    label="SubModuleName"
                                     invalid={
-                                        errors.LocationName &&
-                                        touched.LocationName
+                                        errors.SubModuleName &&
+                                        touched.SubModuleName
                                     }
-                                    errorMessage={errors.LocationName}
+                                    errorMessage={errors.SubModuleName}
                                 >
                                     <Field
-                                        type="LocationName"
+                                        type="SubModuleName"
                                         autoComplete="off"
-                                        name="LocationName"
-                                        placeholder="Location name"
-                                        component={Input}
-                                    />
-                                </FormItem>
-                                <FormItem
-                                    label="TimeZoneCode"
-                                    invalid={
-                                        errors.TimeZoneCode &&
-                                        touched.TimeZoneCode
-                                    }
-                                    errorMessage={errors.TimeZoneCode}
-                                >
-                                    <Field
-                                        type="TimeZoneCode"
-                                        autoComplete="off"
-                                        name="TimeZoneCode"
-                                        placeholder="TimeZoneCode name"
+                                        name="SubModuleName"
+                                        placeholder="SubModule Name"
                                         component={Input}
                                     />
                                 </FormItem>
@@ -182,32 +162,16 @@ const LocationEdit = ({
                                 }}
                             >
                                 <FormItem
-                                    label="ShortName"
-                                    invalid={
-                                        errors.ShortName && touched.ShortName
-                                    }
-                                    errorMessage={errors.ShortName}
-                                >
-                                    <Field
-                                        type="ShortName"
-                                        autoComplete="off"
-                                        name="ShortName"
-                                        placeholder="ShortName name"
-                                        component={Input}
-                                    />
-                                </FormItem>
-                                <FormItem
                                     asterisk
-                                    label="Currency"
+                                    label="Module"
                                     invalid={
-                                        errors.CurrencyCode &&
-                                        touched.CurrencyCode
+                                        errors.ModuleCode && touched.ModuleCode
                                     }
-                                    errorMessage={errors.CurrencyCode}
+                                    errorMessage={errors.ModuleCode}
                                     style={{ width: '250px' }}
                                 >
                                     <Field
-                                        name="CurrencyCode"
+                                        name="ModuleCode"
                                         style={{ width: '250px' }}
                                     >
                                         {({ field, form }) => (
@@ -216,11 +180,11 @@ const LocationEdit = ({
                                                 field={field}
                                                 form={form}
                                                 className="mb-4 w-50"
-                                                options={currency}
-                                                value={currency.filter(
+                                                options={module}
+                                                value={module.filter(
                                                     (option) =>
                                                         option.value ===
-                                                        values.CurrencyCode
+                                                        values.ModuleCode
                                                 )}
                                                 onChange={(option) =>
                                                     form.setFieldValue(
@@ -231,6 +195,21 @@ const LocationEdit = ({
                                             />
                                         )}
                                     </Field>
+                                </FormItem>
+                                <FormItem
+                                    label="IndexNum"
+                                    invalid={
+                                        errors.IndexNum && touched.IndexNum
+                                    }
+                                    errorMessage={errors.IndexNum}
+                                >
+                                    <Field
+                                        type="Number"
+                                        autoComplete="off"
+                                        name="IndexNum"
+                                        placeholder="IndexNum name"
+                                        component={Input}
+                                    />
                                 </FormItem>
                             </div>
                             <div
@@ -268,4 +247,4 @@ const LocationEdit = ({
     )
 }
 
-export default LocationEdit
+export default SubModuleEdit
