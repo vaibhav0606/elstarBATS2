@@ -40,10 +40,14 @@ const EmployeeEdit = ({
     editData,
     setMessage,
     setlog,
-    currency,
+    Designation,
+    Place,
+    State,
+    Department,
+    Country,
+    Region,
 }) => {
     const token = useSelector((state) => state.auth.session.token)
-    //console.log(currency)
 
     const AddLocation = async (values, token) => {
         try {
@@ -187,7 +191,7 @@ const EmployeeEdit = ({
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <FormItem
-                                    label="First Name"
+                                    label="Emp_Contact1"
                                     invalid={
                                         errors.Emp_Contact1 &&
                                         touched.Emp_Contact1
@@ -198,7 +202,7 @@ const EmployeeEdit = ({
                                         type="Emp_Contact1"
                                         autoComplete="off"
                                         name="Emp_Contact1"
-                                        placeholder="First Name"
+                                        placeholder="Emp_Contact1"
                                         component={Input}
                                     />
                                 </FormItem>
@@ -235,15 +239,15 @@ const EmployeeEdit = ({
 
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <FormItem
-                                    label="First Name"
+                                    label="Emp_DOJ"
                                     invalid={errors.Emp_DOJ && touched.Emp_DOJ}
                                     errorMessage={errors.Emp_DOJ}
                                 >
                                     <Field
-                                        type="Emp_DOJ"
+                                        type="date"
                                         autoComplete="off"
                                         name="Emp_DOJ"
-                                        placeholder="First Name"
+                                        placeholder="Emp_DOJ"
                                         component={Input}
                                     />
                                 </FormItem>
@@ -253,7 +257,7 @@ const EmployeeEdit = ({
                                     errorMessage={errors.Emp_DOL}
                                 >
                                     <Field
-                                        type="Emp_DOL"
+                                        type="date"
                                         autoComplete="off"
                                         name="Emp_DOL"
                                         placeholder="Emp_DOL name"
@@ -278,12 +282,22 @@ const EmployeeEdit = ({
                                 </FormItem>
                             </div>
 
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <FormItem
+                                    label="Emp_Email"
+                                    invalid={
+                                        errors.Emp_Email && touched.Emp_Email
+                                    }
+                                    errorMessage={errors.Emp_Email}
+                                >
+                                    <Field
+                                        type="Email"
+                                        autoComplete="off"
+                                        name="Emp_Email"
+                                        placeholder="Emp_Email"
+                                        component={Input}
+                                    />
+                                </FormItem>
                                 <FormItem
                                     asterisk
                                     label="Emp_BloodGroup"
@@ -309,6 +323,247 @@ const EmployeeEdit = ({
                                                     (option) =>
                                                         option.value ===
                                                         values.Emp_BloodGroup
+                                                )}
+                                                onChange={(option) =>
+                                                    form.setFieldValue(
+                                                        field.name,
+                                                        option?.value
+                                                    )
+                                                }
+                                            />
+                                        )}
+                                    </Field>
+                                </FormItem>
+                                <FormItem
+                                    asterisk
+                                    label="Emp_Grade"
+                                    invalid={
+                                        errors.Emp_Grade && touched.Emp_Grade
+                                    }
+                                    errorMessage={errors.Emp_Grade}
+                                    style={{ width: '250px' }}
+                                >
+                                    <Field
+                                        name="Emp_Grade"
+                                        style={{ width: '250px' }}
+                                    >
+                                        {({ field, form }) => (
+                                            <Select
+                                                style={{ width: '250px' }}
+                                                field={field}
+                                                form={form}
+                                                className="mb-4 w-50"
+                                                options={options}
+                                                value={options.filter(
+                                                    (option) =>
+                                                        option.value ===
+                                                        values.Emp_Grade
+                                                )}
+                                                onChange={(option) =>
+                                                    form.setFieldValue(
+                                                        field.name,
+                                                        option?.value
+                                                    )
+                                                }
+                                            />
+                                        )}
+                                    </Field>
+                                </FormItem>
+
+                                <FormItem
+                                    asterisk
+                                    label="Designation"
+                                    invalid={
+                                        errors.Designation &&
+                                        touched.Designation
+                                    }
+                                    errorMessage={errors.Designation}
+                                    style={{ width: '250px' }}
+                                >
+                                    <Field
+                                        name="Designation"
+                                        style={{ width: '250px' }}
+                                    >
+                                        {({ field, form }) => (
+                                            <Select
+                                                style={{ width: '250px' }}
+                                                field={field}
+                                                form={form}
+                                                className="mb-4 w-50"
+                                                options={Designation}
+                                                value={Designation.filter(
+                                                    (option) =>
+                                                        option.value ===
+                                                        values.Designation
+                                                )}
+                                                onChange={(option) =>
+                                                    form.setFieldValue(
+                                                        field.name,
+                                                        option?.value
+                                                    )
+                                                }
+                                            />
+                                        )}
+                                    </Field>
+                                </FormItem>
+
+                                <FormItem
+                                    asterisk
+                                    label="City Code"
+                                    invalid={errors.Place && touched.Place}
+                                    errorMessage={errors.Place}
+                                    style={{ width: '250px' }}
+                                >
+                                    <Field
+                                        name="Place"
+                                        style={{ width: '250px' }}
+                                    >
+                                        {({ field, form }) => (
+                                            <Select
+                                                style={{ width: '250px' }}
+                                                field={field}
+                                                form={form}
+                                                className="mb-4 w-50"
+                                                options={Place}
+                                                value={Place.filter(
+                                                    (option) =>
+                                                        option.value ===
+                                                        values.Place
+                                                )}
+                                                onChange={(option) =>
+                                                    form.setFieldValue(
+                                                        field.name,
+                                                        option?.value
+                                                    )
+                                                }
+                                            />
+                                        )}
+                                    </Field>
+                                </FormItem>
+                                <FormItem
+                                    asterisk
+                                    label="Department Code"
+                                    invalid={
+                                        errors.Department && touched.Department
+                                    }
+                                    errorMessage={errors.Department}
+                                    style={{ width: '250px' }}
+                                >
+                                    <Field
+                                        name="Department"
+                                        style={{ width: '250px' }}
+                                    >
+                                        {({ field, form }) => (
+                                            <Select
+                                                style={{ width: '250px' }}
+                                                field={field}
+                                                form={form}
+                                                className="mb-4 w-50"
+                                                options={Department}
+                                                value={Department.filter(
+                                                    (option) =>
+                                                        option.value ===
+                                                        values.Department
+                                                )}
+                                                onChange={(option) =>
+                                                    form.setFieldValue(
+                                                        field.name,
+                                                        option?.value
+                                                    )
+                                                }
+                                            />
+                                        )}
+                                    </Field>
+                                </FormItem>
+                                <FormItem
+                                    asterisk
+                                    label="State Code"
+                                    invalid={errors.State && touched.State}
+                                    errorMessage={errors.State}
+                                    style={{ width: '250px' }}
+                                >
+                                    <Field
+                                        name="State"
+                                        style={{ width: '250px' }}
+                                    >
+                                        {({ field, form }) => (
+                                            <Select
+                                                style={{ width: '250px' }}
+                                                field={field}
+                                                form={form}
+                                                className="mb-4 w-50"
+                                                options={State}
+                                                value={State.filter(
+                                                    (option) =>
+                                                        option.value ===
+                                                        values.State
+                                                )}
+                                                onChange={(option) =>
+                                                    form.setFieldValue(
+                                                        field.name,
+                                                        option?.value
+                                                    )
+                                                }
+                                            />
+                                        )}
+                                    </Field>
+                                </FormItem>
+                                <FormItem
+                                    asterisk
+                                    label="Country Code"
+                                    invalid={errors.Country && touched.Country}
+                                    errorMessage={errors.Country}
+                                    style={{ width: '250px' }}
+                                >
+                                    <Field
+                                        name="Country"
+                                        style={{ width: '250px' }}
+                                    >
+                                        {({ field, form }) => (
+                                            <Select
+                                                style={{ width: '250px' }}
+                                                field={field}
+                                                form={form}
+                                                className="mb-4 w-50"
+                                                options={Country}
+                                                value={Country.filter(
+                                                    (option) =>
+                                                        option.value ===
+                                                        values.Country
+                                                )}
+                                                onChange={(option) =>
+                                                    form.setFieldValue(
+                                                        field.name,
+                                                        option?.value
+                                                    )
+                                                }
+                                            />
+                                        )}
+                                    </Field>
+                                </FormItem>
+
+                                <FormItem
+                                    asterisk
+                                    label="Region Code"
+                                    invalid={errors.Region && touched.Region}
+                                    errorMessage={errors.Region}
+                                    style={{ width: '250px' }}
+                                >
+                                    <Field
+                                        name="Region"
+                                        style={{ width: '250px' }}
+                                    >
+                                        {({ field, form }) => (
+                                            <Select
+                                                style={{ width: '250px' }}
+                                                field={field}
+                                                form={form}
+                                                className="mb-4 w-50"
+                                                options={Region}
+                                                value={Region.filter(
+                                                    (option) =>
+                                                        option.value ===
+                                                        values.Region
                                                 )}
                                                 onChange={(option) =>
                                                     form.setFieldValue(

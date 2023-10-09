@@ -2,7 +2,12 @@ import { useState, useEffect, useMemo } from 'react'
 import { Badge, Tabs, Input, Alert, Dialog } from 'components/ui'
 import {
     apiGetEmployeemaster,
-    apiGetCurrencymaster,
+    apiGetDesignationMaster,
+    apiGetPlaceMaster,
+    apiGetStateMaster,
+    apiGetDepartmentmaster,
+    apiGetCountryMaster,
+    apiGetRegionMaster,
 } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
 import { HiPlusCircle } from 'react-icons/hi'
@@ -50,7 +55,13 @@ const Employee = () => {
     const [globalFilter, setGlobalFilter] = useState('')
     const [sorting, setSorting] = useState([])
     const [data, setdata] = useState([''])
-    const [currency, setCurrency] = useState({ value: '', label: '' })
+    const [designation, setDesignation] = useState({ value: '', label: '' })
+    const [State, setState] = useState({ value: '', label: '' })
+    const [Department, setDepartment] = useState({ value: '', label: '' })
+    const [Country, setCountry] = useState({ value: '', label: '' })
+    const [Region, setRegion] = useState({ value: '', label: '' })
+
+    const [Place, setPlace] = useState({ value: '', label: '' })
     const [message, setMessage] = useTimeOutMessage()
     const [log, setlog] = useState('')
     const [currentTab, setCurrentTab] = useState('tab1')
@@ -106,13 +117,55 @@ const Employee = () => {
     useEffect(() => {
         ;(async (values) => {
             const resp = await apiGetEmployeemaster(values)
-            const Currency = await apiGetCurrencymaster(values)
-            const formattedOptions = Currency.data.map((option) => ({
-                value: option.CurrencyCode,
-                label: option.CurrencyName,
-            }))
-            setCurrency(formattedOptions)
             setdata(resp.data)
+        })()
+        ;(async (values) => {
+            const Designation = await apiGetDesignationMaster(values)
+            const formattedOptions = Designation.data.map((option) => ({
+                value: option.DesignationCode,
+                label: option.DesignationName,
+            }))
+            setDesignation(formattedOptions)
+        })()
+        ;(async (values) => {
+            const Place = await apiGetPlaceMaster(values)
+            const formattedOptions = Place.data.map((option) => ({
+                value: option.PlaceCode,
+                label: option.PlaceName,
+            }))
+            setPlace(formattedOptions)
+        })()
+        ;(async (values) => {
+            const State = await apiGetStateMaster(values)
+            const formattedOptions = State.data.map((option) => ({
+                value: option.StateCode,
+                label: option.StateName,
+            }))
+            setState(formattedOptions)
+        })()
+        ;(async (values) => {
+            const Department = await apiGetDepartmentmaster(values)
+            const formattedOptions = Department.data.map((option) => ({
+                value: option.DepartmentCode,
+                label: option.DepartmentName,
+            }))
+            setDepartment(formattedOptions)
+        })()
+        ;(async (values) => {
+            const Country = await apiGetCountryMaster(values)
+            const formattedOptions = Country.data.map((option) => ({
+                value: option.CountryCode,
+                label: option.CountryName,
+            }))
+            setCountry(formattedOptions)
+        })()
+        ;(async (values) => {
+            const Region = await apiGetRegionMaster(values)
+            const formattedOptions = Region.data.map((option) => ({
+                value: option.RegionCode,
+                label: option.RegionName,
+            }))
+            setRegion(formattedOptions)
         })()
     }, [])
     // const openDrawer = () => {
@@ -215,16 +268,20 @@ const Employee = () => {
             <Dialog
                 isOpen={dialogIsOpen}
                 width={1000}
+                height="auto"
                 onClose={onDialogClose}
                 onRequestClose={onDialogClose}
+                style={{
+                    content: {
+                        overflow: 'auto',
+                    },
+                }}
+                contentClassName=" max-h-96 overflow-y-auto"
             >
                 <div className="flex flex-col h-full justify-between">
                     {/* // sm:max-h-96 */}
-                    <div
-                        className="
-                    max-h-96
-                    overflow-y-auto"
-                    >
+
+                    <div>
                         <h5 className="mb-4">
                             {editData.Emp_FirstName
                                 ? 'Edit Employee Master'
@@ -259,7 +316,12 @@ const Employee = () => {
                                         editData={editData}
                                         setMessage={setMessage}
                                         setlog={setlog}
-                                        currency={currency}
+                                        Designation={designation}
+                                        Place={Place}
+                                        State={State}
+                                        Department={Department}
+                                        Country={Country}
+                                        Region={Region}
                                     />
                                 </TabContent>
                                 <TabContent value="tab2">
