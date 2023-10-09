@@ -60,7 +60,7 @@ module.exports = {
         },
         extend: {
             maxHeight: {
-                1000: '32rem',
+                128: '32rem',
             },
             typography: (theme) => ({
                 DEFAULT: {

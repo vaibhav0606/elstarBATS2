@@ -8,7 +8,7 @@ import {
 } from 'components/ui'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
-import { Postlocation, Putlocation } from 'services/MasterService'
+import { PostEmp, PutEmp } from 'services/MasterService'
 import { useSelector } from 'react-redux'
 
 const validationSchema = Yup.object().shape({
@@ -24,15 +24,63 @@ const validationSchema = Yup.object().shape({
         .min(1, 'Too Short!')
         .max(200, 'Too Long!')
         .required('Emp_LastName Required'),
-    CurrencyCode: Yup.string()
+    Emp_Email: Yup.string()
         .min(1, 'Too Short!')
         .max(200, 'Too Long!')
-        .required('CurrencyCode Required'),
+        .required('Emp_Email Required'),
+    Emp_Addr1: Yup.string()
+        .min(1, 'Too Short!')
+        .max(200, 'Too Long!')
+        .required('Emp_Addr1 Required'),
+    Emp_Addr2: Yup.string()
+        .min(1, 'Too Short!')
+        .max(200, 'Too Long!')
+        .required('Emp_Addr2 Required'),
+    CityCode: Yup.string().required('CityCode Required'),
+    StateCode: Yup.string().required('StateCode Required'),
+    CountryCode: Yup.string()
+        .min(1, 'Too Short!')
+        .max(200, 'Too Long!')
+        .required('CountryCode Required'),
+    Emp_Contact1: Yup.string()
+        .min(10, 'Too Short!')
+        .max(10, 'Too Long!')
+        .required('Emp_Contact1 Required'),
+    Emp_Contact2: Yup.string()
+        .min(10, 'Too Short!')
+        .max(10, 'Too Long!')
+        .required('Emp_Contact2 Required'),
+    Emp_Grade: Yup.string().required('Emp_Grade Required'),
+    Emp_DOB: Yup.string()
+        .min(1, 'Too Short!')
+        .max(200, 'Too Long!')
+        .required('Emp_DOB Required'),
+    Emp_DOJ: Yup.string()
+        .min(1, 'Too Short!')
+        .max(200, 'Too Long!')
+        .required('Emp_DOJ Required'),
+    Emp_DOL: Yup.string()
+        .min(1, 'Too Short!')
+        .max(200, 'Too Long!')
+        .required('Emp_DOL Required'),
+    Emp_BloodGroup: Yup.string().required('Emp_BloodGroup Required'),
+    DepartmentCode: Yup.string().required('DepartmentCode Required'),
+    DesignationCode: Yup.string().required('DesignationCode Required'),
+    ReportingTo: Yup.string().required('ReportingTo Required'),
+    Emp_Description: Yup.string()
+        .min(1, 'Too Short!')
+        .max(200, 'Too Long!')
+        .required('Emp_Description Required'),
+    RegionCode: Yup.string().required('RegionCode Required'),
     IsActive: Yup.string().required('IsActives Required'),
     rememberMe: Yup.bool(),
 })
 const options = [
-    { value: 'foo', label: 'Foo' },
+    { value: 'str', label: 'str' },
+    { value: 'bar', label: 'Bar' },
+]
+const options2 = [
+    { value: 'string', label: 'string' },
     { value: 'bar', label: 'Bar' },
 ]
 const EmployeeEdit = ({
@@ -51,7 +99,7 @@ const EmployeeEdit = ({
 
     const AddLocation = async (values, token) => {
         try {
-            const resp = await Postlocation(values, token)
+            const resp = await PostEmp(values, token)
             if (resp.data.msg === 'success') {
                 setlog('success')
                 setMessage('Data Inserted Successfully')
@@ -67,9 +115,9 @@ const EmployeeEdit = ({
     }
     const EditLocation = async (values, token) => {
         try {
-            const resp = await Putlocation(values, token)
+            const resp = await PutEmp(values, token)
             console.log(resp)
-            if (resp.data.msg === 'Updated') {
+            if (resp.data.status === 200) {
                 setlog('success')
                 setMessage('Data Updated Successfully')
                 return
@@ -87,18 +135,36 @@ const EmployeeEdit = ({
         <div>
             <Formik
                 initialValues={{
-                    LocationCode: editData.LocationCode || '',
+                    EmployeeCode: editData.EmployeeCode || '',
                     Emp_FirstName: editData.Emp_FirstName || '',
                     Emp_LastName: editData.Emp_LastName || '',
                     Emp_Code: editData.Emp_Code || '',
-                    CurrencyCode: editData.CurrencyCode || '',
-
+                    Emp_Email: editData.Emp_Email || '',
+                    Emp_Addr1: editData.Emp_Addr1 || '',
+                    Emp_Addr2: editData.Emp_Addr2 || '',
+                    CityCode: editData.Place?.PlaceCode || '',
+                    StateCode: editData.State?.StateCode || '',
+                    CountryCode: editData.Country?.CountryCode || '',
+                    Emp_Contact1: editData.Emp_Contact1 || '',
+                    Emp_Contact2: editData.Emp_Contact2 || '',
+                    Emp_Grade: editData.Emp_Grade || '',
+                    Emp_DOB: editData.Emp_DOB || '',
+                    Emp_DOJ: editData.Emp_DOJ || '',
+                    Emp_DOL: editData.Emp_DOL || '',
+                    Emp_BloodGroup: editData.Emp_BloodGroup || '',
+                    // Emp_Image: editData.Emp_Image || '',
+                    DepartmentCode: editData.Department?.DepartmentCode || '',
+                    DesignationCode:
+                        editData.Designation?.DesignationCode || '',
+                    ReportingTo: editData.ReportingTo || '',
+                    Emp_Description: editData.Emp_Description || '',
+                    RegionCode: editData.Region?.RegionCode || '',
                     IsActive: editData.IsActive === 1 ? true : false,
                 }}
-                validationSchema={validationSchema}
+                // validationSchema={validationSchema}
                 onSubmit={(values, { resetForm, setSubmitting }) => {
                     setTimeout(() => {
-                        if (!editData.LocationCode) {
+                        if (!editData.EmployeeCode) {
                             new Promise((resolve, reject) => {
                                 AddLocation(values, token)
                                     .then((response) => {
@@ -131,10 +197,10 @@ const EmployeeEdit = ({
                     <Form>
                         <FormContainer>
                             <Field
-                                type="LocationCode"
+                                type="EmployeeCode"
                                 autoComplete="off"
-                                name="LocationCode"
-                                placeholder="LocationCode name"
+                                name="EmployeeCode"
+                                placeholder="EmployeeCode"
                                 component={Input}
                                 hidden
                             />
@@ -168,13 +234,13 @@ const EmployeeEdit = ({
                                         type="Emp_LastName"
                                         autoComplete="off"
                                         name="Emp_LastName"
-                                        placeholder="Emp_LastName name"
+                                        placeholder="Last Name"
                                         component={Input}
                                     />
                                 </FormItem>
 
                                 <FormItem
-                                    label="Code"
+                                    label="Emp Code"
                                     invalid={
                                         errors.Emp_Code && touched.Emp_Code
                                     }
@@ -184,14 +250,14 @@ const EmployeeEdit = ({
                                         type="Emp_Code"
                                         autoComplete="off"
                                         name="Emp_Code"
-                                        placeholder="Emp_Code name"
+                                        placeholder="Emp Code"
                                         component={Input}
                                     />
                                 </FormItem>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <FormItem
-                                    label="Emp_Contact1"
+                                    label="Emp Contact1"
                                     invalid={
                                         errors.Emp_Contact1 &&
                                         touched.Emp_Contact1
@@ -199,10 +265,10 @@ const EmployeeEdit = ({
                                     errorMessage={errors.Emp_Contact1}
                                 >
                                     <Field
-                                        type="Emp_Contact1"
+                                        type="text"
                                         autoComplete="off"
                                         name="Emp_Contact1"
-                                        placeholder="Emp_Contact1"
+                                        placeholder="Emp Contact1"
                                         component={Input}
                                     />
                                 </FormItem>
@@ -215,7 +281,7 @@ const EmployeeEdit = ({
                                     errorMessage={errors.Emp_Contact2}
                                 >
                                     <Field
-                                        type="Emp_Contact2"
+                                        type="text"
                                         autoComplete="off"
                                         name="Emp_Contact2"
                                         placeholder="Emp_Contact2 name"
@@ -244,7 +310,7 @@ const EmployeeEdit = ({
                                     errorMessage={errors.Emp_DOJ}
                                 >
                                     <Field
-                                        type="date"
+                                        type="datetime-local"
                                         autoComplete="off"
                                         name="Emp_DOJ"
                                         placeholder="Emp_DOJ"
@@ -257,10 +323,10 @@ const EmployeeEdit = ({
                                     errorMessage={errors.Emp_DOL}
                                 >
                                     <Field
-                                        type="date"
+                                        type="datetime-local"
                                         autoComplete="off"
                                         name="Emp_DOL"
-                                        placeholder="Emp_DOL name"
+                                        placeholder="Emp_DOL"
                                         component={Input}
                                     />
                                 </FormItem>
@@ -318,8 +384,8 @@ const EmployeeEdit = ({
                                                 field={field}
                                                 form={form}
                                                 className="mb-4 w-50"
-                                                options={options}
-                                                value={options.filter(
+                                                options={options2}
+                                                value={options2.filter(
                                                     (option) =>
                                                         option.value ===
                                                         values.Emp_BloodGroup
@@ -374,14 +440,14 @@ const EmployeeEdit = ({
                                     asterisk
                                     label="Designation"
                                     invalid={
-                                        errors.Designation &&
-                                        touched.Designation
+                                        errors.DesignationCode &&
+                                        touched.DesignationCode
                                     }
-                                    errorMessage={errors.Designation}
+                                    errorMessage={errors.DesignationCode}
                                     style={{ width: '250px' }}
                                 >
                                     <Field
-                                        name="Designation"
+                                        name="DesignationCode"
                                         style={{ width: '250px' }}
                                     >
                                         {({ field, form }) => (
@@ -394,7 +460,7 @@ const EmployeeEdit = ({
                                                 value={Designation.filter(
                                                     (option) =>
                                                         option.value ===
-                                                        values.Designation
+                                                        values.DesignationCode
                                                 )}
                                                 onChange={(option) =>
                                                     form.setFieldValue(
@@ -410,12 +476,14 @@ const EmployeeEdit = ({
                                 <FormItem
                                     asterisk
                                     label="City Code"
-                                    invalid={errors.Place && touched.Place}
-                                    errorMessage={errors.Place}
+                                    invalid={
+                                        errors.CityCode && touched.CityCode
+                                    }
+                                    errorMessage={errors.CityCode}
                                     style={{ width: '250px' }}
                                 >
                                     <Field
-                                        name="Place"
+                                        name="CityCode"
                                         style={{ width: '250px' }}
                                     >
                                         {({ field, form }) => (
@@ -428,7 +496,7 @@ const EmployeeEdit = ({
                                                 value={Place.filter(
                                                     (option) =>
                                                         option.value ===
-                                                        values.Place
+                                                        values.CityCode
                                                 )}
                                                 onChange={(option) =>
                                                     form.setFieldValue(
@@ -444,13 +512,14 @@ const EmployeeEdit = ({
                                     asterisk
                                     label="Department Code"
                                     invalid={
-                                        errors.Department && touched.Department
+                                        errors.DepartmentCode &&
+                                        touched.DepartmentCode
                                     }
-                                    errorMessage={errors.Department}
+                                    errorMessage={errors.DepartmentCode}
                                     style={{ width: '250px' }}
                                 >
                                     <Field
-                                        name="Department"
+                                        name="DepartmentCode"
                                         style={{ width: '250px' }}
                                     >
                                         {({ field, form }) => (
@@ -463,7 +532,7 @@ const EmployeeEdit = ({
                                                 value={Department.filter(
                                                     (option) =>
                                                         option.value ===
-                                                        values.Department
+                                                        values.DepartmentCode
                                                 )}
                                                 onChange={(option) =>
                                                     form.setFieldValue(
@@ -478,12 +547,14 @@ const EmployeeEdit = ({
                                 <FormItem
                                     asterisk
                                     label="State Code"
-                                    invalid={errors.State && touched.State}
-                                    errorMessage={errors.State}
+                                    invalid={
+                                        errors.StateCode && touched.StateCode
+                                    }
+                                    errorMessage={errors.StateCode}
                                     style={{ width: '250px' }}
                                 >
                                     <Field
-                                        name="State"
+                                        name="StateCode"
                                         style={{ width: '250px' }}
                                     >
                                         {({ field, form }) => (
@@ -496,7 +567,7 @@ const EmployeeEdit = ({
                                                 value={State.filter(
                                                     (option) =>
                                                         option.value ===
-                                                        values.State
+                                                        values.StateCode
                                                 )}
                                                 onChange={(option) =>
                                                     form.setFieldValue(
@@ -511,12 +582,15 @@ const EmployeeEdit = ({
                                 <FormItem
                                     asterisk
                                     label="Country Code"
-                                    invalid={errors.Country && touched.Country}
-                                    errorMessage={errors.Country}
+                                    invalid={
+                                        errors.CountryCode &&
+                                        touched.CountryCode
+                                    }
+                                    errorMessage={errors.CountryCode}
                                     style={{ width: '250px' }}
                                 >
                                     <Field
-                                        name="Country"
+                                        name="CountryCode"
                                         style={{ width: '250px' }}
                                     >
                                         {({ field, form }) => (
@@ -529,7 +603,7 @@ const EmployeeEdit = ({
                                                 value={Country.filter(
                                                     (option) =>
                                                         option.value ===
-                                                        values.Country
+                                                        values.CountryCode
                                                 )}
                                                 onChange={(option) =>
                                                     form.setFieldValue(
@@ -545,12 +619,14 @@ const EmployeeEdit = ({
                                 <FormItem
                                     asterisk
                                     label="Region Code"
-                                    invalid={errors.Region && touched.Region}
-                                    errorMessage={errors.Region}
+                                    invalid={
+                                        errors.RegionCode && touched.RegionCode
+                                    }
+                                    errorMessage={errors.RegionCode}
                                     style={{ width: '250px' }}
                                 >
                                     <Field
-                                        name="Region"
+                                        name="RegionCode"
                                         style={{ width: '250px' }}
                                     >
                                         {({ field, form }) => (
@@ -563,7 +639,7 @@ const EmployeeEdit = ({
                                                 value={Region.filter(
                                                     (option) =>
                                                         option.value ===
-                                                        values.Region
+                                                        values.RegionCode
                                                 )}
                                                 onChange={(option) =>
                                                     form.setFieldValue(
