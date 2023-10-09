@@ -73,12 +73,16 @@ const Employee = () => {
         setIsOpen(true)
     }
 
-    const onDialogClose = () => {
+    const onDialogClose = async (values) => {
         setIsOpen(false)
+        const resp = await apiGetEmployeemaster(values)
+        setdata(resp.data)
+        seteditData([''])
     }
 
-    const onDialogOk = () => {
+    const onDialogOk = async () => {
         setIsOpen(false)
+        seteditData([''])
     }
 
     const statusColor = {
@@ -168,16 +172,7 @@ const Employee = () => {
             setRegion(formattedOptions)
         })()
     }, [])
-    // const openDrawer = () => {
-    //     setIsOpen(true)
-    // }
 
-    // const onDrawerClose = async (e, values) => {
-    //     // setIsOpen(false)
-    //     const resp = await apiGetEmployeemaster(values)
-    //     setdata(resp.data)
-    //     seteditData([''])
-    // }
     function DebouncedInput({
         value: initialValue,
         onChange,
@@ -245,38 +240,17 @@ const Employee = () => {
                 />
             </Card>
 
-            {/* <Drawer
-                title={
-                    editData.Emp_FirstName
-                        ? 'Edit Employee Master'
-                        : 'Add Employee Master'
-                }
-                isOpen={isOpen}
-                onClose={onDrawerClose}
-                onRequestClose={onDrawerClose}
-                width={600}
-            >
-                <LocationEdit
-                    onDrawerClose={onDrawerClose}
-                    editData={editData}
-                    setMessage={setMessage}
-                    setlog={setlog}
-                    currency={currency}
-                />
-            </Drawer> */}
-
             <Dialog
                 isOpen={dialogIsOpen}
+                closable={false}
                 width={1000}
                 height="auto"
-                onClose={onDialogClose}
-                onRequestClose={onDialogClose}
                 style={{
                     content: {
                         overflow: 'auto',
                     },
                 }}
-                contentClassName=" max-h-96 overflow-y-auto"
+                contentClassName=" max-h-[32rem] overflow-y-auto"
             >
                 <div className="flex flex-col h-full justify-between">
                     {/* // sm:max-h-96 */}
@@ -346,12 +320,9 @@ const Employee = () => {
                             <Button
                                 className="ltr:mr-2 rtl:ml-2"
                                 variant="plain"
-                                onClick={onDialogClose}
+                                onClick={() => onDialogOk(0, 0)}
                             >
                                 Cancel
-                            </Button>
-                            <Button variant="solid" onClick={onDialogOk}>
-                                Okay
                             </Button>
                         </div>
                     </div>
