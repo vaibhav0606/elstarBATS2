@@ -105,6 +105,16 @@ const navigationConfig = [
                 authority: [],
                 subMenu: [],
             },
+            {
+                key: 'channelmaster.item2',
+                path: '/channel',
+                title: 'Channel Master',
+                translateKey: 'nav.channelmaster.item2',
+                icon: '',
+                type: NAV_ITEM_TYPE_ITEM,
+                authority: [],
+                subMenu: [],
+            },
             // {
             //     key: 'languagemaster.item2',
             //     path: '/language',

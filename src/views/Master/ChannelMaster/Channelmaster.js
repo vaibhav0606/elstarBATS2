@@ -1,9 +1,9 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
-import { apiGetEntitymaster } from 'services/MasterService'
+import { apiGetChannelmaster, apiGetStateMaster } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
 import { HiPlusCircle } from 'react-icons/hi'
-import EntityEdit from './ChannelEdit'
+import ChannelEdit from './ChannelEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
 
@@ -34,19 +34,21 @@ const headerExtraContent = (
                     icon={<HiPlusCircle />}
                     onClick={() => openDrawer()}
                 >
-                    Add Entity
+                    Add Channel
                 </Button>
             </span>
         </span>
     )
 }
 
-const Entitymaster = () => {
+const Channelmaster = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [editData, seteditData] = useState([''])
     const [globalFilter, setGlobalFilter] = useState('')
     const [sorting, setSorting] = useState([])
     const [data, setdata] = useState([''])
+    const [state, setstate] = useState([''])
+
     const [message, setMessage] = useTimeOutMessage()
     const [log, setlog] = useState('')
 
@@ -58,16 +60,28 @@ const Entitymaster = () => {
     const columns = useMemo(
         () => [
             {
-                header: 'Entity Name',
-                accessorKey: 'EntityName',
+                header: 'ChannelName',
+                accessorKey: 'ChannelName',
             },
             {
-                header: 'Contact Person',
-                accessorKey: 'ContactPerson',
+                header: 'ShortName',
+                accessorKey: 'ShortName',
             },
             {
-                header: 'Contact',
-                accessorKey: 'Contact',
+                header: 'ChannelGenre',
+                accessorKey: 'ChannelGenre',
+            },
+            {
+                header: 'ChlContentType',
+                accessorKey: 'ChannelContentType',
+            },
+            {
+                header: 'SACCode',
+                accessorKey: 'SACCode',
+            },
+            {
+                header: 'GSTN_id',
+                accessorKey: 'GSTN_id',
             },
             {
                 header: 'Status',
@@ -89,9 +103,18 @@ const Entitymaster = () => {
     )
     useEffect(() => {
         ;(async (values) => {
-            const resp = await apiGetEntitymaster(values)
+            const resp = await apiGetChannelmaster(values)
             // console.log(resp.data)
             setdata(resp.data)
+        })()
+        ;(async (values) => {
+            const State = await apiGetStateMaster(values)
+
+            const formattedOptions = State.data.map((option) => ({
+                value: option.StateCode,
+                label: option.StateName,
+            }))
+            setstate(formattedOptions)
         })()
     }, [])
 
@@ -100,11 +123,12 @@ const Entitymaster = () => {
     }
 
     const onDrawerClose = async (e, values) => {
-        const resp = await apiGetEntitymaster(values)
+        const resp = await apiGetChannelmaster(values)
         seteditData([''])
         setdata(resp.data)
         setIsOpen(false)
     }
+
     function DebouncedInput({
         value: initialValue,
         onChange,
@@ -152,7 +176,7 @@ const Entitymaster = () => {
                 </Alert>
             )} */}
             <Card
-                header="Entity Master"
+                header="Channel Master"
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -175,23 +199,24 @@ const Entitymaster = () => {
             <Drawer
                 title={
                     editData.EntityName
-                        ? 'Edit Entity Master'
-                        : 'Add Entity Master'
+                        ? 'Edit Channel Master'
+                        : 'Add Channel Master'
                 }
                 isOpen={isOpen}
                 onClose={onDrawerClose}
                 onRequestClose={onDrawerClose}
                 width={600}
             >
-                <EntityEdit
+                <ChannelEdit
                     onDrawerClose={onDrawerClose}
                     editData={editData}
                     setMessage={setMessage}
                     setlog={setlog}
+                    State={state}
                 />
             </Drawer>
         </>
     )
 }
 
-export default Entitymaster
+export default Channelmaster
