@@ -95,6 +95,16 @@ const navigationConfig = [
                 authority: [],
                 subMenu: [],
             },
+            {
+                key: 'formmaster.item1',
+                path: '/form',
+                title: 'Form Master',
+                translateKey: 'nav.formmaster.item1',
+                icon: '',
+                type: NAV_ITEM_TYPE_ITEM,
+                authority: [],
+                subMenu: [],
+            },
             // {
             //     key: 'languagemaster.item2',
             //     path: '/language',

@@ -108,6 +108,14 @@ export const protectedRoutes = [
         ),
         authority: [],
     },
+    {
+        key: 'formmaster',
+        path: '/form',
+        component: React.lazy(() =>
+            import('views/Master/FormMaster/FormMaster')
+        ),
+        authority: [],
+    },
 
     /** Example purpose only, please remove */
     {
