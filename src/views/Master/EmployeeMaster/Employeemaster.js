@@ -8,12 +8,14 @@ import {
     apiGetDepartmentmaster,
     apiGetCountryMaster,
     apiGetRegionMaster,
+    apiGetempmasterdropmaster,
 } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
 import { HiPlusCircle } from 'react-icons/hi'
 import EmployeeEdit from './EmployeeEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTableEmp from 'views/Controls/DisplayTableEmp'
+import EmpLoginRights from './EmpLoginRights'
 
 const headerExtraContent = (
     openDialog,
@@ -60,6 +62,7 @@ const Employee = () => {
     const [Department, setDepartment] = useState({ value: '', label: '' })
     const [Country, setCountry] = useState({ value: '', label: '' })
     const [Region, setRegion] = useState({ value: '', label: '' })
+    const [Emp, setEmp] = useState({ value: '', label: '' })
 
     const [Place, setPlace] = useState({ value: '', label: '' })
     const [message, setMessage] = useTimeOutMessage()
@@ -146,6 +149,15 @@ const Employee = () => {
                 label: option.StateName,
             }))
             setState(formattedOptions)
+        })()
+        ;(async (values) => {
+            const emp = await apiGetempmasterdropmaster(values)
+            console.log(emp)
+            const formattedOptions = emp.data.map((option) => ({
+                value: option.EmployeeCode,
+                label: option.Emp_FirstName,
+            }))
+            setEmp(formattedOptions)
         })()
         ;(async (values) => {
             const Department = await apiGetDepartmentmaster(values)
@@ -296,15 +308,11 @@ const Employee = () => {
                                         Department={Department}
                                         Country={Country}
                                         Region={Region}
+                                        Emp={Emp}
                                     />
                                 </TabContent>
                                 <TabContent value="tab2">
-                                    <p>
-                                        A computer lets you make more mistakes
-                                        faster than any invention in human
-                                        history with the possible exceptions of
-                                        handguns and tequila. (Mitch Radcliffe).
-                                    </p>
+                                    <EmpLoginRights />
                                 </TabContent>
                                 <TabContent value="tab3">
                                     <p>
