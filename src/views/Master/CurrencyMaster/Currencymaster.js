@@ -62,10 +62,10 @@ const Currencymaster = () => {
                 header: 'Currency Name',
                 accessorKey: 'CurrencyName',
             },
-            {
-                header: 'Currency Image',
-                accessorKey: 'Currency_image',
-            },
+            // {
+            //     header: 'Currency Image',
+            //     accessorKey: 'Currency_image',
+            // },
             {
                 header: 'Currency Symbol',
                 accessorKey: 'CurrencySymbol',
