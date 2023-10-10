@@ -40,10 +40,6 @@ const DisplayTable = ({
         getSortedRowModel: getSortedRowModel(),
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
-        getPaginationRowModel: getPaginationRowModel(),
-        getFacetedRowModel: getFacetedRowModel(),
-        getFacetedUniqueValues: getFacetedUniqueValues(),
-        getFacetedMinMaxValues: getFacetedMinMaxValues(),
     })
     const { Tr, Th, Td, THead, TBody, Sorter } = Table
 

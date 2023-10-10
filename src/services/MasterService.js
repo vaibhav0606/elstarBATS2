@@ -461,6 +461,21 @@ export async function apiGetRegionmaster(data) {
         data,
     })
 }
+export async function apiGetFormmaster(data) {
+    return ApiService.fetchData({
+        url: '/formmaster/',
+        method: 'get',
+        data,
+    })
+}
+
+export async function apiGetSubModulemaster(data) {
+    return ApiService.fetchData({
+        url: '/submodulemaster/drop/',
+        method: 'get',
+        data,
+    })
+}
 
 const PostRegion = (param, token) => {
     return new Promise((resolve, reject) => {
@@ -1022,6 +1037,77 @@ const Putchannel = (param, token) => {
     })
 }
 
+const PostForm = (param, token) => {
+    return new Promise((resolve, reject) => {
+        console.log(param.IsActive ? 1 : 0)
+        let data = JSON.stringify({
+            FormName: param.FormName,
+            ModuleCode: param.ModuleCode,
+            SubModuleCode: param.SubModuleCode,
+            IndexNum: param.IndexNum,
+            WinFormName: param.WinFormName,
+            FormImage: '1.jpg',
+            IS_MO: param.IS_MO,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/formmaster/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const PutForm = (param, token) => {
+    return new Promise((resolve, reject) => {
+        console.log(param)
+        let data = JSON.stringify({
+            FormName: param.FormName,
+            ModuleCode: param.ModuleCode,
+            SubModuleCode: param.SubModuleCode,
+            IndexNum: param.IndexNum,
+            WinFormName: param.WinFormName,
+            FormImage: '1.jpg',
+            IS_MO: 1,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/formmaster/${param.FormCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
 export {
     PostEntity,
     PutEntity,
@@ -1049,4 +1135,6 @@ export {
     Putdesignation,
     Postchannel,
     Putchannel,
+    PutForm,
+    PostForm,
 }
