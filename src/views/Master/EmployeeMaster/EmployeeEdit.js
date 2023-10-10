@@ -94,6 +94,7 @@ const EmployeeEdit = ({
     Department,
     Country,
     Region,
+    Emp,
 }) => {
     const token = useSelector((state) => state.auth.session.token)
 
@@ -153,6 +154,7 @@ const EmployeeEdit = ({
                     Emp_DOL: editData.Emp_DOL || '',
                     Emp_BloodGroup: editData.Emp_BloodGroup || '',
                     // Emp_Image: editData.Emp_Image || '',
+                    Emp: editData.ReportingTo || '',
                     DepartmentCode: editData.Department?.DepartmentCode || '',
                     DesignationCode:
                         editData.Designation?.DesignationCode || '',
@@ -389,6 +391,39 @@ const EmployeeEdit = ({
                                                     (option) =>
                                                         option.value ===
                                                         values.Emp_BloodGroup
+                                                )}
+                                                onChange={(option) =>
+                                                    form.setFieldValue(
+                                                        field.name,
+                                                        option?.value
+                                                    )
+                                                }
+                                            />
+                                        )}
+                                    </Field>
+                                </FormItem>
+                                <FormItem
+                                    asterisk
+                                    label="Rporting"
+                                    invalid={errors.Emp && touched.Emp}
+                                    errorMessage={errors.Emp}
+                                    style={{ width: '250px' }}
+                                >
+                                    <Field
+                                        name="Emp"
+                                        style={{ width: '250px' }}
+                                    >
+                                        {({ field, form }) => (
+                                            <Select
+                                                style={{ width: '250px' }}
+                                                field={field}
+                                                form={form}
+                                                className="mb-4 w-50"
+                                                options={Emp}
+                                                value={Emp.filter(
+                                                    (option) =>
+                                                        option.value ===
+                                                        values.Emp
                                                 )}
                                                 onChange={(option) =>
                                                     form.setFieldValue(
@@ -652,6 +687,41 @@ const EmployeeEdit = ({
                                     </Field>
                                 </FormItem>
                             </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <FormItem
+                                    label="Address Line 1"
+                                    invalid={
+                                        errors.Emp_Addr1 && touched.Emp_Addr1
+                                    }
+                                    errorMessage={errors.Emp_Addr1}
+                                >
+                                    <Field
+                                        type="Emp_Addr1"
+                                        autoComplete="off"
+                                        name="Emp_Addr1"
+                                        placeholder="Address Line 1"
+                                        component={Input}
+                                        textArea
+                                    />
+                                </FormItem>
+                                <FormItem
+                                    label="Address Line 2"
+                                    invalid={
+                                        errors.Emp_Addr2 && touched.Emp_Addr2
+                                    }
+                                    errorMessage={errors.Emp_Addr2}
+                                >
+                                    <Field
+                                        type="Emp_Addr2"
+                                        autoComplete="off"
+                                        name="Emp_Addr2"
+                                        placeholder="Address Line 2"
+                                        component={Input}
+                                        textArea
+                                    />
+                                </FormItem>
+                            </div>
+
                             <div
                                 style={{
                                     display: 'flex',
