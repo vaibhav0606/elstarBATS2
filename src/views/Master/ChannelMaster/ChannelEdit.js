@@ -1,52 +1,57 @@
-import { FormItem, Button, Switcher, Input, FormContainer } from 'components/ui'
+import {
+    FormItem,
+    Button,
+    Switcher,
+    Input,
+    FormContainer,
+    Select,
+} from 'components/ui'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
-import { PostEntity, PutEntity } from 'services/MasterService'
+import { Postchannel, Putchannel } from 'services/MasterService'
 import { useSelector } from 'react-redux'
 
 const validationSchema = Yup.object().shape({
-    entityname: Yup.string()
+    ChannelName: Yup.string()
         .min(3, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('Entity name Required'),
-    PermAddress: Yup.string()
+        .required('ChannelName Required'),
+    ShortName: Yup.string()
+        .min(1, 'Too Short!')
+        .max(200, 'Too Long!')
+        .required('ShortName Required'),
+    ChannelGenre: Yup.string()
         .min(3, 'Too Short!')
         .max(200, 'Too Long!')
-        .required('Perm Address Required'),
-    CorpAddress: Yup.string()
-        .min(3, 'Too Short!')
-        .max(200, 'Too Long!')
-        .required('Corp Address Required'),
-    ContactPerson: Yup.string()
-        .min(3, 'Too Short!')
+        .required('ChannelGenre Required'),
+    ChannelContentType: Yup.string()
+        .min(1, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('Contact Person Required'),
-    Contact: Yup.string()
+        .required('ChannelContentType Required'),
+    SACCode: Yup.string()
         .min(3, 'Too Short!')
         .max(10, 'Too Long!')
-        .required('Contact Required'),
-    IsActive: Yup.string().required('IsActives Required'),
-    PANNO: Yup.string()
+        .required('SACCode Required'),
+    GSTN_id: Yup.string()
         .min(3, 'Too Short!')
         .max(10, 'Too Long!')
-        .required('PANNO Required'),
-    CINNumber: Yup.string()
-        .min(3, 'Too Short!')
-        .max(20, 'Too Long!')
-        .required('CINNumber Required'),
-    // password: Yup.string()
-    //     .required('Password Required')
-    //     .min(8, 'Too Short!')
-    //     .matches(/^[A-Za-z0-9_-]*$/, 'Only Letters & Numbers Allowed'),
+        .required('GSTN_id Required'),
+
     rememberMe: Yup.bool(),
 })
 
-const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
+const ChannelEdit = ({
+    onDrawerClose,
+    editData,
+    setMessage,
+    setlog,
+    State,
+}) => {
     const token = useSelector((state) => state.auth.session.token)
 
-    const AddEntity = async (values, token) => {
+    const AddChannel = async (values, token) => {
         try {
-            const resp = await PostEntity(values, token)
+            const resp = await Postchannel(values, token)
             if (resp.data.msg === 'success') {
                 setlog('success')
                 setMessage('Data Inserted Successfully')
@@ -60,15 +65,15 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
             return {}
         }
     }
-    const EditEntity = async (values, token) => {
+    const EditChannel = async (values, token) => {
         try {
-            const resp = await PutEntity(values, token)
+            const resp = await Putchannel(values, token)
             console.log(resp)
             if (resp.data.msg === 'Updated') {
                 setlog('success')
                 setMessage('Data Updated Successfully')
                 return
-            } else if (resp.data.msg === 'Entity is Already Exists') {
+            } else if (resp.data.msg === 'Channel is Already Exists') {
                 setlog('warning')
                 setMessage(resp.data.msg)
                 return
@@ -82,22 +87,21 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
         <div>
             <Formik
                 initialValues={{
-                    EntityCode: editData.EntityCode,
-                    entityname: editData.EntityName,
-                    CorpAddress: editData.CorpAddress,
-                    PermAddress: editData.PermAddress,
-                    ContactPerson: editData.ContactPerson,
-                    Contact: editData.Contact,
-                    PANNO: editData.PANNO,
-                    CINNumber: editData.CINNumber,
-                    IsActive: editData.IsActive === 1 ? true : false,
+                    ChannelCode: editData.ChannelCode,
+                    ChannelName: editData.ChannelName,
+                    ShortName: editData.ShortName,
+                    ChannelGenre: editData.ChannelGenre,
+                    ChannelContentType: editData.ChannelContentType,
+                    SACCode: editData.SACCode,
+                    GSTN_id: editData.GSTN_id,
+                    State: editData.State,
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { resetForm, setSubmitting }) => {
                     setTimeout(() => {
                         if (!editData.EntityCode) {
                             new Promise((resolve, reject) => {
-                                AddEntity(values, token)
+                                AddChannel(values, token)
                                     .then((response) => {
                                         onDrawerClose(0, 0)
                                         resolve(response)
@@ -109,7 +113,7 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                         } else {
                             new Promise((resolve, reject) => {
                                 setSubmitting(false)
-                                EditEntity(values, token)
+                                EditChannel(values, token)
                                     .then((response) => {
                                         onDrawerClose(0, 0)
                                         resolve(response)
@@ -127,124 +131,140 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                 {({ values, touched, errors }) => (
                     <Form>
                         <FormContainer>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <Field
-                                    type="EntityCode"
+                                    type="ChannelCode"
                                     autoComplete="off"
-                                    name="EntityCode"
-                                    placeholder="EntityCode name"
+                                    name="ChannelCode"
+                                    placeholder="ChannelCode name"
                                     component={Input}
                                     hidden
                                 />
                                 <FormItem
-                                    label="EntityName"
+                                    label="ChannelName"
                                     invalid={
-                                        errors.entityname && touched.entityname
+                                        errors.ChannelName &&
+                                        touched.ChannelName
                                     }
-                                    errorMessage={errors.entityname}
+                                    errorMessage={errors.ChannelName}
                                 >
                                     <Field
-                                        type="entityname"
+                                        type="ChannelName"
                                         autoComplete="off"
-                                        name="entityname"
-                                        placeholder="Entity name"
+                                        name="ChannelName"
+                                        placeholder="Channel Name"
                                         component={Input}
                                     />
                                 </FormItem>
                                 <FormItem
-                                    label="CorpAddress"
+                                    label="ShortName"
                                     invalid={
-                                        errors.CorpAddress &&
-                                        touched.CorpAddress
+                                        errors.ShortName && touched.ShortName
                                     }
-                                    errorMessage={errors.CorpAddress}
+                                    errorMessage={errors.ShortName}
                                 >
                                     <Field
-                                        type="CorpAddress"
+                                        type="ShortName"
                                         autoComplete="off"
-                                        name="CorpAddress"
-                                        placeholder="CorpAddress name"
+                                        name="ShortName"
+                                        placeholder="Short Name"
+                                        component={Input}
+                                    />
+                                </FormItem>
+
+                                <FormItem
+                                    label="ChannelGenre"
+                                    invalid={
+                                        errors.ChannelGenre &&
+                                        touched.ChannelGenre
+                                    }
+                                    errorMessage={errors.ChannelGenre}
+                                >
+                                    <Field
+                                        type="ChannelGenre"
+                                        autoComplete="off"
+                                        name="ChannelGenre"
+                                        placeholder="ChannelGenre Name"
+                                        component={Input}
+                                    />
+                                </FormItem>
+                                <FormItem
+                                    label="ChannelContentType"
+                                    invalid={
+                                        errors.ChannelContentType &&
+                                        touched.ChannelContentType
+                                    }
+                                    errorMessage={errors.ChannelContentType}
+                                >
+                                    <Field
+                                        type="ChannelContentType"
+                                        autoComplete="off"
+                                        name="ChannelContentType"
+                                        placeholder="ChannelContentType Name"
+                                        component={Input}
+                                    />
+                                </FormItem>
+                                <FormItem
+                                    asterisk
+                                    label="State"
+                                    invalid={errors.State && touched.State}
+                                    errorMessage={errors.State}
+                                    style={{ width: '250px' }}
+                                >
+                                    <Field
+                                        name="State"
+                                        style={{ width: '250px' }}
+                                    >
+                                        {({ field, form }) => (
+                                            <Select
+                                                style={{ width: '250px' }}
+                                                field={field}
+                                                form={form}
+                                                className="mb-4 w-50"
+                                                options={State}
+                                                value={State.filter(
+                                                    (option) =>
+                                                        option.value ===
+                                                        values.State
+                                                )}
+                                                onChange={(option) =>
+                                                    form.setFieldValue(
+                                                        field.name,
+                                                        option?.value
+                                                    )
+                                                }
+                                            />
+                                        )}
+                                    </Field>
+                                </FormItem>
+                                <FormItem
+                                    label="SACCode"
+                                    invalid={errors.SACCode && touched.SACCode}
+                                    errorMessage={errors.SACCode}
+                                >
+                                    <Field
+                                        type="SACCode"
+                                        autoComplete="off"
+                                        name="SACCode"
+                                        placeholder="SACCode Name"
+                                        component={Input}
+                                    />
+                                </FormItem>
+                                <FormItem
+                                    label="GSTN_id"
+                                    invalid={errors.GSTN_id && touched.GSTN_id}
+                                    errorMessage={errors.GSTN_id}
+                                >
+                                    <Field
+                                        type="GSTN_id"
+                                        autoComplete="off"
+                                        name="GSTN_id"
+                                        placeholder="GSTN_id Name"
                                         component={Input}
                                     />
                                 </FormItem>
                             </div>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
-                                <FormItem
-                                    label="PermAddress"
-                                    invalid={
-                                        errors.PermAddress &&
-                                        touched.PermAddress
-                                    }
-                                    errorMessage={errors.PermAddress}
-                                >
-                                    <Field
-                                        type="PermAddress"
-                                        autoComplete="off"
-                                        name="PermAddress"
-                                        placeholder="PermAddress name"
-                                        component={Input}
-                                    />
-                                </FormItem>
-                                <FormItem
-                                    label="ContactPerson"
-                                    invalid={
-                                        errors.ContactPerson &&
-                                        touched.ContactPerson
-                                    }
-                                    errorMessage={errors.ContactPerson}
-                                >
-                                    <Field
-                                        type="ContactPerson"
-                                        autoComplete="off"
-                                        name="ContactPerson"
-                                        placeholder="ContactPerson name"
-                                        component={Input}
-                                    />
-                                </FormItem>
-                            </div>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
-                                <FormItem
-                                    label="Contact"
-                                    invalid={errors.Contact && touched.Contact}
-                                    errorMessage={errors.Contact}
-                                >
-                                    <Field
-                                        type="Number"
-                                        autoComplete="off"
-                                        name="Contact"
-                                        placeholder="Contact name"
-                                        component={Input}
-                                    />
-                                </FormItem>
-                                <FormItem
-                                    label="PANNO"
-                                    invalid={errors.PANNO && touched.PANNO}
-                                    errorMessage={errors.PANNO}
-                                >
-                                    <Field
-                                        type="PANNO"
-                                        autoComplete="off"
-                                        name="PANNO"
-                                        placeholder="PANNO name"
-                                        component={Input}
-                                    />
-                                </FormItem>
-                            </div>
+
                             <div
                                 style={{
                                     display: 'flex',
@@ -266,21 +286,6 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                         />
                                     </div>
                                 </FormItem>
-                                <FormItem
-                                    label="CINNumber"
-                                    invalid={
-                                        errors.CINNumber && touched.CINNumber
-                                    }
-                                    errorMessage={errors.CINNumber}
-                                >
-                                    <Field
-                                        type="CINNumber"
-                                        autoComplete="off"
-                                        name="CINNumber"
-                                        placeholder="CINNumber name"
-                                        component={Input}
-                                    />
-                                </FormItem>
                             </div>
                             <FormItem>
                                 <Button variant="solid" type="submit">
@@ -295,4 +300,4 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
     )
 }
 
-export default EntityEdit
+export default ChannelEdit

@@ -456,7 +456,7 @@ export async function apiGetempmasterdropmaster(data) {
 
 export async function apiGetRegionmaster(data) {
     return ApiService.fetchData({
-        url: '/regionmaster/drop/',
+        url: '/regionmaster/',
         method: 'get',
         data,
     })
@@ -471,7 +471,7 @@ export async function apiGetFormmaster(data) {
 
 export async function apiGetSubModulemaster(data) {
     return ApiService.fetchData({
-        url: '/submodulemaster/drop/',
+        url: '/submodulemaster/',
         method: 'get',
         data,
     })
@@ -959,84 +959,6 @@ const Putdesignation = (param, token) => {
     })
 }
 
-export async function apiGetChannelmaster(data) {
-    return ApiService.fetchData({
-        url: '/channelmaster/',
-        method: 'get',
-        data,
-    })
-}
-
-const Postchannel = (param, token) => {
-    return new Promise((resolve, reject) => {
-        let data = JSON.stringify({
-            ChannelName: param.ChannelName,
-            ShortName: param.ShortName,
-            Channel_Image: '1.png',
-            ChannelGenre: param.ChannelGenre,
-            ChannelContentType: param.ChannelContentType,
-            StateCode: param.StateCode,
-            GSTN_id: param.GSTN_id,
-            SACCode: param.SACCode,
-        })
-
-        let config = {
-            method: 'post',
-            maxBodyLength: Infinity,
-            url: 'http://103.14.97.155:3000/channelmaster/',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            },
-            data: data,
-        }
-
-        axios
-            .request(config)
-            .then((response) => {
-                resolve(response)
-            })
-            .catch((errors) => {
-                reject(errors)
-            })
-    })
-}
-
-const Putchannel = (param, token) => {
-    return new Promise((resolve, reject) => {
-        let data = JSON.stringify({
-            ChannelName: param.ChannelName,
-            ShortName: param.ShortName,
-            Channel_Image: '1.png',
-            ChannelGenre: param.ChannelGenre,
-            ChannelContentType: param.ChannelContentType,
-            StateCode: param.StateCode,
-            GSTN_id: param.GSTN_id,
-            SACCode: param.SACCode,
-        })
-
-        let config = {
-            method: 'put',
-            maxBodyLength: Infinity,
-            url: `http://103.14.97.155:3000/channelmaster/${param.ChannelCode}`,
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            },
-            data: data,
-        }
-
-        axios
-            .request(config)
-            .then((response) => {
-                resolve(response)
-            })
-            .catch((errors) => {
-                reject(errors)
-            })
-    })
-}
-
 const PostForm = (param, token) => {
     return new Promise((resolve, reject) => {
         console.log(param.IsActive ? 1 : 0)
@@ -1108,6 +1030,86 @@ const PutForm = (param, token) => {
             })
     })
 }
+export async function apiGetChannelmaster(data) {
+    return ApiService.fetchData({
+        url: '/channelmaster/',
+        method: 'get',
+        data,
+    })
+}
+
+const Postchannel = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            ChannelName: param.ChannelName,
+            ShortName: param.ShortName,
+            Channel_Image: 'string',
+            ChannelGenre: param.ChannelGenre,
+            ChannelContentType: param.ChannelContentType,
+            StateCode: param.State,
+            GSTN_id: param.GSTN_id,
+            SACCode: param.SACCode,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/channelmaster/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const Putchannel = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            ChannelName: param.ChannelName,
+            ShortName: param.ShortName,
+            Channel_Image: '1.png',
+            ChannelGenre: param.ChannelGenre,
+            ChannelContentType: param.ChannelContentType,
+            StateCode: param.State,
+            GSTN_id: param.GSTN_id,
+            SACCode: param.SACCode,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/channelmaster/${param.ChannelCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
 export {
     PostEntity,
     PutEntity,

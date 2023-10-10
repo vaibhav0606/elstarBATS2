@@ -87,13 +87,16 @@ const Regionmaster = () => {
     useEffect(() => {
         ;(async (values) => {
             const resp = await apiGetRegionmaster(values)
+
+            setdata(resp.data)
+        })()
+        ;(async (values) => {
             const Zone = await apiGetZonemaster(values)
             const formattedOptions = Zone.data.map((option) => ({
                 value: option.ZoneCode,
                 label: option.ZoneName,
             }))
             setZone(formattedOptions)
-            setdata(resp.data)
         })()
     }, [])
     const openDrawer = () => {

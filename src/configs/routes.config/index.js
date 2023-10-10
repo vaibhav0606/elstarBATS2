@@ -116,6 +116,14 @@ export const protectedRoutes = [
         ),
         authority: [],
     },
+    {
+        key: 'channelmaster',
+        path: '/channel',
+        component: React.lazy(() =>
+            import('views/Master/ChannelMaster/Channelmaster')
+        ),
+        authority: [],
+    },
 
     /** Example purpose only, please remove */
     {
