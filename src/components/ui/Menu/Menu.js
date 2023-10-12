@@ -57,7 +57,7 @@ Menu.propTypes = {
 }
 
 Menu.defaultProps = {
-    menuItemHeight: 40,
+    menuItemHeight: 30,
     variant: 'light',
     sideCollapsed: false,
     defaultExpandedKeys: [],

@@ -24,8 +24,17 @@ const DefaultItem = (props) => {
     const { nav, onLinkClick, sideCollapsed, userAuthority } = props
 
     return (
-        <AuthorityCheck userAuthority={userAuthority} authority={nav.authority}>
-            <MenuItem key={nav.key} eventKey={nav.key} className="mb-2">
+        <AuthorityCheck
+            userAuthority={userAuthority}
+            authority={nav.authority}
+            style={{ height: '20px !important' }}
+        >
+            <MenuItem
+                key={nav.key}
+                eventKey={nav.key}
+                className="mb-2"
+                style={{ height: '20px !important' }}
+            >
                 <Link
                     to={nav.path}
                     onClick={() =>

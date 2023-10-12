@@ -115,6 +115,7 @@ const TimeZoneEdit = ({
                                 }}
                             >
                                 <Field
+                                    size="sm"
                                     type="TimeZoneCode"
                                     autoComplete="off"
                                     name="TimeZoneCode"
@@ -131,6 +132,7 @@ const TimeZoneEdit = ({
                                     errorMessage={errors.TimeZoneName}
                                 >
                                     <Field
+                                        size="sm"
                                         type="TimeZoneName"
                                         autoComplete="off"
                                         name="TimeZoneName"
@@ -153,6 +155,7 @@ const TimeZoneEdit = ({
                                     errorMessage={errors.ShortName}
                                 >
                                     <Field
+                                        size="sm"
                                         type="ShortName"
                                         autoComplete="off"
                                         name="ShortName"
@@ -177,6 +180,7 @@ const TimeZoneEdit = ({
                                 >
                                     <div>
                                         <Field
+                                            size="sm"
                                             name="IsActive"
                                             component={Switcher}
                                         />

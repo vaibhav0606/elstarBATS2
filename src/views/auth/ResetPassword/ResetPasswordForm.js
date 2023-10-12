@@ -92,6 +92,7 @@ const ResetPasswordForm = (props) => {
                                         errorMessage={errors.password}
                                     >
                                         <Field
+                                            size="sm"
                                             autoComplete="off"
                                             name="password"
                                             placeholder="Password"
@@ -107,6 +108,7 @@ const ResetPasswordForm = (props) => {
                                         errorMessage={errors.confirmPassword}
                                     >
                                         <Field
+                                            size="sm"
                                             autoComplete="off"
                                             name="confirmPassword"
                                             placeholder="Confirm Password"

@@ -76,6 +76,7 @@ const SignInForm = (props) => {
                                 errorMessage={errors.userName}
                             >
                                 <Field
+                                    size="sm"
                                     type="text"
                                     autoComplete="off"
                                     name="userName"
@@ -89,6 +90,7 @@ const SignInForm = (props) => {
                                 errorMessage={errors.password}
                             >
                                 <Field
+                                    size="sm"
                                     autoComplete="off"
                                     name="password"
                                     placeholder="Password"
@@ -97,6 +99,7 @@ const SignInForm = (props) => {
                             </FormItem>
                             <div className="flex justify-between mb-6">
                                 <Field
+                                    size="sm"
                                     className="mb-0"
                                     name="rememberMe"
                                     component={Checkbox}

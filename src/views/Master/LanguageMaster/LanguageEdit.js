@@ -122,6 +122,7 @@ const LanguageEdit = ({
                                 }}
                             >
                                 <Field
+                                    size="sm"
                                     type="LanguageCode"
                                     autoComplete="off"
                                     name="LanguageCode"
@@ -138,6 +139,7 @@ const LanguageEdit = ({
                                     errorMessage={errors.LanguageName}
                                 >
                                     <Field
+                                        size="sm"
                                         type="LanguageName"
                                         autoComplete="off"
                                         name="LanguageName"
@@ -164,6 +166,7 @@ const LanguageEdit = ({
                                     style={{ width: '250px' }}
                                 >
                                     <Field
+                                        size="sm"
                                         name="CountryCode"
                                         style={{ width: '250px' }}
                                     >

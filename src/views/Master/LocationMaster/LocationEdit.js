@@ -93,8 +93,6 @@ const LocationEdit = ({
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { resetForm, setSubmitting }) => {
-                    console.log(values)
-                    return
                     setTimeout(() => {
                         if (!editData.LocationCode) {
                             new Promise((resolve, reject) => {
@@ -128,13 +126,9 @@ const LocationEdit = ({
                 {({ values, touched, errors }) => (
                     <Form>
                         <FormContainer>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                                 <Field
+                                    size="sm"
                                     type="LocationCode"
                                     autoComplete="off"
                                     name="LocationCode"
@@ -151,6 +145,7 @@ const LocationEdit = ({
                                     errorMessage={errors.LocationName}
                                 >
                                     <Field
+                                        size="sm"
                                         type="LocationName"
                                         autoComplete="off"
                                         name="LocationName"
@@ -167,6 +162,7 @@ const LocationEdit = ({
                                     errorMessage={errors.TimeZoneCode}
                                 >
                                     <Field
+                                        size="sm"
                                         type="TimeZoneCode"
                                         autoComplete="off"
                                         name="TimeZoneCode"
@@ -174,13 +170,7 @@ const LocationEdit = ({
                                         component={Input}
                                     />
                                 </FormItem>
-                            </div>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
+
                                 <FormItem
                                     label="ShortName"
                                     invalid={
@@ -189,6 +179,7 @@ const LocationEdit = ({
                                     errorMessage={errors.ShortName}
                                 >
                                     <Field
+                                        size="sm"
                                         type="ShortName"
                                         autoComplete="off"
                                         name="ShortName"
@@ -207,6 +198,7 @@ const LocationEdit = ({
                                     style={{ width: '250px' }}
                                 >
                                     <Field
+                                        size="sm"
                                         name="CurrencyCode"
                                         style={{ width: '250px' }}
                                     >
@@ -232,13 +224,7 @@ const LocationEdit = ({
                                         )}
                                     </Field>
                                 </FormItem>
-                            </div>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
+
                                 <FormItem
                                     asterisk
                                     label="Status"
@@ -249,6 +235,7 @@ const LocationEdit = ({
                                 >
                                     <div>
                                         <Field
+                                            size="sm"
                                             name="IsActive"
                                             component={Switcher}
                                         />

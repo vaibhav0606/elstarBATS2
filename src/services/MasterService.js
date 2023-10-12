@@ -1,11 +1,10 @@
 import ApiService from './ApiService'
 const axios = require('axios')
 
-export async function apiGetEmployeemaster(data) {
+export async function apiGetEmployeemaster() {
     return ApiService.fetchData({
         url: '/empmaster/',
         method: 'get',
-        data,
     })
 }
 
@@ -57,6 +56,13 @@ export async function apiGetDepartmentmaster(data) {
     })
 }
 
+
+export async function apiGetEmpbyid(data) {
+    return ApiService.fetchData({
+        url: `/empmaster/${data}`,
+        method: 'get',
+    })
+}
 export async function apiGetRegionMaster(data) {
     return ApiService.fetchData({
         url: '/regionmaster/',
@@ -366,7 +372,7 @@ const PostEmp = (param, token) => {
             Emp_Image: '1.jpg',
             DepartmentCode: param.DepartmentCode,
             DesignationCode: param.DesignationCode,
-            ReportingTo: 0,
+            ReportingTo: param.ReportingTo,
             Emp_Description: param.Emp_Description,
             RegionCode: param.RegionCode,
             Emp_Addr1: 'string',
@@ -418,7 +424,7 @@ const PutEmp = (param, token) => {
             Emp_Image: '1.jpg',
             DepartmentCode: param.DepartmentCode,
             DesignationCode: param.DesignationCode,
-            ReportingTo: param.Emp,
+            ReportingTo: param.ReportingTo,
             Emp_Description: param.Emp_Description,
             RegionCode: param.RegionCode,
             IsActive: param.IsActive ? 1 : 0,

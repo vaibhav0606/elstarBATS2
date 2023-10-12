@@ -122,6 +122,7 @@ const RegionEdit = ({ onDrawerClose, editData, setMessage, setlog, Zone }) => {
                                 }}
                             >
                                 <Field
+                                    size="sm"
                                     type="RegionCode"
                                     autoComplete="off"
                                     name="RegionCode"
@@ -137,6 +138,7 @@ const RegionEdit = ({ onDrawerClose, editData, setMessage, setlog, Zone }) => {
                                     errorMessage={errors.RegionName}
                                 >
                                     <Field
+                                        size="sm"
                                         type="RegionName"
                                         autoComplete="off"
                                         name="RegionName"
@@ -159,6 +161,7 @@ const RegionEdit = ({ onDrawerClose, editData, setMessage, setlog, Zone }) => {
                                     errorMessage={errors.ShortName}
                                 >
                                     <Field
+                                        size="sm"
                                         type="ShortName"
                                         autoComplete="off"
                                         name="ShortName"
@@ -183,6 +186,7 @@ const RegionEdit = ({ onDrawerClose, editData, setMessage, setlog, Zone }) => {
                                     style={{ width: '250px' }}
                                 >
                                     <Field
+                                        size="sm"
                                         name="ZoneCode"
                                         style={{ width: '250px' }}
                                     >
@@ -218,6 +222,7 @@ const RegionEdit = ({ onDrawerClose, editData, setMessage, setlog, Zone }) => {
                                 >
                                     <div>
                                         <Field
+                                            size="sm"
                                             name="IsActive"
                                             component={Switcher}
                                         />

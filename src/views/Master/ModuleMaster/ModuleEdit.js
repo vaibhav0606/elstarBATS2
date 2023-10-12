@@ -123,6 +123,7 @@ const ModuleEdit = ({
                                 }}
                             >
                                 <Field
+                                    size="sm"
                                     type="ModuleCode"
                                     autoComplete="off"
                                     name="ModuleCode"
@@ -138,6 +139,7 @@ const ModuleEdit = ({
                                     errorMessage={errors.ModuleName}
                                 >
                                     <Field
+                                        size="sm"
                                         type="ModuleName"
                                         autoComplete="off"
                                         name="ModuleName"
@@ -153,6 +155,7 @@ const ModuleEdit = ({
                                     errorMessage={errors.IndexNum}
                                 >
                                     <Field
+                                        size="sm"
                                         type="Number"
                                         autoComplete="off"
                                         name="IndexNum"
@@ -177,6 +180,7 @@ const ModuleEdit = ({
                                 >
                                     <div>
                                         <Field
+                                            size="sm"
                                             name="IsActive"
                                             component={Switcher}
                                         />

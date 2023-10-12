@@ -49,7 +49,7 @@ const Entitymaster = () => {
     const [data, setdata] = useState([''])
     const [message, setMessage] = useTimeOutMessage()
     const [log, setlog] = useState('')
-
+    console.log(window.screen.width)
     const statusColor = {
         1: 'bg-emerald-500',
         0: 'bg-red-500',
@@ -90,7 +90,7 @@ const Entitymaster = () => {
     useEffect(() => {
         ;(async (values) => {
             const resp = await apiGetEntitymaster(values)
-            // console.log(resp.data)
+            //console.log(resp.data.length)
             setdata(resp.data)
         })()
     }, [])
@@ -181,7 +181,11 @@ const Entitymaster = () => {
                 isOpen={isOpen}
                 onClose={onDrawerClose}
                 onRequestClose={onDrawerClose}
-                width={window.screen.width / 1.5}
+                width={
+                    window.screen.width > 400
+                        ? window.screen.width / 3
+                        : window.screen.width / 1.5
+                }
             >
                 <EntityEdit
                     onDrawerClose={onDrawerClose}

@@ -79,6 +79,7 @@ const ForgotPasswordForm = (props) => {
                                     errorMessage={errors.email}
                                 >
                                     <Field
+                                        size="sm"
                                         type="email"
                                         autoComplete="off"
                                         name="email"

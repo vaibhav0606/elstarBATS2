@@ -144,6 +144,7 @@ const FormEdit = ({
                         <FormContainer>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                                 <Field
+                                    size="sm"
                                     type="FormCode"
                                     autoComplete="off"
                                     name="FormCode"
@@ -159,6 +160,7 @@ const FormEdit = ({
                                     errorMessage={errors.FormName}
                                 >
                                     <Field
+                                        size="sm"
                                         type="FormName"
                                         autoComplete="off"
                                         name="FormName"
@@ -177,6 +179,7 @@ const FormEdit = ({
                                     style={{ width: '250px' }}
                                 >
                                     <Field
+                                        size="sm"
                                         name="ModuleCode"
                                         style={{ width: '250px' }}
                                     >
@@ -214,6 +217,7 @@ const FormEdit = ({
                                     style={{ width: '250px' }}
                                 >
                                     <Field
+                                        size="sm"
                                         name="SubModuleCode"
                                         style={{ width: '250px' }}
                                     >
@@ -248,6 +252,7 @@ const FormEdit = ({
                                     errorMessage={errors.IndexNum}
                                 >
                                     <Field
+                                        size="sm"
                                         type="IndexNum"
                                         autoComplete="off"
                                         name="IndexNum"
@@ -264,6 +269,7 @@ const FormEdit = ({
                                     errorMessage={errors.WinFormName}
                                 >
                                     <Field
+                                        size="sm"
                                         type="WinFormName"
                                         autoComplete="off"
                                         name="WinFormName"
@@ -278,7 +284,7 @@ const FormEdit = ({
                                     }
                                     errorMessage={errors.FormImage}
                                 >
-                                    <Field
+                                    <Field size="sm"
                                         type="FormImage"
                                         autoComplete="off"
                                         name="FormImage"
@@ -292,7 +298,7 @@ const FormEdit = ({
                                     invalid={errors.IS_MO && touched.IS_MO}
                                     errorMessage={errors.IS_MO}
                                 >
-                                    <Field
+                                    <Field size="sm"
                                         type="Number"
                                         autoComplete="off"
                                         name="IS_MO"
@@ -309,6 +315,7 @@ const FormEdit = ({
                             >
                                 <div>
                                     <Field
+                                        size="sm"
                                         name="IsActive"
                                         component={Switcher}
                                     />
