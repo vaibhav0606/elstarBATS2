@@ -56,7 +56,6 @@ export async function apiGetDepartmentmaster(data) {
     })
 }
 
-
 export async function apiGetEmpbyid(data) {
     return ApiService.fetchData({
         url: `/empmaster/${data}`,
@@ -1115,7 +1114,78 @@ const Putchannel = (param, token) => {
             })
     })
 }
+export async function apiGetPlacemaster(data) {
+    return ApiService.fetchData({
+        url: '/placemaster/',
+        method: 'get',
+        data,
+    })
+}
+const Postplace = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            PlaceName: param.PlaceName,
+            ShortName: param.ShortName,
+            ZoneCode: param.ZoneCode,
+            StateCode: param.State,
+            CountryCode: param.CountryCode,
+            IsActive: param.IsActive ? 1 : 0,
+        })
 
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/placemaster/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const Putplace = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            PlaceName: param.PlaceName,
+            ShortName: param.ShortName,
+            ZoneCode: param.ZoneCode,
+            StateCode: param.State,
+            CountryCode: param.CountryCode,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/placemaster/${param.PlaceCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
 export {
     PostEntity,
     PutEntity,
@@ -1145,4 +1215,6 @@ export {
     Putchannel,
     PutForm,
     PostForm,
+    Postplace,
+    Putplace,
 }
