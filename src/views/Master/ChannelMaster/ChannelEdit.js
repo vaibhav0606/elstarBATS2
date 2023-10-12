@@ -133,6 +133,7 @@ const ChannelEdit = ({
                         <FormContainer>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <Field
+                                    size="sm"
                                     type="ChannelCode"
                                     autoComplete="off"
                                     name="ChannelCode"
@@ -149,6 +150,7 @@ const ChannelEdit = ({
                                     errorMessage={errors.ChannelName}
                                 >
                                     <Field
+                                        size="sm"
                                         type="ChannelName"
                                         autoComplete="off"
                                         name="ChannelName"
@@ -164,6 +166,7 @@ const ChannelEdit = ({
                                     errorMessage={errors.ShortName}
                                 >
                                     <Field
+                                        size="sm"
                                         type="ShortName"
                                         autoComplete="off"
                                         name="ShortName"
@@ -181,6 +184,7 @@ const ChannelEdit = ({
                                     errorMessage={errors.ChannelGenre}
                                 >
                                     <Field
+                                        size="sm"
                                         type="ChannelGenre"
                                         autoComplete="off"
                                         name="ChannelGenre"
@@ -197,6 +201,7 @@ const ChannelEdit = ({
                                     errorMessage={errors.ChannelContentType}
                                 >
                                     <Field
+                                        size="sm"
                                         type="ChannelContentType"
                                         autoComplete="off"
                                         name="ChannelContentType"
@@ -212,6 +217,7 @@ const ChannelEdit = ({
                                     style={{ width: '250px' }}
                                 >
                                     <Field
+                                        size="sm"
                                         name="State"
                                         style={{ width: '250px' }}
                                     >
@@ -243,6 +249,7 @@ const ChannelEdit = ({
                                     errorMessage={errors.SACCode}
                                 >
                                     <Field
+                                        size="sm"
                                         type="SACCode"
                                         autoComplete="off"
                                         name="SACCode"
@@ -256,6 +263,7 @@ const ChannelEdit = ({
                                     errorMessage={errors.GSTN_id}
                                 >
                                     <Field
+                                        size="sm"
                                         type="GSTN_id"
                                         autoComplete="off"
                                         name="GSTN_id"
@@ -281,6 +289,7 @@ const ChannelEdit = ({
                                 >
                                     <div>
                                         <Field
+                                            size="sm"
                                             name="IsActive"
                                             component={Switcher}
                                         />

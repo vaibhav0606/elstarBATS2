@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
-import { Badge, Tabs, Input, Alert, Dialog } from 'components/ui'
+import { Badge, Tabs, Input, Alert, Dialog, ScrollBar } from 'components/ui'
 import {
     apiGetEmployeemaster,
     apiGetDesignationMaster,
@@ -9,6 +9,7 @@ import {
     apiGetCountryMaster,
     apiGetRegionMaster,
     apiGetempmasterdropmaster,
+    apiGetEmpbyid,
 } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
 import { HiPlusCircle } from 'react-icons/hi'
@@ -16,6 +17,22 @@ import EmployeeEdit from './EmployeeEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTableEmp from 'views/Controls/DisplayTableEmp'
 import EmpLoginRights from './EmpLoginRights'
+
+
+
+
+
+const Last = () => {
+  return (
+    <div><p>
+    In C++ its harder to shoot yourself in
+    the foot, but when you do, you blow off
+    your whole leg. (Bjarne Stroustrup)
+</p></div>
+  )
+}
+
+
 
 const headerExtraContent = (
     openDialog,
@@ -63,11 +80,13 @@ const Employee = () => {
     const [Country, setCountry] = useState({ value: '', label: '' })
     const [Region, setRegion] = useState({ value: '', label: '' })
     const [Emp, setEmp] = useState({ value: '', label: '' })
+    const [count, setcount] = useState(1)
 
     const [Place, setPlace] = useState({ value: '', label: '' })
     const [message, setMessage] = useTimeOutMessage()
     const [log, setlog] = useState('')
     const [currentTab, setCurrentTab] = useState('tab1')
+
     const { TabNav, TabList, TabContent } = Tabs
 
     const [dialogIsOpen, setIsOpen] = useState(false)
@@ -76,11 +95,15 @@ const Employee = () => {
         setIsOpen(true)
     }
 
-    const onDialogClose = async (values) => {
-        setIsOpen(false)
-        const resp = await apiGetEmployeemaster(values)
-        setdata(resp.data)
-        seteditData([''])
+    const onDialogClose = async (response) => {  
+            try {
+                const resp = await apiGetEmployeemaster()
+                setdata(resp.data)            
+                const resps = await apiGetEmpbyid(response)
+                seteditData(resps.data)
+              } catch (error) {
+                console.error("An error occurred:", error);
+              }
     }
 
     const onDialogOk = async () => {
@@ -121,6 +144,50 @@ const Employee = () => {
         ],
         []
     )
+
+    const TABS = [
+        {
+            tab: 'tab1',
+            name: 'Employee',
+            component: <EmployeeEdit onDialogClose={onDialogClose}
+            editData={editData}
+            setMessage={setMessage}
+            setlog={setlog}
+            Designation={designation}
+            Place={Place}
+            State={State}
+            Department={Department}
+            Country={Country}
+            Region={Region}
+            Emp={Emp}
+            onDialogOk={onDialogOk}
+            setCurrentTab={setCurrentTab}
+            count={count}
+            setcount={setcount}
+            tab={'tab2'}
+            />,
+            status : count >= 1 ? false : true
+           
+        },
+        {
+            tab: 'tab2',
+            name: 'Login Right',
+            component:  <EmpLoginRights 
+             setCurrentTab={setCurrentTab}
+            count={count}
+            setcount={setcount}
+            tab={'tab3'}
+            tabP={'tab1'} />,
+            status : count >= 2 ? false : true
+        },
+        {
+            tab: 'tab3',
+            name: 'Map Channel',
+            component: <Last />,
+            status:count >= 3 ? false : true
+        },
+    ]
+    
     useEffect(() => {
         ;(async (values) => {
             const resp = await apiGetEmployeemaster(values)
@@ -152,7 +219,6 @@ const Employee = () => {
         })()
         ;(async (values) => {
             const emp = await apiGetempmasterdropmaster(values)
-            console.log(emp)
             const formattedOptions = emp.data.map((option) => ({
                 value: option.EmployeeCode,
                 label: option.Emp_FirstName,
@@ -218,7 +284,6 @@ const Employee = () => {
         )
     }
 
-    // console.log(log)
     return (
         <>
             {message && (
@@ -255,14 +320,13 @@ const Employee = () => {
             <Dialog
                 isOpen={dialogIsOpen}
                 closable={false}
-                width={1000}
+                width={1200}
                 height="auto"
                 style={{
                     content: {
                         overflow: 'auto',
                     },
                 }}
-                contentClassName=" max-h-[32rem] overflow-y-auto"
             >
                 <div className="flex flex-col h-full justify-between">
                     {/* // sm:max-h-96 */}
@@ -273,66 +337,36 @@ const Employee = () => {
                                 ? 'Edit Employee Master'
                                 : 'Add Employee Master'}
                         </h5>
-
+                        {message && (
+                <Alert className="mb-4" type={log} showIcon>
+                    {message}
+                </Alert>
+            )}
                         <Tabs
                             value={currentTab}
                             onChange={(val) => setCurrentTab(val)}
                         >
                             <TabList>
-                                <TabNav value="tab1">
-                                    {editData.Emp_FirstName
-                                        ? 'Edit Employee '
-                                        : 'Add Employee '}
-                                </TabNav>
-                                <TabNav value="tab2">
-                                    {editData.Emp_FirstName
-                                        ? 'Edit Login Rights '
-                                        : 'Add Login Rights  '}
-                                </TabNav>
-                                <TabNav value="tab3">
-                                    {editData.Emp_FirstName
-                                        ? 'Edit Map Channel '
-                                        : 'Add Map Channel  '}
-                                </TabNav>
+                                {TABS.map((i) => (
+                                    <TabNav value={i.tab} disabled={i.status}>
+                                        {editData.Emp_FirstName
+                                            ? `Edit ${i.name} `
+                                            : `Add ${i.name} `}
+                                    </TabNav>
+                                ))}
+                               
+                               
                             </TabList>
                             <div className="p-4">
-                                <TabContent value="tab1">
-                                    <EmployeeEdit
-                                        onDialogClose={onDialogClose}
-                                        editData={editData}
-                                        setMessage={setMessage}
-                                        setlog={setlog}
-                                        Designation={designation}
-                                        Place={Place}
-                                        State={State}
-                                        Department={Department}
-                                        Country={Country}
-                                        Region={Region}
-                                        Emp={Emp}
-                                    />
-                                </TabContent>
-                                <TabContent value="tab2">
-                                    <EmpLoginRights />
-                                </TabContent>
-                                <TabContent value="tab3">
-                                    <p>
-                                        In C++ its harder to shoot yourself in
-                                        the foot, but when you do, you blow off
-                                        your whole leg. (Bjarne Stroustrup)
-                                    </p>
-                                </TabContent>
+
+                            {TABS.map((i) => (
+                                    <TabContent value={i.tab}>
+                                       {i.component}
+                                    </TabContent>
+                                ))}
+                             
                             </div>
                         </Tabs>
-
-                        <div className="text-right mt-6">
-                            <Button
-                                className="ltr:mr-2 rtl:ml-2"
-                                variant="plain"
-                                onClick={() => onDialogOk(0, 0)}
-                            >
-                                Cancel
-                            </Button>
-                        </div>
                     </div>
                 </div>
             </Dialog>

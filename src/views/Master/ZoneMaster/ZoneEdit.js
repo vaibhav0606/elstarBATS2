@@ -115,6 +115,7 @@ const ZoneEdit = ({
                                 }}
                             >
                                 <Field
+                                    size="sm"
                                     type="ZoneCode"
                                     autoComplete="off"
                                     name="ZoneCode"
@@ -130,6 +131,7 @@ const ZoneEdit = ({
                                     errorMessage={errors.ZoneName}
                                 >
                                     <Field
+                                        size="sm"
                                         type="ZoneName"
                                         autoComplete="off"
                                         name="ZoneName"
@@ -152,6 +154,7 @@ const ZoneEdit = ({
                                     errorMessage={errors.ShortName}
                                 >
                                     <Field
+                                        size="sm"
                                         type="ShortName"
                                         autoComplete="off"
                                         name="ShortName"
@@ -176,6 +179,7 @@ const ZoneEdit = ({
                                 >
                                     <div>
                                         <Field
+                                            size="sm"
                                             name="IsActive"
                                             component={Switcher}
                                         />

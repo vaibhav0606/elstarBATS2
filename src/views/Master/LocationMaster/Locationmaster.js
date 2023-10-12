@@ -189,7 +189,11 @@ const Locationmaster = () => {
                 isOpen={isOpen}
                 onClose={onDrawerClose}
                 onRequestClose={onDrawerClose}
-                width={600}
+                width={
+                    window.screen.width > 400
+                        ? window.screen.width / 3
+                        : window.screen.width / 1.5
+                }
             >
                 <LocationEdit
                     onDrawerClose={onDrawerClose}

@@ -131,6 +131,7 @@ const SubModuleEdit = ({
                                 }}
                             >
                                 <Field
+                                    size="sm"
                                     type="SubModuleCode"
                                     autoComplete="off"
                                     name="SubModuleCode"
@@ -147,6 +148,7 @@ const SubModuleEdit = ({
                                     errorMessage={errors.SubModuleName}
                                 >
                                     <Field
+                                        size="sm"
                                         type="SubModuleName"
                                         autoComplete="off"
                                         name="SubModuleName"
@@ -171,6 +173,7 @@ const SubModuleEdit = ({
                                     style={{ width: '250px' }}
                                 >
                                     <Field
+                                        size="sm"
                                         name="ModuleCode"
                                         style={{ width: '250px' }}
                                     >
@@ -204,6 +207,7 @@ const SubModuleEdit = ({
                                     errorMessage={errors.IndexNum}
                                 >
                                     <Field
+                                        size="sm"
                                         type="Number"
                                         autoComplete="off"
                                         name="IndexNum"
@@ -228,6 +232,7 @@ const SubModuleEdit = ({
                                 >
                                     <div>
                                         <Field
+                                            size="sm"
                                             name="IsActive"
                                             component={Switcher}
                                         />

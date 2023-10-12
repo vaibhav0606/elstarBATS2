@@ -121,6 +121,7 @@ const CurrencyEdit = ({
                         <FormContainer>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <Field
+                                    size="sm"
                                     type="CurrencyCode"
                                     autoComplete="off"
                                     name="CurrencyCode"
@@ -137,6 +138,7 @@ const CurrencyEdit = ({
                                     errorMessage={errors.CurrencyName}
                                 >
                                     <Field
+                                        size="sm"
                                         type="CurrencyName"
                                         autoComplete="off"
                                         name="CurrencyName"
@@ -153,6 +155,7 @@ const CurrencyEdit = ({
                                     errorMessage={errors.CurrencySymbol}
                                 >
                                     <Field
+                                        size="sm"
                                         type="text"
                                         autoComplete="off"
                                         name="CurrencySymbol"
@@ -168,6 +171,7 @@ const CurrencyEdit = ({
                                     errorMessage={errors.ShortName}
                                 >
                                     <Field
+                                        size="sm"
                                         type="ShortName"
                                         autoComplete="off"
                                         name="ShortName"

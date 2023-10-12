@@ -69,6 +69,7 @@ const SignUpForm = (props) => {
                                 errorMessage={errors.userName}
                             >
                                 <Field
+                                    size="sm"
                                     type="text"
                                     autoComplete="off"
                                     name="userName"
@@ -82,6 +83,7 @@ const SignUpForm = (props) => {
                                 errorMessage={errors.email}
                             >
                                 <Field
+                                    size="sm"
                                     type="email"
                                     autoComplete="off"
                                     name="email"
@@ -95,6 +97,7 @@ const SignUpForm = (props) => {
                                 errorMessage={errors.password}
                             >
                                 <Field
+                                    size="sm"
                                     autoComplete="off"
                                     name="password"
                                     placeholder="Password"
@@ -110,6 +113,7 @@ const SignUpForm = (props) => {
                                 errorMessage={errors.confirmPassword}
                             >
                                 <Field
+                                    size="sm"
                                     autoComplete="off"
                                     name="confirmPassword"
                                     placeholder="Confirm Password"

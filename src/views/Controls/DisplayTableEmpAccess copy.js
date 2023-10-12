@@ -14,7 +14,7 @@ import {
 import { Button, Input } from 'components/ui'
 import { HiOutlinePencil } from 'react-icons/hi'
 
-const DisplayTable = ({
+const DisplayTableEmpAccess = ({
     data,
     columns,
     sorting,
@@ -40,6 +40,7 @@ const DisplayTable = ({
         getSortedRowModel: getSortedRowModel(),
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
+        // getPaginationRowModel: getPaginationRowModel(),
         getFacetedRowModel: getFacetedRowModel(),
         getFacetedUniqueValues: getFacetedUniqueValues(),
         getFacetedMinMaxValues: getFacetedMinMaxValues(),
@@ -57,58 +58,50 @@ const DisplayTable = ({
                                     <Th
                                         key={header.id}
                                         colSpan={header.colSpan}
-                                        className="bg-stone-300"
                                         style={{
                                             position: 'relative',
                                             //  width: header.getSize(3000),
                                         }}
                                     >
-                                        <p
-                                            className="font-bold text-black"
-                                            // style={{ backgroundColor: 'red' }}
-                                        >
-                                            {/* {console.log(header.getSize(3000))} */}
-                                            {header.isPlaceholder ? null : (
-                                                <div
-                                                    {...{
-                                                        className:
-                                                            header.column.getCanSort()
-                                                                ? 'cursor-pointer select-none'
-                                                                : '',
-                                                        onClick:
-                                                            header.column.getToggleSortingHandler(),
-                                                    }}
-                                                >
-                                                    {flexRender(
-                                                        header.column.columnDef
-                                                            .header,
-                                                        header.getContext()
-                                                    )}
-                                                    {
-                                                        <>
-                                                            <Sorter
-                                                                sort={header.column.getIsSorted()}
-                                                            />
-                                                            <div
-                                                                className={`table-resizer cursor-all-scroll ${
-                                                                    header.column.getIsResizing()
-                                                                        ? 'isResizing'
-                                                                        : ''
-                                                                }`}
-                                                                onMouseDown={header.getResizeHandler()}
-                                                                onTouchStart={header.getResizeHandler()}
-                                                            ></div>
-                                                        </>
-                                                    }
-                                                </div>
-                                            )}
-                                        </p>
+                                        {/* {console.log(header.getSize(3000))} */}
+                                        {header.isPlaceholder ? null : (
+                                            <div
+                                                {...{
+                                                    className:
+                                                        header.column.getCanSort()
+                                                            ? 'cursor-pointer select-none'
+                                                            : '',
+                                                    onClick:
+                                                        header.column.getToggleSortingHandler(),
+                                                }}
+                                            >
+                                                {flexRender(
+                                                    header.column.columnDef
+                                                        .header,
+                                                    header.getContext()
+                                                )}
+                                                {
+                                                    <>
+                                                        <Sorter
+                                                            sort={header.column.getIsSorted()}
+                                                        />
+                                                        <div
+                                                            className={`table-resizer cursor-all-scroll ${
+                                                                header.column.getIsResizing()
+                                                                    ? 'isResizing'
+                                                                    : ''
+                                                            }`}
+                                                            onMouseDown={header.getResizeHandler()}
+                                                            onTouchStart={header.getResizeHandler()}
+                                                        ></div>
+                                                    </>
+                                                }
+                                            </div>
+                                        )}
                                     </Th>
                                 )
                             })}
-                            <Th className="bg-stone-300">
-                                <p className="font-bold text-black">Actions</p>
-                            </Th>
+                            <Th>Action</Th>
                         </Tr>
                     ))}
                 </THead>
@@ -118,10 +111,7 @@ const DisplayTable = ({
                             <Tr key={row.id}>
                                 {row.getVisibleCells().map((cell) => {
                                     return (
-                                        <Td
-                                            key={cell.id}
-                                            className="text-xs text-black font-medium border "
-                                        >
+                                        <Td key={cell.id}>
                                             {flexRender(
                                                 cell.column.columnDef.cell,
                                                 cell.getContext()
@@ -134,7 +124,6 @@ const DisplayTable = ({
                                         seteditData(row.original)
                                         openDialog()
                                     }}
-                                    className="text-xs text-black font-medium border"
                                 >
                                     <Button
                                         size="xs"
@@ -147,11 +136,8 @@ const DisplayTable = ({
                     })}
                 </TBody>
             </Table>
-            <div className="flex  justify-end mt-2">
-                <h1 className="text-xs  font-light">Records : {data.length}</h1>
-            </div>
         </>
     )
 }
 
-export default DisplayTable
+export default DisplayTableEmpAccess

@@ -129,6 +129,7 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                         <FormContainer>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                                 <Field
+                                    size="sm"
                                     type="EntityCode"
                                     autoComplete="off"
                                     name="EntityCode"
@@ -137,13 +138,19 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                     hidden
                                 />
                                 <FormItem
-                                    label="EntityName"
+                                    label="EntityName "
+                                    errorMessage={
+                                        <p className="text-xs italic">
+                                            {errors.entityname}
+                                        </p>
+                                    }
                                     invalid={
                                         errors.entityname && touched.entityname
                                     }
-                                    errorMessage={errors.entityname}
+                                    //
                                 >
                                     <Field
+                                        size="sm"
                                         type="entityname"
                                         autoComplete="off"
                                         name="entityname"
@@ -157,9 +164,14 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                         errors.CorpAddress &&
                                         touched.CorpAddress
                                     }
-                                    errorMessage={errors.CorpAddress}
+                                    errorMessage={
+                                        <p className="text-xs italic">
+                                            {errors.CorpAddress}
+                                        </p>
+                                    }
                                 >
                                     <Field
+                                        size="sm"
                                         type="CorpAddress"
                                         autoComplete="off"
                                         name="CorpAddress"
@@ -175,9 +187,14 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                         errors.PermAddress &&
                                         touched.PermAddress
                                     }
-                                    errorMessage={errors.PermAddress}
+                                    errorMessage={
+                                        <p className="text-xs italic">
+                                            {errors.PermAddress}
+                                        </p>
+                                    }
                                 >
                                     <Field
+                                        size="sm"
                                         type="PermAddress"
                                         autoComplete="off"
                                         name="PermAddress"
@@ -191,9 +208,14 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                         errors.ContactPerson &&
                                         touched.ContactPerson
                                     }
-                                    errorMessage={errors.ContactPerson}
+                                    errorMessage={
+                                        <p className="text-xs italic">
+                                            {errors.ContactPerson}
+                                        </p>
+                                    }
                                 >
                                     <Field
+                                        size="sm"
                                         type="ContactPerson"
                                         autoComplete="off"
                                         name="ContactPerson"
@@ -206,9 +228,14 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                 <FormItem
                                     label="Contact"
                                     invalid={errors.Contact && touched.Contact}
-                                    errorMessage={errors.Contact}
+                                    errorMessage={
+                                        <p className="text-xs italic">
+                                            {errors.Contact}
+                                        </p>
+                                    }
                                 >
                                     <Field
+                                        size="sm"
                                         type="Number"
                                         autoComplete="off"
                                         name="Contact"
@@ -219,9 +246,14 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                 <FormItem
                                     label="PAN NO"
                                     invalid={errors.PANNO && touched.PANNO}
-                                    errorMessage={errors.PANNO}
+                                    errorMessage={
+                                        <p className="text-xs italic">
+                                            {errors.PANNO}
+                                        </p>
+                                    }
                                 >
                                     <Field
+                                        size="sm"
                                         type="PANNO"
                                         autoComplete="off"
                                         name="PANNO"
@@ -241,6 +273,7 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                 >
                                     <div>
                                         <Field
+                                            size="sm"
                                             name="IsActive"
                                             component={Switcher}
                                         />
@@ -251,9 +284,15 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                     invalid={
                                         errors.CINNumber && touched.CINNumber
                                     }
-                                    errorMessage={errors.CINNumber}
+                                    errorMessage={
+                                        <p className="text-xs italic">
+                                            {errors.CINNumber}
+                                        </p>
+                                    }
+                                    // errorMessage={errors.CINNumber}
                                 >
                                     <Field
+                                        size="sm"
                                         type="CINNumber"
                                         autoComplete="off"
                                         name="CINNumber"

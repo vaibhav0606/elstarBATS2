@@ -117,6 +117,7 @@ const DepartmentEdit = ({
                         <FormContainer>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                                 <Field
+                                    size="sm"
                                     type="DepartmentCode"
                                     autoComplete="off"
                                     name="DepartmentCode"
@@ -133,6 +134,7 @@ const DepartmentEdit = ({
                                     errorMessage={errors.DepartmentName}
                                 >
                                     <Field
+                                        size="sm"
                                         type="DepartmentName"
                                         autoComplete="off"
                                         name="DepartmentName"
@@ -150,6 +152,7 @@ const DepartmentEdit = ({
                                     errorMessage={errors.ShortName}
                                 >
                                     <Field
+                                        size="sm"
                                         type="ShortName"
                                         autoComplete="off"
                                         name="ShortName"
@@ -169,6 +172,7 @@ const DepartmentEdit = ({
                                 >
                                     <div>
                                         <Field
+                                            size="sm"
                                             name="IsActive"
                                             component={Switcher}
                                         />

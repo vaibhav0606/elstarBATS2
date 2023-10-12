@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Logo from 'components/template/Logo'
-import { Menu, ScrollBar } from 'components/ui'
+import { Button, Menu, ScrollBar } from 'components/ui'
 import {
     NAV_MODE_DARK,
     NAV_MODE_THEMED,
@@ -14,6 +14,7 @@ import navigationIcon from 'configs/navigation-icon.config'
 import useMenuActive from 'utils/hooks/useMenuActive'
 import isEmpty from 'lodash/isEmpty'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 const StackedSideNavMini = (props) => {
     const {
@@ -27,7 +28,7 @@ const StackedSideNavMini = (props) => {
         direction,
         ...rest
     } = props
-
+    const themeColor = useSelector((state) => state.theme.themeColor)
     const { includedRouteTree } = useMenuActive(navigationConfig, routeKey)
 
     const logoMode = () => {
@@ -69,14 +70,24 @@ const StackedSideNavMini = (props) => {
 
     return (
         <div {...rest}>
-            <Logo
-                mode={logoMode()}
-                type="streamline"
-                gutter={SIDE_NAV_CONTENT_GUTTER}
-            />
+            <center>
+                <Logo
+                    mode={logoMode()}
+                    type="streamline"
+                    gutter={SIDE_NAV_CONTENT_GUTTER}
+                />
+            </center>
+            <div
+                style={{
+                    height: 1,
+                    width: '100%',
+                    background: themeColor,
+                    marginBottom: 10,
+                }}
+            ></div>
             <ScrollBar autoHide direction={direction}>
                 <Menu
-                    className="px-4 pb-4"
+                    className="px-2 "
                     variant={navMode}
                     defaultActiveKeys={activeKeys || [includedRouteTree.key]}
                 >
@@ -87,22 +98,30 @@ const StackedSideNavMini = (props) => {
                             userAuthority={userAuthority}
                         >
                             {nav.subMenu && nav.subMenu.length > 0 ? (
-                                <Menu.MenuItem
-                                    eventKey={nav.key}
-                                    className="mb-2"
-                                    onSelect={() =>
-                                        handleMenuItemSelect({
-                                            key: nav.key,
-                                            title: nav.title,
-                                            menu: nav.subMenu,
-                                            translateKey: nav.translateKey,
-                                        })
-                                    }
-                                >
-                                    <div className="text-2xl">
-                                        {navigationIcon[nav.icon]}
-                                    </div>
-                                </Menu.MenuItem>
+                                <center>
+                                    <Menu.MenuItem
+                                        eventKey={nav.key}
+                                        className="mb-4 "
+                                        style={{ padding: 22 }}
+                                        onSelect={() =>
+                                            handleMenuItemSelect({
+                                                key: nav.key,
+                                                title: nav.title,
+                                                menu: nav.subMenu,
+                                                translateKey: nav.translateKey,
+                                            })
+                                        }
+                                    >
+                                        <center>
+                                            <div className="text-2xl">
+                                                {navigationIcon[nav.icon]}
+                                            </div>
+                                            <span style={{ fontSize: '10px' }}>
+                                                {nav.title}
+                                            </span>
+                                        </center>
+                                    </Menu.MenuItem>
+                                </center>
                             ) : (
                                 <Link
                                     to={nav.path}
@@ -115,11 +134,17 @@ const StackedSideNavMini = (props) => {
                                 >
                                     <Menu.MenuItem
                                         eventKey={nav.key}
-                                        className="mb-2"
+                                        className="mb-4 "
+                                        style={{ padding: 22 }}
                                     >
-                                        <div className="text-2xl">
-                                            {navigationIcon[nav.icon]}
-                                        </div>
+                                        <center>
+                                            <div className="text-2xl">
+                                                {navigationIcon[nav.icon]}
+                                            </div>
+                                            <span style={{ fontSize: '10px' }}>
+                                                {nav.title}
+                                            </span>
+                                        </center>
                                     </Menu.MenuItem>
                                 </Link>
                             )}

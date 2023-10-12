@@ -123,6 +123,7 @@ const DesignationEdit = ({
                                 }}
                             >
                                 <Field
+                                    size="sm"
                                     type="DesignationCode"
                                     autoComplete="off"
                                     name="DesignationCode"
@@ -139,6 +140,7 @@ const DesignationEdit = ({
                                     errorMessage={errors.DesignationName}
                                 >
                                     <Field
+                                        size="sm"
                                         type="DesignationName"
                                         autoComplete="off"
                                         name="DesignationName"
@@ -154,6 +156,7 @@ const DesignationEdit = ({
                                     errorMessage={errors.ShortName}
                                 >
                                     <Field
+                                        size="sm"
                                         type="ShortName"
                                         autoComplete="off"
                                         name="ShortName"
@@ -178,6 +181,7 @@ const DesignationEdit = ({
                                 >
                                     <div>
                                         <Field
+                                            size="sm"
                                             name="IsActive"
                                             component={Switcher}
                                         />
