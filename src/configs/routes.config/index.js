@@ -124,6 +124,86 @@ export const protectedRoutes = [
         ),
         authority: [],
     },
+    {
+        key: 'placemaster',
+        path: '/placemaster',
+        component: React.lazy(() =>
+            import('views/Master/PlaceMaster/Placemaster')
+        ),
+        authority: [],
+    },
+    {
+        key: 'starcasttype',
+        path: '/starcasttype',
+        component: React.lazy(() =>
+            import('views/Master/StarCastTypeMaster/StarCastTypemaster')
+        ),
+        authority: [],
+    },
+    {
+        key: 'starcastmaster',
+        path: '/starcastmaster',
+        component: React.lazy(() =>
+            import('views/Master/StarCastMaster/StarCastmaster')
+        ),
+        authority: [],
+    },
+    {
+        key: 'genremaster',
+        path: '/genremaster',
+        component: React.lazy(() =>
+            import('views/Master/GenreMaster/Genremaster')
+        ),
+        authority: [],
+    },
+    {
+        key: 'SubGenreMaster',
+        path: '/SubGenreMaster',
+        component: React.lazy(() =>
+            import('views/Master/SubGenreMaster/SubGenremaster')
+        ),
+        authority: [],
+    },
+    {
+        key: 'contenttypemaster',
+        path: '/contenttypemaster',
+        component: React.lazy(() =>
+            import('views/Master/ContentTypeMaster/ContentTypemaster')
+        ),
+        authority: [],
+    },
+    {
+        key: 'viewmaster',
+        path: '/viewmaster',
+        component: React.lazy(() =>
+            import('views/Master/ViewMaster/Viewmaster')
+        ),
+        authority: [],
+    },
+    {
+        key: 'Censorshipmaster',
+        path: '/Censorshipmaster',
+        component: React.lazy(() =>
+            import('views/Master/CensorshipMaster/Censorshipmaster')
+        ),
+        authority: [],
+    },
+    {
+        key: 'Telecastmaster',
+        path: '/Telecastmaster',
+        component: React.lazy(() =>
+            import('views/Master/TXVersionMaster/TXVersionmaster')
+        ),
+        authority: [],
+    },
+    {
+        key: 'suppliermastertable',
+        path: '/suppliermastertable',
+        component: React.lazy(() =>
+            import('views/Master/SupplierMaster/Suppliermaster')
+        ),
+        authority: [],
+    },
 
     /** Example purpose only, please remove */
     {
