@@ -136,7 +136,7 @@ export const protectedRoutes = [
         key: 'starcasttype',
         path: '/starcasttype',
         component: React.lazy(() =>
-            import('views/Master/StarCastTypeMaster/StarCastTypemaster')
+            import('views/Programming/StarCastTypeMaster/StarCastTypemaster')
         ),
         authority: [],
     },
@@ -144,7 +144,7 @@ export const protectedRoutes = [
         key: 'starcastmaster',
         path: '/starcastmaster',
         component: React.lazy(() =>
-            import('views/Master/StarCastMaster/StarCastmaster')
+            import('views/Programming/StarCastMaster/StarCastmaster')
         ),
         authority: [],
     },
@@ -152,7 +152,7 @@ export const protectedRoutes = [
         key: 'genremaster',
         path: '/genremaster',
         component: React.lazy(() =>
-            import('views/Master/GenreMaster/Genremaster')
+            import('views/Programming/GenreMaster/Genremaster')
         ),
         authority: [],
     },
@@ -160,7 +160,7 @@ export const protectedRoutes = [
         key: 'SubGenreMaster',
         path: '/SubGenreMaster',
         component: React.lazy(() =>
-            import('views/Master/SubGenreMaster/SubGenremaster')
+            import('views/Programming/SubGenreMaster/SubGenremaster')
         ),
         authority: [],
     },
@@ -168,7 +168,7 @@ export const protectedRoutes = [
         key: 'contenttypemaster',
         path: '/contenttypemaster',
         component: React.lazy(() =>
-            import('views/Master/ContentTypeMaster/ContentTypemaster')
+            import('views/Programming/ContentTypeMaster/ContentTypemaster')
         ),
         authority: [],
     },
@@ -176,7 +176,7 @@ export const protectedRoutes = [
         key: 'viewmaster',
         path: '/viewmaster',
         component: React.lazy(() =>
-            import('views/Master/ViewMaster/Viewmaster')
+            import('views/Programming/ViewMaster/Viewmaster')
         ),
         authority: [],
     },
@@ -184,7 +184,7 @@ export const protectedRoutes = [
         key: 'Censorshipmaster',
         path: '/Censorshipmaster',
         component: React.lazy(() =>
-            import('views/Master/CensorshipMaster/Censorshipmaster')
+            import('views/Programming/CensorshipMaster/Censorshipmaster')
         ),
         authority: [],
     },
@@ -192,7 +192,7 @@ export const protectedRoutes = [
         key: 'Telecastmaster',
         path: '/Telecastmaster',
         component: React.lazy(() =>
-            import('views/Master/TXVersionMaster/TXVersionmaster')
+            import('views/Programming/TXVersionMaster/TXVersionmaster')
         ),
         authority: [],
     },
@@ -200,7 +200,7 @@ export const protectedRoutes = [
         key: 'suppliermastertable',
         path: '/suppliermastertable',
         component: React.lazy(() =>
-            import('views/Master/SupplierMaster/Suppliermaster')
+            import('views/Programming/SupplierMaster/Suppliermaster')
         ),
         authority: [],
     },

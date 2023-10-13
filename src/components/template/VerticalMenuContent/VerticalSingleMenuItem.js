@@ -27,13 +27,13 @@ const DefaultItem = (props) => {
         <AuthorityCheck
             userAuthority={userAuthority}
             authority={nav.authority}
-
+           
         >
             <MenuItem
                 key={nav.key}
                 eventKey={nav.key}
-                className="mb-2"
-            >
+                className="mb-1"
+                 >
                 <Link
                     to={nav.path}
                     onClick={() =>

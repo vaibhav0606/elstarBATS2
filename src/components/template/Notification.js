@@ -124,6 +124,7 @@ export const Notification = ({ className }) => {
         if (notificationList.length === 0) {
             setLoading(true)
             const resp = await apiGetNotificationList()
+            console.log(resp);
             setLoading(false)
             setNotificationList(resp.data)
         }
@@ -205,7 +206,7 @@ export const Notification = ({ className }) => {
                                                 {item.target}{' '}
                                             </span>
                                         )}
-                                        <span>{item.description}</span>
+                                        <span>{item.title}</span>
                                     </div>
                                     <span className="text-xs">{item.date}</span>
                                 </div>

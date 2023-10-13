@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
 import { apiGetEntitymaster } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
-import { HiPlusCircle } from 'react-icons/hi'
+import { HiOutlinePencil, HiPlusCircle,HiOutlinePlus } from 'react-icons/hi'
 import EntityEdit from './EntityEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
@@ -199,11 +199,27 @@ const Entitymaster = () => {
             </Card>
 
             <Drawer
-                title={
-                    editData.EntityName
-                        ? <p className='text-xl font-medium text-black flex '><HiPlusCircle /> Entity Master</p>
-                        : 'Add Entity Master'
-                }
+               title={
+                editData.EntityName
+                ? <p className='text-xl font-medium text-black flex '>
+                <center>
+                    <Button
+                        size="xs"
+                        variant="twoTone"
+                        icon={<HiOutlinePencil />}
+                    ></Button>
+                </center>
+                Entity Master</p>
+            : <p className='text-xl font-medium text-black flex '>
+            <center>
+                <Button
+                    size="xs"
+                    variant="twoTone"
+                    icon={<HiOutlinePlus />}
+                ></Button>
+            </center>
+            Entity Master</p>  
+            }
                 isOpen={isOpen}
                 onClose={onDrawerClose}
                 onRequestClose={onDrawerClose}
