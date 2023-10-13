@@ -15,7 +15,7 @@ const validationSchema = Yup.object().shape({
     RegionName: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('RegionName Required'),
+        .required('Region Name Required'),
     ShortName: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
@@ -23,7 +23,7 @@ const validationSchema = Yup.object().shape({
     ZoneCode: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('ZoneCode Required'),
+        .required('Zone Name Required'),
     IsActive: Yup.string().required('IsActives Required'),
     rememberMe: Yup.bool(),
 })
@@ -115,12 +115,7 @@ const RegionEdit = ({ onDrawerClose, editData, setMessage, setlog, Zone }) => {
                 {({ values, touched, errors }) => (
                     <Form>
                         <FormContainer>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                                 <Field
                                     size="sm"
                                     type="RegionCode"
@@ -131,7 +126,8 @@ const RegionEdit = ({ onDrawerClose, editData, setMessage, setlog, Zone }) => {
                                     hidden
                                 />
                                 <FormItem
-                                    label="RegionName"
+                                    asterisk
+                                    label="Region Name"
                                     invalid={
                                         errors.RegionName && touched.RegionName
                                     }
@@ -146,14 +142,9 @@ const RegionEdit = ({ onDrawerClose, editData, setMessage, setlog, Zone }) => {
                                         component={Input}
                                     />
                                 </FormItem>
-                            </div>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
+
                                 <FormItem
+                                    asterisk
                                     label="ShortName"
                                     invalid={
                                         errors.ShortName && touched.ShortName
@@ -163,22 +154,17 @@ const RegionEdit = ({ onDrawerClose, editData, setMessage, setlog, Zone }) => {
                                     <Field
                                         size="sm"
                                         type="ShortName"
+                                        maxlength="4"
                                         autoComplete="off"
                                         name="ShortName"
-                                        placeholder="ShortName name"
+                                        placeholder="ShortName"
                                         component={Input}
                                     />
                                 </FormItem>
-                            </div>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
+
                                 <FormItem
                                     asterisk
-                                    label="Zone Code"
+                                    label="Zone Name"
                                     invalid={
                                         errors.ZoneCode && touched.ZoneCode
                                     }
@@ -212,23 +198,21 @@ const RegionEdit = ({ onDrawerClose, editData, setMessage, setlog, Zone }) => {
                                         )}
                                     </Field>
                                 </FormItem>
-                                <FormItem
-                                    asterisk
-                                    label="Status"
-                                    invalid={
-                                        errors.IsActive && touched.IsActive
-                                    }
-                                    errorMessage={errors.IsActive}
-                                >
-                                    <div>
-                                        <Field
-                                            size="sm"
-                                            name="IsActive"
-                                            component={Switcher}
-                                        />
-                                    </div>
-                                </FormItem>
                             </div>
+                            <FormItem
+                                label="Status"
+                                invalid={errors.IsActive && touched.IsActive}
+                                errorMessage={errors.IsActive}
+                            >
+                                <div>
+                                    <Field
+                                        size="sm"
+                                        name="IsActive"
+                                        component={Switcher}
+                                    />
+                                </div>
+                            </FormItem>
+
                             <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit

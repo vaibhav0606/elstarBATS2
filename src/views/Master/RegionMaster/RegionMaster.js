@@ -2,10 +2,11 @@ import { useState, useEffect, useMemo } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
 import { apiGetRegionmaster, apiGetZonemaster } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
-import { HiPlusCircle } from 'react-icons/hi'
+import { HiOutlinePencil, HiPlusCircle } from 'react-icons/hi'
 import RegionEdit from './RegionEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
+import HeaderExtra from 'views/Controls/HeaderExtra'
 
 const headerExtraContent = (
     openDrawer,
@@ -156,7 +157,7 @@ const Regionmaster = () => {
                 </Alert>
             )} */}
             <Card
-                header="Region Master"
+                header={<HeaderExtra Component={'Region Master'} />}
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -178,9 +179,29 @@ const Regionmaster = () => {
 
             <Drawer
                 title={
-                    editData.RegionName
-                        ? 'Edit Region Master'
-                        : 'Add Region Master'
+                    editData.RegionName ? (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiOutlinePencil />}
+                                ></Button>
+                            </center>
+                            &nbsp;&nbsp; Region Master
+                        </p>
+                    ) : (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiPlusCircle />}
+                                ></Button>
+                            </center>
+                            &nbsp;&nbsp;Region Master
+                        </p>
+                    )
                 }
                 isOpen={isOpen}
                 onClose={onDrawerClose}

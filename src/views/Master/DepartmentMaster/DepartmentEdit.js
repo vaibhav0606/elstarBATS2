@@ -15,10 +15,10 @@ const validationSchema = Yup.object().shape({
     DepartmentName: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('DepartmentName Required'),
+        .required('Department Name Required'),
     ShortName: Yup.string()
         .min(1, 'Too Short!')
-        .max(50, 'Too Long!')
+        .max(4, 'Too Long!')
         .required('ShortName Required'),
     IsActive: Yup.string().required('IsActives Required'),
     rememberMe: Yup.bool(),
@@ -121,12 +121,13 @@ const DepartmentEdit = ({
                                     type="DepartmentCode"
                                     autoComplete="off"
                                     name="DepartmentCode"
-                                    placeholder="DepartmentCode name"
+                                    placeholder="DepartmentCode"
                                     component={Input}
                                     hidden
                                 />
                                 <FormItem
-                                    label="DepartmentName"
+                                    asterisk
+                                    label="Department Name"
                                     invalid={
                                         errors.DepartmentName &&
                                         touched.DepartmentName
@@ -135,16 +136,16 @@ const DepartmentEdit = ({
                                 >
                                     <Field
                                         size="sm"
-                                        type="DepartmentName"
+                                        type="Department Name"
                                         autoComplete="off"
                                         name="DepartmentName"
-                                        placeholder="Department name"
+                                        placeholder="Department Name"
                                         component={Input}
                                     />
                                 </FormItem>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+
                                 <FormItem
+                                    asterisk
                                     label="ShortName"
                                     invalid={
                                         errors.ShortName && touched.ShortName
@@ -154,16 +155,16 @@ const DepartmentEdit = ({
                                     <Field
                                         size="sm"
                                         type="ShortName"
+                                        maxlength="4"
                                         autoComplete="off"
                                         name="ShortName"
-                                        placeholder="ShortName name"
+                                        placeholder="Short Name"
                                         component={Input}
                                     />
                                 </FormItem>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                                 <FormItem
-                                    asterisk
                                     label="Status"
                                     invalid={
                                         errors.IsActive && touched.IsActive

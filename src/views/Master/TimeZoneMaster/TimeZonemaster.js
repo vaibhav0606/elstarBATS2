@@ -5,10 +5,11 @@ import {
     apiGetCurrencymaster,
 } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
-import { HiPlusCircle } from 'react-icons/hi'
+import { HiOutlinePencil, HiPlusCircle } from 'react-icons/hi'
 import TimeZoneEdit from './TimeZoneEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
+import HeaderExtra from 'views/Controls/HeaderExtra'
 
 const headerExtraContent = (
     openDrawer,
@@ -156,7 +157,7 @@ const TimeZonemaster = () => {
                 </Alert>
             )} */}
             <Card
-                header="TimeZone Master"
+                header={<HeaderExtra Component={'Time Zone Master'} />}
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -178,9 +179,29 @@ const TimeZonemaster = () => {
 
             <Drawer
                 title={
-                    editData.TimeZoneName
-                        ? 'Edit TimeZone Master'
-                        : 'Add TimeZone Master'
+                    editData.TimeZoneName ? (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiOutlinePencil />}
+                                ></Button>
+                            </center>
+                            &nbsp;&nbsp; TimeZone Master
+                        </p>
+                    ) : (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiPlusCircle />}
+                                ></Button>
+                            </center>
+                            &nbsp;&nbsp;TimeZone Master
+                        </p>
+                    )
                 }
                 isOpen={isOpen}
                 onClose={onDrawerClose}

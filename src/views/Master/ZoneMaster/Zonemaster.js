@@ -2,10 +2,11 @@ import { useState, useEffect, useMemo } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
 import { apiGetZonemaster, apiGetCurrencymaster } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
-import { HiPlusCircle } from 'react-icons/hi'
+import { HiOutlinePencil, HiPlusCircle } from 'react-icons/hi'
 import ZoneEdit from './ZoneEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
+import HeaderExtra from 'views/Controls/HeaderExtra'
 
 const headerExtraContent = (
     openDrawer,
@@ -153,7 +154,7 @@ const Zonemaster = () => {
                 </Alert>
             )} */}
             <Card
-                header="Zone Master"
+                header={<HeaderExtra Component={'Zone Master'} />}
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -175,7 +176,29 @@ const Zonemaster = () => {
 
             <Drawer
                 title={
-                    editData.ZoneName ? 'Edit Zone Master' : 'Add Zone Master'
+                    editData.ZoneName ? (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiOutlinePencil />}
+                                ></Button>
+                            </center>
+                            &nbsp;&nbsp; Zone Master
+                        </p>
+                    ) : (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiPlusCircle />}
+                                ></Button>
+                            </center>
+                            &nbsp;&nbsp;Zone Master
+                        </p>
+                    )
                 }
                 isOpen={isOpen}
                 onClose={onDrawerClose}

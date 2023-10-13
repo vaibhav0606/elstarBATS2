@@ -5,10 +5,11 @@ import {
     apiGetCurrencymaster,
 } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
-import { HiPlusCircle } from 'react-icons/hi'
+import { HiOutlinePencil, HiPlusCircle } from 'react-icons/hi'
 import DepartmentEdit from './DepartmentEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
+import HeaderExtra from 'views/Controls/HeaderExtra'
 
 const headerExtraContent = (
     openDrawer,
@@ -156,7 +157,7 @@ const Departmentmaster = () => {
                 </Alert>
             )} */}
             <Card
-                header="Department Master"
+                header={<HeaderExtra Component={'Department Master'} />}
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -178,14 +179,38 @@ const Departmentmaster = () => {
 
             <Drawer
                 title={
-                    editData.DepartmentName
-                        ? 'Edit Department Master'
-                        : 'Add Department Master'
+                    editData.DepartmentName ? (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiOutlinePencil />}
+                                ></Button>
+                            </center>
+                            &nbsp;&nbsp; Department Master
+                        </p>
+                    ) : (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiPlusCircle />}
+                                ></Button>
+                            </center>
+                            &nbsp;&nbsp;Department Master
+                        </p>
+                    )
                 }
                 isOpen={isOpen}
                 onClose={onDrawerClose}
                 onRequestClose={onDrawerClose}
-                width={window.screen.width / 1.5}
+                width={
+                    window.screen.width > 400
+                        ? window.screen.width / 3
+                        : window.screen.width / 1.5
+                }
             >
                 <DepartmentEdit
                     onDrawerClose={onDrawerClose}

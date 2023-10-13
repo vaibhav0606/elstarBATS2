@@ -15,19 +15,19 @@ const validationSchema = Yup.object().shape({
     LocationName: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('LocationName Required'),
+        .required('Location Name Required'),
     ShortName: Yup.string()
         .min(1, 'Too Short!')
-        .max(50, 'Too Long!')
+        .max(4, 'Too Long!')
         .required('ShortName Required'),
     TimeZoneCode: Yup.string()
         .min(1, 'Too Short!')
         .max(200, 'Too Long!')
-        .required('TimeZoneCode Required'),
+        .required('TimeZone Required'),
     CurrencyCode: Yup.string()
         .min(1, 'Too Short!')
         .max(200, 'Too Long!')
-        .required('CurrencyCode Required'),
+        .required('Currency Required'),
     IsActive: Yup.string().required('IsActives Required'),
     rememberMe: Yup.bool(),
 })
@@ -69,7 +69,7 @@ const LocationEdit = ({
                 setlog('success')
                 setMessage('Data Updated Successfully')
                 return
-            } else if (resp.data.msg === 'Location is Already Exists') {
+            } else if (resp.data.msg === 'Location Already Exists') {
                 setlog('warning')
                 setMessage(resp.data.msg)
                 return
@@ -132,12 +132,14 @@ const LocationEdit = ({
                                     type="LocationCode"
                                     autoComplete="off"
                                     name="LocationCode"
-                                    placeholder="LocationCode name"
+                                    placeholder="Location Name"
                                     component={Input}
                                     hidden
                                 />
+
                                 <FormItem
-                                    label="LocationName"
+                                    asterisk
+                                    label="Location Name"
                                     invalid={
                                         errors.LocationName &&
                                         touched.LocationName
@@ -149,12 +151,13 @@ const LocationEdit = ({
                                         type="LocationName"
                                         autoComplete="off"
                                         name="LocationName"
-                                        placeholder="Location name"
+                                        placeholder="Location Name"
                                         component={Input}
                                     />
                                 </FormItem>
                                 <FormItem
-                                    label="TimeZoneCode"
+                                    asterisk
+                                    label="TimeZone"
                                     invalid={
                                         errors.TimeZoneCode &&
                                         touched.TimeZoneCode
@@ -165,14 +168,15 @@ const LocationEdit = ({
                                         size="sm"
                                         type="TimeZoneCode"
                                         autoComplete="off"
-                                        name="TimeZoneCode"
-                                        placeholder="TimeZoneCode name"
+                                        name="TimeZone"
+                                        placeholder="TimeZone"
                                         component={Input}
                                     />
                                 </FormItem>
 
                                 <FormItem
-                                    label="ShortName"
+                                    asterisk
+                                    label="Short Name"
                                     invalid={
                                         errors.ShortName && touched.ShortName
                                     }
@@ -181,9 +185,10 @@ const LocationEdit = ({
                                     <Field
                                         size="sm"
                                         type="ShortName"
+                                        maxlength="4"
                                         autoComplete="off"
                                         name="ShortName"
-                                        placeholder="ShortName name"
+                                        placeholder="ShortName"
                                         component={Input}
                                     />
                                 </FormItem>
@@ -226,7 +231,6 @@ const LocationEdit = ({
                                 </FormItem>
 
                                 <FormItem
-                                    asterisk
                                     label="Status"
                                     invalid={
                                         errors.IsActive && touched.IsActive
