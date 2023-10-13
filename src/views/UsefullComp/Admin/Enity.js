@@ -5,10 +5,8 @@
     name:'entityname',
     type:'text',
     width:'50%',
-     min:"200"
 },
 {
-    cats:'text',
     asterisk:true,
     lable:"Address",
     placeholder:"Parmanet Address",

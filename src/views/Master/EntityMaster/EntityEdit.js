@@ -14,7 +14,7 @@ const validationSchema = Yup.object().shape({
         .max(50, 'Too Long!')
         .required('Entity name Required'),
     PermAddress: Yup.string()
-        .min(3, 'Too Short!')
+        .min(6, 'Too Short!')
         .max(200, 'Too Long!')
         .required('Permanent Address Required'),
     CorpAddress: Yup.string()
@@ -174,7 +174,7 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                 {enity.map((item, index) => (
                                    
                                        <div  key={index} style={{width:item.width}} class='px-1'> 
-                                    <InputField lable={item.lable}placeholder={item.placeholder}name={item.name}type={item.type}errors={errors}touched={touched}asterisk={item.asterisk}/>
+                                    <InputField lable={item.lable} placeholder={item.placeholder} name={item.name}type={item.type}errors={errors}touched={touched}asterisk={item.asterisk}/>
                                     </div>
                                     
                                         ))}

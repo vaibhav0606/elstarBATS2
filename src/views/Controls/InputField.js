@@ -1,19 +1,26 @@
 import { FormItem, Input } from 'components/ui'
 import { Field } from 'formik'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const InputField = ({lable,placeholder,name,type,errors,touched,asterisk}) => {
+   
+//    useEffect(() => {
+//     const errorst = {name};
+//    console.log(name);
+//   alert(name)
+//    }, [])
+   
   return (
     <FormItem
     asterisk={asterisk}
         label={lable}
         errorMessage={
             <p className="text-xs italic">
-                {errors.entityname}
+                {errors.name}
             </p>
         }
         invalid={
-            errors.entityname && touched.entityname
+            errors.name && touched.name
         }
     >
         <Field
