@@ -119,7 +119,7 @@ const CurrencyEdit = ({
                 {({ values, touched, errors }) => (
                     <Form>
                         <FormContainer>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <Field
                                     size="sm"
                                     type="CurrencyCode"
@@ -130,7 +130,8 @@ const CurrencyEdit = ({
                                     hidden
                                 />
                                 <FormItem
-                                    label="CurrencyName"
+                                    asterisk
+                                    label="Currency Name"
                                     invalid={
                                         errors.CurrencyName &&
                                         touched.CurrencyName
@@ -139,15 +140,17 @@ const CurrencyEdit = ({
                                 >
                                     <Field
                                         size="sm"
-                                        type="CurrencyName"
+                                        type="text"
+                                        maxlength="30"
                                         autoComplete="off"
                                         name="CurrencyName"
-                                        placeholder="Currency name"
+                                        placeholder="Currency Name"
                                         component={Input}
                                     />
                                 </FormItem>
                                 <FormItem
-                                    label="CurrencySymbol"
+                                    asterisk
+                                    label="Currency Symbol"
                                     invalid={
                                         errors.CurrencySymbol &&
                                         touched.CurrencySymbol
@@ -159,12 +162,13 @@ const CurrencyEdit = ({
                                         type="text"
                                         autoComplete="off"
                                         name="CurrencySymbol"
-                                        placeholder="CurrencySymbol name"
+                                        placeholder="Currency Symbol"
                                         component={Input}
                                     />
                                 </FormItem>
                                 <FormItem
-                                    label="ShortName"
+                                    asterisk
+                                    label="Short Name"
                                     invalid={
                                         errors.ShortName && touched.ShortName
                                     }
@@ -172,10 +176,11 @@ const CurrencyEdit = ({
                                 >
                                     <Field
                                         size="sm"
-                                        type="ShortName"
+                                        type="text"
+                                        maxlength="4"
                                         autoComplete="off"
                                         name="ShortName"
-                                        placeholder="Short name"
+                                        placeholder="Short Name"
                                         component={Input}
                                     />
                                 </FormItem>

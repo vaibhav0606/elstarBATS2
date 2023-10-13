@@ -15,27 +15,27 @@ const validationSchema = Yup.object().shape({
     ChannelName: Yup.string()
         .min(3, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('ChannelName Required'),
+        .required('Channel Name Required'),
     ShortName: Yup.string()
         .min(1, 'Too Short!')
-        .max(200, 'Too Long!')
-        .required('ShortName Required'),
+        .max(100, 'Too Long!')
+        .required('Short Name Required'),
     ChannelGenre: Yup.string()
         .min(3, 'Too Short!')
-        .max(200, 'Too Long!')
+        .max(100, 'Too Long!')
         .required('ChannelGenre Required'),
     ChannelContentType: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('ChannelContentType Required'),
+        .required('ContentType Required'),
     SACCode: Yup.string()
         .min(3, 'Too Short!')
         .max(10, 'Too Long!')
         .required('SACCode Required'),
     GSTN_id: Yup.string()
         .min(3, 'Too Short!')
-        .max(10, 'Too Long!')
-        .required('GSTN_id Required'),
+        .max(15, 'Too Long!')
+        .required('GST Number Required'),
 
     rememberMe: Yup.bool(),
 })
@@ -131,7 +131,7 @@ const ChannelEdit = ({
                 {({ values, touched, errors }) => (
                     <Form>
                         <FormContainer>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <Field
                                     size="sm"
                                     type="ChannelCode"
@@ -142,7 +142,8 @@ const ChannelEdit = ({
                                     hidden
                                 />
                                 <FormItem
-                                    label="ChannelName"
+                                    asterisk
+                                    label="Channel Name"
                                     invalid={
                                         errors.ChannelName &&
                                         touched.ChannelName
@@ -151,7 +152,8 @@ const ChannelEdit = ({
                                 >
                                     <Field
                                         size="sm"
-                                        type="ChannelName"
+                                        type="text"
+                                        maxlength="30"
                                         autoComplete="off"
                                         name="ChannelName"
                                         placeholder="Channel Name"
@@ -159,7 +161,8 @@ const ChannelEdit = ({
                                     />
                                 </FormItem>
                                 <FormItem
-                                    label="ShortName"
+                                    asterisk
+                                    label="Short Name"
                                     invalid={
                                         errors.ShortName && touched.ShortName
                                     }
@@ -167,16 +170,17 @@ const ChannelEdit = ({
                                 >
                                     <Field
                                         size="sm"
-                                        type="ShortName"
+                                        type="text"
+                                        maxlength="4"
                                         autoComplete="off"
                                         name="ShortName"
                                         placeholder="Short Name"
                                         component={Input}
                                     />
                                 </FormItem>
-
                                 <FormItem
-                                    label="ChannelGenre"
+                                    asterisk
+                                    label="Channel Genre"
                                     invalid={
                                         errors.ChannelGenre &&
                                         touched.ChannelGenre
@@ -185,7 +189,8 @@ const ChannelEdit = ({
                                 >
                                     <Field
                                         size="sm"
-                                        type="ChannelGenre"
+                                        type="text"
+                                        maxlength="20"
                                         autoComplete="off"
                                         name="ChannelGenre"
                                         placeholder="ChannelGenre Name"
@@ -193,7 +198,8 @@ const ChannelEdit = ({
                                     />
                                 </FormItem>
                                 <FormItem
-                                    label="ChannelContentType"
+                                    asterisk
+                                    label="Content Type"
                                     invalid={
                                         errors.ChannelContentType &&
                                         touched.ChannelContentType
@@ -202,10 +208,41 @@ const ChannelEdit = ({
                                 >
                                     <Field
                                         size="sm"
-                                        type="ChannelContentType"
+                                        type="text"
+                                        maxlength="10"
                                         autoComplete="off"
                                         name="ChannelContentType"
-                                        placeholder="ChannelContentType Name"
+                                        placeholder="Channel Content Type"
+                                        component={Input}
+                                    />
+                                </FormItem>
+                                <FormItem
+                                    label="SAC Code"
+                                    invalid={errors.SACCode && touched.SACCode}
+                                    errorMessage={errors.SACCode}
+                                >
+                                    <Field
+                                        size="sm"
+                                        type="text"
+                                        maxlength="10"
+                                        autoComplete="off"
+                                        name="SACCode"
+                                        placeholder="SAC Code"
+                                        component={Input}
+                                    />
+                                </FormItem>
+                                <FormItem
+                                    label="GST"
+                                    invalid={errors.GSTN_id && touched.GSTN_id}
+                                    errorMessage={errors.GSTN_id}
+                                >
+                                    <Field
+                                        size="sm"
+                                        type="text"
+                                        maxlength="15"
+                                        autoComplete="off"
+                                        name="GSTN_id"
+                                        placeholder="GST Number"
                                         component={Input}
                                     />
                                 </FormItem>
@@ -242,34 +279,6 @@ const ChannelEdit = ({
                                             />
                                         )}
                                     </Field>
-                                </FormItem>
-                                <FormItem
-                                    label="SACCode"
-                                    invalid={errors.SACCode && touched.SACCode}
-                                    errorMessage={errors.SACCode}
-                                >
-                                    <Field
-                                        size="sm"
-                                        type="SACCode"
-                                        autoComplete="off"
-                                        name="SACCode"
-                                        placeholder="SACCode Name"
-                                        component={Input}
-                                    />
-                                </FormItem>
-                                <FormItem
-                                    label="GSTN_id"
-                                    invalid={errors.GSTN_id && touched.GSTN_id}
-                                    errorMessage={errors.GSTN_id}
-                                >
-                                    <Field
-                                        size="sm"
-                                        type="GSTN_id"
-                                        autoComplete="off"
-                                        name="GSTN_id"
-                                        placeholder="GSTN_id Name"
-                                        component={Input}
-                                    />
                                 </FormItem>
                             </div>
 

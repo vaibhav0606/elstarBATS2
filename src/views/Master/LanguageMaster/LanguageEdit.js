@@ -15,11 +15,11 @@ const validationSchema = Yup.object().shape({
     LanguageName: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('LanguageName Required'),
+        .required('Language Name Required'),
     CountryName: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('CountryName Required'),
+        .required('Country Name Required'),
     IsActive: Yup.string().required('IsActives Required'),
     rememberMe: Yup.bool(),
 })
@@ -131,7 +131,8 @@ const LanguageEdit = ({
                                     hidden
                                 />
                                 <FormItem
-                                    label="LanguageName"
+                                    asterisk
+                                    label="Language Name"
                                     invalid={
                                         errors.LanguageName &&
                                         touched.LanguageName
@@ -140,7 +141,8 @@ const LanguageEdit = ({
                                 >
                                     <Field
                                         size="sm"
-                                        type="LanguageName"
+                                        type="text"
+                                        maxlength="20"
                                         autoComplete="off"
                                         name="LanguageName"
                                         placeholder="Language Name"

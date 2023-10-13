@@ -15,11 +15,11 @@ const validationSchema = Yup.object().shape({
     ModuleName: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('LocationName Required'),
+        .required('Module Name Required'),
     IndexNum: Yup.number()
         .positive('Must be more than 0')
         .integer('Must be more than 0')
-        .required('IndexNum Required'),
+        .required('Index Number Required'),
     IsActive: Yup.string().required('IsActives Required'),
     rememberMe: Yup.bool(),
 })
@@ -116,23 +116,19 @@ const ModuleEdit = ({
                 {({ values, touched, errors }) => (
                     <Form>
                         <FormContainer>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                                 <Field
                                     size="sm"
                                     type="ModuleCode"
                                     autoComplete="off"
                                     name="ModuleCode"
-                                    placeholder="ModuleCode name"
+                                    placeholder="ModuleCode Name"
                                     component={Input}
                                     hidden
                                 />
                                 <FormItem
-                                    label="ModuleName"
+                                    asterisk
+                                    label="Module Name"
                                     invalid={
                                         errors.ModuleName && touched.ModuleName
                                     }
@@ -143,12 +139,13 @@ const ModuleEdit = ({
                                         type="ModuleName"
                                         autoComplete="off"
                                         name="ModuleName"
-                                        placeholder="Module name"
+                                        placeholder="Module Name"
                                         component={Input}
                                     />
                                 </FormItem>
                                 <FormItem
-                                    label="IndexNum"
+                                    asterisk
+                                    label="Index Number"
                                     invalid={
                                         errors.IndexNum && touched.IndexNum
                                     }
@@ -159,7 +156,7 @@ const ModuleEdit = ({
                                         type="Number"
                                         autoComplete="off"
                                         name="IndexNum"
-                                        placeholder="IndexNum name"
+                                        placeholder="Index Number"
                                         component={Input}
                                     />
                                 </FormItem>

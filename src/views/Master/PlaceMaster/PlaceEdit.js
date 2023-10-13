@@ -15,7 +15,7 @@ const validationSchema = Yup.object().shape({
     PlaceName: Yup.string()
         .min(3, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('PlaceName Required'),
+        .required('Place Name Required'),
     ShortName: Yup.string()
         .min(1, 'Too Short!')
         .max(200, 'Too Long!')
@@ -23,12 +23,16 @@ const validationSchema = Yup.object().shape({
     ZoneCode: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('ZoneCode Required'),
+        .required('Zone Required'),
+    StateCode: Yup.string()
+        .min(1, 'Too Short!')
+        .max(50, 'Too Long!')
+        .required('State Required'),
     //StateCode: Yup.string().required('StateCode Required'),
     CountryCode: Yup.string()
         .min(1, 'Too Short!')
         .max(200, 'Too Long!')
-        .required('CountryCode Required'),
+        .required('Country Required'),
     IsActive: Yup.string().required('IsActives Required'),
 
     rememberMe: Yup.bool(),
@@ -126,7 +130,7 @@ const PlaceEdit = ({
                 {({ values, touched, errors }) => (
                     <Form>
                         <FormContainer>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <Field
                                     type="PlaceCode"
                                     autoComplete="off"
@@ -137,14 +141,15 @@ const PlaceEdit = ({
                                 />
                                 <FormItem
                                     asterisk
-                                    label="PlaceName"
+                                    label="Place Name"
                                     invalid={
                                         errors.PlaceName && touched.PlaceName
                                     }
                                     errorMessage={errors.PlaceName}
                                 >
                                     <Field
-                                        type="PlaceName"
+                                        type="text"
+                                        maxlength="30"
                                         autoComplete="off"
                                         name="PlaceName"
                                         placeholder="Place Name"
@@ -153,14 +158,15 @@ const PlaceEdit = ({
                                 </FormItem>
                                 <FormItem
                                     asterisk
-                                    label="ShortName"
+                                    label="Short Name"
                                     invalid={
                                         errors.ShortName && touched.ShortName
                                     }
                                     errorMessage={errors.ShortName}
                                 >
                                     <Field
-                                        type="ShortName"
+                                        type="text"
+                                        maxlength="4"
                                         autoComplete="off"
                                         name="ShortName"
                                         placeholder="Short Name"
@@ -224,7 +230,7 @@ const PlaceEdit = ({
                                                 value={State.filter(
                                                     (option) =>
                                                         option.value ===
-                                                        values.State
+                                                        values.StateCode
                                                 )}
                                                 onChange={(option) =>
                                                     form.setFieldValue(
