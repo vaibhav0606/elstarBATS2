@@ -15,8 +15,8 @@ const VerticalMenuIcon = ({ icon, gutter }) => {
     }
 
     return (
-        <span className={`text-2xl ${gutter ? 'ltr:mr-2 rtl:ml-2' : ''}`}>
-            {navigationIcon[icon]}
+        <span className={`text-xs ${gutter ? 'ltr:mr-2 rtl:ml-2' : ''}`}>
+            --
         </span>
     )
 }

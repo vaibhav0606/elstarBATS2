@@ -180,7 +180,7 @@ const navigationConfig = [
     {
         key: 'Programming',
         path: '/Programming',
-        title: 'Programming',
+        title: 'Content',
         translateKey: 'nav.Programming',
         icon: 'singleMenu',
         type: NAV_ITEM_TYPE_COLLAPSE,

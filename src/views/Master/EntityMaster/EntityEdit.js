@@ -3,7 +3,7 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { PostEntity, PutEntity } from 'services/MasterService'
 import { useSelector } from 'react-redux'
-
+import NumberFormat from 'react-number-format' 
 const validationSchema = Yup.object().shape({
     entityname: Yup.string()
         .min(3, 'Too Short!')
@@ -12,7 +12,7 @@ const validationSchema = Yup.object().shape({
     PermAddress: Yup.string()
         .min(3, 'Too Short!')
         .max(200, 'Too Long!')
-        .required('Perm Address Required'),
+        .required('Permanent Address Required'),
     CorpAddress: Yup.string()
         .min(3, 'Too Short!')
         .max(200, 'Too Long!')
@@ -21,9 +21,10 @@ const validationSchema = Yup.object().shape({
         .min(3, 'Too Short!')
         .max(50, 'Too Long!')
         .required('Contact Person Required'),
-    Contact: Yup.string()
-        .min(3, 'Too Short!')
-        .max(10, 'Too Long!')
+    Contact: Yup.string()    
+        .min(10, 'Too Short!')
+        .max(12, 'Too Long!')
+        .matches(/^[0-9]+$/, "Must be only digits")
         .required('Contact Required'),
     IsActive: Yup.string().required('IsActives Required'),
     PANNO: Yup.string()
@@ -77,7 +78,26 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
             return {}
         }
     }
-
+    const PriceInput = (props) => {
+        return <Input {...props}  name="Contact" value={props.field.value} prefix="" />
+    }
+    const NumberFormatInput = ({ onValueChange, ...rest }) => {
+        return (
+            <NumberFormat
+                customInput={Input}
+                type="text"
+                onValueChange={onValueChange}
+                autoComplete="off"
+                {...rest}
+            />
+        )
+    }
+    const withValueCap = (inputObj) => {
+        const MAX_VAL = 9999999999;
+        const { value } = inputObj;
+        if (value <= MAX_VAL) return true;
+        return false;
+      };
     return (
         <div>
             <Formik
@@ -138,7 +158,8 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                     hidden
                                 />
                                 <FormItem
-                                    label="EntityName "
+                                asterisk
+                                    label="Name "
                                     errorMessage={
                                         <p className="text-xs italic">
                                             {errors.entityname}
@@ -154,12 +175,13 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                         type="entityname"
                                         autoComplete="off"
                                         name="entityname"
-                                        placeholder="Entity name"
+                                        placeholder="Entity Name"
                                         component={Input}
                                     />
                                 </FormItem>
                                 <FormItem
-                                    label="CorpAddress"
+                                asterisk
+                                    label="Address"
                                     invalid={
                                         errors.CorpAddress &&
                                         touched.CorpAddress
@@ -182,7 +204,8 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                                 <FormItem
-                                    label="PermAddress"
+                                asterisk
+                                    label="Permanent Address"
                                     invalid={
                                         errors.PermAddress &&
                                         touched.PermAddress
@@ -198,12 +221,13 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                         type="PermAddress"
                                         autoComplete="off"
                                         name="PermAddress"
-                                        placeholder="Perm Address"
+                                        placeholder="Address"
                                         component={Input}
                                     />
                                 </FormItem>
                                 <FormItem
-                                    label="ContactPerson"
+                                asterisk
+                                    label="Contact Person"
                                     invalid={
                                         errors.ContactPerson &&
                                         touched.ContactPerson
@@ -226,6 +250,7 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                                 <FormItem
+                                asterisk
                                     label="Contact"
                                     invalid={errors.Contact && touched.Contact}
                                     errorMessage={
@@ -234,16 +259,30 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                         </p>
                                     }
                                 >
-                                    <Field
-                                        size="sm"
-                                        type="Number"
-                                        autoComplete="off"
-                                        name="Contact"
+                                      <Field name="Contact" component={Input} size="sm">
+                            {({ field, form }) => {
+                                return (
+                                    <NumberFormatInput
+                                    size="sm"
+                                        form={form}
+                                        field={field}
+                                        name="Contact" 
                                         placeholder="Contact"
-                                        component={Input}
+                                        customInput={PriceInput}
+                                        isAllowed={withValueCap}
+                                        onValueChange={(e) => {
+                                            form.setFieldValue(
+                                                field.name,
+                                                e.value
+                                            )
+                                        }}
                                     />
+                                )
+                            }}
+                        </Field>
                                 </FormItem>
                                 <FormItem
+                                asterisk
                                     label="PAN NO"
                                     invalid={errors.PANNO && touched.PANNO}
                                     errorMessage={
@@ -280,15 +319,13 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                     </div>
                                 </FormItem>
                                 <FormItem
+                                asterisk
                                     label="CIN Number"
                                     invalid={
                                         errors.CINNumber && touched.CINNumber
                                     }
-                                    errorMessage={
-                                        <p className="text-xs italic">
-                                            {errors.CINNumber}
-                                        </p>
-                                    }
+                                    errorMessage={<p className="text-xs italic">
+                                    {errors.CINNumber}</p>}
                                     // errorMessage={errors.CINNumber}
                                 >
                                     <Field

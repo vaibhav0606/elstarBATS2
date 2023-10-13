@@ -6,13 +6,10 @@ import {
     getSortedRowModel,
     useReactTable,
     getFilteredRowModel,
-    getFacetedRowModel,
-    getFacetedUniqueValues,
-    getFacetedMinMaxValues,
-    getPaginationRowModel,
 } from '@tanstack/react-table'
-import { Button, Input } from 'components/ui'
+import { Button } from 'components/ui'
 import { HiOutlinePencil } from 'react-icons/hi'
+import { useSelector } from 'react-redux'
 
 const DisplayTable = ({
     data,
@@ -35,18 +32,20 @@ const DisplayTable = ({
         onSortingChange: setSorting,
         onGlobalFilterChange: setGlobalFilter,
         enableColumnResizing: true,
-        columnResizeMode: 'onChange',
         getCoreRowModel: getCoreRowModel(),
         getSortedRowModel: getSortedRowModel(),
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
     })
     const { Tr, Th, Td, THead, TBody, Sorter } = Table
-
+    const themeColor = useSelector((state) => state.theme.themeColor)
     return (
         <>
+
             <Table>
-                <THead>
+                <THead className="border-b-2 "  style={{
+                    borderColor: themeColor,
+                }}variant="solid">
                     {table.getHeaderGroups().map((headerGroup) => (
                         <Tr key={headerGroup.id}>
                             {headerGroup.headers.map((header) => {
@@ -54,13 +53,9 @@ const DisplayTable = ({
                                     <Th
                                         key={header.id}
                                         colSpan={header.colSpan}
-                                        style={{
-                                            position: 'relative',
-                                            //  width: header.getSize(3000),
-                                        }}
+                                        
                                     >
-                                        <p className="font-bold text-black">
-                                            {/* {console.log(header.getSize(3000))} */}
+                                        <p className="text-black capitalize">
                                             {header.isPlaceholder ? null : (
                                                 <div
                                                     {...{
@@ -100,7 +95,7 @@ const DisplayTable = ({
                                 )
                             })}
                             <Th>
-                                <p className="font-bold text-black">Actions</p>
+                                <p className="text-black capitalize">Actions</p>
                             </Th>
                         </Tr>
                     ))}
@@ -113,7 +108,7 @@ const DisplayTable = ({
                                     return (
                                         <Td
                                             key={cell.id}
-                                            className="text-xs text-black font-medium border "
+                                            className="text-xs text-black font-light border-y "
                                         >
                                             {flexRender(
                                                 cell.column.columnDef.cell,
@@ -127,7 +122,7 @@ const DisplayTable = ({
                                         seteditData(row.original)
                                         openDrawer()
                                     }}
-                                    className="text-xs text-black font-medium border"
+                                    className="text-xs text-black font-medium border-y"
                                 >
                                     <center>
                                         <Button
@@ -142,7 +137,7 @@ const DisplayTable = ({
                     })}
                 </TBody>
             </Table>
-            <div className="flex  justify-end mt-2">
+            <div className="flex  justify-start mt-2">
                 <h1 className="text-xs  font-light">Records : {data.length}</h1>
             </div>
         </>
