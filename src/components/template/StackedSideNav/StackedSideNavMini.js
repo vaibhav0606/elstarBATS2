@@ -113,10 +113,10 @@ const StackedSideNavMini = (props) => {
                                         }
                                     >
                                         <center>
-                                            <div className="text-2xl">
+                                            <div className="text-2xl"  style={{border:1,borderColor:'red'}}>
                                                 {navigationIcon[nav.icon]}
                                             </div>
-                                            <span style={{ fontSize: '10px' }}>
+                                            <span style={{ fontSize: '9px' }}>
                                                 {nav.title}
                                             </span>
                                         </center>
@@ -141,7 +141,7 @@ const StackedSideNavMini = (props) => {
                                             <div className="text-2xl">
                                                 {navigationIcon[nav.icon]}
                                             </div>
-                                            <span style={{ fontSize: '10px' }}>
+                                            <span style={{ fontSize: '9px' }}>
                                                 {nav.title}
                                             </span>
                                         </center>

@@ -6,6 +6,7 @@ import { HiPlusCircle } from 'react-icons/hi'
 import EntityEdit from './EntityEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
+import HeaderExtra from 'views/Controls/HeaderExtra'
 
 const headerExtraContent = (
     openDrawer,
@@ -13,7 +14,7 @@ const headerExtraContent = (
     globalFilter,
     setGlobalFilter
 ) => {
-    return (
+    return (            
         <span className="flex items-center">
             <span className="mr-1 mt-4  font-semibold">
                 <DebouncedInput
@@ -40,6 +41,30 @@ const headerExtraContent = (
         </span>
     )
 }
+
+// const HeaderExtra = () => {
+//     return (
+//     <div>
+//     <p className='text-xl font-medium text-black'>Entity Master</p>
+//     <Breadcrumbs style={{marginLeft:'-15px',width:'auto'}}>
+//     <a href="#" className="opacity-60">
+//         <svg
+//           xmlns="http://www.w3.org/2000/svg"
+//           className="h-4 w-4"
+//           viewBox="0 0 20 20"
+//           fill="currentColor"
+//         >
+//           <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+//         </svg>
+//       </a>
+//       <a href="#" className="opacity-60">
+//       <span>Admin</span>
+//     </a>
+//     <a href="#" ><span>Entity Master</span></a>
+//   </Breadcrumbs>
+//   </div>
+//     )
+// }
 
 const Entitymaster = () => {
     const [isOpen, setIsOpen] = useState(false)
@@ -152,7 +177,7 @@ const Entitymaster = () => {
                 </Alert>
             )} */}
             <Card
-                header="Entity Master"
+                header={<HeaderExtra Component={'Entity Master'}/>}
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -160,6 +185,7 @@ const Entitymaster = () => {
                     setGlobalFilter
                 )}
             >
+     
                 <DisplayTable
                     data={data}
                     columns={columns}
@@ -175,7 +201,7 @@ const Entitymaster = () => {
             <Drawer
                 title={
                     editData.EntityName
-                        ? 'Edit Entity Master'
+                        ? <p className='text-xl font-medium text-black flex '><HiPlusCircle /> Entity Master</p>
                         : 'Add Entity Master'
                 }
                 isOpen={isOpen}

@@ -13,6 +13,7 @@ import {
 } from '@tanstack/react-table'
 import { Button, Input } from 'components/ui'
 import { HiOutlinePencil } from 'react-icons/hi'
+import { useSelector } from 'react-redux'
 
 const DisplayTable = ({
     data,
@@ -45,11 +46,13 @@ const DisplayTable = ({
         getFacetedMinMaxValues: getFacetedMinMaxValues(),
     })
     const { Tr, Th, Td, THead, TBody, Sorter } = Table
-
+    const themeColor = useSelector((state) => state.theme.themeColor)
     return (
         <>
             <Table>
-                <THead>
+            <THead className="border-b-2 "  style={{
+                    borderColor: themeColor,
+                }}variant="solid">
                     {table.getHeaderGroups().map((headerGroup) => (
                         <Tr key={headerGroup.id}>
                             {headerGroup.headers.map((header) => {
@@ -57,16 +60,9 @@ const DisplayTable = ({
                                     <Th
                                         key={header.id}
                                         colSpan={header.colSpan}
-                                        className="bg-stone-300"
-                                        style={{
-                                            position: 'relative',
-                                            //  width: header.getSize(3000),
-                                        }}
+                                        
                                     >
-                                        <p
-                                            className="font-bold text-black"
-                                            // style={{ backgroundColor: 'red' }}
-                                        >
+                                       <p className="text-black capitalize">
                                             {/* {console.log(header.getSize(3000))} */}
                                             {header.isPlaceholder ? null : (
                                                 <div
@@ -106,8 +102,8 @@ const DisplayTable = ({
                                     </Th>
                                 )
                             })}
-                            <Th className="bg-stone-300">
-                                <p className="font-bold text-black">Actions</p>
+                            <Th>
+                            <p className="text-black capitalize">Actions</p>
                             </Th>
                         </Tr>
                     ))}

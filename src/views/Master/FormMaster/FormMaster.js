@@ -10,6 +10,7 @@ import { HiPlusCircle } from 'react-icons/hi'
 import FormEdit from './FormEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
+import HeaderExtra from 'views/Controls/HeaderExtra'
 
 const headerExtraContent = (
     openDrawer,
@@ -188,8 +189,8 @@ const Formmaster = () => {
                     {log}
                 </Alert>
             )} */}
-            <Card
-                header="Form Master"
+                <Card
+                header={<HeaderExtra Component={'Form Master'}/>}
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,

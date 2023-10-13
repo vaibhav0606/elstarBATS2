@@ -27,7 +27,7 @@ const StackedSideNavSecondary = (props) => {
             <div
                 className={`${HEADER_HEIGHT_CLASS} flex items-center justify-between gap-4 pl-6 pr-4`}
             >
-                <h5 className="font-bold">{title}</h5>
+                <h5 className="font-bold">{title.toUpperCase()}</h5>
                 <Button
                     shape="circle"
                     variant="plain"

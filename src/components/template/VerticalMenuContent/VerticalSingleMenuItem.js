@@ -27,13 +27,12 @@ const DefaultItem = (props) => {
         <AuthorityCheck
             userAuthority={userAuthority}
             authority={nav.authority}
-            style={{ height: '20px !important' }}
+
         >
             <MenuItem
                 key={nav.key}
                 eventKey={nav.key}
                 className="mb-2"
-                style={{ height: '20px !important' }}
             >
                 <Link
                     to={nav.path}
@@ -49,9 +48,10 @@ const DefaultItem = (props) => {
                     <VerticalMenuIcon icon={nav.icon} />
                     {!sideCollapsed && (
                         <span>
-                            <Trans
+                            <Trans 
+                           
                                 i18nKey={nav.translateKey}
-                                defaults={nav.title}
+                                defaults={<p  className='text-xs font-normal'>{nav.title}</p>}
                             />
                         </span>
                     )}
