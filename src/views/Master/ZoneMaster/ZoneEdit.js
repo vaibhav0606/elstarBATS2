@@ -8,9 +8,9 @@ const validationSchema = Yup.object().shape({
     ZoneName: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('ZoneName Required'),
+        .required('Zone Name Required'),
     ShortName: Yup.string()
-        .min(1, 'Too Short!')
+        .min(4, 'Too Short!')
         .max(50, 'Too Long!')
         .required('ShortName Required'),
     IsActive: Yup.string().required('IsActives Required'),
@@ -108,12 +108,7 @@ const ZoneEdit = ({
                 {({ values, touched, errors }) => (
                     <Form>
                         <FormContainer>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                                 <Field
                                     size="sm"
                                     type="ZoneCode"
@@ -124,7 +119,7 @@ const ZoneEdit = ({
                                     hidden
                                 />
                                 <FormItem
-                                    label="ZoneName"
+                                    label="Zone Name"
                                     invalid={
                                         errors.ZoneName && touched.ZoneName
                                     }
@@ -132,20 +127,14 @@ const ZoneEdit = ({
                                 >
                                     <Field
                                         size="sm"
-                                        type="ZoneName"
+                                        type="text"
                                         autoComplete="off"
                                         name="ZoneName"
-                                        placeholder="Zone name"
+                                        placeholder="Zone Name"
                                         component={Input}
                                     />
                                 </FormItem>
-                            </div>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
+
                                 <FormItem
                                     label="ShortName"
                                     invalid={
@@ -156,13 +145,15 @@ const ZoneEdit = ({
                                     <Field
                                         size="sm"
                                         type="ShortName"
+                                        maxlength="4"
                                         autoComplete="off"
                                         name="ShortName"
-                                        placeholder="ShortName name"
+                                        placeholder="ShortName"
                                         component={Input}
                                     />
                                 </FormItem>
                             </div>
+
                             <div
                                 style={{
                                     display: 'flex',

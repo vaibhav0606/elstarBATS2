@@ -8,7 +8,7 @@ const validationSchema = Yup.object().shape({
     TimeZoneName: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('TimeZoneName Required'),
+        .required('TimeZone Name Required'),
     ShortName: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
@@ -108,23 +108,18 @@ const TimeZoneEdit = ({
                 {({ values, touched, errors }) => (
                     <Form>
                         <FormContainer>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                                 <Field
                                     size="sm"
                                     type="TimeZoneCode"
                                     autoComplete="off"
                                     name="TimeZoneCode"
-                                    placeholder="TimeZoneCode name"
+                                    placeholder="TimeZoneCode"
                                     component={Input}
                                     hidden
                                 />
                                 <FormItem
-                                    label="TimeZoneName"
+                                    label="TimeZone Name"
                                     invalid={
                                         errors.TimeZoneName &&
                                         touched.TimeZoneName
@@ -136,17 +131,11 @@ const TimeZoneEdit = ({
                                         type="TimeZoneName"
                                         autoComplete="off"
                                         name="TimeZoneName"
-                                        placeholder="TimeZone name"
+                                        placeholder="TimeZone Name"
                                         component={Input}
                                     />
                                 </FormItem>
-                            </div>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
+
                                 <FormItem
                                     label="ShortName"
                                     invalid={
@@ -157,9 +146,10 @@ const TimeZoneEdit = ({
                                     <Field
                                         size="sm"
                                         type="ShortName"
+                                        maxlength="4"
                                         autoComplete="off"
                                         name="ShortName"
-                                        placeholder="ShortName name"
+                                        placeholder="ShortName"
                                         component={Input}
                                     />
                                 </FormItem>
