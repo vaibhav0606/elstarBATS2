@@ -6,7 +6,7 @@ import {
     apiGetSubModulemaster,
 } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
-import { HiPlusCircle } from 'react-icons/hi'
+import { HiOutlinePencil, HiPlusCircle } from 'react-icons/hi'
 import FormEdit from './FormEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
@@ -189,8 +189,8 @@ const Formmaster = () => {
                     {log}
                 </Alert>
             )} */}
-                <Card
-                header={<HeaderExtra Component={'Form Master'}/>}
+            <Card
+                header={<HeaderExtra Component={'Form Master'} />}
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -212,7 +212,29 @@ const Formmaster = () => {
 
             <Drawer
                 title={
-                    editData.FormName ? 'Edit Form Master' : 'Add Form Master'
+                    editData.FormName ? (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiOutlinePencil />}
+                                ></Button>
+                            </center>
+                            &nbsp;&nbsp; Form Master
+                        </p>
+                    ) : (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiPlusCircle />}
+                                ></Button>
+                            </center>
+                            &nbsp;&nbsp;Form Master
+                        </p>
+                    )
                 }
                 isOpen={isOpen}
                 onClose={onDrawerClose}
