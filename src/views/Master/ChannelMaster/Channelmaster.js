@@ -2,10 +2,11 @@ import { useState, useEffect, useMemo } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
 import { apiGetChannelmaster, apiGetStateMaster } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
-import { HiPlusCircle } from 'react-icons/hi'
+import { HiOutlinePencil, HiPlusCircle } from 'react-icons/hi'
 import ChannelEdit from './ChannelEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
+import HeaderExtra from 'views/Controls/HeaderExtra'
 
 const headerExtraContent = (
     openDrawer,
@@ -60,29 +61,29 @@ const Channelmaster = () => {
     const columns = useMemo(
         () => [
             {
-                header: 'ChannelName',
+                header: 'Channel Name',
                 accessorKey: 'ChannelName',
             },
+            // {
+            //     header: 'ShortName',
+            //     accessorKey: 'ShortName',
+            // },
             {
-                header: 'ShortName',
-                accessorKey: 'ShortName',
-            },
-            {
-                header: 'ChannelGenre',
+                header: 'Channel Genre',
                 accessorKey: 'ChannelGenre',
             },
             {
-                header: 'ChlContentType',
+                header: 'Channel Content Type',
                 accessorKey: 'ChannelContentType',
             },
-            {
-                header: 'SACCode',
-                accessorKey: 'SACCode',
-            },
-            {
-                header: 'GSTN_id',
-                accessorKey: 'GSTN_id',
-            },
+            // {
+            //     header: 'SACCode',
+            //     accessorKey: 'SACCode',
+            // },
+            // {
+            //     header: 'GSTN_id',
+            //     accessorKey: 'GSTN_id',
+            // },
             {
                 header: 'Status',
                 id: 'action',
@@ -176,7 +177,7 @@ const Channelmaster = () => {
                 </Alert>
             )} */}
             <Card
-                header="Channel Master"
+                header={<HeaderExtra Component={'Channel Master'} />}
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -198,14 +199,38 @@ const Channelmaster = () => {
 
             <Drawer
                 title={
-                    editData.EntityName
-                        ? 'Edit Channel Master'
-                        : 'Add Channel Master'
+                    editData.ChannelName ? (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiOutlinePencil />}
+                                ></Button>
+                            </center>
+                            &nbsp;&nbsp; Channel Master
+                        </p>
+                    ) : (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiPlusCircle />}
+                                ></Button>
+                            </center>
+                            &nbsp;&nbsp;Channel Master
+                        </p>
+                    )
                 }
                 isOpen={isOpen}
                 onClose={onDrawerClose}
                 onRequestClose={onDrawerClose}
-                width={600}
+                width={
+                    window.screen.width > 400
+                        ? window.screen.width / 3
+                        : window.screen.width / 1.5
+                }
             >
                 <ChannelEdit
                     onDrawerClose={onDrawerClose}

@@ -15,11 +15,11 @@ const validationSchema = Yup.object().shape({
     DesignationName: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('DesignationName Required'),
+        .required('Designation Name Required'),
     ShortName: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('ShortName Required'),
+        .required('Short Name Required'),
     IsActive: Yup.string().required('IsActives Required'),
     rememberMe: Yup.bool(),
 })
@@ -116,12 +116,7 @@ const DesignationEdit = ({
                 {({ values, touched, errors }) => (
                     <Form>
                         <FormContainer>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <Field
                                     size="sm"
                                     type="DesignationCode"
@@ -132,6 +127,7 @@ const DesignationEdit = ({
                                     hidden
                                 />
                                 <FormItem
+                                    asterisk
                                     label="Designation Name"
                                     invalid={
                                         errors.DesignationName &&
@@ -141,7 +137,8 @@ const DesignationEdit = ({
                                 >
                                     <Field
                                         size="sm"
-                                        type="DesignationName"
+                                        type="text"
+                                        maxlength="30"
                                         autoComplete="off"
                                         name="DesignationName"
                                         placeholder="Designation Name"
@@ -149,6 +146,7 @@ const DesignationEdit = ({
                                     />
                                 </FormItem>
                                 <FormItem
+                                    asterisk
                                     label="ShortName"
                                     invalid={
                                         errors.ShortName && touched.ShortName
@@ -157,10 +155,11 @@ const DesignationEdit = ({
                                 >
                                     <Field
                                         size="sm"
-                                        type="ShortName"
+                                        type="text"
+                                        maxlength="4"
                                         autoComplete="off"
                                         name="ShortName"
-                                        placeholder="ShortName name"
+                                        placeholder="Short Name"
                                         component={Input}
                                     />
                                 </FormItem>

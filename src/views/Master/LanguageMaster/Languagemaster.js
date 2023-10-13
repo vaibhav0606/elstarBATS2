@@ -5,10 +5,11 @@ import {
     apiGetCountrymaster,
 } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
-import { HiPlusCircle } from 'react-icons/hi'
+import { HiOutlinePencil, HiPlusCircle } from 'react-icons/hi'
 import LanguageEdit from './LanguageEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
+import HeaderExtra from 'views/Controls/HeaderExtra'
 
 const headerExtraContent = (
     openDrawer,
@@ -152,7 +153,7 @@ const Languagemaster = () => {
                 </Alert>
             )} */}
             <Card
-                header="Language Master"
+                header={<HeaderExtra Component={'Language Master'} />}
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -174,14 +175,38 @@ const Languagemaster = () => {
 
             <Drawer
                 title={
-                    editData.LanguageName
-                        ? 'Edit Language Master'
-                        : 'Add Language Master'
+                    editData.LanguageName ? (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiOutlinePencil />}
+                                ></Button>
+                            </center>
+                            &nbsp;&nbsp; Language Master
+                        </p>
+                    ) : (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiPlusCircle />}
+                                ></Button>
+                            </center>
+                            &nbsp;&nbsp;Language Master
+                        </p>
+                    )
                 }
                 isOpen={isOpen}
                 onClose={onDrawerClose}
                 onRequestClose={onDrawerClose}
-                width={600}
+                width={
+                    window.screen.width > 400
+                        ? window.screen.width / 3
+                        : window.screen.width / 1.5
+                }
             >
                 <LanguageEdit
                     onDrawerClose={onDrawerClose}

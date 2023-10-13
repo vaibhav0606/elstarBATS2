@@ -15,7 +15,7 @@ const validationSchema = Yup.object().shape({
     SubModuleName: Yup.string()
         .min(3, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('SubModuleName Required'),
+        .required('SubModule Name Required'),
     // ModuleName: Yup.string()
     //     .min(1, 'Too Short!')
     //     .max(50, 'Too Long!')
@@ -23,7 +23,7 @@ const validationSchema = Yup.object().shape({
     IndexNum: Yup.number()
         .positive('Must be more than 0')
         .integer('Must be more than 0')
-        .required('IndexNum Required'),
+        .required('Index Number Required'),
 
     IsActive: Yup.string().required('IsActives Required'),
     rememberMe: Yup.bool(),
@@ -90,7 +90,6 @@ const SubModuleEdit = ({
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { resetForm, setSubmitting }) => {
-                    console.log('submitttt')
                     setTimeout(() => {
                         if (!editData.SubModuleCode) {
                             new Promise((resolve, reject) => {
@@ -124,12 +123,7 @@ const SubModuleEdit = ({
                 {({ values, touched, errors }) => (
                     <Form>
                         <FormContainer>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <Field
                                     size="sm"
                                     type="SubModuleCode"
@@ -140,7 +134,8 @@ const SubModuleEdit = ({
                                     hidden
                                 />
                                 <FormItem
-                                    label="SubModuleName"
+                                    asterisk
+                                    label="SubModule Name"
                                     invalid={
                                         errors.SubModuleName &&
                                         touched.SubModuleName
@@ -149,10 +144,28 @@ const SubModuleEdit = ({
                                 >
                                     <Field
                                         size="sm"
-                                        type="SubModuleName"
+                                        type="text"
+                                        maxlength="30"
                                         autoComplete="off"
                                         name="SubModuleName"
                                         placeholder="SubModule Name"
+                                        component={Input}
+                                    />
+                                </FormItem>
+                                <FormItem
+                                    asterisk
+                                    label="Index Number"
+                                    invalid={
+                                        errors.IndexNum && touched.IndexNum
+                                    }
+                                    errorMessage={errors.IndexNum}
+                                >
+                                    <Field
+                                        size="sm"
+                                        type="Number"
+                                        autoComplete="off"
+                                        name="IndexNum"
+                                        placeholder="Index Number"
                                         component={Input}
                                     />
                                 </FormItem>
@@ -198,22 +211,6 @@ const SubModuleEdit = ({
                                             />
                                         )}
                                     </Field>
-                                </FormItem>
-                                <FormItem
-                                    label="IndexNum"
-                                    invalid={
-                                        errors.IndexNum && touched.IndexNum
-                                    }
-                                    errorMessage={errors.IndexNum}
-                                >
-                                    <Field
-                                        size="sm"
-                                        type="Number"
-                                        autoComplete="off"
-                                        name="IndexNum"
-                                        placeholder="IndexNum name"
-                                        component={Input}
-                                    />
                                 </FormItem>
                             </div>
                             <div

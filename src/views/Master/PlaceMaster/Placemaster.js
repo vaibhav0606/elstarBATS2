@@ -7,10 +7,11 @@ import {
     apiGetCountryMaster,
 } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
-import { HiPlusCircle } from 'react-icons/hi'
+import { HiOutlinePencil, HiPlusCircle } from 'react-icons/hi'
 import PlaceEdit from './PlaceEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
+import HeaderExtra from 'views/Controls/HeaderExtra'
 
 const headerExtraContent = (
     openDrawer,
@@ -220,7 +221,7 @@ const Placemaster = () => {
                 </Alert>
             )} */}
             <Card
-                header="Place Master"
+                header={<HeaderExtra Component={'Place Master'} />}
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -242,14 +243,38 @@ const Placemaster = () => {
 
             <Drawer
                 title={
-                    editData.EntityName
-                        ? 'Edit Place Master'
-                        : 'Add Place Master'
+                    editData.PlaceName ? (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiOutlinePencil />}
+                                ></Button>
+                            </center>
+                            &nbsp;&nbsp; Place Master
+                        </p>
+                    ) : (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiPlusCircle />}
+                                ></Button>
+                            </center>
+                            &nbsp;&nbsp;Place Master
+                        </p>
+                    )
                 }
                 isOpen={isOpen}
                 onClose={onDrawerClose}
                 onRequestClose={onDrawerClose}
-                width={600}
+                width={
+                    window.screen.width > 400
+                        ? window.screen.width / 3
+                        : window.screen.width / 1.5
+                }
             >
                 <PlaceEdit
                     onDrawerClose={onDrawerClose}
