@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
 import { apiGetEntitymaster } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
-import { HiOutlinePencil, HiPlusCircle } from 'react-icons/hi'
+import { HiOutlinePencil, HiPlusCircle,HiOutlinePlus } from 'react-icons/hi'
 import EntityEdit from './EntityEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
@@ -14,7 +14,7 @@ const headerExtraContent = (
     globalFilter,
     setGlobalFilter
 ) => {
-    return (
+    return (            
         <span className="flex items-center">
             <span className="mr-1 mt-4  font-semibold">
                 <DebouncedInput
@@ -177,7 +177,7 @@ const Entitymaster = () => {
                 </Alert>
             )} */}
             <Card
-                header={<HeaderExtra Component={'Entity Master'} />}
+                header={<HeaderExtra Component={'Entity Master'}/>}
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -185,6 +185,7 @@ const Entitymaster = () => {
                     setGlobalFilter
                 )}
             >
+     
                 <DisplayTable
                     data={data}
                     columns={columns}
@@ -198,31 +199,27 @@ const Entitymaster = () => {
             </Card>
 
             <Drawer
-                title={
-                    editData.EntityName ? (
-                        <p className="text-xl font-medium text-black flex ">
-                            <center>
-                                <Button
-                                    size="xs"
-                                    variant="twoTone"
-                                    icon={<HiOutlinePencil />}
-                                ></Button>
-                            </center>
-                            &nbsp;&nbsp; Entity Master
-                        </p>
-                    ) : (
-                        <p className="text-xl font-medium text-black flex ">
-                            <center>
-                                <Button
-                                    size="xs"
-                                    variant="twoTone"
-                                    icon={<HiPlusCircle />}
-                                ></Button>
-                            </center>
-                            &nbsp;&nbsp;Entity Master
-                        </p>
-                    )
-                }
+               title={
+                editData.EntityName
+                ? <p className='text-xl font-medium text-black flex '>
+                <center>
+                    <Button
+                        size="xs"
+                        variant="twoTone"
+                        icon={<HiOutlinePencil />}
+                    ></Button>
+                </center>
+                Entity Master</p>
+            : <p className='text-xl font-medium text-black flex '>
+            <center>
+                <Button
+                    size="xs"
+                    variant="twoTone"
+                    icon={<HiOutlinePlus />}
+                ></Button>
+            </center>
+            Entity Master</p>  
+            }
                 isOpen={isOpen}
                 onClose={onDrawerClose}
                 onRequestClose={onDrawerClose}
