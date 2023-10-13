@@ -15,19 +15,19 @@ const validationSchema = Yup.object().shape({
     FormName: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('FormName Required'),
+        .required('Form Name Required'),
     ModuleCode: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('ModuleCode Required'),
+        .required('Module Name Required'),
     SubModuleCode: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('SubModuleCode Required'),
+        .required('SubModule Name Required'),
     IndexNum: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('IndexNum Required'),
+        .required('Index Number Required'),
     WinFormName: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
@@ -107,7 +107,7 @@ const FormEdit = ({
 
                     IsActive: editData.IsActive === 1 ? true : false,
                 }}
-                // validationSchema={validationSchema}
+                validationSchema={validationSchema}
                 onSubmit={(values, { resetForm, setSubmitting }) => {
                     setTimeout(() => {
                         if (!editData.FormCode) {
@@ -142,141 +142,146 @@ const FormEdit = ({
                 {({ values, touched, errors }) => (
                     <Form>
                         <FormContainer>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-                                <Field
-                                    size="sm"
-                                    type="FormCode"
-                                    autoComplete="off"
-                                    name="FormCode"
-                                    placeholder="FormCode name"
-                                    component={Input}
-                                    hidden
-                                />
-                                <FormItem
-                                    label="FormName"
-                                    invalid={
-                                        errors.FormName && touched.FormName
-                                    }
-                                    errorMessage={errors.FormName}
-                                >
-                                    <Field
-                                        size="sm"
-                                        type="FormName"
-                                        autoComplete="off"
-                                        name="FormName"
-                                        placeholder="Form Name"
-                                        component={Input}
-                                    />
-                                </FormItem>
-
-                                <FormItem
-                                    asterisk
-                                    label="Module Code"
-                                    invalid={
-                                        errors.ModuleCode && touched.ModuleCode
-                                    }
-                                    errorMessage={errors.ModuleCode}
-                                    style={{ width: '250px' }}
-                                >
-                                    <Field
-                                        size="sm"
-                                        name="ModuleCode"
+                            <Field
+                                size="sm"
+                                type="FormCode"
+                                autoComplete="off"
+                                name="FormCode"
+                                placeholder="FormCode name"
+                                component={Input}
+                                hidden
+                            />
+                            <div class="flex flex-wrap">
+                                <div style={{ width: '50%' }} className="px-1">
+                                    <FormItem
+                                        asterisk
+                                        label="Form Name"
+                                        invalid={
+                                            errors.FormName && touched.FormName
+                                        }
+                                        errorMessage={errors.FormName}
+                                    >
+                                        <Field
+                                            size="md"
+                                            type="FormName"
+                                            autoComplete="off"
+                                            name="FormName"
+                                            placeholder="Form Name"
+                                            component={Input}
+                                        />
+                                    </FormItem>
+                                </div>
+                                <div style={{ width: '50%' }} className="px-1">
+                                    <FormItem
+                                        asterisk
+                                        label="Module Name"
+                                        invalid={
+                                            errors.ModuleCode &&
+                                            touched.ModuleCode
+                                        }
+                                        errorMessage={errors.ModuleCode}
+                                    >
+                                        <Field name="ModuleCode">
+                                            {({ field, form }) => (
+                                                <Select
+                                                    size="md"
+                                                    field={field}
+                                                    form={form}
+                                                    options={Module}
+                                                    value={Module.filter(
+                                                        (option) =>
+                                                            option.value ===
+                                                            values.ModuleCode
+                                                    )}
+                                                    onChange={(option) =>
+                                                        form.setFieldValue(
+                                                            field.name,
+                                                            option?.value
+                                                        )
+                                                    }
+                                                />
+                                            )}
+                                        </Field>
+                                    </FormItem>
+                                </div>
+                                <div style={{ width: '50%' }} className="px-1">
+                                    <FormItem
+                                        asterisk
+                                        label="SubModule Name"
+                                        invalid={
+                                            errors.SubModuleCode &&
+                                            touched.SubModuleCode
+                                        }
+                                        errorMessage={errors.SubModuleCode}
                                         style={{ width: '250px' }}
                                     >
-                                        {({ field, form }) => (
-                                            <Select
-                                                style={{ width: '250px' }}
-                                                field={field}
-                                                form={form}
-                                                className="mb-4 w-50"
-                                                options={Module}
-                                                value={Module.filter(
-                                                    (option) =>
-                                                        option.value ===
-                                                        values.ModuleCode
-                                                )}
-                                                onChange={(option) =>
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        option?.value
-                                                    )
-                                                }
-                                            />
-                                        )}
-                                    </Field>
-                                </FormItem>
-
-                                <FormItem
-                                    asterisk
-                                    label="SubModule Code"
-                                    invalid={
-                                        errors.SubModuleCode &&
-                                        touched.SubModuleCode
-                                    }
-                                    errorMessage={errors.ZoneCode}
-                                    style={{ width: '250px' }}
-                                >
-                                    <Field
-                                        size="sm"
-                                        name="SubModuleCode"
-                                        style={{ width: '250px' }}
+                                        <Field
+                                            size="sm"
+                                            name="SubModuleCode"
+                                            style={{ width: '250px' }}
+                                        >
+                                            {({ field, form }) => (
+                                                <Select
+                                                    style={{ width: '250px' }}
+                                                    field={field}
+                                                    form={form}
+                                                    className=" w-50"
+                                                    options={SubModule}
+                                                    value={SubModule.filter(
+                                                        (option) =>
+                                                            option.value ===
+                                                            values.SubModuleCode
+                                                    )}
+                                                    onChange={(option) =>
+                                                        form.setFieldValue(
+                                                            field.name,
+                                                            option?.value
+                                                        )
+                                                    }
+                                                />
+                                            )}
+                                        </Field>
+                                    </FormItem>
+                                </div>
+                                <div style={{ width: '50%' }} className="px-1">
+                                    <FormItem
+                                        asterisk
+                                        label="Index Number"
+                                        invalid={
+                                            errors.IndexNum && touched.IndexNum
+                                        }
+                                        errorMessage={errors.IndexNum}
                                     >
-                                        {({ field, form }) => (
-                                            <Select
-                                                style={{ width: '250px' }}
-                                                field={field}
-                                                form={form}
-                                                className="mb-4 w-50"
-                                                options={SubModule}
-                                                value={SubModule.filter(
-                                                    (option) =>
-                                                        option.value ===
-                                                        values.SubModuleCode
-                                                )}
-                                                onChange={(option) =>
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        option?.value
-                                                    )
-                                                }
-                                            />
-                                        )}
-                                    </Field>
-                                </FormItem>
-
-                                <FormItem
-                                    label="IndexNum"
-                                    invalid={
-                                        errors.IndexNum && touched.IndexNum
-                                    }
-                                    errorMessage={errors.IndexNum}
-                                >
-                                    <Field
-                                        size="sm"
-                                        type="IndexNum"
-                                        autoComplete="off"
-                                        name="IndexNum"
-                                        placeholder="IndexNum"
-                                        component={Input}
-                                    />
-                                </FormItem>
-                                <FormItem
-                                    label="WinFormName"
-                                    invalid={
-                                        errors.WinFormName &&
-                                        touched.WinFormName
-                                    }
-                                    errorMessage={errors.WinFormName}
-                                >
-                                    <Field
-                                        size="sm"
-                                        type="WinFormName"
-                                        autoComplete="off"
-                                        name="WinFormName"
-                                        placeholder="WinFormName"
-                                        component={Input}
-                                    />
-                                </FormItem>
+                                        <Field
+                                            size="md"
+                                            type="Index Number"
+                                            autoComplete="off"
+                                            name="IndexNum"
+                                            placeholder="Index Number"
+                                            component={Input}
+                                        />
+                                    </FormItem>
+                                </div>
+                                <div style={{ width: '100%' }} className="px-1">
+                                    <FormItem
+                                        asterisk
+                                        label="WinFormName"
+                                        invalid={
+                                            errors.WinFormName &&
+                                            touched.WinFormName
+                                        }
+                                        errorMessage={errors.WinFormName}
+                                    >
+                                        <Field
+                                            size="md"
+                                            type="WinFormName"
+                                            autoComplete="off"
+                                            name="WinFormName"
+                                            placeholder="WinFormName"
+                                            component={Input}
+                                        />
+                                    </FormItem>
+                                </div>
                                 {/* <FormItem
                                     label="FormImage"
                                     invalid={
@@ -308,7 +313,6 @@ const FormEdit = ({
                                 </FormItem> */}
                             </div>
                             <FormItem
-                                asterisk
                                 label="Status"
                                 invalid={errors.IsActive && touched.IsActive}
                                 errorMessage={errors.IsActive}
