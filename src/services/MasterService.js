@@ -1127,7 +1127,7 @@ const Postplace = (param, token) => {
             PlaceName: param.PlaceName,
             ShortName: param.ShortName,
             ZoneCode: param.ZoneCode,
-            StateCode: param.State,
+            StateCode: param.StateCode,
             CountryCode: param.CountryCode,
             IsActive: param.IsActive ? 1 : 0,
         })
@@ -1160,7 +1160,7 @@ const Putplace = (param, token) => {
             PlaceName: param.PlaceName,
             ShortName: param.ShortName,
             ZoneCode: param.ZoneCode,
-            StateCode: param.State,
+            StateCode: param.StateCode,
             CountryCode: param.CountryCode,
             IsActive: param.IsActive ? 1 : 0,
         })
