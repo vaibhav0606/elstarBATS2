@@ -5,6 +5,7 @@ export const sessionSlice = createSlice({
     initialState: {
         token: '',
         signedIn: false,
+        module: [],
     },
     reducers: {
         onSignInSuccess: (state, action) => {
@@ -18,10 +19,13 @@ export const sessionSlice = createSlice({
         setToken: (state, action) => {
             state.token = action.payload
         },
+        setModule: (state, action) => {
+            state.module = action.payload
+        },
     },
 })
 
-export const { onSignInSuccess, onSignOutSuccess, setToken } =
+export const { onSignInSuccess, onSignOutSuccess, setToken, setModule } =
     sessionSlice.actions
 
 export default sessionSlice.reducer

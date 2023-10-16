@@ -15,6 +15,7 @@ import useMenuActive from 'utils/hooks/useMenuActive'
 import isEmpty from 'lodash/isEmpty'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { apiGetModulemaster } from 'services/MasterService'
 
 const StackedSideNavMini = (props) => {
     const {
@@ -65,6 +66,7 @@ const StackedSideNavMini = (props) => {
                 translateKey: includedRouteTree.translateKey,
             })
         }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [includedRouteTree.key])
 
@@ -98,30 +100,30 @@ const StackedSideNavMini = (props) => {
                             userAuthority={userAuthority}
                         >
                             {nav.subMenu && nav.subMenu.length > 0 ? (
-                                <center>
-                                    <Menu.MenuItem
-                                        eventKey={nav.key}
-                                        className="mb-4 "
-                                        style={{ padding: 22 }}
-                                        onSelect={() =>
-                                            handleMenuItemSelect({
-                                                key: nav.key,
-                                                title: nav.title,
-                                                menu: nav.subMenu,
-                                                translateKey: nav.translateKey,
-                                            })
-                                        }
-                                    >
-                                        <center>
-                                            <div className="text-2xl"  style={{border:1,borderColor:'red'}}>
-                                                {navigationIcon[nav.icon]}
-                                            </div>
-                                            <span style={{ fontSize: '9px' }}>
-                                                {nav.title}
-                                            </span>
-                                        </center>
-                                    </Menu.MenuItem>
-                                </center>
+                                <Menu.MenuItem
+                                    eventKey={nav.key}
+                                    className="mb-4 flex justify-center "
+                                    style={{
+                                        padding: 22,
+                                    }}
+                                    onSelect={() =>
+                                        handleMenuItemSelect({
+                                            key: nav.key,
+                                            title: nav.title,
+                                            menu: nav.subMenu,
+                                            translateKey: nav.translateKey,
+                                        })
+                                    }
+                                >
+                                    <center>
+                                        <div className="text-2xl">
+                                            {navigationIcon[nav.icon]}
+                                        </div>
+                                        <span style={{ fontSize: '9px' }}>
+                                            {nav.title}
+                                        </span>
+                                    </center>
+                                </Menu.MenuItem>
                             ) : (
                                 <Link
                                     to={nav.path}
@@ -134,7 +136,7 @@ const StackedSideNavMini = (props) => {
                                 >
                                     <Menu.MenuItem
                                         eventKey={nav.key}
-                                        className="mb-4 "
+                                        className="mb-4 flex justify-center "
                                         style={{ padding: 22 }}
                                     >
                                         <center>
