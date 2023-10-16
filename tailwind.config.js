@@ -59,14 +59,12 @@ module.exports = {
             '2xl': '1536px',
         },
         extend: {
-            maxHeight: {
-                128: '32rem',
-            },
             typography: (theme) => ({
                 DEFAULT: {
                     css: {
                         color: theme('colors.gray.500'),
                         maxWidth: '65ch',
+                        maxHeight: '32rem',
                     },
                 },
                 invert: {
