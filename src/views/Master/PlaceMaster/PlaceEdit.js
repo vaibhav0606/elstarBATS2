@@ -91,7 +91,7 @@ const PlaceEdit = ({
                     PlaceName: editData.PlaceName,
                     ShortName: editData.ShortName,
                     ZoneCode: editData.Zone?.ZoneCode || '',
-                    State: editData.State?.StateCode || '',
+                    StateCode: editData.State?.StateCode || '',
                     CountryCode: editData.Country?.CountryCode || '',
                     IsActive: editData.IsActive === 1 ? true : false,
                 }}
@@ -212,8 +212,10 @@ const PlaceEdit = ({
                                 <FormItem
                                     asterisk
                                     label="State"
-                                    invalid={errors.State && touched.State}
-                                    errorMessage={errors.State}
+                                    invalid={
+                                        errors.StateCode && touched.StateCode
+                                    }
+                                    errorMessage={errors.StateCode}
                                     style={{ width: '250px' }}
                                 >
                                     <Field
