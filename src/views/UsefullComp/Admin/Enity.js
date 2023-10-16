@@ -1,18 +1,12 @@
 const enity = [
     {
-
         category: 'text',
-
         asterisk: true,
         lable: 'Name',
         placeholder: 'Entity Name',
         name: 'entityname',
         type: 'text',
         width: '50%',
-
-    },
-    {
-
         max: 100,
     },
     {
@@ -26,39 +20,24 @@ const enity = [
     },
     {
         category: 'text',
-
         asterisk: true,
         lable: 'Address',
         placeholder: 'Parmanet Address',
         name: 'PermAddress',
         type: 'text',
-
-        width: '50%',
-    },
-    {
-        cats: 'text',
-
         width: '100%',
     },
     {
         category: 'text',
-
         asterisk: true,
         lable: 'Address',
         placeholder: 'Corp Address',
         name: 'CorpAddress',
         type: 'text',
-
-        width: '50%',
-    },
-    {
-        cats: 'text',
-
         width: '100%',
     },
     {
         category: 'text',
-
         asterisk: true,
         lable: 'Contact Person',
         placeholder: 'Contact Person',
@@ -66,8 +45,6 @@ const enity = [
         type: 'text',
         width: '50%',
     },
-
-
     {
         category: 'text',
         asterisk: true,
@@ -84,6 +61,5 @@ const enity = [
         name: 'IsActive',
         width: '50%',
     },
-
 ]
 export default enity
