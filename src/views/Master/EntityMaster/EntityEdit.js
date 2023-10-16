@@ -37,10 +37,6 @@ const validationSchema = Yup.object().shape({
         .min(3, 'Too Short!')
         .max(20, 'Too Long!')
         .required('CINNumber Required'),
-    // password: Yup.string()
-    //     .required('Password Required')
-    //     .min(8, 'Too Short!')
-    //     .matches(/^[A-Za-z0-9_-]*$/, 'Only Letters & Numbers Allowed'),
     rememberMe: Yup.bool(),
 })
 

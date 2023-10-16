@@ -24,16 +24,8 @@ const DefaultItem = (props) => {
     const { nav, onLinkClick, sideCollapsed, userAuthority } = props
 
     return (
-        <AuthorityCheck
-            userAuthority={userAuthority}
-            authority={nav.authority}
-           
-        >
-            <MenuItem
-                key={nav.key}
-                eventKey={nav.key}
-                className="mb-1"
-                 >
+        <AuthorityCheck userAuthority={userAuthority} authority={nav.authority}>
+            <MenuItem key={nav.key} eventKey={nav.key} className="mb-1">
                 <Link
                     to={nav.path}
                     onClick={() =>
@@ -48,10 +40,13 @@ const DefaultItem = (props) => {
                     <VerticalMenuIcon icon={nav.icon} />
                     {!sideCollapsed && (
                         <span>
-                            <Trans 
-                           
+                            <Trans
                                 i18nKey={nav.translateKey}
-                                defaults={<p  className='text-xs font-normal'>{nav.title}</p>}
+                                defaults={
+                                    <p className="text-xs font-normal">
+                                        {nav.title}
+                                    </p>
+                                }
                             />
                         </span>
                     )}
