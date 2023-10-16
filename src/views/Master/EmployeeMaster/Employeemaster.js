@@ -12,27 +12,22 @@ import {
     apiGetEmpbyid,
 } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
-import { HiPlusCircle } from 'react-icons/hi'
+import { HiOutlinePencil, HiOutlinePlus, HiPlusCircle } from 'react-icons/hi'
 import EmployeeEdit from './EmployeeEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTableEmp from 'views/Controls/DisplayTableEmp'
 import EmpLoginRights from './EmpLoginRights'
 
-
-
-
-
 const Last = () => {
-  return (
-    <div><p>
-    In C++ its harder to shoot yourself in
-    the foot, but when you do, you blow off
-    your whole leg. (Bjarne Stroustrup)
-</p></div>
-  )
+    return (
+        <div>
+            <p>
+                In C++ its harder to shoot yourself in the foot, but when you
+                do, you blow off your whole leg. (Bjarne Stroustrup)
+            </p>
+        </div>
+    )
 }
-
-
 
 const headerExtraContent = (
     openDialog,
@@ -95,15 +90,15 @@ const Employee = () => {
         setIsOpen(true)
     }
 
-    const onDialogClose = async (response) => {  
-            try {
-                const resp = await apiGetEmployeemaster()
-                setdata(resp.data)            
-                const resps = await apiGetEmpbyid(response)
-                seteditData(resps.data)
-              } catch (error) {
-                console.error("An error occurred:", error);
-              }
+    const onDialogClose = async (response) => {
+        try {
+            const resp = await apiGetEmployeemaster()
+            setdata(resp.data)
+            const resps = await apiGetEmpbyid(response)
+            seteditData(resps.data)
+        } catch (error) {
+            console.error('An error occurred:', error)
+        }
     }
 
     const onDialogOk = async () => {
@@ -149,45 +144,50 @@ const Employee = () => {
         {
             tab: 'tab1',
             name: 'Employee',
-            component: <EmployeeEdit onDialogClose={onDialogClose}
-            editData={editData}
-            setMessage={setMessage}
-            setlog={setlog}
-            Designation={designation}
-            Place={Place}
-            State={State}
-            Department={Department}
-            Country={Country}
-            Region={Region}
-            Emp={Emp}
-            onDialogOk={onDialogOk}
-            setCurrentTab={setCurrentTab}
-            count={count}
-            setcount={setcount}
-            tab={'tab2'}
-            />,
-            status : count >= 1 ? false : true
-           
+            component: (
+                <EmployeeEdit
+                    onDialogClose={onDialogClose}
+                    editData={editData}
+                    setMessage={setMessage}
+                    setlog={setlog}
+                    Designation={designation}
+                    Place={Place}
+                    State={State}
+                    Department={Department}
+                    Country={Country}
+                    Region={Region}
+                    Emp={Emp}
+                    onDialogOk={onDialogOk}
+                    setCurrentTab={setCurrentTab}
+                    count={count}
+                    setcount={setcount}
+                    tab={'tab2'}
+                />
+            ),
+            status: count >= 1 ? false : true,
         },
         {
             tab: 'tab2',
             name: 'Login Right',
-            component:  <EmpLoginRights 
-             setCurrentTab={setCurrentTab}
-            count={count}
-            setcount={setcount}
-            tab={'tab3'}
-            tabP={'tab1'} />,
-            status : count >= 2 ? false : true
+            component: (
+                <EmpLoginRights
+                    setCurrentTab={setCurrentTab}
+                    count={count}
+                    setcount={setcount}
+                    tab={'tab3'}
+                    tabP={'tab1'}
+                />
+            ),
+            status: count >= 2 ? false : true,
         },
         {
             tab: 'tab3',
             name: 'Map Channel',
             component: <Last />,
-            status:count >= 3 ? false : true
+            status: count >= 3 ? false : true,
         },
     ]
-    
+
     useEffect(() => {
         ;(async (values) => {
             const resp = await apiGetEmployeemaster(values)
@@ -332,16 +332,34 @@ const Employee = () => {
                     {/* // sm:max-h-96 */}
 
                     <div>
-                        <h5 className="mb-4">
-                            {editData.Emp_FirstName
-                                ? 'Edit Employee Master'
-                                : 'Add Employee Master'}
-                        </h5>
+                        {editData.Emp_FirstName ? (
+                            <p className="text-xl font-medium text-black flex ">
+                                <center>
+                                    <Button
+                                        size="xs"
+                                        variant="twoTone"
+                                        icon={<HiOutlinePencil />}
+                                    ></Button>
+                                </center>
+                                Employee Master
+                            </p>
+                        ) : (
+                            <p className="text-xl font-medium text-black flex ">
+                                <center>
+                                    <Button
+                                        size="xs"
+                                        variant="twoTone"
+                                        icon={<HiOutlinePlus />}
+                                    ></Button>
+                                </center>
+                                Employee Master
+                            </p>
+                        )}
                         {message && (
-                <Alert className="mb-4" type={log} showIcon>
-                    {message}
-                </Alert>
-            )}
+                            <Alert className="mb-4" type={log} showIcon>
+                                {message}
+                            </Alert>
+                        )}
                         <Tabs
                             value={currentTab}
                             onChange={(val) => setCurrentTab(val)}
@@ -354,17 +372,13 @@ const Employee = () => {
                                             : `Add ${i.name} `}
                                     </TabNav>
                                 ))}
-                               
-                               
                             </TabList>
                             <div className="p-4">
-
-                            {TABS.map((i) => (
+                                {TABS.map((i) => (
                                     <TabContent value={i.tab}>
-                                       {i.component}
+                                        {i.component}
                                     </TabContent>
                                 ))}
-                             
                             </div>
                         </Tabs>
                     </div>
