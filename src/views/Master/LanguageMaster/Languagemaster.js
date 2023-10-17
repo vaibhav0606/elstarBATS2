@@ -38,7 +38,7 @@ const headerExtraContent = (
                     icon={<HiPlusCircle />}
                     onClick={() => openDrawer()}
                 >
-                    Add Location
+                    Add Language
                 </Button>
             </span>
         </span>
@@ -86,14 +86,15 @@ const Languagemaster = () => {
     useEffect(() => {
         ;(async (values) => {
             const resp = await apiGetLanguagemaster(values)
+            setdata(resp.data)
+        })()
+        ;(async (values) => {
             const Currency = await apiGetCountrymaster(values)
-
             const formattedOptions = Currency.data.map((option) => ({
                 value: option.CountryCode,
                 label: option.CountryName,
             }))
             setCurrency(formattedOptions)
-            setdata(resp.data)
         })()
     }, [])
     const openDrawer = () => {

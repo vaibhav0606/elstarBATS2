@@ -20,10 +20,10 @@ const validationSchema = Yup.object().shape({
         .min(1, 'Too Short!')
         .max(200, 'Too Long!')
         .required('ShortName Required'),
-    ZoneCode: Yup.string()
-        .min(1, 'Too Short!')
-        .max(50, 'Too Long!')
-        .required('Zone Required'),
+    // ZoneCode: Yup.string()
+    //     .min(1, 'Too Short!')
+    //     .max(50, 'Too Long!')
+    //     .required('Zone Required'),
     StateCode: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
