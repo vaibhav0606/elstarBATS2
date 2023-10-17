@@ -18,19 +18,17 @@ const DefaultOption = ({
     selectProps,
     isSelected,
     isDisabled,
-    isFocused
+    isFocused,
 }) => {
     const { themeColor } = selectProps
     return (
         <div
-            className={
-                classNames(
-                    'select-option', 
-                    isSelected && 'selected', 
-                    isDisabled && 'disabled',
-                    isFocused && 'focused'
-                )
-            }
+            className={classNames(
+                'select-option',
+                isSelected && 'selected',
+                isDisabled && 'disabled',
+                isFocused && 'focused'
+            )}
             {...innerProps}
         >
             <span className="ml-2">{label}</span>
@@ -121,8 +119,7 @@ const Select = React.forwardRef((props, ref) => {
         control: (provided, state) => {
             return {
                 ...provided,
-                height: twHeight[CONTROL_SIZES[selectSize]],
-                minHeight: twHeight[CONTROL_SIZES[selectSize]],
+
                 '&:hover': {
                     boxShadow: getBoxShadow(state),
                     cursor: 'pointer',
@@ -167,7 +164,7 @@ const Select = React.forwardRef((props, ref) => {
                             ? twColor.gray['600']
                             : twColor.gray['300'],
                     neutral80: twColor.gray['700'],
-                    neutral10: 
+                    neutral10:
                         mode === 'dark'
                             ? twColor.gray['600']
                             : twColor.gray['300'],
@@ -192,7 +189,7 @@ const Select = React.forwardRef((props, ref) => {
 })
 
 Select.propTypes = {
-    size: PropTypes.oneOf([SIZES.LG, SIZES.MD, SIZES.SM]),
+    size: PropTypes.oneOf([SIZES.LG, SIZES.MD, SIZES.SM, SIZES.XS, SIZES.XSX]),
     componentAs: PropTypes.elementType,
 }
 

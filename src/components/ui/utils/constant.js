@@ -3,10 +3,12 @@ export const SIZES = {
     SM: 'sm',
     MD: 'md',
     LG: 'lg',
+    XSX: 'xsx',
 }
 
 export const CONTROL_SIZES = {
     [SIZES.XS]: 7,
+    [SIZES.XSX]: 7,
     [SIZES.SM]: 9,
     [SIZES.MD]: 11,
     [SIZES.LG]: 14,

@@ -95,13 +95,16 @@ const Locationmaster = () => {
     useEffect(() => {
         ;(async (values) => {
             const resp = await apiGetLocationmaster(values)
+
+            setdata(resp.data)
+        })()
+        ;(async (values) => {
             const Currency = await apiGetCurrencymaster(values)
             const formattedOptions = Currency.data.map((option) => ({
                 value: option.CurrencyCode,
                 label: option.CurrencyName,
             }))
             setCurrency(formattedOptions)
-            setdata(resp.data)
         })()
     }, [])
     const openDrawer = () => {

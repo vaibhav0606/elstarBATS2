@@ -168,7 +168,7 @@ const LocationEdit = ({
                                         size="sm"
                                         type="TimeZoneCode"
                                         autoComplete="off"
-                                        name="TimeZone"
+                                        name="TimeZoneCode"
                                         placeholder="TimeZone"
                                         component={Input}
                                     />

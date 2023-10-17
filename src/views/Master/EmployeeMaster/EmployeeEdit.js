@@ -58,7 +58,7 @@ const validationSchema = Yup.object().shape({
         .min(1, 'Too Short!')
         .max(100, 'Too Long!')
         .required('Address Required'),
-    CityCode: Yup.string().required('City Required'),
+    PlaceCode: Yup.string().required('City Required'),
     StateCode: Yup.string().required('State Required'),
     CountryCode: Yup.string()
         .min(1, 'Too Short!')
@@ -81,14 +81,10 @@ const validationSchema = Yup.object().shape({
         .min(1, 'Too Short!')
         .max(200, 'Too Long!')
         .required('Date of Join Required'),
-    Emp_DOL: Yup.string()
-        .min(1, 'Too Short!')
-        .max(200, 'Too Long!')
-        .required('Emp_DOL Required'),
+
     Emp_BloodGroup: Yup.string().required('Emp_BloodGroup Required'),
     DepartmentCode: Yup.string().required('DepartmentCode Required'),
     DesignationCode: Yup.string().required('DesignationCode Required'),
-    ReportingTo: Yup.string().required('ReportingTo Required'),
     Emp_Description: Yup.string()
         .min(1, 'Too Short!')
         .max(100, 'Too Long!')
@@ -132,9 +128,11 @@ const EmployeeEdit = ({
     tab,
     count,
     setcount,
+    data,
 }) => {
     const token = useSelector((state) => state.auth.session.token)
     const [game, setGame] = useState(1)
+    console.log(Place)
     const AddLocation = async (values, token) => {
         try {
             const resp = await PostEmp(values, token)
@@ -183,7 +181,7 @@ const EmployeeEdit = ({
                 Emp_Addr2:
                     editData.Emp_Addr2 ||
                     '1111111111111111111111111111111111111111',
-                CityCode: editData.Place?.PlaceCode || '',
+                PlaceCode: editData.Place?.PlaceCode || '',
                 StateCode: editData.State?.StateCode || '',
                 CountryCode: editData.Country?.CountryCode || '',
                 Emp_Contact1: editData.Emp_Contact1 || '',
@@ -480,25 +478,30 @@ const EmployeeEdit = ({
                                             />
                                         </FormItem>
                                     </div>
-                                    <div class="px-1" style={{ width: '20%' }}>
-                                        <FormItem
-                                            label="Date Of Leaving"
-                                            invalid={
-                                                errors.Emp_DOL &&
-                                                touched.Emp_DOL
-                                            }
-                                            errorMessage={errors.Emp_DOL}
+                                    {editData.EmployeeCode ? (
+                                        <div
+                                            class="px-1"
+                                            style={{ width: '20%' }}
                                         >
-                                            <Field
-                                                size="xs"
-                                                type="date"
-                                                autoComplete="off"
-                                                name="Emp_DOL"
-                                                placeholder="Emp_DOL"
-                                                component={Input}
-                                            />
-                                        </FormItem>
-                                    </div>
+                                            <FormItem
+                                                label="Date Of Leaving"
+                                                invalid={
+                                                    errors.Emp_DOL &&
+                                                    touched.Emp_DOL
+                                                }
+                                                errorMessage={errors.Emp_DOL}
+                                            >
+                                                <Field
+                                                    size="xs"
+                                                    type="date"
+                                                    autoComplete="off"
+                                                    name="Emp_DOL"
+                                                    placeholder="Emp_DOL"
+                                                    component={Input}
+                                                />
+                                            </FormItem>
+                                        </div>
+                                    ) : null}
 
                                     <div class="px-1" style={{ width: '20%' }}>
                                         <FormItem
@@ -520,7 +523,12 @@ const EmployeeEdit = ({
                                             />
                                         </FormItem>
                                     </div>
-                                    <div class="px-1" style={{ width: '20%' }}>
+                                    <div
+                                        class="px-1"
+                                        style={{
+                                            width: '20%',
+                                        }}
+                                    >
                                         <FormItem
                                             asterisk
                                             label="Blood Group"
@@ -529,25 +537,17 @@ const EmployeeEdit = ({
                                                 touched.Emp_BloodGroup
                                             }
                                             errorMessage={errors.Emp_BloodGroup}
-                                            style={{ width: '250px' }}
                                         >
-                                            <Field
-                                                size="xs"
-                                                name="Emp_BloodGroup"
-                                                style={{
-                                                    width: '250px',
-                                                    height: 10,
-                                                }}
-                                            >
+                                            <Field name="Emp_BloodGroup">
                                                 {({ field, form }) => (
                                                     <Select
-                                                        size="xs"
                                                         style={{
-                                                            width: '250px',
+                                                            border: '1px solid red !importent',
                                                         }}
+                                                        size="sm"
                                                         field={field}
                                                         form={form}
-                                                        className="mb-4 w-50"
+                                                        className="h-1"
                                                         options={options2}
                                                         value={options2.filter(
                                                             (option) =>
@@ -565,64 +565,73 @@ const EmployeeEdit = ({
                                             </Field>
                                         </FormItem>
                                     </div>
-                                    <div class="px-1" style={{ width: '20%' }}>
-                                        <FormItem
-                                            asterisk
-                                            label="Reporting"
-                                            invalid={
-                                                errors.ReportingTo &&
-                                                touched.ReportingTo
-                                            }
-                                            errorMessage={errors.ReportingTo}
-                                            style={{ width: '250px' }}
+                                    {data.length > 0 ? (
+                                        <div
+                                            class="px-1"
+                                            style={{ width: '20%' }}
                                         >
-                                            <Field
-                                                size="xs"
-                                                name="ReportingTo"
+                                            <FormItem
+                                                asterisk
+                                                label="Reporting"
+                                                invalid={
+                                                    errors.ReportingTo &&
+                                                    touched.ReportingTo
+                                                }
+                                                errorMessage={
+                                                    errors.ReportingTo
+                                                }
                                                 style={{ width: '250px' }}
                                             >
-                                                {({ field, form }) => (
-                                                    <Select
-                                                        style={{
-                                                            width: '250px',
-                                                        }}
-                                                        size="xs"
-                                                        field={field}
-                                                        form={form}
-                                                        className="mb-4 w-50"
-                                                        options={
-                                                            Emp.length > 2
-                                                                ? Emp
-                                                                : EmpDemo
-                                                        }
-                                                        value={
-                                                            Emp.length > 2
-                                                                ? Emp.filter(
-                                                                      (
-                                                                          option
-                                                                      ) =>
-                                                                          option.value ===
-                                                                          values.ReportingTo
-                                                                  )
-                                                                : EmpDemo.filter(
-                                                                      (
-                                                                          option
-                                                                      ) =>
-                                                                          option.value ===
-                                                                          values.ReportingTo
-                                                                  )
-                                                        }
-                                                        onChange={(option) =>
-                                                            form.setFieldValue(
-                                                                field.name,
-                                                                option?.value
-                                                            )
-                                                        }
-                                                    />
-                                                )}
-                                            </Field>
-                                        </FormItem>
-                                    </div>
+                                                <Field
+                                                    size="xs"
+                                                    name="ReportingTo"
+                                                    style={{ width: '250px' }}
+                                                >
+                                                    {({ field, form }) => (
+                                                        <Select
+                                                            style={{
+                                                                width: '250px',
+                                                            }}
+                                                            size="xs"
+                                                            field={field}
+                                                            form={form}
+                                                            className="mb-4 w-50"
+                                                            options={
+                                                                Emp.length > 0
+                                                                    ? Emp
+                                                                    : EmpDemo
+                                                            }
+                                                            value={
+                                                                Emp.length > 0
+                                                                    ? Emp.filter(
+                                                                          (
+                                                                              option
+                                                                          ) =>
+                                                                              option.value ===
+                                                                              values.ReportingTo
+                                                                      )
+                                                                    : EmpDemo.filter(
+                                                                          (
+                                                                              option
+                                                                          ) =>
+                                                                              option.value ===
+                                                                              values.ReportingTo
+                                                                      )
+                                                            }
+                                                            onChange={(
+                                                                option
+                                                            ) =>
+                                                                form.setFieldValue(
+                                                                    field.name,
+                                                                    option?.value
+                                                                )
+                                                            }
+                                                        />
+                                                    )}
+                                                </Field>
+                                            </FormItem>
+                                        </div>
+                                    ) : null}
                                     <div class="px-1" style={{ width: '20%' }}>
                                         <FormItem
                                             asterisk
@@ -735,15 +744,15 @@ const EmployeeEdit = ({
                                             asterisk
                                             label="City"
                                             invalid={
-                                                errors.CityCode &&
-                                                touched.CityCode
+                                                errors.PlaceCode &&
+                                                touched.PlaceCode
                                             }
-                                            errorMessage={errors.CityCode}
+                                            errorMessage={errors.PlaceCode}
                                             style={{ width: '250px' }}
                                         >
                                             <Field
                                                 size="xs"
-                                                name="CityCode"
+                                                name="PlaceCode"
                                                 style={{ width: '250px' }}
                                             >
                                                 {({ field, form }) => (
@@ -756,18 +765,18 @@ const EmployeeEdit = ({
                                                         form={form}
                                                         className="mb-4 w-50"
                                                         options={
-                                                            Place.length > 2
+                                                            Place.length > 0
                                                                 ? Place
                                                                 : EmpDemo
                                                         }
                                                         value={
-                                                            Place.length > 2
+                                                            Place.length > 0
                                                                 ? Place.filter(
                                                                       (
                                                                           option
                                                                       ) =>
                                                                           option.value ===
-                                                                          values.CityCode
+                                                                          values.PlaceCode
                                                                   )
                                                                 : EmpDemo.filter(
                                                                       (

@@ -8,7 +8,7 @@ export const defaultConfig = {
     locale: 'en',
     primaryColorLevel: 600,
     cardBordered: false,
-    controlSize: SIZES.MD,
+    controlSize: SIZES.XS,
     navMode: 'light',
 }
 
