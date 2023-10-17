@@ -41,11 +41,14 @@ const DisplayTable = ({
     const themeColor = useSelector((state) => state.theme.themeColor)
     return (
         <>
-
             <Table>
-                <THead className="border-b-2 "  style={{
-                    borderColor: themeColor,
-                }}variant="solid">
+                <THead
+                    className="border-b-2 "
+                    style={{
+                        borderColor: themeColor,
+                    }}
+                    variant="solid"
+                >
                     {table.getHeaderGroups().map((headerGroup) => (
                         <Tr key={headerGroup.id}>
                             {headerGroup.headers.map((header) => {
@@ -53,7 +56,6 @@ const DisplayTable = ({
                                     <Th
                                         key={header.id}
                                         colSpan={header.colSpan}
-                                        
                                     >
                                         <p className="text-black capitalize">
                                             {header.isPlaceholder ? null : (
@@ -108,12 +110,14 @@ const DisplayTable = ({
                                     return (
                                         <Td
                                             key={cell.id}
-                                            className="text-xs text-black font-light border-y "
+                                            className="text-xs text-black font-light border-y capitalize"
                                         >
-                                            {flexRender(
-                                                cell.column.columnDef.cell,
-                                                cell.getContext()
-                                            )}
+                                            <p className="text-black capitalize">
+                                                {flexRender(
+                                                    cell.column.columnDef.cell,
+                                                    cell.getContext()
+                                                )}
+                                            </p>
                                         </Td>
                                     )
                                 })}

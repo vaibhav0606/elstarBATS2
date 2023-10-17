@@ -10,7 +10,7 @@ const validationSchema = Yup.object().shape({
         .max(50, 'Too Long!')
         .required('Zone Name Required'),
     ShortName: Yup.string()
-        .min(4, 'Too Short!')
+        .min(1, 'Too Short!')
         .max(50, 'Too Long!')
         .required('ShortName Required'),
     IsActive: Yup.string().required('IsActives Required'),
