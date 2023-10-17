@@ -162,6 +162,7 @@ const Employee = () => {
                     count={count}
                     setcount={setcount}
                     tab={'tab2'}
+                    data={data}
                 />
             ),
             status: count >= 1 ? false : true,

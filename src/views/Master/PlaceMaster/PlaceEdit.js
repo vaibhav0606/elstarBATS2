@@ -175,7 +175,7 @@ const PlaceEdit = ({
                                 </FormItem>
                                 <FormItem
                                     asterisk
-                                    label="Zone Code"
+                                    label="Zone"
                                     invalid={
                                         errors.ZoneCode && touched.ZoneCode
                                     }
@@ -219,7 +219,7 @@ const PlaceEdit = ({
                                     style={{ width: '250px' }}
                                 >
                                     <Field
-                                        name="State"
+                                        name="StateCode"
                                         style={{ width: '250px' }}
                                     >
                                         {({ field, form }) => (
