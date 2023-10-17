@@ -34,7 +34,7 @@ const headerExtraContent = (
                     icon={<HiPlusCircle />}
                     onClick={() => openDrawer()}
                 >
-                    Add View
+                    Add Censorship
                 </Button>
             </span>
         </span>

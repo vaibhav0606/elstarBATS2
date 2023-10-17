@@ -1124,7 +1124,7 @@ const Postplace = (param, token) => {
         let data = JSON.stringify({
             PlaceName: param.PlaceName,
             ShortName: param.ShortName,
-            ZoneCode: param.ZoneCode,
+            ZoneCode: param.ZoneCode || '0',
             StateCode: param.StateCode,
             CountryCode: param.CountryCode,
             IsActive: param.IsActive ? 1 : 0,
@@ -1157,7 +1157,7 @@ const Putplace = (param, token) => {
         let data = JSON.stringify({
             PlaceName: param.PlaceName,
             ShortName: param.ShortName,
-            ZoneCode: param.ZoneCode,
+            ZoneCode: param.ZoneCode || '0',
             StateCode: param.StateCode,
             CountryCode: param.CountryCode,
             IsActive: param.IsActive ? 1 : 0,

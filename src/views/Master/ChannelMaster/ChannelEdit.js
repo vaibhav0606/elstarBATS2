@@ -94,12 +94,13 @@ const ChannelEdit = ({
                     ChannelContentType: editData.ChannelContentType,
                     SACCode: editData.SACCode,
                     GSTN_id: editData.GSTN_id,
-                    State: editData.State,
+                    State: editData.StateCode,
+                    IsActive: editData.IsActive === 1 ? true : false,
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { resetForm, setSubmitting }) => {
                     setTimeout(() => {
-                        if (!editData.EntityCode) {
+                        if (!editData.ChannelCode) {
                             new Promise((resolve, reject) => {
                                 AddChannel(values, token)
                                     .then((response) => {

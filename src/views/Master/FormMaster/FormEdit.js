@@ -30,7 +30,7 @@ const validationSchema = Yup.object().shape({
         .required('Index Number Required'),
     WinFormName: Yup.string()
         .min(1, 'Too Short!')
-        .max(50, 'Too Long!')
+        .max(300, 'Too Long!')
         .required('WinFormName Required'),
     FormImage: Yup.string()
         .min(1, 'Too Short!')
