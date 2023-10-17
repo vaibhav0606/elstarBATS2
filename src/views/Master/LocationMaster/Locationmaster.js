@@ -65,6 +65,17 @@ const Locationmaster = () => {
             {
                 header: 'Location Name',
                 accessorKey: 'LocationName',
+                cell: (props) => {
+                    const row = props.row.original
+                    return (
+                        <div className="flex items-center">
+                            <Badge className={statusColor[row.IsActive]} />
+                            <span className="ml-2 rtl:mr-2 capitalize">
+                                {row.LocationName}
+                            </span>
+                        </div>
+                    )
+                },
             },
             {
                 header: 'Short Name',
@@ -74,21 +85,21 @@ const Locationmaster = () => {
                 header: 'TimeZone Code',
                 accessorKey: 'TimeZoneCode',
             },
-            {
-                header: 'Status',
-                id: 'action',
-                cell: (props) => {
-                    const row = props.row.original
-                    return (
-                        <div className="flex items-center">
-                            <Badge className={statusColor[row.IsActive]} />
-                            <span className="ml-2 rtl:mr-2 capitalize">
-                                {row.IsActive == 1 ? 'Active' : 'InActive'}
-                            </span>
-                        </div>
-                    )
-                },
-            },
+            // {
+            //     header: 'Status',
+            //     id: 'action',
+            //     cell: (props) => {
+            //         const row = props.row.original
+            //         return (
+            //             <div className="flex items-center">
+            //                 <Badge className={statusColor[row.IsActive]} />
+            //                 <span className="ml-2 rtl:mr-2 capitalize">
+            //                     {row.IsActive == 1 ? 'Active' : 'InActive'}
+            //                 </span>
+            //             </div>
+            //         )
+            //     },
+            // },
         ],
         []
     )

@@ -63,6 +63,17 @@ const Channelmaster = () => {
             {
                 header: 'Channel Name',
                 accessorKey: 'ChannelName',
+                cell: (props) => {
+                    const row = props.row.original
+                    return (
+                        <div className="flex items-center">
+                            <Badge className={statusColor[row.IsActive]} />
+                            <span className="ml-2 rtl:mr-2 capitalize">
+                                {row.ChannelName}
+                            </span>
+                        </div>
+                    )
+                },
             },
             // {
             //     header: 'ShortName',
@@ -84,21 +95,21 @@ const Channelmaster = () => {
             //     header: 'GSTN_id',
             //     accessorKey: 'GSTN_id',
             // },
-            {
-                header: 'Status',
-                id: 'action',
-                cell: (props) => {
-                    const row = props.row.original
-                    return (
-                        <div className="flex items-center">
-                            <Badge className={statusColor[row.IsActive]} />
-                            <span className="ml-2 rtl:mr-2 capitalize">
-                                {row.IsActive == 1 ? 'Active' : 'InActive'}
-                            </span>
-                        </div>
-                    )
-                },
-            },
+            // {
+            //     header: 'Status',
+            //     id: 'action',
+            //     cell: (props) => {
+            //         const row = props.row.original
+            //         return (
+            //             <div className="flex items-center">
+            //                 <Badge className={statusColor[row.IsActive]} />
+            //                 <span className="ml-2 rtl:mr-2 capitalize">
+            //                     {row.IsActive == 1 ? 'Active' : 'InActive'}
+            //                 </span>
+            //             </div>
+            //         )
+            //     },
+            // },
         ],
         []
     )
