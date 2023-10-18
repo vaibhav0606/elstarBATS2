@@ -212,6 +212,14 @@ export const protectedRoutes = [
         ),
         authority: [],
     },
+    {
+        key: 'contentmaster',
+        path: '/contentmaster',
+        component: React.lazy(() =>
+            import('views/Programming/ContentMaster/Contentmaster')
+        ),
+        authority: [],
+    },
 
     /** Example purpose only, please remove */
     {

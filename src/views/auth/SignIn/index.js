@@ -1,5 +1,6 @@
 import React from 'react'
 import SignInForm from './SignInForm'
+import { APP_NAME } from 'constants/app.constant'
 
 const SignIn = () => {
     return (
@@ -18,13 +19,21 @@ const SignIn = () => {
                 >
                     BATS Login
                 </h1>
- 
+
                 {/* <p>Please enter your credentials to sign in!</p> */}
- 
+
                 <p style={{ color: '#2d3436' }}>Welcome To BATS System!!!</p>
- 
             </div>
+
             <SignInForm disableSubmit={false} />
+            <br></br>
+            <div className="flex items-center justify-between flex-auto w-full">
+                <span className="text-xs">
+                    Copyright &copy; {`${new Date().getFullYear()}`}{' '}
+                    <span className="font-semibold">{`${APP_NAME}`}</span> All
+                    rights reserved.
+                </span>
+            </div>
         </>
     )
 }

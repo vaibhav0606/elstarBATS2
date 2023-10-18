@@ -573,10 +573,10 @@ const PostSupplier = (param, token) => {
             SupplierERPCode: param.SupplierERPCode,
             Address1: param.Address1,
             Address2: param.Address2,
-            Pin: param.Pin,
+            Pin: '' + param.Pin + '',
             CountryCode: param.CountryCode,
             StateCode: param.State,
-            PlaceCode: param.CityCode,
+            PlaceCode: param.PlaceCode,
             Phone: param.Phone,
             Mobile: param.Mobile,
             Fax: param.Fax,
@@ -615,10 +615,10 @@ const PutSupplier = (param, token) => {
             SupplierERPCode: param.SupplierERPCode,
             Address1: param.Address1,
             Address2: param.Address2,
-            Pin: param.Pin,
+            Pin: '' + param.Pin + '',
             CountryCode: param.CountryCode,
             StateCode: param.State,
-            PlaceCode: param.CityCode,
+            PlaceCode: param.PlaceCode,
             Phone: param.Phone,
             Mobile: param.Mobile,
             Fax: param.Fax,
@@ -631,6 +631,138 @@ const PutSupplier = (param, token) => {
             method: 'put',
             maxBodyLength: Infinity,
             url: `http://103.14.97.155:3000/suppliermastertable/${param.SupplierCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+export async function apiGetContentmaster(data) {
+    return ApiService.fetchData({
+        url: '/contentmaster/',
+        method: 'get',
+        data,
+    })
+}
+
+const PostContent = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            ContentName: param.ContentName,
+            ShortName: param.ShortName,
+            ERPCode: param.ERPCode,
+            ContentTypeCode: param.ContentTypeCode,
+            ClassificationCode: param.ClassificationCode,
+            ViewCode: param.ViewCode,
+            LanguageCode: param.LanguageCode,
+            CensorshipCode: param.CensorshipCode,
+            BlackWhite: param.BlackWhite,
+            InHouseOutHouse: param.InHouseOutHouse,
+            FPCReleaseDate: param.FPCReleaseDate,
+            SlotDuration: param.SlotDuration,
+            Synopsis: param.Synopsis,
+            GroupName: param.GroupName,
+            IsSubProgram: param.IsSubProgram,
+            IsEpRestriction: param.IsEpRestriction,
+            IsRecorded: param.IsRecorded,
+            AllowOverBooking: param.AllowOverBooking,
+            IgnoreRODPSpots: param.IgnoreRODPSpots,
+            GenreCode: param.GenreCode,
+            SubGenreCode: param.SubGenreCode,
+            AspectRatio: param.AspectRatio,
+            SD: param.SD,
+            HD: param.HD,
+            UHD: param.UHD,
+            IsGeneric: param.IsGeneric,
+            EPGContentName: param.EPGContentName,
+            GenericSynopsis: param.GenericSynopsis,
+            ApprovedStatus: param.ApprovedStatus,
+            AppRejRemark: param.AppRejRemark,
+            Content_Image: '1.png',
+            MetaData: param.MetaData,
+            TxMasterCode: param.TxMasterCode,
+            VideoTypeCode: param.VideoTypeCode,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/contentmaster/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const PutContent = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            ContentName: param.ContentName,
+            ShortName: param.ShortName,
+            ERPCode: param.ERPCode,
+            ContentTypeCode: param.ContentTypeCode,
+            ClassificationCode: param.ClassificationCode,
+            ViewCode: param.ViewCode,
+            LanguageCode: param.LanguageCode,
+            CensorshipCode: param.CensorshipCode,
+            BlackWhite: param.BlackWhite,
+            InHouseOutHouse: param.InHouseOutHouse,
+            FPCReleaseDate: param.FPCReleaseDate,
+            SlotDuration: param.SlotDuration,
+            Synopsis: param.Synopsis,
+            GroupName: param.GroupName,
+            IsSubProgram: param.IsSubProgram,
+            IsEpRestriction: param.IsEpRestriction,
+            IsRecorded: param.IsRecorded,
+            AllowOverBooking: param.AllowOverBooking,
+            IgnoreRODPSpots: param.IgnoreRODPSpots,
+            GenreCode: param.GenreCode,
+            SubGenreCode: param.SubGenreCode,
+            AspectRatio: param.AspectRatio,
+            SD: param.SD,
+            HD: param.HD,
+            UHD: param.UHD,
+            IsGeneric: param.IsGeneric,
+            EPGContentName: param.EPGContentName,
+            GenericSynopsis: param.GenericSynopsis,
+            ApprovedStatus: param.ApprovedStatus,
+            AppRejRemark: param.AppRejRemark,
+            Content_Image: '1.png',
+            MetaData: param.MetaData,
+            TxMasterCode: param.TxMasterCode,
+            VideoTypeCode: param.VideoTypeCode,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/contentmaster/${param.ContentCode}`,
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
@@ -668,4 +800,6 @@ export {
     Puttxversion,
     PostSupplier,
     PutSupplier,
+    PostContent,
+    PutContent,
 }
