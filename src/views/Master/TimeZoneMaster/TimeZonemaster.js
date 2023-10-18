@@ -65,26 +65,37 @@ const TimeZonemaster = () => {
             {
                 header: 'TimeZone Name',
                 accessorKey: 'TimeZoneName',
-            },
-            {
-                header: 'Short Name',
-                accessorKey: 'ShortName',
-            },
-            {
-                header: 'Status',
-                id: 'action',
                 cell: (props) => {
                     const row = props.row.original
                     return (
                         <div className="flex items-center">
                             <Badge className={statusColor[row.IsActive]} />
                             <span className="ml-2 rtl:mr-2 capitalize">
-                                {row.IsActive == 1 ? 'Active' : 'InActive'}
+                                {row.TimeZoneName}
                             </span>
                         </div>
                     )
                 },
             },
+            {
+                header: 'Short Name',
+                accessorKey: 'ShortName',
+            },
+            // {
+            //     header: 'Status',
+            //     id: 'action',
+            //     cell: (props) => {
+            //         const row = props.row.original
+            //         return (
+            //             <div className="flex items-center">
+            //                 <Badge className={statusColor[row.IsActive]} />
+            //                 <span className="ml-2 rtl:mr-2 capitalize">
+            //                     {row.IsActive == 1 ? 'Active' : 'InActive'}
+            //                 </span>
+            //             </div>
+            //         )
+            //     },
+            // },
         ],
         []
     )

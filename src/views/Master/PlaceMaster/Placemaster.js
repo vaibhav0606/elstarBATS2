@@ -69,21 +69,32 @@ const Placemaster = () => {
             {
                 header: 'PlaceName',
                 accessorKey: 'PlaceName',
-            },
-            {
-                header: 'Zone Name',
-                accessorKey: 'Zone',
                 cell: (props) => {
-                    const { Zone } = props.row.original
+                    const row = props.row.original
                     return (
                         <div className="flex items-center">
+                            <Badge className={statusColor[row.IsActive]} />
                             <span className="ml-2 rtl:mr-2 capitalize">
-                                {Zone?.ZoneName}
+                                {row.PlaceName}
                             </span>
                         </div>
                     )
                 },
             },
+            // {
+            //     header: 'Zone Name',
+            //     accessorKey: 'Zone',
+            //     cell: (props) => {
+            //         const { Zone } = props.row.original
+            //         return (
+            //             <div className="flex items-center">
+            //                 <span className="ml-2 rtl:mr-2 capitalize">
+            //                     {Zone?.ZoneName}
+            //                 </span>
+            //             </div>
+            //         )
+            //     },
+            // },
             {
                 header: 'State Name',
                 accessorKey: 'State',
@@ -112,21 +123,21 @@ const Placemaster = () => {
                     )
                 },
             },
-            {
-                header: 'Status',
-                id: 'action',
-                cell: (props) => {
-                    const row = props.row.original
-                    return (
-                        <div className="flex items-center">
-                            <Badge className={statusColor[row.IsActive]} />
-                            <span className="ml-2 rtl:mr-2 capitalize">
-                                {row.IsActive == 1 ? 'Active' : 'InActive'}
-                            </span>
-                        </div>
-                    )
-                },
-            },
+            // {
+            //     header: 'Status',
+            //     id: 'action',
+            //     cell: (props) => {
+            //         const row = props.row.original
+            //         return (
+            //             <div className="flex items-center">
+            //                 <Badge className={statusColor[row.IsActive]} />
+            //                 <span className="ml-2 rtl:mr-2 capitalize">
+            //                     {row.IsActive == 1 ? 'Active' : 'InActive'}
+            //                 </span>
+            //             </div>
+            //         )
+            //     },
+            // },
         ],
         []
     )

@@ -18,7 +18,11 @@ const SignIn = () => {
                 >
                     BATS Login
                 </h1>
+ 
                 {/* <p>Please enter your credentials to sign in!</p> */}
+ 
+                <p style={{ color: '#2d3436' }}>Welcome To BATS System!!!</p>
+ 
             </div>
             <SignInForm disableSubmit={false} />
         </>

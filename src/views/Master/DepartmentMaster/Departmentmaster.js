@@ -65,26 +65,37 @@ const Departmentmaster = () => {
             {
                 header: 'Department Name',
                 accessorKey: 'DepartmentName',
-            },
-            {
-                header: 'Short Name',
-                accessorKey: 'ShortName',
-            },
-            {
-                header: 'Status',
-                id: 'action',
                 cell: (props) => {
                     const row = props.row.original
                     return (
                         <div className="flex items-center">
                             <Badge className={statusColor[row.IsActive]} />
                             <span className="ml-2 rtl:mr-2 capitalize">
-                                {row.IsActive == 1 ? 'Active' : 'InActive'}
+                                {row.DepartmentName}
                             </span>
                         </div>
                     )
                 },
             },
+            {
+                header: 'Short Name',
+                accessorKey: 'ShortName',
+            },
+            // {
+            //     header: 'Status',
+            //     id: 'action',
+            //     cell: (props) => {
+            //         const row = props.row.original
+            //         return (
+            //             <div className="flex items-center">
+            //                 <Badge className={statusColor[row.IsActive]} />
+            //                 <span className="ml-2 rtl:mr-2 capitalize">
+            //                     {row.IsActive == 1 ? 'Active' : 'InActive'}
+            //                 </span>
+            //             </div>
+            //         )
+            //     },
+            // },
         ],
         []
     )

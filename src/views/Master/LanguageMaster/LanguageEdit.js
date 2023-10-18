@@ -16,7 +16,7 @@ const validationSchema = Yup.object().shape({
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
         .required('Language Name Required'),
-    CountryName: Yup.string()
+    CountryCode: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
         .required('Country Name Required'),
@@ -75,6 +75,7 @@ const LanguageEdit = ({
         <div>
             <Formik
                 initialValues={{
+                    LanguageCode: editData.LanguageCode || '',
                     LanguageName: editData.LanguageName || '',
                     CountryCode: editData.Country?.CountryCode,
                     IsActive: editData.IsActive === 1 ? true : false,
@@ -83,7 +84,7 @@ const LanguageEdit = ({
                 onSubmit={(values, { resetForm, setSubmitting }) => {
                     console.log(editData)
                     setTimeout(() => {
-                        if (!editData.LanguageName) {
+                        if (!editData.LanguageCode) {
                             new Promise((resolve, reject) => {
                                 AddLanguage(values, token)
                                     .then((response) => {

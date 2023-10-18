@@ -23,7 +23,7 @@ const Home = () => {
         .catch((error) => {
             console.log(error)
         })
-    return <div>homer</div>
+    return <div>Home</div>
 }
 
 export default Home

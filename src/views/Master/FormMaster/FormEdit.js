@@ -27,19 +27,20 @@ const validationSchema = Yup.object().shape({
     IndexNum: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
+        .matches(/^[0-2]+$/, 'Must be only digits')
         .required('Index Number Required'),
     WinFormName: Yup.string()
         .min(1, 'Too Short!')
-        .max(50, 'Too Long!')
+        .max(300, 'Too Long!')
         .required('WinFormName Required'),
-    FormImage: Yup.string()
-        .min(1, 'Too Short!')
-        .max(50, 'Too Long!')
-        .required('FormImage Required'),
-    IS_MO: Yup.number()
-        .min(1, 'Too Short!')
-        .max(50, 'Too Long!')
-        .required('IS_MO Required'),
+    // FormImage: Yup.string()
+    //     .min(1, 'Too Short!')
+    //     .max(50, 'Too Long!')
+    //     .required('FormImage Required'),
+    // IS_MO: Yup.number()
+    //     .min(1, 'Too Short!')
+    //     .max(50, 'Too Long!')
+    //     .required('IS_MO Required'),
     IsActive: Yup.string().required('IsActives Required'),
     rememberMe: Yup.bool(),
 })

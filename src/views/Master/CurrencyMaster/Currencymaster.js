@@ -35,7 +35,7 @@ const headerExtraContent = (
                     icon={<HiPlusCircle />}
                     onClick={() => openDrawer()}
                 >
-                    Add Module
+                    Add Currency
                 </Button>
             </span>
         </span>
