@@ -87,6 +87,10 @@ const Channelmaster = () => {
                 header: 'Channel Content Type',
                 accessorKey: 'ChannelContentType',
             },
+            {
+                header: 'Channel Short Name',
+                accessorKey: 'ShortName',
+            },
             // {
             //     header: 'SACCode',
             //     accessorKey: 'SACCode',
