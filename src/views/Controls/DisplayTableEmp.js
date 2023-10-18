@@ -14,7 +14,7 @@ import {
 import { Button } from 'components/ui'
 import { HiLockClosed, HiOutlinePencil } from 'react-icons/hi'
 import { useSelector } from 'react-redux'
-
+import { useNavigate } from 'react-router-dom'
 const DisplayTable = ({
     data,
     columns,
@@ -29,6 +29,7 @@ const DisplayTable = ({
     setGame,
 }) => {
     //console.log(setGlobalFilter);
+    const navigate = useNavigate();
     const table = useReactTable({
         data,
         columns,
@@ -138,7 +139,8 @@ const DisplayTable = ({
                                         icon={<HiOutlinePencil />}
                                         onClick={() => {
                                             seteditData(row.original)
-                                            openDialog()
+                                            //openDialog()
+                                            navigate(`/BasicInformationFields`);
                                         }}
                                         style={{ marginRight: '5px' }}
                                     ></Button>

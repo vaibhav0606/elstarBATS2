@@ -17,6 +17,7 @@ import EmployeeEdit from './EmployeeEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTableEmp from 'views/Controls/DisplayTableEmp'
 import EmpLoginRights from './EmpLoginRights'
+import CustomerDetail from '../../crm/CustomerDetail/index'
 import HeaderExtra from 'views/Controls/HeaderExtra'
 import { useNavigate } from 'react-router-dom'
 
@@ -171,6 +172,7 @@ const Employee = () => {
                     tab={'tab2'}
                     data={data}
                 />
+                 
             ),
             status: count >= 1 ? false : true,
         },
@@ -178,16 +180,21 @@ const Employee = () => {
             tab: 'tab2',
             name: 'Login Right',
             component: (
-                <EmpLoginRights
-                    setCurrentTab={setCurrentTab}
-                    count={count}
-                    setcount={setcount}
-                    tab={'tab3'}
-                    tabP={'tab1'}
-                    setGame={setGame}
-                    game={game}
-                    onDialogOk={onDialogOk}
-                />
+                // <EmpLoginRights
+                //     setCurrentTab={setCurrentTab}
+                //     count={count}
+                //     setcount={setcount}
+                //     tab={'tab3'}
+                //     tabP={'tab1'}
+                //     setGame={setGame}
+                //     game={game}
+                //     onDialogOk={onDialogOk}
+                // />
+                // <CustomerDetail
+                // id={8}>
+
+                // </CustomerDetail>
+                <></>
             ),
             status: count >= 2 ? false : true,
         },
