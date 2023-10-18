@@ -51,7 +51,7 @@ const DisplayTable = ({
                 >
                     {table.getHeaderGroups().map((headerGroup) => (
                         <Tr key={headerGroup.id}>
-                            <Th style={{ width: '10px' }}>
+                            <Th>
                                 <p className="text-black capitalize">#</p>
                             </Th>
 
