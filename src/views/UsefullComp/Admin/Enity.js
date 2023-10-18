@@ -55,6 +55,15 @@ const enity = [
         width: '50%',
     },
     {
+        category: 'text',
+        asterisk: true,
+        lable: 'CIN Number',
+        placeholder: 'CIN Number',
+        name: 'CINNumber',
+        type: 'text',
+        width: '50%',
+    },
+    {
         category: 'Status',
         asterisk: true,
         lable: 'Status',

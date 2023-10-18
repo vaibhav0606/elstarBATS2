@@ -18,7 +18,7 @@ const SignIn = () => {
                 >
                     BATS Login
                 </h1>
-                <p>Please enter your credentials to sign in!</p>
+                {/* <p>Please enter your credentials to sign in!</p> */}
             </div>
             <SignInForm disableSubmit={false} />
         </>

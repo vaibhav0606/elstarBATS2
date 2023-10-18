@@ -8,7 +8,16 @@ const statusColor = {
     0: 'bg-red-500',
 }
 
-const EmpLoginRights = ({  setCurrentTab,count,setcount,tab,tabP}) => {
+const EmpLoginRights = ({
+    setCurrentTab,
+    count,
+    setcount,
+    tab,
+    tabP,
+    setGame,
+    game,
+    onDialogOk,
+}) => {
     const [sorting, setSorting] = useState([])
     const [globalFilter, setGlobalFilter] = useState('')
     const [data, setdata] = useState([''])
@@ -52,25 +61,24 @@ const EmpLoginRights = ({  setCurrentTab,count,setcount,tab,tabP}) => {
                 header: 'Form Name',
                 accessorKey: 'FormName',
             },
-            {
-                header: 'Status',
-                id: 'action',
-                cell: (props) => {
-                    const row = props.row.original
-                    return (
-                        <div className="flex items-center">
-                            <Badge className={statusColor[row.IsActive]} />
-                            <span className="ml-2 rtl:mr-2 capitalize">
-                                {row.IsActive == 1 ? 'Active' : 'InActive'}
-                            </span>
-                        </div>
-                    )
-                },
-            },
+            // {
+            //     header: 'Status',
+            //     id: 'action',
+            //     cell: (props) => {
+            //         const row = props.row.original
+            //         return (
+            //             <div className="flex items-center">
+            //                 <Badge className={statusColor[row.IsActive]} />
+            //                 <span className="ml-2 rtl:mr-2 capitalize">
+            //                     {row.IsActive == 1 ? 'Active' : 'InActive'}
+            //                 </span>
+            //             </div>
+            //         )
+            //     },
+            // },
         ],
         []
     )
-    const [game, setGame] = useState(2)
 
     const handleClicks = () => {
         setCurrentTab(tab)
@@ -78,7 +86,7 @@ const EmpLoginRights = ({  setCurrentTab,count,setcount,tab,tabP}) => {
             setGame(1)
             setcount(1)
         } else {
-            setcount(count+1)
+            setcount(count + 1)
             setGame(game + 1)
         }
     }
@@ -88,7 +96,7 @@ const EmpLoginRights = ({  setCurrentTab,count,setcount,tab,tabP}) => {
             setGame(1)
             setcount(1)
         } else {
-            setcount(count-1)
+            setcount(count - 1)
             setGame(game - 1)
         }
     }
@@ -104,6 +112,7 @@ const EmpLoginRights = ({  setCurrentTab,count,setcount,tab,tabP}) => {
                 handleClicks={handleClicks}
                 game={game}
                 handleClickPrevious={handleClickPrevious}
+                onDialogOk={onDialogOk}
             />
         </Card>
     )

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Checkbox, Table } from 'components/ui'
+import { Checkbox, ScrollBar, Table } from 'components/ui'
 import {
     flexRender,
     getCoreRowModel,
@@ -11,8 +11,7 @@ import {
     getFacetedMinMaxValues,
     getPaginationRowModel,
 } from '@tanstack/react-table'
-import { Button, Input } from 'components/ui'
-import { HiOutlinePencil } from 'react-icons/hi'
+import { Button } from 'components/ui'
 
 const DisplayTableEmpAccess = ({
     data,
@@ -23,6 +22,7 @@ const DisplayTableEmpAccess = ({
     setGlobalFilter,
     seteditData,
     openDialog,
+    onDialogOk,
 }) => {
     //console.log(setGlobalFilter);
     const table = useReactTable({
@@ -46,92 +46,126 @@ const DisplayTableEmpAccess = ({
         getFacetedMinMaxValues: getFacetedMinMaxValues(),
     })
     const { Tr, Th, Td, THead, TBody, Sorter } = Table
+    const [first, setfirst] = useState(1)
 
     return (
         <>
-            <Table>
-                <THead>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                        <Tr key={headerGroup.id}>
-                            {headerGroup.headers.map((header) => {
-                                return (
-                                    <Th
-                                        key={header.id}
-                                        colSpan={header.colSpan}
-                                        style={{
-                                            position: 'relative',
-                                            //  width: header.getSize(3000),
-                                        }}
-                                    >
-                                        {/* {console.log(header.getSize(3000))} */}
-                                        {header.isPlaceholder ? null : (
-                                            <div
-                                                {...{
-                                                    className:
-                                                        header.column.getCanSort()
-                                                            ? 'cursor-pointer select-none'
-                                                            : '',
-                                                    onClick:
-                                                        header.column.getToggleSortingHandler(),
+            <div className="overflow-y-auto h-96 mb-6">
+                {/* <Button onClick={() => setfirst(1)}>IsActive</Button>
+                <Button onClick={() => setfirst(0)}> Inactive</Button> */}
+                <ScrollBar>
+                    <Table>
+                        <THead>
+                            {table.getHeaderGroups().map((headerGroup) => (
+                                <Tr key={headerGroup.id}>
+                                    {headerGroup.headers.map((header) => {
+                                        return (
+                                            <Th
+                                                key={header.id}
+                                                colSpan={header.colSpan}
+                                                style={{
+                                                    position: 'relative',
+                                                    //  width: header.getSize(3000),
                                                 }}
                                             >
-                                                {flexRender(
-                                                    header.column.columnDef
-                                                        .header,
-                                                    header.getContext()
+                                                {/* {console.log(header.getSize(3000))} */}
+                                                {header.isPlaceholder ? null : (
+                                                    <div
+                                                        {...{
+                                                            className:
+                                                                header.column.getCanSort()
+                                                                    ? 'cursor-pointer select-none'
+                                                                    : '',
+                                                            onClick:
+                                                                header.column.getToggleSortingHandler(),
+                                                        }}
+                                                    >
+                                                        {flexRender(
+                                                            header.column
+                                                                .columnDef
+                                                                .header,
+                                                            header.getContext()
+                                                        )}
+                                                        {
+                                                            <>
+                                                                <Sorter
+                                                                    sort={header.column.getIsSorted()}
+                                                                />
+                                                                <div
+                                                                    className={`table-resizer cursor-all-scroll ${
+                                                                        header.column.getIsResizing()
+                                                                            ? 'isResizing'
+                                                                            : ''
+                                                                    }`}
+                                                                    onMouseDown={header.getResizeHandler()}
+                                                                    onTouchStart={header.getResizeHandler()}
+                                                                ></div>
+                                                            </>
+                                                        }
+                                                    </div>
                                                 )}
-                                                {
-                                                    <>
-                                                        <Sorter
-                                                            sort={header.column.getIsSorted()}
-                                                        />
-                                                        <div
-                                                            className={`table-resizer cursor-all-scroll ${
-                                                                header.column.getIsResizing()
-                                                                    ? 'isResizing'
-                                                                    : ''
-                                                            }`}
-                                                            onMouseDown={header.getResizeHandler()}
-                                                            onTouchStart={header.getResizeHandler()}
-                                                        ></div>
-                                                    </>
-                                                }
-                                            </div>
-                                        )}
-                                    </Th>
+                                            </Th>
+                                        )
+                                    })}
+                                    <Th>Read Write</Th>
+                                </Tr>
+                            ))}
+                        </THead>
+                        <TBody>
+                            {table
+                                .getRowModel()
+                                .rows.filter(
+                                    (row) => row.original.IsActive === first
                                 )
-                            })}
-                            <Th>Action</Th>
-                        </Tr>
-                    ))}
-                </THead>
-                <TBody>
-                    {table.getRowModel().rows.map((row) => {
-                        return (
-                            <Tr key={row.id}>
-                                {row.getVisibleCells().map((cell) => {
+                                .map((row) => {
+                                    // setfirst(row)
+                                    console.log(row)
                                     return (
-                                        <Td key={cell.id}>
-                                            {flexRender(
-                                                cell.column.columnDef.cell,
-                                                cell.getContext()
-                                            )}
-                                        </Td>
+                                        <Tr key={row.id}>
+                                            {row
+                                                .getVisibleCells()
+                                                .map((cell) => {
+                                                    return (
+                                                        <Td key={cell.id}>
+                                                            {flexRender(
+                                                                cell.column
+                                                                    .columnDef
+                                                                    .cell,
+                                                                cell.getContext()
+                                                            )}
+                                                        </Td>
+                                                    )
+                                                })}
+                                            <Td
+                                                onClick={() => {
+                                                    seteditData(row.original)
+                                                    openDialog()
+                                                }}
+                                            >
+                                                <Checkbox /> &nbsp;&nbsp;
+                                                <Checkbox />
+                                            </Td>
+                                        </Tr>
                                     )
                                 })}
-                                <Td
-                                    onClick={() => {
-                                        seteditData(row.original)
-                                        openDialog()
-                                    }}
-                                >
-                                    <Checkbox />
-                                </Td>
-                            </Tr>
-                        )
-                    })}
-                </TBody>
-            </Table>
+                        </TBody>
+                    </Table>
+                </ScrollBar>
+            </div>
+
+            <Button className="mr-2 mb-2 " variant="solid" type="button">
+                Save And Next
+            </Button>
+
+            <Button
+                className="mr-2 mb-2"
+                variant="twoTone"
+                color="red-600"
+                type="button"
+                onClick={() => onDialogOk(0, 0)}
+            >
+                Close
+            </Button>
         </>
     )
 }

@@ -17,6 +17,8 @@ import EmployeeEdit from './EmployeeEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTableEmp from 'views/Controls/DisplayTableEmp'
 import EmpLoginRights from './EmpLoginRights'
+import HeaderExtra from 'views/Controls/HeaderExtra'
+import { useNavigate } from 'react-router-dom'
 
 const Last = () => {
     return (
@@ -33,7 +35,8 @@ const headerExtraContent = (
     openDialog,
     DebouncedInput,
     globalFilter,
-    setGlobalFilter
+    setGlobalFilter,
+    navigate
 ) => {
     return (
         <span className="flex items-center">
@@ -54,7 +57,7 @@ const headerExtraContent = (
                     variant="solid"
                     size="sm"
                     icon={<HiPlusCircle />}
-                    onClick={() => openDialog()}
+                    onClick={() => navigate('/editUser')}
                 >
                     Add Employee
                 </Button>
@@ -64,6 +67,7 @@ const headerExtraContent = (
 }
 
 const Employee = () => {
+    const navigate = useNavigate()
     // const [isOpen, setIsOpen] = useState(false)
     const [editData, seteditData] = useState([''])
     const [globalFilter, setGlobalFilter] = useState('')
@@ -76,7 +80,7 @@ const Employee = () => {
     const [Region, setRegion] = useState({ value: '', label: '' })
     const [Emp, setEmp] = useState({ value: '', label: '' })
     const [count, setcount] = useState(1)
-
+    const [game, setGame] = useState(2)
     const [Place, setPlace] = useState({ value: '', label: '' })
     const [message, setMessage] = useTimeOutMessage()
     const [log, setlog] = useState('')
@@ -104,6 +108,9 @@ const Employee = () => {
     const onDialogOk = async () => {
         setIsOpen(false)
         seteditData([''])
+        setcount(1)
+        setGame(2)
+        setCurrentTab('tab1')
     }
 
     const statusColor = {
@@ -177,6 +184,9 @@ const Employee = () => {
                     setcount={setcount}
                     tab={'tab3'}
                     tabP={'tab1'}
+                    setGame={setGame}
+                    game={game}
+                    onDialogOk={onDialogOk}
                 />
             ),
             status: count >= 2 ? false : true,
@@ -298,12 +308,13 @@ const Employee = () => {
                 </Alert>
             )} */}
             <Card
-                header="Employee Master"
+                header={<HeaderExtra Component={'Employee Master'} />}
                 headerExtra={headerExtraContent(
                     openDialog,
                     DebouncedInput,
                     globalFilter,
-                    setGlobalFilter
+                    setGlobalFilter,
+                    navigate
                 )}
             >
                 <DisplayTableEmp
@@ -315,13 +326,16 @@ const Employee = () => {
                     setGlobalFilter={setGlobalFilter}
                     seteditData={seteditData}
                     openDialog={openDialog}
+                    setCurrentTab={setCurrentTab}
+                    setcount={setcount}
+                    setGame={setGame}
                 />
             </Card>
 
             <Dialog
                 isOpen={dialogIsOpen}
                 closable={false}
-                width={1200}
+                width="auto"
                 height="auto"
                 style={{
                     content: {
