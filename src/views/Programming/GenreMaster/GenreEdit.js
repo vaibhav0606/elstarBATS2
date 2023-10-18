@@ -40,7 +40,7 @@ const GenreEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                 setlog('success')
                 setMessage('Data Updated Successfully')
                 return
-            } else if (resp.data.msg === 'Genre is Already Exists') {
+            } else if (resp.data.msg === 'Genre Already Exists') {
                 setlog('warning')
                 setMessage(resp.data.msg)
                 return
@@ -110,7 +110,7 @@ const GenreEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                 />
                                 <FormItem
                                     asterisk
-                                    label="GenreName"
+                                    label="Genre Name"
                                     invalid={
                                         errors.GenreName && touched.GenreName
                                     }

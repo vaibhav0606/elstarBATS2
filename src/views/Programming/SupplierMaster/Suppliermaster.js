@@ -6,11 +6,17 @@ import {
     apiGetCountryMaster,
 } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
-import { HiPlusCircle } from 'react-icons/hi'
+import {
+    HiOutlinePencil,
+    HiOutlinePlus,
+    HiOutlinePlusCircle,
+    HiPlusCircle,
+} from 'react-icons/hi'
 import SupplierEdit from './SupplierEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
 import { apiGetSuppliermaster } from 'services/ProgrammingService'
+import HeaderExtra from 'views/Controls/HeaderExtra'
 
 const headerExtraContent = (
     openDrawer,
@@ -68,10 +74,21 @@ const Suppliermaster = () => {
             {
                 header: 'SupplierName',
                 accessorKey: 'SupplierName',
+                cell: (props) => {
+                    const row = props.row.original
+                    return (
+                        <div className="flex items-center">
+                            <Badge className={statusColor[row.IsActive]} />
+                            <span className="ml-2 rtl:mr-2 capitalize">
+                                {row.SupplierName}
+                            </span>
+                        </div>
+                    )
+                },
             },
             {
-                header: 'Mobile',
-                accessorKey: 'Mobile',
+                header: 'Phone',
+                accessorKey: 'Phone',
             },
             {
                 header: 'ContactPerson',
@@ -91,21 +108,21 @@ const Suppliermaster = () => {
                     )
                 },
             },
-            {
-                header: 'Status',
-                id: 'action',
-                cell: (props) => {
-                    const row = props.row.original
-                    return (
-                        <div className="flex items-center">
-                            <Badge className={statusColor[row.IsActive]} />
-                            <span className="ml-2 rtl:mr-2 capitalize">
-                                {row.IsActive == 1 ? 'Active' : 'InActive'}
-                            </span>
-                        </div>
-                    )
-                },
-            },
+            // {
+            //     header: 'Status',
+            //     id: 'action',
+            //     cell: (props) => {
+            //         const row = props.row.original
+            //         return (
+            //             <div className="flex items-center">
+            //                 <Badge className={statusColor[row.IsActive]} />
+            //                 <span className="ml-2 rtl:mr-2 capitalize">
+            //                     {row.IsActive == 1 ? 'Active' : 'InActive'}
+            //                 </span>
+            //             </div>
+            //         )
+            //     },
+            // },
         ],
         []
     )
@@ -194,7 +211,7 @@ const Suppliermaster = () => {
                 </Alert>
             )}
             <Card
-                header="Supplier Master"
+                header={<HeaderExtra Component={'Supplier Master'} />}
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -216,9 +233,29 @@ const Suppliermaster = () => {
 
             <Drawer
                 title={
-                    editData.SupplierName
-                        ? 'Edit Supplier Master'
-                        : 'Add Supplier Master'
+                    editData.SupplierName ? (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiOutlinePencil />}
+                                ></Button>
+                            </center>
+                            Supplier Master
+                        </p>
+                    ) : (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiOutlinePlusCircle />}
+                                ></Button>
+                            </center>
+                            Supplier Master
+                        </p>
+                    )
                 }
                 isOpen={isOpen}
                 onClose={onDrawerClose}

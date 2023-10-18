@@ -6,6 +6,7 @@ import { HiPlusCircle } from 'react-icons/hi'
 import ViewEdit from './ViewEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
+import HeaderExtra from 'views/Controls/HeaderExtra'
 
 const headerExtraContent = (
     openDrawer,
@@ -143,7 +144,7 @@ const Viewmaster = () => {
                 </Alert>
             )} */}
             <Card
-                header="View Master"
+                header={<HeaderExtra Component={'View Master'} />}
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,

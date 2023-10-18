@@ -16,19 +16,13 @@ const validationSchema = Yup.object().shape({
         .min(3, 'Too Short!')
         .max(50, 'Too Long!')
         .required('StarCastName Required'),
+
     StarCastTypeCode: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
         .required('StarCastType Required'),
+
     MaleFemale: Yup.string().required('Gender Required'),
-    DateOfBirth: Yup.string()
-        .min(1, 'Too Short!')
-        .max(200, 'Too Long!')
-        .required('DateOfBirth Required'),
-    DateOfDeath: Yup.string()
-        .min(1, 'Too Short!')
-        .max(200, 'Too Long!')
-        .required('DateOfDeath Required'),
     CountryCode: Yup.string()
         .min(1, 'Too Short!')
         .max(200, 'Too Long!')
@@ -80,7 +74,7 @@ const StarCastEdit = ({
                 setlog('success')
                 setMessage('Data Updated Successfully')
                 return
-            } else if (resp.data.msg === 'StarCast is Already Exists') {
+            } else if (resp.data.msg === 'StarCast Already Exists') {
                 setlog('warning')
                 setMessage(resp.data.msg)
                 return
@@ -145,13 +139,13 @@ const StarCastEdit = ({
                                     type="StarCastCode"
                                     autoComplete="off"
                                     name="StarCastCode"
-                                    placeholder="StarCastCode name"
+                                    placeholder="StarCastCode"
                                     component={Input}
                                     hidden
                                 />
                                 <FormItem
                                     asterisk
-                                    label="StarCastName"
+                                    label="StarCast Name"
                                     invalid={
                                         errors.StarCastName &&
                                         touched.StarCastName
@@ -168,7 +162,7 @@ const StarCastEdit = ({
                                 </FormItem>
                                 <FormItem
                                     asterisk
-                                    label="StartCastType"
+                                    label="StartCast Type"
                                     invalid={
                                         errors.StarCastTypeCode &&
                                         touched.StarCastTypeCode
@@ -238,8 +232,7 @@ const StarCastEdit = ({
                                     </Field>
                                 </FormItem>
                                 <FormItem
-                                    asterisk
-                                    label="Date OF Birth"
+                                    label="Date Of Birth"
                                     invalid={
                                         errors.DateOfBirth &&
                                         touched.DateOfBirth
@@ -255,8 +248,7 @@ const StarCastEdit = ({
                                     />
                                 </FormItem>
                                 <FormItem
-                                    asterisk
-                                    label="Date OF Death"
+                                    label="Date Of Death"
                                     invalid={
                                         errors.DateOfDeath &&
                                         touched.DateOfDeath
@@ -316,7 +308,6 @@ const StarCastEdit = ({
                                 }}
                             >
                                 <FormItem
-                                    asterisk
                                     label="Status"
                                     invalid={
                                         errors.IsActive && touched.IsActive

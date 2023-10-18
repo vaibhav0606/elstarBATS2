@@ -2,10 +2,15 @@ import { useState, useEffect, useMemo } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
 import { apiGetSubGenremaster } from 'services/ProgrammingService'
 import { Button, Card } from 'components/ui'
-import { HiPlusCircle } from 'react-icons/hi'
+import {
+    HiOutlinePencil,
+    HiOutlinePlusCircle,
+    HiPlusCircle,
+} from 'react-icons/hi'
 import SubGenreEdit from './SubGenreEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
+import HeaderExtra from 'views/Controls/HeaderExtra'
 
 const headerExtraContent = (
     openDrawer,
@@ -61,22 +66,33 @@ const SubGenremaster = () => {
             {
                 header: 'SubGenreName',
                 accessorKey: 'SubGenreName',
-            },
-            {
-                header: 'Status',
-                id: 'action',
                 cell: (props) => {
                     const row = props.row.original
                     return (
                         <div className="flex items-center">
                             <Badge className={statusColor[row.IsActive]} />
                             <span className="ml-2 rtl:mr-2 capitalize">
-                                {row.IsActive == 1 ? 'Active' : 'InActive'}
+                                {row.SubGenreName}
                             </span>
                         </div>
                     )
                 },
             },
+            // {
+            //     header: 'Status',
+            //     id: 'action',
+            //     cell: (props) => {
+            //         const row = props.row.original
+            //         return (
+            //             <div className="flex items-center">
+            //                 <Badge className={statusColor[row.IsActive]} />
+            //                 <span className="ml-2 rtl:mr-2 capitalize">
+            //                     {row.IsActive == 1 ? 'Active' : 'InActive'}
+            //                 </span>
+            //             </div>
+            //         )
+            //     },
+            // },
         ],
         []
     )
@@ -143,7 +159,7 @@ const SubGenremaster = () => {
                 </Alert>
             )} */}
             <Card
-                header="SubGenre Master"
+                header={<HeaderExtra Component={'SubGenre Master'} />}
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -165,9 +181,29 @@ const SubGenremaster = () => {
 
             <Drawer
                 title={
-                    editData.LanguageName
-                        ? 'Edit SubGenre Master'
-                        : 'Add SubGenre Master'
+                    editData.SubGenreName ? (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiOutlinePencil />}
+                                ></Button>
+                            </center>
+                            SubGenre Master
+                        </p>
+                    ) : (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiOutlinePlusCircle />}
+                                ></Button>
+                            </center>
+                            SubGenre Master
+                        </p>
+                    )
                 }
                 isOpen={isOpen}
                 onClose={onDrawerClose}

@@ -5,10 +5,15 @@ import {
     apiGetCountrymaster,
 } from 'services/ProgrammingService'
 import { Button, Card } from 'components/ui'
-import { HiPlusCircle } from 'react-icons/hi'
+import {
+    HiOutlinePencil,
+    HiOutlinePlusCircle,
+    HiPlusCircle,
+} from 'react-icons/hi'
 import StarCastTypeEdit from './StarCastTypeEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
+import HeaderExtra from 'views/Controls/HeaderExtra'
 
 const headerExtraContent = (
     openDrawer,
@@ -65,21 +70,21 @@ const StarCastTypemaster = () => {
                 header: 'StarCastType Name',
                 accessorKey: 'StarCastTypeName',
             },
-            {
-                header: 'Status',
-                id: 'action',
-                cell: (props) => {
-                    const row = props.row.original
-                    return (
-                        <div className="flex items-center">
-                            <Badge className={statusColor[row.IsActive]} />
-                            <span className="ml-2 rtl:mr-2 capitalize">
-                                {row.IsActive == 1 ? 'Active' : 'InActive'}
-                            </span>
-                        </div>
-                    )
-                },
-            },
+            // {
+            //     header: 'Status',
+            //     id: 'action',
+            //     cell: (props) => {
+            //         const row = props.row.original
+            //         return (
+            //             <div className="flex items-center">
+            //                 <Badge className={statusColor[row.IsActive]} />
+            //                 <span className="ml-2 rtl:mr-2 capitalize">
+            //                     {row.IsActive == 1 ? 'Active' : 'InActive'}
+            //                 </span>
+            //             </div>
+            //         )
+            //     },
+            // },
         ],
         []
     )
@@ -146,7 +151,7 @@ const StarCastTypemaster = () => {
                 </Alert>
             )} */}
             <Card
-                header="StarCastType Master"
+                header={<HeaderExtra Component={'StarCastType Master'} />}
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -168,9 +173,29 @@ const StarCastTypemaster = () => {
 
             <Drawer
                 title={
-                    editData.LanguageName
-                        ? 'Edit StarCastType Master'
-                        : 'Add StarCastType Master'
+                    editData.StarCastTypeName ? (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiOutlinePencil />}
+                                ></Button>
+                            </center>
+                            StarCastType Master
+                        </p>
+                    ) : (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiOutlinePlusCircle />}
+                                ></Button>
+                            </center>
+                            StarCastType Master
+                        </p>
+                    )
                 }
                 isOpen={isOpen}
                 onClose={onDrawerClose}
