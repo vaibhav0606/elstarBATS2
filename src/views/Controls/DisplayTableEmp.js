@@ -11,8 +11,8 @@ import {
     getFacetedMinMaxValues,
     getPaginationRowModel,
 } from '@tanstack/react-table'
-import { Button, Input } from 'components/ui'
-import { HiOutlinePencil } from 'react-icons/hi'
+import { Button } from 'components/ui'
+import { HiLockClosed, HiOutlinePencil } from 'react-icons/hi'
 import { useSelector } from 'react-redux'
 
 const DisplayTable = ({
@@ -24,6 +24,9 @@ const DisplayTable = ({
     setGlobalFilter,
     seteditData,
     openDialog,
+    setCurrentTab,
+    setcount,
+    setGame,
 }) => {
     //console.log(setGlobalFilter);
     const table = useReactTable({
@@ -50,9 +53,13 @@ const DisplayTable = ({
     return (
         <>
             <Table>
-            <THead className="border-b-2 "  style={{
-                    borderColor: themeColor,
-                }}variant="solid">
+                <THead
+                    className="border-b-2 "
+                    style={{
+                        borderColor: themeColor,
+                    }}
+                    variant="solid"
+                >
                     {table.getHeaderGroups().map((headerGroup) => (
                         <Tr key={headerGroup.id}>
                             {headerGroup.headers.map((header) => {
@@ -60,9 +67,8 @@ const DisplayTable = ({
                                     <Th
                                         key={header.id}
                                         colSpan={header.colSpan}
-                                        
                                     >
-                                       <p className="text-black capitalize">
+                                        <p className="text-black capitalize">
                                             {/* {console.log(header.getSize(3000))} */}
                                             {header.isPlaceholder ? null : (
                                                 <div
@@ -103,7 +109,7 @@ const DisplayTable = ({
                                 )
                             })}
                             <Th>
-                            <p className="text-black capitalize">Actions</p>
+                                <p className="text-black capitalize">Actions</p>
                             </Th>
                         </Tr>
                     ))}
@@ -125,17 +131,28 @@ const DisplayTable = ({
                                         </Td>
                                     )
                                 })}
-                                <Td
-                                    onClick={() => {
-                                        seteditData(row.original)
-                                        openDialog()
-                                    }}
-                                    className="text-xs text-black font-medium border"
-                                >
+                                <Td className="text-xs text-black font-medium border flex">
                                     <Button
                                         size="xs"
                                         variant="twoTone"
                                         icon={<HiOutlinePencil />}
+                                        onClick={() => {
+                                            seteditData(row.original)
+                                            openDialog()
+                                        }}
+                                        style={{ marginRight: '5px' }}
+                                    ></Button>
+                                    <Button
+                                        size="xs"
+                                        variant="twoTone"
+                                        onClick={() => {
+                                            seteditData(row.original)
+                                            openDialog()
+                                            setCurrentTab('tab2')
+                                            setcount(3)
+                                            setGame(3)
+                                        }}
+                                        icon={<HiLockClosed />}
                                     ></Button>
                                 </Td>
                             </Tr>

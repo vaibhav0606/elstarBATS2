@@ -136,10 +136,10 @@ const Entitymaster = () => {
     }
 
     const onDrawerClose = async (e, values) => {
+        setIsOpen(false)
         const resp = await apiGetEntitymaster(values)
         seteditData([''])
         setdata(resp.data)
-        setIsOpen(false)
     }
     function DebouncedInput({
         value: initialValue,

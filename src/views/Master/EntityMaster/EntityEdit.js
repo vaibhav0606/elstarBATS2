@@ -94,6 +94,7 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                 validationSchema={validationSchema}
                 onSubmit={(values, { resetForm, setSubmitting }) => {
                     setTimeout(() => {
+                        alert('hh')
                         if (!editData.EntityCode) {
                             new Promise((resolve, reject) => {
                                 AddEntity(values, token)
