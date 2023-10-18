@@ -1,6 +1,6 @@
 import React from 'react'
 import { AdaptableCard } from 'components/shared'
-import { Input, FormItem } from 'components/ui'
+import { Input, FormItemcompact,Select } from 'components/ui'
 import NumberFormat from 'react-number-format'
 import { Field } from 'formik'
 
@@ -27,43 +27,71 @@ const NumberFormatInput = ({ onValueChange, ...rest }) => {
         />
     )
 }
-
+ 
 const PricingFields = (props) => {
     const { touched, errors } = props
-
+ 
     return (
         <AdaptableCard className="mb-4" divider>
-            <h5>Pricing</h5>
-            <p className="mb-6">Section to config product sales information</p>
+            <h5>Contact Detail</h5>
+            {/* <p className="mb-6">Section to config product sales information</p> */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
-                    <FormItem
-                        label="SKU"
-                        invalid={errors.stock && touched.stock}
-                        errorMessage={errors.stock}
+
+                    <FormItemcompact
+                        label="Address"
+                        invalid={errors.Emp_Addr1 && touched.Emp_Addr1}
+                        errorMessage={errors.Emp_Addr1}
                     >
-                        <Field name="stock">
-                            {({ field, form }) => {
-                                return (
-                                    <NumberFormatInput
-                                        form={form}
+                        <Field
+                            type="text"
+                            autoComplete="off"
+                            name="Emp_Addr1"
+                            placeholder="Address"
+                            component={Input}
+                        />
+                        {/* <FormItemcompact
+                            asterisk
+                            label="Country"
+                            invalid={
+                                errors.CountryCode &&
+                                touched.CountryCode
+                            }
+                            errorMessage={errors.CountryCode}
+                            style={{ width: '250px' }}
+                        >
+                            <Field
+                                size="sm"
+                                name="CountryCode"
+                                style={{ width: '250px' }}
+                            >
+                                {({ field, form }) => (
+                                    <Select
+                                        style={{ width: '250px' }}
                                         field={field}
-                                        placeholder="Stock"
-                                        customInput={NumberInput}
-                                        onValueChange={(e) => {
+                                        form={form}
+                                        className="mb-4 w-50"
+                                        options={Country}
+                                        value={Country.filter(
+                                            (option) =>
+                                                option.value ===
+                                                1
+                                        )}
+                                        onChange={(option) =>
                                             form.setFieldValue(
                                                 field.name,
-                                                e.value
+                                                option?.value
                                             )
-                                        }}
+                                        }
                                     />
-                                )
-                            }}
-                        </Field>
-                    </FormItem>
+                                )}
+                            </Field>
+                        </FormItemcompact> */}
+
+                    </FormItemcompact>
                 </div>
                 <div className="col-span-1">
-                    <FormItem
+                    <FormItemcompact
                         label="Price"
                         invalid={errors.price && touched.price}
                         errorMessage={errors.price}
@@ -86,12 +114,12 @@ const PricingFields = (props) => {
                                 )
                             }}
                         </Field>
-                    </FormItem>
+                    </FormItemcompact>
                 </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
-                    <FormItem
+                    <FormItemcompact
                         label="Bulk Discount Price"
                         invalid={
                             errors.bulkDiscountPrice &&
@@ -117,10 +145,10 @@ const PricingFields = (props) => {
                                 )
                             }}
                         </Field>
-                    </FormItem>
+                    </FormItemcompact>
                 </div>
                 <div className="col-span-1">
-                    <FormItem
+                    <FormItemcompact
                         label="Tax Rate(%)"
                         invalid={errors.taxRate && touched.taxRate}
                         errorMessage={errors.taxRate}
@@ -146,7 +174,7 @@ const PricingFields = (props) => {
                                 )
                             }}
                         </Field>
-                    </FormItem>
+                    </FormItemcompact>
                 </div>
             </div>
         </AdaptableCard>

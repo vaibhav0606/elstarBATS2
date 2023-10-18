@@ -25,7 +25,7 @@ const ImageList = (props) => {
         setViewOpen(false)
         setTimeout(() => {
             setSelectedImg({})
-        }, 300)
+        }, 200)
     }
 
     const onDeleteConfirmation = (img) => {
@@ -47,24 +47,24 @@ const ImageList = (props) => {
         <>
             {imgList.map((img) => (
                 <div
-                    className="group relative rounded border p-2 flex"
+                    className="group relative rounded border p-1 flex"
                     key={img.id}
                 >
                     <img
-                        className="rounded max-h-[140px] max-w-full"
+                        className="rounded max-h-[40px] max-w-full"
                         src={img.img}
                         alt={img.name}
                     />
                     <div className="absolute inset-2 bg-gray-900/[.7] group-hover:flex hidden text-xl items-center justify-center">
                         <span
                             onClick={() => onViewOpen(img)}
-                            className="text-gray-100 hover:text-gray-300 cursor-pointer p-1.5"
+                            className="text-gray-100 hover:text-gray-300 cursor-pointer p-1"
                         >
                             <HiEye />
                         </span>
                         <span
                             onClick={() => onDeleteConfirmation(img)}
-                            className="text-gray-100 hover:text-gray-300 cursor-pointer p-1.5"
+                            className="text-gray-100 hover:text-gray-300 cursor-pointer p-1"
                         >
                             <HiTrash />
                         </span>
@@ -76,7 +76,7 @@ const ImageList = (props) => {
                 onClose={onDialogClose}
                 onRequestClose={onDialogClose}
             >
-                <h5 className="mb-4">{selectedImg.name}</h5>
+                <h5 className="mb-1">{selectedImg.name}</h5>
                 <img
                     className="w-full"
                     src={selectedImg.img}
@@ -150,8 +150,8 @@ const ProductImages = (props) => {
 
     return (
         <AdaptableCard className="mb-4">
-            <h5>Product Image</h5>
-            <p className="mb-6">Add or change image for the product</p>
+            <h5>Profile Picture</h5>
+            <p className="mb-6">Add or change image for the Profile</p>
             <FormItem>
                 <Field name="imgList">
                     {({ field, form }) => {

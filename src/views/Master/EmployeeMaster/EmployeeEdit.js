@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react'
+import React, { forwardRef, useState,useEffect } from 'react'
 import { FormContainer, Button, hooks } from 'components/ui'
 import { StickyFooter, ConfirmDialog } from 'components/shared'
 import { Form, Formik } from 'formik'
@@ -10,6 +10,17 @@ import cloneDeep from 'lodash/cloneDeep'
 import { HiOutlineTrash } from 'react-icons/hi'
 import { AiOutlineSave } from 'react-icons/ai'
 import * as Yup from 'yup'
+import {
+    apiGetEmployeemaster,
+    apiGetDesignationMaster,
+    apiGetPlaceMaster,
+    apiGetStateMaster,
+    apiGetDepartmentmaster,
+    apiGetCountryMaster,
+    apiGetRegionMaster,
+    apiGetempmasterdropmaster,
+    apiGetEmpbyid,
+} from 'services/MasterService'
 
 const { useUniqueId } = hooks
 
@@ -19,6 +30,8 @@ const validationSchema = Yup.object().shape({
     stock: Yup.number().required('SKU Required'),
     category: Yup.string().required('Category Required'),
 })
+
+
 
 const DeleteProductButton = ({ onDelete }) => {
     const [dialogOpen, setDialogOpen] = useState(false)
@@ -35,9 +48,10 @@ const DeleteProductButton = ({ onDelete }) => {
         onDelete?.(setDialogOpen)
     }
 
+
     return (
         <>
-            <Button
+            {/* <Button
                 className="text-red-600"
                 variant="plain"
                 size="sm"
@@ -62,12 +76,67 @@ const DeleteProductButton = ({ onDelete }) => {
                     related to this product will be deleted as well. This action
                     cannot be undone.
                 </p>
-            </ConfirmDialog>
+            </ConfirmDialog> */}
         </>
     )
 }
 
 const ProductForm = forwardRef((props, ref) => {
+    const [editData, seteditData] = useState([''])
+const [globalFilter, setGlobalFilter] = useState('')
+const [sorting, setSorting] = useState([])
+const [data, setdata] = useState([''])
+const [designation, setDesignation] = useState({ value: '', label: '' })
+const [State, setState] = useState({ value: '', label: '' })
+const [Department, setDepartment] = useState({ value: '', label: '' })
+const [Country, setCountry] = useState({ value: '', label: '' })
+const [Region, setRegion] = useState({ value: '', label: '' })
+const [Emp, setEmp] = useState({ value: '', label: '' })
+const [count, setcount] = useState(1)
+const [game, setGame] = useState(2) 
+const [Place, setPlace] = useState({ value: '', label: '' })
+//const [message, setMessage] = useTimeOutMessage()
+const [log, setlog] = useState('')
+const [currentTab, setCurrentTab] = useState('tab1')
+
+
+useEffect(() => {
+          
+    ;(async (values) => {
+        const State = await apiGetStateMaster(values)
+        const formattedOptions = State.data.map((option) => ({
+            value: option.StateCode,
+            label: option.StateName,
+        }))
+        setState(formattedOptions)
+    })()
+    
+    ;(async (values) => {
+        const Department = await apiGetDepartmentmaster(values)
+        const formattedOptions = Department.data.map((option) => ({
+            value: option.DepartmentCode,
+            label: option.DepartmentName,
+        }))
+        setDepartment(formattedOptions)
+    })()
+    ;(async (values) => {
+        const Country = await apiGetCountryMaster(values)
+        const formattedOptions = Country.data.map((option) => ({
+            value: option.CountryCode,
+            label: option.CountryName,
+        }))
+        setCountry(formattedOptions)
+    })()
+    ;(async (values) => {
+        const Region = await apiGetRegionMaster(values)
+        const formattedOptions = Region.data.map((option) => ({
+            value: option.RegionCode,
+            label: option.RegionName,
+        }))
+        setRegion(formattedOptions)
+    })()
+}, [])
+
     const { type, initialData, onFormSubmit, onDiscard, onDelete } = props
 
     const newId = useUniqueId('product-')
@@ -102,7 +171,16 @@ const ProductForm = forwardRef((props, ref) => {
                     <Form>
                         <FormContainer>
                             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                            <div className="lg:col-span-1">
+                                    <ProductImages
+                                        touched={touched}
+                                        errors={errors}
+                                        values={values}
+                                        
+                                    />
+                                </div>
                                 <div className="lg:col-span-2">
+                                    
                                     <BasicInformationFields
                                         touched={touched}
                                         errors={errors}
@@ -112,6 +190,7 @@ const ProductForm = forwardRef((props, ref) => {
                                         touched={touched}
                                         errors={errors}
                                         values={values}
+                                        Country={Country}
                                     />
                                     <OrganizationFields
                                         touched={touched}
@@ -119,13 +198,7 @@ const ProductForm = forwardRef((props, ref) => {
                                         values={values}
                                     />
                                 </div>
-                                <div className="lg:col-span-1">
-                                    <ProductImages
-                                        touched={touched}
-                                        errors={errors}
-                                        values={values}
-                                    />
-                                </div>
+                                
                             </div>
                             <StickyFooter
                                 className="-mx-8 px-8 flex items-center justify-between py-4"
