@@ -22,44 +22,46 @@ const validationSchema = Yup.object().shape({
         .required('ShortName Required'),
     SupplierERPCode: Yup.string()
         .min(3, 'Too Short!')
-        .max(50, 'Too Long!')
+        .max(4, 'Too Long!')
         .required('SupplierERPCode Required'),
     Address1: Yup.string()
         .min(3, 'Too Short!')
         .max(50, 'Too Long!')
         .required('Address1 Required'),
-    Address2: Yup.string()
-        .min(3, 'Too Short!')
-        .max(200, 'Too Long!')
-        .required('Address2 Required'),
+    // Address2: Yup.string()
+    //     .min(3, 'Too Short!')
+    //     .max(200, 'Too Long!')
+    //     .required('Address2 Required'),
     Pin: Yup.string()
-        .min(1, 'Too Short!')
-        .max(50, 'Too Long!')
+        .min(6, 'Too Short!')
+        .max(6, 'Too Long!')
         .required('Pin Required'),
     CountryCode: Yup.string()
         .min(1, 'Too Short!')
         .max(200, 'Too Long!')
         .required('Country Required'),
-    StateCode: Yup.string()
+    State: Yup.string()
         .min(1, 'Too Short!')
         .max(200, 'Too Long!')
         .required('State Required'),
     PlaceCode: Yup.string()
-        .min(3, 'Too Short!')
+        .min(1, 'Too Short!')
         .max(50, 'Too Long!')
         .required('Place Required'),
     Phone: Yup.string()
         .min(1, 'Too Short!')
-        .max(200, 'Too Long!')
+        .max(10, 'Too Long!')
+        .matches(/^[0-9]+$/, 'Must be only digits')
         .required('Phone Required'),
-    Mobile: Yup.string()
-        .min(1, 'Too Short!')
-        .max(50, 'Too Long!')
-        .required('Mobile Required'),
-    Fax: Yup.string()
-        .min(3, 'Too Short!')
-        .max(50, 'Too Long!')
-        .required('Fax Required'),
+    // Mobile: Yup.string()
+    //     .min(1, 'Too Short!')
+    //     .max(50, 'Too Long!')
+    //     .matches(/^[0-9]+$/, 'Must be only digits')
+    //     .required('Mobile Required'),
+    // Fax: Yup.string()
+    //     .min(3, 'Too Short!')
+    //     .max(50, 'Too Long!')
+    //     .required('Fax Required'),
     Email: Yup.string()
         .min(1, 'Too Short!')
         .max(200, 'Too Long!')
@@ -109,7 +111,7 @@ const SupplierEdit = ({
                 setlog('success')
                 setMessage('Data Updated Successfully')
                 return
-            } else if (resp.data.msg === 'Supplier is Already Exists') {
+            } else if (resp.data.msg === 'Supplier Already Exists') {
                 setlog('warning')
                 setMessage(resp.data.msg)
                 return
@@ -123,6 +125,7 @@ const SupplierEdit = ({
         <div>
             <Formik
                 initialValues={{
+                    SupplierCode: editData.SupplierCode || '',
                     SupplierName: editData.SupplierName || '',
                     ShortName: editData.ShortName || '',
                     SupplierERPCode: editData.SupplierERPCode || '',
@@ -224,6 +227,7 @@ const SupplierEdit = ({
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <FormItem
+                                        asterisk
                                         label="ERPCode"
                                         invalid={
                                             errors.SupplierERPCode &&
@@ -235,11 +239,12 @@ const SupplierEdit = ({
                                             type="SupplierERPCode"
                                             autoComplete="off"
                                             name="SupplierERPCode"
-                                            placeholder="SupplierERP Code"
+                                            placeholder="Supplier ERP Code"
                                             component={Input}
                                         />
                                     </FormItem>
                                     <FormItem
+                                        asterisk
                                         label="Pin"
                                         invalid={errors.Pin && touched.Pin}
                                         errorMessage={errors.Pin}
@@ -401,6 +406,7 @@ const SupplierEdit = ({
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <FormItem
+                                    asterisk
                                     label="Phone"
                                     invalid={errors.Phone && touched.Phone}
                                     errorMessage={errors.Phone}
@@ -423,6 +429,7 @@ const SupplierEdit = ({
                                         autoComplete="off"
                                         name="Mobile"
                                         placeholder="Mobile"
+                                        maxlength="10"
                                         component={Input}
                                     />
                                 </FormItem>
@@ -442,6 +449,7 @@ const SupplierEdit = ({
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <FormItem
+                                    asterisk
                                     label="Email"
                                     invalid={errors.Email && touched.Email}
                                     errorMessage={errors.Email}
@@ -455,6 +463,7 @@ const SupplierEdit = ({
                                     />
                                 </FormItem>
                                 <FormItem
+                                    asterisk
                                     label="ContactPerson"
                                     invalid={
                                         errors.ContactPerson &&

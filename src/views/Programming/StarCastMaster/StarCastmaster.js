@@ -5,11 +5,16 @@ import {
     apiGetStarCastTypemaster,
 } from 'services/ProgrammingService'
 import { Button, Card } from 'components/ui'
-import { HiPlusCircle } from 'react-icons/hi'
+import {
+    HiOutlinePencil,
+    HiOutlinePlusCircle,
+    HiPlusCircle,
+} from 'react-icons/hi'
 import StarCastEdit from './StarCastEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
 import { apiGetCountryMaster } from 'services/MasterService'
+import HeaderExtra from 'views/Controls/HeaderExtra'
 
 const headerExtraContent = (
     openDrawer,
@@ -66,58 +71,53 @@ const StarCastmaster = () => {
             {
                 header: 'StarCast Name',
                 accessorKey: 'StarCastName',
-            },
-            {
-                header: 'StarCastType Master',
-                id: 'StarCastTypeMaster',
-                cell: (props) => {
-                    const { StarCastTypeMaster } = props.row.original
-                    return (
-                        <div className="flex items-center">
-                            <span className="ml-2 rtl:mr-2 capitalize">
-                                {StarCastTypeMaster?.StarCastTypeName}
-                            </span>
-                        </div>
-                    )
-                },
-            },
-            {
-                header: 'Gender',
-                accessorKey: 'MaleFemale',
-            },
-            {
-                header: 'DateOfBirth',
-                accessorKey: 'DateOfBirth',
-            },
-            {
-                header: 'Country',
-                id: 'Country',
-                cell: (props) => {
-                    const { Country } = props.row.original
-                    return (
-                        <div className="flex items-center">
-                            <span className="ml-2 rtl:mr-2 capitalize">
-                                {Country?.CountryName}
-                            </span>
-                        </div>
-                    )
-                },
-            },
-            {
-                header: 'Status',
-                id: 'action',
                 cell: (props) => {
                     const row = props.row.original
                     return (
                         <div className="flex items-center">
                             <Badge className={statusColor[row.IsActive]} />
                             <span className="ml-2 rtl:mr-2 capitalize">
-                                {row.IsActive == 1 ? 'Active' : 'InActive'}
+                                {row.StarCastName}
                             </span>
                         </div>
                     )
                 },
             },
+            {
+                header: 'StarCastType',
+                id: 'StarCastType',
+                cell: (props) => {
+                    const { StarCastType } = props.row.original
+                    return (
+                        <div className="flex items-center">
+                            <span className="ml-2 rtl:mr-2 capitalize">
+                                {StarCastType?.StarCastType}
+                            </span>
+                        </div>
+                    )
+                },
+            },
+
+            {
+                header: 'Gender',
+                accessorKey: 'MaleFemale',
+            },
+
+            //{
+            //     header: 'Status',
+            //     id: 'action',
+            //     cell: (props) => {
+            //         const row = props.row.original
+            //         return (
+            //             <div className="flex items-center">
+            //                 <Badge className={statusColor[row.IsActive]} />
+            //                 <span className="ml-2 rtl:mr-2 capitalize">
+            //                     {row.IsActive == 1 ? 'Active' : 'InActive'}
+            //                 </span>
+            //             </div>
+            //         )
+            //     },
+            // },
         ],
         []
     )
@@ -201,7 +201,7 @@ const StarCastmaster = () => {
                 </Alert>
             )} */}
             <Card
-                header="StarCast Master"
+                header={<HeaderExtra Component={'StarCast Master'} />}
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -223,9 +223,29 @@ const StarCastmaster = () => {
 
             <Drawer
                 title={
-                    editData.LanguageName
-                        ? 'Edit StarCast Master'
-                        : 'Add StarCast Master'
+                    editData.StarCastName ? (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiOutlinePencil />}
+                                ></Button>
+                            </center>
+                            StarCast Master
+                        </p>
+                    ) : (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiOutlinePlusCircle />}
+                                ></Button>
+                            </center>
+                            StarCast Master
+                        </p>
+                    )
                 }
                 isOpen={isOpen}
                 onClose={onDrawerClose}

@@ -15,7 +15,7 @@ const validationSchema = Yup.object().shape({
     StarCastTypeName: Yup.string()
         .min(3, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('StarCastTypeName Required'),
+        .required('StarCastType Name Required'),
     IsActive: Yup.string().required('IsActives Required'),
     rememberMe: Yup.bool(),
 })
@@ -57,7 +57,7 @@ const StarCastTypeEdit = ({
                 setlog('success')
                 setMessage('Data Updated Successfully')
                 return
-            } else if (resp.data.msg === 'StarCastType is Already Exists') {
+            } else if (resp.data.msg === 'StarCastType Already Exists') {
                 setlog('warning')
                 setMessage(resp.data.msg)
                 return

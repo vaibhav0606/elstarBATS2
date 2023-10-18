@@ -15,7 +15,7 @@ const validationSchema = Yup.object().shape({
     ContentTypeName: Yup.string()
         .min(3, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('ContentTypeName Required'),
+        .required('Required'),
     rememberMe: Yup.bool(),
 })
 const options = [
@@ -56,7 +56,7 @@ const ContentTypeEdit = ({
                 setlog('success')
                 setMessage('Data Updated Successfully')
                 return
-            } else if (resp.data.msg === 'ContentType is Already Exists') {
+            } else if (resp.data.msg === 'ContentType Already Exists') {
                 setlog('warning')
                 setMessage(resp.data.msg)
                 return
