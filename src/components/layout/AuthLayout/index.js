@@ -24,7 +24,7 @@ const AuthLayout = (props) => {
             >
                 <img
                     className="mb-4 max-w-[150px]"
-                    src="/img/logo/logo-dark-full.png"
+                    src="/img/logo/logo-light-full.png"
                     alt="no-notification"
                 />
                 <div class="flex justify-between pt-2" style={{}}>
