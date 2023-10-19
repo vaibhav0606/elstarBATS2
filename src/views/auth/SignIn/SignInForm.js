@@ -5,8 +5,9 @@ import {
     Checkbox,
     FormItem,
     FormContainer,
-    Alert,
+    Alert
 } from 'components/ui'
+import { StickyFooter, ConfirmDialog } from 'components/shared'
 import { PasswordInput, ActionLink } from 'components/shared'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import { Field, Form, Formik } from 'formik'
@@ -19,6 +20,7 @@ const validationSchema = Yup.object().shape({
     password: Yup.string().required('Please enter your password'),
     rememberMe: Yup.bool(),
 })
+const APP_NAME = "BATS"
 
 const SignInForm = (props) => {
     const {
@@ -89,7 +91,7 @@ const SignInForm = (props) => {
                                         />
                                     </FormItem>
 
-                                    <Button
+                                    <Button className="mb-8"
                                         block
                                         onClick={() => {
                                             if (
@@ -106,6 +108,10 @@ const SignInForm = (props) => {
                                     >
                                         Continue
                                     </Button>
+                                    
+                                
+                                     
+                                  
                                 </>
                             )}
                             {isshow ? null : (

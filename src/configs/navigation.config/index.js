@@ -190,7 +190,6 @@ const navigationConfig = [
                 path: '',
                 title: 'Content Management',
                 translateKey: 'nav.suppliermastertable.item2',
-                icon: '',
                 type: NAV_ITEM_TYPE_COLLAPSE,
                 authority: [],
                 subMenu: [
