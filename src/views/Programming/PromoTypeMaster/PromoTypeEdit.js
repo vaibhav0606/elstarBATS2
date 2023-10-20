@@ -1,32 +1,30 @@
 import { FormItem, Button, Switcher, Input, FormContainer } from 'components/ui'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
-import {
-    Postcommercialtype,
-    Putcommercialtype,
-} from 'services/ProgrammingService'
+import { Postpromotype, Putpromotype } from 'services/ProgrammingService'
 import { useSelector } from 'react-redux'
 
 const validationSchema = Yup.object().shape({
-    CommercialTypeName: Yup.string()
+    PromoTypeName: Yup.string()
         .min(3, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('CommercialType Name Required'),
+        .required('PromoType Name Required'),
+    PromoTypeShortName: Yup.string()
+        .min(3, 'Too Short!')
+        .max(4, 'Too Long!')
+        .required('PromoType Short Name Required'),
+
+    ChannelSpecific: Yup.string().required('ChannelSpecific Required'),
     IsActive: Yup.string().required('IsActives Required'),
     rememberMe: Yup.bool(),
 })
-const CommercialTypeEdit = ({
-    onDrawerClose,
-    editData,
-    setMessage,
-    setlog,
-}) => {
+const PromoTypeEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
     const token = useSelector((state) => state.auth.session.token)
     //console.log(currency)
 
-    const AddCommercialTypeName = async (values, token) => {
+    const AddPromoTypeName = async (values, token) => {
         try {
-            const resp = await Postcommercialtype(values, token)
+            const resp = await Postpromotype(values, token)
             if (resp.data.msg === 'success') {
                 setlog('success')
                 setMessage('Data Inserted Successfully')
@@ -40,15 +38,15 @@ const CommercialTypeEdit = ({
             return {}
         }
     }
-    const EditCommercialType = async (values, token) => {
+    const EditPromoType = async (values, token) => {
         try {
-            const resp = await Putcommercialtype(values, token)
+            const resp = await Putpromotype(values, token)
             console.log(resp)
             if (resp.data.msg === 'Updated') {
                 setlog('success')
                 setMessage('Data Updated Successfully')
                 return
-            } else if (resp.data.msg === 'Commercial Type Already Exists') {
+            } else if (resp.data.msg === 'Promo Type Already Exists') {
                 setlog('warning')
                 setMessage(resp.data.msg)
                 return
@@ -62,17 +60,20 @@ const CommercialTypeEdit = ({
         <div>
             <Formik
                 initialValues={{
-                    CommercialTypeCode: editData.CommercialTypeCode || '',
-                    CommercialTypeName: editData.CommercialTypeName || '',
+                    PromoTypeCode: editData.PromoTypeCode || '',
+                    PromoTypeName: editData.PromoTypeName || '',
+                    PromoTypeShortName: editData.PromoTypeShortName || '',
+                    ChannelSpecific:
+                        editData.ChannelSpecific === 1 ? true : false,
                     IsActive: editData.IsActive === 1 ? true : false,
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { resetForm, setSubmitting }) => {
                     console.log(editData)
                     setTimeout(() => {
-                        if (!editData.CommercialTypeCode) {
+                        if (!editData.PromoTypeCode) {
                             new Promise((resolve, reject) => {
-                                AddCommercialTypeName(values, token)
+                                AddPromoTypeName(values, token)
                                     .then((response) => {
                                         onDrawerClose(0, 0)
                                         resolve(response)
@@ -84,7 +85,7 @@ const CommercialTypeEdit = ({
                         } else {
                             new Promise((resolve, reject) => {
                                 setSubmitting(false)
-                                EditCommercialType(values, token)
+                                EditPromoType(values, token)
                                     .then((response) => {
                                         onDrawerClose(0, 0)
                                         resolve(response)
@@ -109,29 +110,69 @@ const CommercialTypeEdit = ({
                                 }}
                             >
                                 <Field
-                                    type="CommercialTypeCode"
+                                    type="PromoTypeCode"
                                     autoComplete="off"
-                                    name="CommercialTypeCode"
-                                    placeholder="CommercialTypeCode"
+                                    name="PromoTypeCode"
+                                    placeholder="PromoTypeCode"
                                     component={Input}
                                     hidden
                                 />
                                 <FormItem
                                     asterisk
-                                    label="CommercialType Name"
+                                    label="PromoType Name"
                                     invalid={
-                                        errors.CommercialTypeName &&
-                                        touched.CommercialTypeName
+                                        errors.PromoTypeName &&
+                                        touched.PromoTypeName
                                     }
-                                    errorMessage={errors.CommercialTypeName}
+                                    errorMessage={errors.PromoTypeName}
                                 >
                                     <Field
-                                        type="CommercialTypeName"
+                                        type="PromoTypeName"
                                         autoComplete="off"
-                                        name="CommercialTypeName"
-                                        placeholder="CommercialType Name"
+                                        name="PromoTypeName"
+                                        placeholder="PromoType Name"
                                         component={Input}
                                     />
+                                </FormItem>
+
+                                <FormItem
+                                    asterisk
+                                    label="PromoType Short Name"
+                                    invalid={
+                                        errors.PromoTypeShortName &&
+                                        touched.PromoTypeShortName
+                                    }
+                                    errorMessage={errors.PromoTypeShortName}
+                                >
+                                    <Field
+                                        type="PromoTypeShortName"
+                                        autoComplete="off"
+                                        name="PromoTypeShortName"
+                                        placeholder="PromoType Short Name"
+                                        component={Input}
+                                    />
+                                </FormItem>
+                            </div>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                }}
+                            >
+                                <FormItem
+                                    label="ChannelSpecific"
+                                    invalid={
+                                        errors.ChannelSpecific &&
+                                        touched.ChannelSpecific
+                                    }
+                                    errorMessage={errors.ChannelSpecific}
+                                >
+                                    <div>
+                                        <Field
+                                            name="ChannelSpecific"
+                                            component={Switcher}
+                                        />
+                                    </div>
                                 </FormItem>
                             </div>
                             <div
@@ -169,4 +210,4 @@ const CommercialTypeEdit = ({
     )
 }
 
-export default CommercialTypeEdit
+export default PromoTypeEdit

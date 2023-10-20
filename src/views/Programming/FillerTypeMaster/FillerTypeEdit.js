@@ -1,32 +1,24 @@
 import { FormItem, Button, Switcher, Input, FormContainer } from 'components/ui'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
-import {
-    Postcommercialtype,
-    Putcommercialtype,
-} from 'services/ProgrammingService'
+import { Postfillertype, Putfillertype } from 'services/ProgrammingService'
 import { useSelector } from 'react-redux'
 
 const validationSchema = Yup.object().shape({
-    CommercialTypeName: Yup.string()
+    FillerTypeName: Yup.string()
         .min(3, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('CommercialType Name Required'),
+        .required('FillerTypeName  Required'),
     IsActive: Yup.string().required('IsActives Required'),
     rememberMe: Yup.bool(),
 })
-const CommercialTypeEdit = ({
-    onDrawerClose,
-    editData,
-    setMessage,
-    setlog,
-}) => {
+const FillerTypeEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
     const token = useSelector((state) => state.auth.session.token)
     //console.log(currency)
 
-    const AddCommercialTypeName = async (values, token) => {
+    const AddFillerType = async (values, token) => {
         try {
-            const resp = await Postcommercialtype(values, token)
+            const resp = await Postfillertype(values, token)
             if (resp.data.msg === 'success') {
                 setlog('success')
                 setMessage('Data Inserted Successfully')
@@ -40,15 +32,15 @@ const CommercialTypeEdit = ({
             return {}
         }
     }
-    const EditCommercialType = async (values, token) => {
+    const EditFillerType = async (values, token) => {
         try {
-            const resp = await Putcommercialtype(values, token)
+            const resp = await Putfillertype(values, token)
             console.log(resp)
             if (resp.data.msg === 'Updated') {
                 setlog('success')
                 setMessage('Data Updated Successfully')
                 return
-            } else if (resp.data.msg === 'Commercial Type Already Exists') {
+            } else if (resp.data.msg === 'Filler Type Already Exists') {
                 setlog('warning')
                 setMessage(resp.data.msg)
                 return
@@ -62,17 +54,17 @@ const CommercialTypeEdit = ({
         <div>
             <Formik
                 initialValues={{
-                    CommercialTypeCode: editData.CommercialTypeCode || '',
-                    CommercialTypeName: editData.CommercialTypeName || '',
+                    FillerTypeCode: editData.FillerTypeCode || '',
+                    FillerTypeName: editData.FillerTypeName || '',
                     IsActive: editData.IsActive === 1 ? true : false,
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { resetForm, setSubmitting }) => {
                     console.log(editData)
                     setTimeout(() => {
-                        if (!editData.CommercialTypeCode) {
+                        if (!editData.FillerTypeCode) {
                             new Promise((resolve, reject) => {
-                                AddCommercialTypeName(values, token)
+                                AddFillerType(values, token)
                                     .then((response) => {
                                         onDrawerClose(0, 0)
                                         resolve(response)
@@ -84,7 +76,7 @@ const CommercialTypeEdit = ({
                         } else {
                             new Promise((resolve, reject) => {
                                 setSubmitting(false)
-                                EditCommercialType(values, token)
+                                EditFillerType(values, token)
                                     .then((response) => {
                                         onDrawerClose(0, 0)
                                         resolve(response)
@@ -109,27 +101,27 @@ const CommercialTypeEdit = ({
                                 }}
                             >
                                 <Field
-                                    type="CommercialTypeCode"
+                                    type="FillerTypeCode"
                                     autoComplete="off"
-                                    name="CommercialTypeCode"
-                                    placeholder="CommercialTypeCode"
+                                    name="FillerTypeCode"
+                                    placeholder="FillerTypeCode"
                                     component={Input}
                                     hidden
                                 />
                                 <FormItem
                                     asterisk
-                                    label="CommercialType Name"
+                                    label="FillerType Name"
                                     invalid={
-                                        errors.CommercialTypeName &&
-                                        touched.CommercialTypeName
+                                        errors.FillerTypeName &&
+                                        touched.FillerTypeName
                                     }
-                                    errorMessage={errors.CommercialTypeName}
+                                    errorMessage={errors.FillerTypeName}
                                 >
                                     <Field
-                                        type="CommercialTypeName"
+                                        type="FillerTypeName"
                                         autoComplete="off"
-                                        name="CommercialTypeName"
-                                        placeholder="CommercialType Name"
+                                        name="FillerTypeName"
+                                        placeholder="FillerType Name"
                                         component={Input}
                                     />
                                 </FormItem>
@@ -169,4 +161,4 @@ const CommercialTypeEdit = ({
     )
 }
 
-export default CommercialTypeEdit
+export default FillerTypeEdit
