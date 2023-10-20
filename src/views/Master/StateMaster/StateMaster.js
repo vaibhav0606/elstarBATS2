@@ -1,13 +1,13 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
-import { apiGetViewmaster } from 'services/ProgrammingService'
+import { apiGetCountryMaster, apiGetStateMaster } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
 import {
     HiOutlinePencil,
     HiOutlinePlusCircle,
     HiPlusCircle,
 } from 'react-icons/hi'
-import ViewEdit from './ViewEdit'
+import StateEdit from './StateEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
 import HeaderExtra from 'views/Controls/HeaderExtra'
@@ -39,20 +39,20 @@ const headerExtraContent = (
                     icon={<HiPlusCircle />}
                     onClick={() => openDrawer()}
                 >
-                    Add View
+                    Add State
                 </Button>
             </span>
         </span>
     )
 }
 
-const Viewmaster = () => {
+const Statemaster = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [editData, seteditData] = useState([''])
     const [globalFilter, setGlobalFilter] = useState('')
     const [sorting, setSorting] = useState([])
     const [data, setdata] = useState([''])
-    const [currency, setCurrency] = useState({ value: '', label: '' })
+    const [Country, setCountry] = useState({ value: '', label: '' })
     const [message, setMessage] = useTimeOutMessage()
     const [log, setlog] = useState('')
 
@@ -64,19 +64,31 @@ const Viewmaster = () => {
     const columns = useMemo(
         () => [
             {
-                header: 'ViewName',
-                accessorKey: 'ViewName',
+                header: 'StateName',
+                accessorKey: 'StateName',
                 cell: (props) => {
                     const row = props.row.original
                     return (
                         <div className="flex items-center">
                             <Badge className={statusColor[row.IsActive]} />
                             <span className="ml-2 rtl:mr-2 capitalize">
-                                {row.ViewName}
+                                {row.StateName}
                             </span>
                         </div>
                     )
                 },
+            },
+            {
+                header: 'State Short Name',
+                accessorKey: 'StateShortName',
+            },
+            {
+                header: 'Country',
+                accessorKey: 'CountryCode',
+            },
+            {
+                header: 'State TinNo',
+                accessorKey: 'StateTinNo',
             },
             // {
             //     header: 'Status',
@@ -98,8 +110,17 @@ const Viewmaster = () => {
     )
     useEffect(() => {
         ;(async (values) => {
-            const resp = await apiGetViewmaster(values)
+            const resp = await apiGetStateMaster(values)
             setdata(resp.data)
+        })()
+        ;(async (values) => {
+            const resp = await apiGetCountryMaster(values)
+
+            const Country = resp.data.map((option) => ({
+                value: option.CountryCode,
+                label: option.CountryName,
+            }))
+            setCountry(Country)
         })()
     }, [])
     const openDrawer = () => {
@@ -108,7 +129,8 @@ const Viewmaster = () => {
 
     const onDrawerClose = async (e, values) => {
         setIsOpen(false)
-        const resp = await apiGetViewmaster(values)
+        const resp = await apiGetStateMaster(values)
+
         setdata(resp.data)
         seteditData([''])
     }
@@ -159,7 +181,7 @@ const Viewmaster = () => {
                 </Alert>
             )} */}
             <Card
-                header={<HeaderExtra Component={'View Master'} />}
+                header={<HeaderExtra Component={'State Master'} />}
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -181,7 +203,7 @@ const Viewmaster = () => {
 
             <Drawer
                 title={
-                    editData.ViewName ? (
+                    editData.StateName ? (
                         <p className="text-xl font-medium text-black flex ">
                             <center>
                                 <Button
@@ -190,7 +212,7 @@ const Viewmaster = () => {
                                     icon={<HiOutlinePencil />}
                                 ></Button>
                             </center>
-                            View Master
+                            State Master
                         </p>
                     ) : (
                         <p className="text-xl font-medium text-black flex ">
@@ -201,7 +223,7 @@ const Viewmaster = () => {
                                     icon={<HiOutlinePlusCircle />}
                                 ></Button>
                             </center>
-                            View Master
+                            State Master
                         </p>
                     )
                 }
@@ -210,16 +232,16 @@ const Viewmaster = () => {
                 onRequestClose={onDrawerClose}
                 width={600}
             >
-                <ViewEdit
+                <StateEdit
                     onDrawerClose={onDrawerClose}
                     editData={editData}
                     setMessage={setMessage}
                     setlog={setlog}
-                    currency={currency}
+                    Country={Country}
                 />
             </Drawer>
         </>
     )
 }
 
-export default Viewmaster
+export default Statemaster
