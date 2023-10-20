@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
-import { Badge, Drawer, Input, Alert } from 'components/ui'
+import { Badge, Drawer, Input, Alert, Tabs } from 'components/ui'
 import {
     apiGetContentmaster,
     apiGetContentTypemaster,
@@ -19,6 +19,11 @@ import ContentEdit from './ContentEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
 import HeaderExtra from 'views/Controls/HeaderExtra'
+import TabList from 'components/ui/Tabs/TabList'
+import TabNav from 'components/ui/Tabs/TabNav'
+import TabContent from 'components/ui/Tabs/TabContent'
+import MapChannel from './MapChannel'
+import SeasonMapping from './SeasonMapping'
 
 const headerExtraContent = (
     openDrawer,
@@ -257,21 +262,69 @@ const Contentmaster = () => {
                 onRequestClose={onDrawerClose}
                 width={
                     window.screen.width > 400
-                        ? window.screen.width / 2.5
+                        ? window.screen.width / 2.0
                         : window.screen.width / 1.5
                 }
             >
-                <ContentEdit
-                    onDrawerClose={onDrawerClose}
-                    editData={editData}
-                    setMessage={setMessage}
-                    setlog={setlog}
-                    ContentType={ContentType}
-                    Language={Language}
-                    Censorship={Censorship}
-                    Genre={Genre}
-                    SubGenre={SubGenre}
-                />
+                <Tabs defaultValue="tab1">
+                    <TabList>
+                        <TabNav value="tab1">
+                            <p className="text-xs">Content</p>
+                        </TabNav>
+                        <TabNav value="tab2">
+                            <p className="text-xs">MapChannel</p>
+                        </TabNav>
+                        <TabNav value="tab3">
+                            <p className="text-xs">MapStarcast</p>
+                        </TabNav>
+                        <TabNav value="tab4">
+                            <p className="text-xs">Synopsis</p>
+                        </TabNav>
+                        <TabNav value="tab5">
+                            <p className="text-xs">Episode Restrictions</p>
+                        </TabNav>
+                    </TabList>
+                    <div className="p-4">
+                        <TabContent value="tab1">
+                            <ContentEdit
+                                onDrawerClose={onDrawerClose}
+                                editData={editData}
+                                setMessage={setMessage}
+                                setlog={setlog}
+                                ContentType={ContentType}
+                                Language={Language}
+                                Censorship={Censorship}
+                                Genre={Genre}
+                                SubGenre={SubGenre}
+                            />
+                        </TabContent>
+                        <TabContent value="tab2">
+                            <MapChannel />
+                            <SeasonMapping />
+                        </TabContent>
+                        <TabContent value="tab3">
+                            <p>
+                                In C++ its harder to shoot yourself in the foot,
+                                but when you do, you blow off your whole leg.
+                                (Bjarne Stroustrup)
+                            </p>
+                        </TabContent>
+                        <TabContent value="tab4">
+                            <p>
+                                In C++ its harder to shoot yourself in the foot,
+                                but when you do, you blow off your whole leg.
+                                (Bjarne Stroustrup)
+                            </p>
+                        </TabContent>
+                        <TabContent value="tab5">
+                            <p>
+                                In C++ its harder to shoot yourself in the foot,
+                                but when you do, you blow off your whole leg.
+                                (Bjarne Stroustrup)
+                            </p>
+                        </TabContent>
+                    </div>
+                </Tabs>
             </Drawer>
         </>
     )
