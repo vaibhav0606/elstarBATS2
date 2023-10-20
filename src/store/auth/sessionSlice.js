@@ -4,6 +4,8 @@ export const sessionSlice = createSlice({
     name: 'auth/session',
     initialState: {
         token: '',
+        LoginId: '',
+        Username: '',
         signedIn: false,
         module: [],
     },
@@ -19,13 +21,25 @@ export const sessionSlice = createSlice({
         setToken: (state, action) => {
             state.token = action.payload
         },
+        setLoginId: (state, action) => {
+            state.LoginId = action.payload
+        },
+        setUsername: (state, action) => {
+            state.Username = action.payload
+        },
         setModule: (state, action) => {
             state.module = action.payload
         },
     },
 })
 
-export const { onSignInSuccess, onSignOutSuccess, setToken, setModule } =
-    sessionSlice.actions
+export const {
+    onSignInSuccess,
+    onSignOutSuccess,
+    setToken,
+    setModule,
+    setLoginId,
+    setUsername,
+} = sessionSlice.actions
 
 export default sessionSlice.reducer

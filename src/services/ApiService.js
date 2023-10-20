@@ -8,7 +8,7 @@ const ApiService = {
                     resolve(response)
                 })
                 .catch((errors) => {
-                    console.log(errors)
+                    // console.log(errors)
                     reject(errors)
                 })
         })

@@ -12,9 +12,9 @@ import {
     getPaginationRowModel,
 } from '@tanstack/react-table'
 import { Button } from 'components/ui'
-import { HiLockClosed, HiOutlinePencil } from 'react-icons/hi'
+import { HiEye, HiLockClosed, HiOutlinePencil } from 'react-icons/hi'
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 const DisplayTable = ({
     data,
     columns,
@@ -29,7 +29,8 @@ const DisplayTable = ({
     setGame,
 }) => {
     //console.log(setGlobalFilter);
-    const navigate = useNavigate();
+    const navigate = useNavigate()
+    console.log(data)
     const table = useReactTable({
         data,
         columns,
@@ -133,29 +134,43 @@ const DisplayTable = ({
                                     )
                                 })}
                                 <Td className="text-xs text-black font-medium border flex">
-                                    <Button
+                                    {/* <Button
                                         size="xs"
                                         variant="twoTone"
                                         icon={<HiOutlinePencil />}
                                         onClick={() => {
                                             seteditData(row.original)
                                             //openDialog()
-                                            navigate(`/BasicInformationFields`);
+                                            navigate(`/BasicInformationFields`)
                                         }}
                                         style={{ marginRight: '5px' }}
-                                    ></Button>
-                                    <Button
+                                    ></Button> */}
+                                    <Link
+                                        to={'/editUser'}
+                                        state={{ editData: row.original }}
                                         size="xs"
                                         variant="twoTone"
-                                        onClick={() => {
-                                            seteditData(row.original)
-                                            openDialog()
-                                            setCurrentTab('tab2')
-                                            setcount(3)
-                                            setGame(3)
-                                        }}
-                                        icon={<HiLockClosed />}
-                                    ></Button>
+                                    >
+                                        <Button
+                                            size="xs"
+                                            variant="twoTone"
+                                            icon={<HiOutlinePencil />}
+                                        ></Button>
+                                    </Link>
+
+                                    <Link
+                                        to={'/emp/EmplyeeView'}
+                                        state={{ editData: row.original }}
+                                        size="xs"
+                                        variant="twoTone"
+                                        className="ml-2"
+                                    >
+                                        <Button
+                                            size="xs"
+                                            variant="twoTone"
+                                            icon={<HiEye />}
+                                        ></Button>
+                                    </Link>
                                 </Td>
                             </Tr>
                         )

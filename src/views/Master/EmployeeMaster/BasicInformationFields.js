@@ -1,6 +1,12 @@
 import React from 'react'
 import { AdaptableCard } from 'components/shared'
-import { Input, FormItem, DatePicker, Select,FormItemcompact } from 'components/ui'
+import {
+    Input,
+    FormItem,
+    DatePicker,
+    Select,
+    FormItemcompact,
+} from 'components/ui'
 import { Field } from 'formik'
 import { HiCake } from 'react-icons/hi'
 import CreatableSelect from 'react-select/creatable'
@@ -12,6 +18,7 @@ export const categories = [
     { label: 'Shoes', value: 'shoes' },
     { label: 'Watches', value: 'watches' },
 ]
+const EmpDemo = [{ value: '', label: 'Data Not Found' }]
 export const bloodgroup = [
     { label: 'A+', value: 'A+' },
     { label: 'A-', value: 'A-' },
@@ -20,8 +27,7 @@ export const bloodgroup = [
     { label: 'AB+', value: 'AB+' },
     { label: 'AB-', value: 'AB-' },
     { label: 'O+', value: 'O+' },
-    { label: 'O-', value: 'O-' }, 
-
+    { label: 'O-', value: 'O-' },
 ]
 
 const BasicInformationFields = (props) => {
@@ -94,14 +100,14 @@ const BasicInformationFields = (props) => {
                     </FormItemcompact>
                 </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="col-span-1">
-                    <FormItemcompact  
+                    <FormItemcompact
                         label="Date Of Birth"
                         invalid={errors.Emp_DOB && touched.Emp_DOB}
                         errorMessage={errors.Emp_DOB}
                     >
-                        <Field name="Emp_DOB" placeholder="Date">
+                        {/* <Field name="Emp_DOB" placeholder="Date">
                             {({ field, form }) => (
                                 <DatePicker
                                     field={field}
@@ -113,16 +119,23 @@ const BasicInformationFields = (props) => {
                                     }}
                                 />
                             )}
-                        </Field>
+                        </Field> */}
+                        <Field
+                            type="date"
+                            autoComplete="off"
+                            name="Emp_DOB"
+                            placeholder="Contact"
+                            component={Input}
+                        />
                     </FormItemcompact>
-                 </div>
+                </div>
                 <div className="col-span-1">
-                     <FormItemcompact
+                    <FormItemcompact
                         label="Date Of Joining"
                         invalid={errors.Emp_DOJ && touched.Emp_DOJ}
                         errorMessage={errors.Emp_DOJ}
                     >
-                        <Field name="Emp_DOJ" placeholder="Date">
+                        {/* <Field name="Emp_DOJ" placeholder="Date">
                             {({ field, form }) => (
                                 <DatePicker
                                     field={field}
@@ -132,6 +145,63 @@ const BasicInformationFields = (props) => {
                                     onChange={(date) => {
                                         form.setFieldValue(field.name, date)
                                     }}
+                                />
+                            )}
+                        </Field> */}
+                        <Field
+                            type="date"
+                            autoComplete="off"
+                            name="Emp_DOJ"
+                            placeholder="Contact"
+                            component={Input}
+                        />
+                    </FormItemcompact>
+                </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="col-span-1">
+                    <FormItemcompact
+                        label="Blood Group"
+                        invalid={
+                            errors.Emp_BloodGroup && touched.Emp_BloodGroup
+                        }
+                        Emp_DOB
+                        errorMessage={errors.Emp_BloodGroup}
+                    >
+                        <Field
+                            size="sm"
+                            name="Emp_BloodGroup"
+                            style={{ width: '250px' }}
+                        >
+                            {({ field, form }) => (
+                                <Select
+                                    style={{ width: '250px' }}
+                                    field={field}
+                                    form={form}
+                                    options={
+                                        bloodgroup.length > 0
+                                            ? bloodgroup
+                                            : EmpDemo
+                                    }
+                                    value={
+                                        bloodgroup.length > 0
+                                            ? bloodgroup.filter(
+                                                  (option) =>
+                                                      option.value ===
+                                                      values.Emp_BloodGroup
+                                              )
+                                            : EmpDemo.filter(
+                                                  (option) =>
+                                                      option.value ===
+                                                      values.ReportingTo
+                                              )
+                                    }
+                                    onChange={(option) =>
+                                        form.setFieldValue(
+                                            field.name,
+                                            option?.value
+                                        )
+                                    }
                                 />
                             )}
                         </Field>
@@ -139,27 +209,17 @@ const BasicInformationFields = (props) => {
                 </div>
                 <div className="col-span-1">
                     <FormItemcompact
-                        label="Blood Group"
-                        invalid={
-                            errors.Emp_BloodGroup && touched.Emp_BloodGroup
-                        }
-                        Emp_DOB errorMessage={errors.Emp_BloodGroup}
+                        label="Code"
+                        invalid={errors.Emp_Code && touched.Emp_Code}
+                        errorMessage={errors.Emp_Code}
                     >
-                        <Field name="Emp_BloodGroup">
-                            {({ field, form }) => (
-                                <Select
-                                    componentAs={CreatableSelect}
-                                    //isMulti
-                                    field={field}
-                                    form={form}
-                                    options={bloodgroup}
-                                    value={values.bloodgroup}
-                                    onChange={(option) =>
-                                        form.setFieldValue(field.value, option)
-                                    }
-                                />
-                            )}
-                        </Field>
+                        <Field
+                            type="text"
+                            autoComplete="off"
+                            name="Emp_Code"
+                            placeholder="Employee Code"
+                            component={Input}
+                        />
                     </FormItemcompact>
                 </div>
             </div>
