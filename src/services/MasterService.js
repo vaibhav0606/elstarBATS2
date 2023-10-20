@@ -1199,6 +1199,72 @@ const Putplace = (param, token) => {
             })
     })
 }
+
+const Poststate = (param, token) => {
+    return new Promise((resolve, reject) => {
+        console.log(param.IsActive ? 1 : 0)
+        let data = JSON.stringify({
+            StateName: param.StateName,
+            StateShortName: param.StateShortName,
+            CountryCode: param.CountryCode,
+            StateTinNo: param.StateTinNo,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/statemaster/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const Putstate = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            StateName: param.StateName,
+            StateShortName: param.StateShortName,
+            CountryCode: param.CountryCode,
+            StateTinNo: param.StateTinNo,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/timeZonemaster/${param.StateCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
 export {
     PostEntity,
     PutEntity,
@@ -1230,4 +1296,6 @@ export {
     PostForm,
     Postplace,
     Putplace,
+    Putstate,
+    Poststate,
 }

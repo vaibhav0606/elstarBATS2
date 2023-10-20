@@ -783,6 +783,72 @@ const PutContent = (param, token) => {
     })
 }
 
+export async function apiGetAspectratiomaster(data) {
+    return ApiService.fetchData({
+        url: '/aspectratiomaster/',
+        method: 'get',
+        data,
+    })
+}
+
+const Postaspectratio = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            AspectRatio: param.AspectRatio,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/aspectratiomaster/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const Putaspectratio = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            AspectRatio: param.AspectRatio,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/aspectratiomaster/${param.AspectRatioCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
 export {
     Poststarcasttype,
     Putstarcasttype,
@@ -804,4 +870,6 @@ export {
     PutSupplier,
     PostContent,
     PutContent,
+    Putaspectratio,
+    Postaspectratio,
 }
