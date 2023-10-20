@@ -52,29 +52,40 @@ const Awardmaster = () => {
     const [globalFilter, setGlobalFilter] = useState('')
     const [sorting, setSorting] = useState([])
     const [data, setdata] = useState([''])
-    const [currency, setCurrency] = useState({ value: '', label: '' })
+    //const [currency, setCurrency] = useState({ value: '', label: '' })
     const [message, setMessage] = useTimeOutMessage()
     const [log, setlog] = useState('')
 
+  
     const statusColor = {
         1: 'bg-emerald-500',
         0: 'bg-red-500',
     }
-
     const columns = useMemo(
         () => [
             {
                 header: 'Award Name',
                 accessorKey: 'AwardName',
+                cell: (props) => {
+                            const row = props.row.original
+                            return (
+                                <div className="flex items-center">
+                                    <Badge className={statusColor[row.IsActive]} />
+                                    <span className="ml-2 rtl:mr-2 capitalize">
+                                        {row.AwardName}
+                                    </span>
+                                </div>
+                            )
+                        },
             },
             {
                 header: 'Award Date ',
                 accessorKey: 'AwardDate',
             },
-            {
-                header: 'IsActive',
-                accessorKey: 'IsActive',
-            },
+            // {
+            //     header: 'IsActive',
+            //     accessorKey: 'IsActive',
+            // },
             // {
             //     header: 'Status',
             //     id: 'action',
@@ -214,7 +225,7 @@ const Awardmaster = () => {
                     editData={editData}
                     setMessage={setMessage}
                     setlog={setlog}
-                    currency={currency}
+                     
                 />
             </Drawer>
         </>

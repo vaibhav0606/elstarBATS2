@@ -148,19 +148,20 @@ const OriginalRepeatEdit = ({ onDrawerClose, editData, setMessage, setlog }) => 
                                 </FormItem>
                                 <FormItem
                                     asterisk
-                                    label="NewColourCode Name"
+                                    label="Colour"
                                     invalid={
                                         errors.NewColourCode && touched.NewColourCode
                                     }
                                     errorMessage={errors.NewColourCode}
                                 >
                                     <Field
-                                        type="NewColourCode"
+                                        type="color"
                                         autoComplete="off"
                                         name="NewColourCode"
-                                        placeholder="NewColourCode Name"
+                                        placeholder="Colour"
                                         component={Input}
                                     />
+                                       
                                 </FormItem>
                             </div>
                             <div

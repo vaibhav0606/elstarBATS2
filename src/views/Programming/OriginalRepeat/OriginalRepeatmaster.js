@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
-import { Badge, Drawer, Input, Alert } from 'components/ui'
+import { Badge, Drawer, Input, Alert,Tag } from 'components/ui'
 import { apiGetfpcorgrepmaster } from 'services/ProgrammingService'
 import { Button, Card } from 'components/ui'
 import {
@@ -66,6 +66,17 @@ const Fpcorgrep = () => {
             {
                 header: 'OriginalRepeat Name',
                 accessorKey: 'OriginalRepeatName',
+                cell: (props) => {
+                    const row = props.row.original
+                    return (
+                        <div className="flex items-center">
+                            <Badge className={statusColor[row.IsActive]} />
+                            <span   className="ml-2 rtl:mr-2 capitalize">
+                                { row.OriginalRepeatName }
+                            </span>
+                        </div>
+                    )
+                },
             },
             {
                 header: 'Short Name',
@@ -74,22 +85,39 @@ const Fpcorgrep = () => {
             {
                 header: 'Colour Code',
                 accessorKey: 'NewColourCode',
-            },
-            {
-                header: 'Status',
-                id: 'action',
+                // cell: (props) => {
+                //     const row = props.row.original
+                //     return (
+                //         <div className="flex items-center">
+                //             <Badge className={statusColor[row.IsActive]} />
+                //             <span className="ml-2 rtl:mr-2 capitalize">
+                //                 {row.IsActive === 1 ? 'Active' : 'InActive'}
+                //             </span>
+                //         </div>
+                //     )
+                // },
                 cell: (props) => {
-                    const row = props.row.original
-                    return (
-                        <div className="flex items-center">
-                            <Badge className={statusColor[row.IsActive]} />
-                            <span className="ml-2 rtl:mr-2 capitalize">
-                                {row.IsActive == 1 ? 'Active' : 'InActive'}
-                            </span>
-                        </div>
-                    )
+                     console.log(props);
+                     const row = props.row.original
+                //     return <Tag 
+                //     className="  rounded border-0"
+                     
+                //     > 
+                //     <span style={{backgroundColor: row.NewColourCode}}></span>
+                //      {row.OriginalRepeatName}
+                // </Tag> 
+                return  <div style={{
+                    height: '20px',
+                    width: '100%',
+                    backgroundColor: row.NewColourCode,
+                  }}>  </div>
                 },
-            },
+            //},
+            // {
+            //     header: 'Status',
+            //     id: 'action',
+              
+             },
         ],
         []
     )
