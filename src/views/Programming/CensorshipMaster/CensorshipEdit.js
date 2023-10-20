@@ -5,12 +5,12 @@ import { Postcensorship, Putcensorship } from 'services/ProgrammingService'
 import { useSelector } from 'react-redux'
 
 const validationSchema = Yup.object().shape({
-    ViewName: Yup.string()
-        .min(3, 'Too Short!')
+    CensorshipName: Yup.string()
+        .min(1, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('ViewName Required'),
+        .required('CensorshipName Required'),
     ShortName: Yup.string()
-        .min(3, 'Too Short!')
+        .min(1, 'Too Short!')
         .max(50, 'Too Long!')
         .required('ShortName Required'),
     IsActive: Yup.string().required('IsActives Required'),

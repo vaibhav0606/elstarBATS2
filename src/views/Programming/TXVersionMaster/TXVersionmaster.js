@@ -2,10 +2,11 @@ import { useState, useEffect, useMemo } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
 import { apiGetTXVersionmaster } from 'services/ProgrammingService'
 import { Button, Card } from 'components/ui'
-import { HiPlusCircle } from 'react-icons/hi'
+import { HiOutlinePencil, HiOutlinePlus, HiPlusCircle } from 'react-icons/hi'
 import TXVersionEdit from './TXVersionEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
+import HeaderExtra from 'views/Controls/HeaderExtra'
 
 const headerExtraContent = (
     openDrawer,
@@ -143,7 +144,7 @@ const TXVersionmaster = () => {
                 </Alert>
             )} */}
             <Card
-                header="Telecast Version Master"
+                header={<HeaderExtra Component={'Telecast Version Master'} />}
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -165,9 +166,29 @@ const TXVersionmaster = () => {
 
             <Drawer
                 title={
-                    editData.TXVersionName
-                        ? 'Edit Telecast Version Master'
-                        : 'Add Telecast Version Master'
+                    editData.TXVersionName ? (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiOutlinePencil />}
+                                ></Button>
+                            </center>
+                            Telecast Version Master
+                        </p>
+                    ) : (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiOutlinePlus />}
+                                ></Button>
+                            </center>
+                            Telecast Version Master
+                        </p>
+                    )
                 }
                 isOpen={isOpen}
                 onClose={onDrawerClose}

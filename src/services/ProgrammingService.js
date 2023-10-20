@@ -427,7 +427,7 @@ const Putview = (param, token) => {
 
 export async function apiGetCensorshipmaster(data) {
     return ApiService.fetchData({
-        url: '/Censorshipmaster/',
+        url: '/censorshipmaster/',
         method: 'get',
         data,
     })
@@ -437,13 +437,14 @@ const Postcensorship = (param, token) => {
     return new Promise((resolve, reject) => {
         let data = JSON.stringify({
             CensorshipName: param.CensorshipName,
+            ShortName: param.ShortName,
             IsActive: param.IsActive ? 1 : 0,
         })
 
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'http://103.14.97.155:3000/Censorshipmaster/',
+            url: 'http://103.14.97.155:3000/censorshipmaster/',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
@@ -466,13 +467,14 @@ const Putcensorship = (param, token) => {
     return new Promise((resolve, reject) => {
         let data = JSON.stringify({
             CensorshipName: param.CensorshipName,
+            ShortName: param.ShortName,
             IsActive: param.IsActive ? 1 : 0,
         })
 
         let config = {
             method: 'put',
             maxBodyLength: Infinity,
-            url: `http://103.14.97.155:3000/Censorshipmaster/${param.CensorshipCode}`,
+            url: `http://103.14.97.155:3000/censorshipmaster/${param.CensorshipCode}`,
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
@@ -493,7 +495,7 @@ const Putcensorship = (param, token) => {
 
 export async function apiGetTXVersionmaster(data) {
     return ApiService.fetchData({
-        url: '/Telecastmaster/',
+        url: '/txversionmaster/',
         method: 'get',
         data,
     })
@@ -509,7 +511,7 @@ const Posttxversion = (param, token) => {
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'http://103.14.97.155:3000/Telecastmaster/',
+            url: 'http://103.14.97.155:3000/txversionmaster/',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
@@ -538,7 +540,7 @@ const Puttxversion = (param, token) => {
         let config = {
             method: 'put',
             maxBodyLength: Infinity,
-            url: `http://103.14.97.155:3000/Telecastmaster/${param.TXVersionCode}`,
+            url: `http://103.14.97.155:3000/txversionmaster/${param.TXVersionCode}`,
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
