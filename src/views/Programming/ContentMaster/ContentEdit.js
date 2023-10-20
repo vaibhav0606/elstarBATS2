@@ -196,7 +196,7 @@ const ContentEdit = ({
                                     component={Input}
                                     hidden
                                 />
-                                <FormItem
+                                <FormItemcompact
                                     asterisk
                                     label="ContentName"
                                     invalid={
@@ -212,10 +212,10 @@ const ContentEdit = ({
                                         placeholder="Content Name"
                                         component={Input}
                                     />
-                                </FormItem>
+                                </FormItemcompact>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <FormItem
+                                <FormItemcompact
                                     asterisk
                                     label="ShortName"
                                     invalid={
@@ -230,9 +230,9 @@ const ContentEdit = ({
                                         placeholder="Short Name"
                                         component={Input}
                                     />
-                                </FormItem>
+                                </FormItemcompact>
 
-                                <FormItem
+                                <FormItemcompact
                                     asterisk
                                     label="ERPCode"
                                     invalid={errors.ERPCode && touched.ERPCode}
@@ -245,9 +245,9 @@ const ContentEdit = ({
                                         placeholder="ERPCode"
                                         component={Input}
                                     />
-                                </FormItem>
+                                </FormItemcompact>
 
-                                <FormItem
+                                <FormItemcompact
                                     asterisk
                                     label="ContentType"
                                     invalid={
@@ -267,7 +267,6 @@ const ContentEdit = ({
                                                 style={{ width: '250px' }}
                                                 field={field}
                                                 form={form}
-                                                className="mb-4 w-50"
                                                 options={ContentType}
                                                 value={ContentType.filter(
                                                     (option) =>
@@ -283,9 +282,9 @@ const ContentEdit = ({
                                             />
                                         )}
                                     </Field>
-                                </FormItem>
+                                </FormItemcompact>
 
-                                <FormItem
+                                <FormItemcompact
                                     asterisk
                                     label="ContentClassification"
                                     invalid={
@@ -304,7 +303,6 @@ const ContentEdit = ({
                                                 style={{ width: '250px' }}
                                                 field={field}
                                                 form={form}
-                                                className="mb-4 w-50"
                                                 options={options2}
                                                 value={options2.filter(
                                                     (option) =>
@@ -320,9 +318,9 @@ const ContentEdit = ({
                                             />
                                         )}
                                     </Field>
-                                </FormItem>
+                                </FormItemcompact>
 
-                                <FormItem
+                                <FormItemcompact
                                     asterisk
                                     label="Audience"
                                     invalid={
@@ -340,7 +338,6 @@ const ContentEdit = ({
                                                 style={{ width: '250px' }}
                                                 field={field}
                                                 form={form}
-                                                className="mb-4 w-50"
                                                 options={options3}
                                                 value={options3.filter(
                                                     (option) =>
@@ -356,9 +353,9 @@ const ContentEdit = ({
                                             />
                                         )}
                                     </Field>
-                                </FormItem>
+                                </FormItemcompact>
 
-                                <FormItem
+                                <FormItemcompact
                                     asterisk
                                     label="Language"
                                     invalid={
@@ -378,7 +375,6 @@ const ContentEdit = ({
                                                 style={{ width: '250px' }}
                                                 field={field}
                                                 form={form}
-                                                className="mb-4 w-50"
                                                 options={Language}
                                                 value={Language.filter(
                                                     (option) =>
@@ -394,9 +390,9 @@ const ContentEdit = ({
                                             />
                                         )}
                                     </Field>
-                                </FormItem>
+                                </FormItemcompact>
 
-                                {/* <FormItem
+                                {/* <FormItemcompact
                                     asterisk
                                     label="Censorship"
                                     invalid={
@@ -416,7 +412,7 @@ const ContentEdit = ({
                                                 style={{ width: '250px' }}
                                                 field={field}
                                                 form={form}
-                                                className="mb-4 w-50"
+                                               
                                                 options={Censorship}
                                                 value={Censorship.filter(
                                                     (option) =>
@@ -432,7 +428,7 @@ const ContentEdit = ({
                                             />
                                         )}
                                     </Field>
-                                </FormItem> */}
+                                </FormItemcompact> */}
 
                                 <FormItemcompact
                                     label="Content Release Date"
@@ -464,7 +460,7 @@ const ContentEdit = ({
                                         )}
                                     </Field>
                                 </FormItemcompact>
-                                <FormItem
+                                <FormItemcompact
                                     asterisk
                                     label="Slot Duration In Mins."
                                     invalid={
@@ -480,9 +476,9 @@ const ContentEdit = ({
                                         placeholder="Slot Duration"
                                         component={Input}
                                     />
-                                </FormItem>
+                                </FormItemcompact>
 
-                                <FormItem
+                                <FormItemcompact
                                     asterisk
                                     label="Genre"
                                     invalid={
@@ -501,7 +497,6 @@ const ContentEdit = ({
                                                 style={{ width: '250px' }}
                                                 field={field}
                                                 form={form}
-                                                className="mb-4 w-50"
                                                 options={Genre}
                                                 value={Genre.filter(
                                                     (option) =>
@@ -517,9 +512,9 @@ const ContentEdit = ({
                                             />
                                         )}
                                     </Field>
-                                </FormItem>
+                                </FormItemcompact>
 
-                                <FormItem
+                                <FormItemcompact
                                     asterisk
                                     label="SubGenre"
                                     invalid={
@@ -539,7 +534,6 @@ const ContentEdit = ({
                                                 style={{ width: '250px' }}
                                                 field={field}
                                                 form={form}
-                                                className="mb-4 w-50"
                                                 options={SubGenre}
                                                 value={SubGenre.filter(
                                                     (option) =>
@@ -555,7 +549,7 @@ const ContentEdit = ({
                                             />
                                         )}
                                     </Field>
-                                </FormItem>
+                                </FormItemcompact>
                             </div>
                             <div
                                 style={{
@@ -563,7 +557,7 @@ const ContentEdit = ({
                                     justifyContent: 'space-between',
                                 }}
                             >
-                                <FormItem
+                                <FormItemcompact
                                     asterisk
                                     label="Status"
                                     invalid={
@@ -577,13 +571,13 @@ const ContentEdit = ({
                                             component={Switcher}
                                         />
                                     </div>
-                                </FormItem>
+                                </FormItemcompact>
                             </div>
-                            <FormItem>
+                            <FormItemcompact>
                                 <Button variant="solid" type="submit">
                                     Submit
                                 </Button>
-                            </FormItem>
+                            </FormItemcompact>
                         </FormContainer>
                     </Form>
                 )}
