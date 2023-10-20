@@ -65,10 +65,10 @@ const validationSchema = Yup.object().shape({
     //     .min(6, 'Too Short!')
     //     .max(200, 'Too Long!')
     //     .required('SubContentCode Required'),
-    // EpisodeDuration: Yup.string()
-    //     .min(3, 'Too Short!')
-    //     .max(50, 'Too Long!')
-    //     .required('EpisodeDuration Required'),
+    EpisodeDuration: Yup.string()
+        .min(3, 'Too Short!')
+        .max(50, 'Too Long!')
+        .required('EpisodeDuration Required'),
     // EpisodeDurationinMin: Yup.string()
     //     .min(3, 'Too Short!')
     //     .max(50, 'Too Long!')
@@ -192,7 +192,7 @@ const ContentsegEdit = ({
                     // Resolution Type.
                     VideoFormatTypeCode: editData.VideoFormatTypeCode || '',
                     //Video Formate Type
-                    //Solt Duration
+                    EpisodeDuration: editData.EpisodeDuration,
                     EpisodeCaption: editData.EpisodeCaption,
                     Remarks: editData.Remarks,
                     IsActive: editData.IsActive === 1 ? true : false,
@@ -206,7 +206,6 @@ const ContentsegEdit = ({
                     // ShortSynopsis: editData.ShortSynopsis,
                     // LongSynopsis: editData.LongSynopsis,
                     // IsReadyToBroadCast: editData.IsReadyToBroadCast,
-                    // EpisodeDuration: editData.EpisodeDuration,
                     // EpisodeDurationinMin: editData.EpisodeDurationinMin,
                 }}
                 validationSchema={validationSchema}
@@ -491,9 +490,7 @@ const ContentsegEdit = ({
                                         )}
                                     </Field>
                                 </FormItemcompact> */}
-                            </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <FormItemcompact
                                     asterisk
                                     label="Tape Type"
@@ -598,8 +595,8 @@ const ContentsegEdit = ({
                                                 style={{ width: '250px' }}
                                                 field={field}
                                                 form={form}
-                                                options={ContentType}
-                                                value={ContentType.filter(
+                                                options={TXVersion}
+                                                value={TXVersion.filter(
                                                     (option) =>
                                                         option.value ===
                                                         values.TXVersionCode
@@ -689,118 +686,51 @@ const ContentsegEdit = ({
 
                                 <FormItemcompact
                                     asterisk
-                                    label="ShortName"
+                                    label="Slot Duration"
                                     invalid={
-                                        errors.ShortName && touched.ShortName
+                                        errors.EpisodeDuration &&
+                                        touched.EpisodeDuration
                                     }
-                                    errorMessage={errors.ShortName}
+                                    errorMessage={errors.EpisodeDuration}
                                 >
                                     <Field
-                                        type="ShortName"
+                                        type="EpisodeDuration"
                                         autoComplete="off"
-                                        name="ShortName"
-                                        placeholder="Short Name"
-                                        component={Input}
-                                    />
-                                </FormItemcompact>
-
-                                <FormItemcompact
-                                    asterisk
-                                    label="ERPCode"
-                                    invalid={errors.ERPCode && touched.ERPCode}
-                                    errorMessage={errors.ERPCode}
-                                >
-                                    <Field
-                                        type="ERPCode"
-                                        autoComplete="off"
-                                        name="ERPCode"
-                                        placeholder="ERPCode"
-                                        component={Input}
-                                    />
-                                </FormItemcompact>
-
-                                {/* <FormItemcompact
-                                    asterisk
-                                    label="Censorship"
-                                    invalid={
-                                        errors.CensorshipCode &&
-                                        touched.CensorshipCode
-                                    }
-                                    errorMessage={errors.CensorshipCode}
-                                    style={{ width: '250px' }}
-                                >
-                                    <Field
-                                        size="sm"
-                                        name="Censorship"
-                                        style={{ width: '250px' }}
-                                    >
-                                        {({ field, form }) => (
-                                            <Select
-                                                style={{ width: '250px' }}
-                                                field={field}
-                                                form={form}
-                                               
-                                                options={Censorship}
-                                                value={Censorship.filter(
-                                                    (option) =>
-                                                        option.value ===
-                                                        values.CensorshipCode
-                                                )}
-                                                onChange={(option) =>
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        option?.value
-                                                    )
-                                                }
-                                            />
-                                        )}
-                                    </Field>
-                                </FormItemcompact> */}
-
-                                <FormItemcompact
-                                    label="Content Release Date"
-                                    invalid={
-                                        errors.FPCReleaseDate &&
-                                        touched.FPCReleaseDate
-                                    }
-                                    errorMessage={errors.FPCReleaseDate}
-                                >
-                                    <Field
-                                        name="FPCReleaseDate"
-                                        placeholder="Date"
-                                    >
-                                        {({ field, form }) => (
-                                            <DatePicker
-                                                field={field}
-                                                form={form}
-                                                value={field.value}
-                                                prefix={
-                                                    <HiCake className="text-xl" />
-                                                }
-                                                onChange={(date) => {
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        date
-                                                    )
-                                                }}
-                                            />
-                                        )}
-                                    </Field>
-                                </FormItemcompact>
-                                <FormItemcompact
-                                    asterisk
-                                    label="Slot Duration In Mins."
-                                    invalid={
-                                        errors.SlotDuration &&
-                                        touched.SlotDuration
-                                    }
-                                    errorMessage={errors.SlotDuration}
-                                >
-                                    <Field
-                                        type="SlotDuration"
-                                        autoComplete="off"
-                                        name="SlotDuration"
+                                        name="EpisodeDuration"
                                         placeholder="Slot Duration"
+                                        component={Input}
+                                    />
+                                </FormItemcompact>
+
+                                <FormItemcompact
+                                    asterisk
+                                    label="Episode Caption"
+                                    invalid={
+                                        errors.EpisodeCaption &&
+                                        touched.EpisodeCaption
+                                    }
+                                    errorMessage={errors.EpisodeCaption}
+                                >
+                                    <Field
+                                        type="EpisodeCaption"
+                                        autoComplete="off"
+                                        name="EpisodeCaption"
+                                        placeholder="Episode Caption"
+                                        component={Input}
+                                    />
+                                </FormItemcompact>
+
+                                <FormItemcompact
+                                    asterisk
+                                    label="Remarks"
+                                    invalid={errors.Remarks && touched.Remarks}
+                                    errorMessage={errors.Remarks}
+                                >
+                                    <Field
+                                        type="Remarks"
+                                        autoComplete="off"
+                                        name="Remarks"
+                                        placeholder="Remarks"
                                         component={Input}
                                     />
                                 </FormItemcompact>
@@ -813,7 +743,7 @@ const ContentsegEdit = ({
                             >
                                 <FormItemcompact
                                     asterisk
-                                    label="Status"
+                                    label="Ready To BroadCast"
                                     invalid={
                                         errors.IsActive && touched.IsActive
                                     }
@@ -827,6 +757,7 @@ const ContentsegEdit = ({
                                     </div>
                                 </FormItemcompact>
                             </div>
+                            <br></br>
                             <FormItemcompact>
                                 <Button variant="solid" type="submit">
                                     Submit
