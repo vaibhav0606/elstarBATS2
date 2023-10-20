@@ -5,11 +5,14 @@ import {
     Input,
     FormContainer,
     Select,
+    DatePicker,
+    FormItemcompact,
 } from 'components/ui'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { PostContent, PutContent } from 'services/ProgrammingService'
 import { useSelector } from 'react-redux'
+import { HiCake } from 'react-icons/hi'
 
 const validationSchema = Yup.object().shape({
     ContentName: Yup.string()
@@ -393,7 +396,7 @@ const ContentEdit = ({
                                     </Field>
                                 </FormItem>
 
-                                <FormItem
+                                {/* <FormItem
                                     asterisk
                                     label="Censorship"
                                     invalid={
@@ -419,6 +422,129 @@ const ContentEdit = ({
                                                     (option) =>
                                                         option.value ===
                                                         values.CensorshipCode
+                                                )}
+                                                onChange={(option) =>
+                                                    form.setFieldValue(
+                                                        field.name,
+                                                        option?.value
+                                                    )
+                                                }
+                                            />
+                                        )}
+                                    </Field>
+                                </FormItem> */}
+
+                                <FormItemcompact
+                                    label="Content Release Date"
+                                    invalid={
+                                        errors.FPCReleaseDate &&
+                                        touched.FPCReleaseDate
+                                    }
+                                    errorMessage={errors.FPCReleaseDate}
+                                >
+                                    <Field
+                                        name="FPCReleaseDate"
+                                        placeholder="Date"
+                                    >
+                                        {({ field, form }) => (
+                                            <DatePicker
+                                                field={field}
+                                                form={form}
+                                                value={field.value}
+                                                prefix={
+                                                    <HiCake className="text-xl" />
+                                                }
+                                                onChange={(date) => {
+                                                    form.setFieldValue(
+                                                        field.name,
+                                                        date
+                                                    )
+                                                }}
+                                            />
+                                        )}
+                                    </Field>
+                                </FormItemcompact>
+                                <FormItem
+                                    asterisk
+                                    label="Slot Duration In Mins."
+                                    invalid={
+                                        errors.SlotDuration &&
+                                        touched.SlotDuration
+                                    }
+                                    errorMessage={errors.SlotDuration}
+                                >
+                                    <Field
+                                        type="SlotDuration"
+                                        autoComplete="off"
+                                        name="SlotDuration"
+                                        placeholder="Slot Duration"
+                                        component={Input}
+                                    />
+                                </FormItem>
+
+                                <FormItem
+                                    asterisk
+                                    label="Genre"
+                                    invalid={
+                                        errors.GenreCode && touched.GenreCode
+                                    }
+                                    errorMessage={errors.GenreCode}
+                                    style={{ width: '250px' }}
+                                >
+                                    <Field
+                                        size="sm"
+                                        name="Genre"
+                                        style={{ width: '250px' }}
+                                    >
+                                        {({ field, form }) => (
+                                            <Select
+                                                style={{ width: '250px' }}
+                                                field={field}
+                                                form={form}
+                                                className="mb-4 w-50"
+                                                options={Genre}
+                                                value={Genre.filter(
+                                                    (option) =>
+                                                        option.value ===
+                                                        values.GenreCode
+                                                )}
+                                                onChange={(option) =>
+                                                    form.setFieldValue(
+                                                        field.name,
+                                                        option?.value
+                                                    )
+                                                }
+                                            />
+                                        )}
+                                    </Field>
+                                </FormItem>
+
+                                <FormItem
+                                    asterisk
+                                    label="SubGenre"
+                                    invalid={
+                                        errors.SubGenreCode &&
+                                        touched.SubGenreCode
+                                    }
+                                    errorMessage={errors.SubGenreCode}
+                                    style={{ width: '250px' }}
+                                >
+                                    <Field
+                                        size="sm"
+                                        name="SubGenre"
+                                        style={{ width: '250px' }}
+                                    >
+                                        {({ field, form }) => (
+                                            <Select
+                                                style={{ width: '250px' }}
+                                                field={field}
+                                                form={form}
+                                                className="mb-4 w-50"
+                                                options={SubGenre}
+                                                value={SubGenre.filter(
+                                                    (option) =>
+                                                        option.value ===
+                                                        values.SubGenreCode
                                                 )}
                                                 onChange={(option) =>
                                                     form.setFieldValue(

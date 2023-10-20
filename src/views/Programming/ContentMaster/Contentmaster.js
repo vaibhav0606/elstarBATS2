@@ -4,10 +4,17 @@ import {
     apiGetContentmaster,
     apiGetContentTypemaster,
     apiGetCensorshipmaster,
+    apiGetGenremaster,
+    apiGetSubGenremaster,
 } from 'services/ProgrammingService'
 import { apiGetLanguagemaster } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
-import { HiOutlinePencil, HiPlusCircle, HiOutlinePlus } from 'react-icons/hi'
+import {
+    HiOutlinePencil,
+    HiPlusCircle,
+    HiOutlinePlus,
+    HiPencilAlt,
+} from 'react-icons/hi'
 import ContentEdit from './ContentEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
@@ -55,8 +62,9 @@ const Contentmaster = () => {
     const [data, setdata] = useState([''])
     const [ContentType, setContentType] = useState({ value: '', label: '' })
     const [Language, setLanguage] = useState({ value: '', label: '' })
+    const [Genre, setGenre] = useState({ value: '', label: '' })
+    const [SubGenre, setSubGenre] = useState({ value: '', label: '' })
     const [Censorship, setCensorship] = useState({ value: '', label: '' })
-
     const [message, setMessage] = useTimeOutMessage()
     const [log, setlog] = useState('')
     console.log(window.screen.width)
@@ -122,6 +130,22 @@ const Contentmaster = () => {
                 label: option.CensorshipName,
             }))
             setCensorship(formattedOptions)
+        })()
+        ;(async (values) => {
+            const Genre = await apiGetGenremaster(values)
+            const formattedOptions = Genre.data.map((option) => ({
+                value: option.GenreCode,
+                label: option.GenreName,
+            }))
+            setGenre(formattedOptions)
+        })()
+        ;(async (values) => {
+            const SubGenre = await apiGetSubGenremaster(values)
+            const formattedOptions = SubGenre.data.map((option) => ({
+                value: option.SubGenreCode,
+                label: option.SubGenreName,
+            }))
+            setSubGenre(formattedOptions)
         })()
     }, [])
 
@@ -245,6 +269,8 @@ const Contentmaster = () => {
                     ContentType={ContentType}
                     Language={Language}
                     Censorship={Censorship}
+                    Genre={Genre}
+                    SubGenre={SubGenre}
                 />
             </Drawer>
         </>
