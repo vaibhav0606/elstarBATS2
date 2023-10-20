@@ -1,7 +1,12 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { setUser, initialState } from 'store/auth/userSlice'
 import { apiSignIn, apiSignOut, apiSignUp } from 'services/AuthService'
-import { onSignInSuccess, onSignOutSuccess } from 'store/auth/sessionSlice'
+import {
+    onSignInSuccess,
+    onSignOutSuccess,
+    setLoginId,
+    setUsername,
+} from 'store/auth/sessionSlice'
 import appConfig from 'configs/app.config'
 import { REDIRECT_URL_KEY } from 'constants/app.constant'
 import { useNavigate } from 'react-router-dom'
@@ -20,8 +25,9 @@ function useAuth() {
         try {
             const resp = await apiSignIn(values)
             if (resp.data) {
-                const { access_token } = resp.data
-
+                const { access_token, LoginName, LoginCode } = resp.data
+                dispatch(setLoginId(LoginCode))
+                dispatch(setUsername(LoginName))
                 dispatch(onSignInSuccess(access_token))
                 // if (resp.data.user) {
                 //     dispatch(

@@ -213,6 +213,22 @@ export const protectedRoutes = [
         authority: [],
     },
     {
+        key: '',
+        path: '/emp/EmplyeeView',
+        component: React.lazy(() =>
+            import('views/Master/EmployeeMaster/EmployeeView')
+        ),
+        authority: [],
+    },
+    {
+        key: '',
+        path: '/addUser',
+        component: React.lazy(() =>
+            import('views/Master/EmployeeMaster/EmployeeEdit')
+        ),
+        authority: [],
+    },
+    {
         key: 'contentmaster',
         path: '/contentmaster',
         component: React.lazy(() =>

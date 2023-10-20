@@ -32,9 +32,24 @@ export async function apiGetPlaceMaster(data) {
     })
 }
 
+export async function apiGetPlaceMasterbyId(data) {
+    return ApiService.fetchData({
+        url: `/placemaster/getplaceasperstate/${data}`,
+        method: 'get',
+        data,
+    })
+}
+
 export async function apiGetStateMaster(data) {
     return ApiService.fetchData({
         url: '/statemaster/',
+        method: 'get',
+        data,
+    })
+}
+export async function apiGetStateMasterbyId(data) {
+    return ApiService.fetchData({
+        url: `/statemaster/getstateaspercountry/${data}`,
         method: 'get',
         data,
     })

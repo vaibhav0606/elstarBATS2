@@ -12,6 +12,7 @@ import {
     getPaginationRowModel,
 } from '@tanstack/react-table'
 import { Button } from 'components/ui'
+import { useSelector } from 'react-redux'
 
 const DisplayTableEmpAccess = ({
     data,
@@ -47,12 +48,21 @@ const DisplayTableEmpAccess = ({
     })
     const { Tr, Th, Td, THead, TBody, Sorter } = Table
     const [first, setfirst] = useState(1)
+    const [CheckboxValue, setCheckboxValue] = useState([''])
+    const { LoginId } = useSelector((state) => state.auth.session)
+    const [datas, setData] = useState([])
+    const functioation = (val, e) => {
+        const { checked, name } = e.target
+    }
 
+    console.log(data)
     return (
         <>
+            <h6 className="mb-4">Login Rights</h6>
             <div className="overflow-y-auto h-96 mb-6">
                 {/* <Button onClick={() => setfirst(1)}>IsActive</Button>
                 <Button onClick={() => setfirst(0)}> Inactive</Button> */}
+
                 <ScrollBar>
                     <Table>
                         <THead>
@@ -63,47 +73,45 @@ const DisplayTableEmpAccess = ({
                                             <Th
                                                 key={header.id}
                                                 colSpan={header.colSpan}
-                                                style={{
-                                                    position: 'relative',
-                                                    //  width: header.getSize(3000),
-                                                }}
                                             >
-                                                {/* {console.log(header.getSize(3000))} */}
-                                                {header.isPlaceholder ? null : (
-                                                    <div
-                                                        {...{
-                                                            className:
-                                                                header.column.getCanSort()
-                                                                    ? 'cursor-pointer select-none'
-                                                                    : '',
-                                                            onClick:
-                                                                header.column.getToggleSortingHandler(),
-                                                        }}
-                                                    >
-                                                        {flexRender(
-                                                            header.column
-                                                                .columnDef
-                                                                .header,
-                                                            header.getContext()
-                                                        )}
-                                                        {
-                                                            <>
-                                                                <Sorter
-                                                                    sort={header.column.getIsSorted()}
-                                                                />
-                                                                <div
-                                                                    className={`table-resizer cursor-all-scroll ${
-                                                                        header.column.getIsResizing()
-                                                                            ? 'isResizing'
-                                                                            : ''
-                                                                    }`}
-                                                                    onMouseDown={header.getResizeHandler()}
-                                                                    onTouchStart={header.getResizeHandler()}
-                                                                ></div>
-                                                            </>
-                                                        }
-                                                    </div>
-                                                )}
+                                                <p className="apitalize">
+                                                    {/* {console.log(header.getSize(3000))} */}
+                                                    {header.isPlaceholder ? null : (
+                                                        <div
+                                                            {...{
+                                                                className:
+                                                                    header.column.getCanSort()
+                                                                        ? 'cursor-pointer select-none'
+                                                                        : '',
+                                                                onClick:
+                                                                    header.column.getToggleSortingHandler(),
+                                                            }}
+                                                        >
+                                                            {flexRender(
+                                                                header.column
+                                                                    .columnDef
+                                                                    .header,
+                                                                header.getContext()
+                                                            )}
+                                                            {
+                                                                <>
+                                                                    <Sorter
+                                                                        sort={header.column.getIsSorted()}
+                                                                    />
+                                                                    <div
+                                                                        className={`table-resizer cursor-all-scroll ${
+                                                                            header.column.getIsResizing()
+                                                                                ? 'isResizing'
+                                                                                : ''
+                                                                        }`}
+                                                                        onMouseDown={header.getResizeHandler()}
+                                                                        onTouchStart={header.getResizeHandler()}
+                                                                    ></div>
+                                                                </>
+                                                            }
+                                                        </div>
+                                                    )}
+                                                </p>
                                             </Th>
                                         )
                                     })}
@@ -118,8 +126,6 @@ const DisplayTableEmpAccess = ({
                                     (row) => row.original.IsActive === first
                                 )
                                 .map((row) => {
-                                    // setfirst(row)
-                                    console.log(row)
                                     return (
                                         <Tr key={row.id}>
                                             {row
@@ -136,14 +142,26 @@ const DisplayTableEmpAccess = ({
                                                         </Td>
                                                     )
                                                 })}
-                                            <Td
-                                                onClick={() => {
-                                                    seteditData(row.original)
-                                                    openDialog()
-                                                }}
-                                            >
-                                                <Checkbox /> &nbsp;&nbsp;
-                                                <Checkbox />
+                                            <Td>
+                                                <Checkbox
+                                                    name="Read"
+                                                    onClick={(e) =>
+                                                        functioation(
+                                                            row.original,
+                                                            e
+                                                        )
+                                                    }
+                                                />
+                                                &nbsp;&nbsp;
+                                                <Checkbox
+                                                    name="Write"
+                                                    onClick={(e) =>
+                                                        functioation(
+                                                            row.original,
+                                                            e
+                                                        )
+                                                    }
+                                                />
                                             </Td>
                                         </Tr>
                                     )
@@ -154,18 +172,18 @@ const DisplayTableEmpAccess = ({
             </div>
 
             <Button className="mr-2 mb-2 " variant="solid" type="button">
-                Save And Next
+                Save
             </Button>
 
-            <Button
+            {/* <Button
                 className="mr-2 mb-2"
                 variant="twoTone"
                 color="red-600"
                 type="button"
-                onClick={() => onDialogOk(0, 0)}
+               
             >
                 Close
-            </Button>
+            </Button> */}
         </>
     )
 }
