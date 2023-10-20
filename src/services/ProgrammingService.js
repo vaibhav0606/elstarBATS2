@@ -1,5 +1,7 @@
+import appConfig from 'configs/app.config'
 import ApiService from './ApiService'
 const axios = require('axios')
+const APIURL = process.env.APIURL
 
 export async function apiGetStarCastTypemaster(data) {
     return ApiService.fetchData({
@@ -870,7 +872,7 @@ const Postfpcorgrep = (param, token) => {
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'http://103.14.97.155:3000/fpcorgrep/',
+            url: appConfig.apiPrefix + '/fpcorgrep/',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
@@ -940,7 +942,7 @@ const PostAwardmaster = (param, token) => {
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'http://103.14.97.155:3000/awardmaster/',
+            url: appConfig.apiPrefix + '/awardmaster/',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
@@ -970,7 +972,7 @@ const PutAwardmaster = (param, token) => {
         let config = {
             method: 'put',
             maxBodyLength: Infinity,
-            url: `http://103.14.97.155:3000/awardmaster/${param.AwardCode}`,
+            url: appConfig.apiPrefix +  `/awardmaster/${param.AwardCode}`,
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
