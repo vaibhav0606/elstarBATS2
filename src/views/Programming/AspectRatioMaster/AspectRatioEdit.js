@@ -1,28 +1,24 @@
 import { FormItem, Button, Switcher, Input, FormContainer } from 'components/ui'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
-import { Postcensorship, Putcensorship } from 'services/ProgrammingService'
+import { Postaspectratio, Putaspectratio } from 'services/ProgrammingService'
 import { useSelector } from 'react-redux'
 
 const validationSchema = Yup.object().shape({
-    CensorshipName: Yup.string()
-        .min(1, 'Too Short!')
+    AspectRatio: Yup.string()
+        .min(3, 'Too Short!')
         .max(50, 'Too Long!')
-        .required('CensorshipName Required'),
-    ShortName: Yup.string()
-        .min(1, 'Too Short!')
-        .max(50, 'Too Long!')
-        .required('ShortName Required'),
+        .required('AspectRatio Required'),
     IsActive: Yup.string().required('IsActives Required'),
     rememberMe: Yup.bool(),
 })
-const CensorshipEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
+const AspectRatioEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
     const token = useSelector((state) => state.auth.session.token)
     //console.log(currency)
 
-    const AddCensorship = async (values, token) => {
+    const AddAspectRatio = async (values, token) => {
         try {
-            const resp = await Postcensorship(values, token)
+            const resp = await Postaspectratio(values, token)
             if (resp.data.msg === 'success') {
                 setlog('success')
                 setMessage('Data Inserted Successfully')
@@ -36,15 +32,15 @@ const CensorshipEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
             return {}
         }
     }
-    const EditCensorship = async (values, token) => {
+    const EditAspectRatio = async (values, token) => {
         try {
-            const resp = await Putcensorship(values, token)
+            const resp = await Putaspectratio(values, token)
             console.log(resp)
             if (resp.data.msg === 'Updated') {
                 setlog('success')
                 setMessage('Data Updated Successfully')
                 return
-            } else if (resp.data.msg === 'Censorship is Already Exists') {
+            } else if (resp.data.msg === 'AspectRatio Already Exists') {
                 setlog('warning')
                 setMessage(resp.data.msg)
                 return
@@ -58,18 +54,17 @@ const CensorshipEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
         <div>
             <Formik
                 initialValues={{
-                    CensorshipCode: editData.CensorshipCode || '',
-                    CensorshipName: editData.CensorshipName || '',
-                    ShortName: editData.ShortName || '',
+                    AspectRatioCode: editData.AspectRatioCode || '',
+                    AspectRatio: editData.AspectRatio || '',
                     IsActive: editData.IsActive === 1 ? true : false,
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { resetForm, setSubmitting }) => {
                     console.log(editData)
                     setTimeout(() => {
-                        if (!editData.CensorshipCode) {
+                        if (!editData.AspectRatioCode) {
                             new Promise((resolve, reject) => {
-                                AddCensorship(values, token)
+                                AddAspectRatio(values, token)
                                     .then((response) => {
                                         onDrawerClose(0, 0)
                                         resolve(response)
@@ -81,7 +76,7 @@ const CensorshipEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                         } else {
                             new Promise((resolve, reject) => {
                                 setSubmitting(false)
-                                EditCensorship(values, token)
+                                EditAspectRatio(values, token)
                                     .then((response) => {
                                         onDrawerClose(0, 0)
                                         resolve(response)
@@ -106,43 +101,27 @@ const CensorshipEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                 }}
                             >
                                 <Field
-                                    type="CensorshipCode"
+                                    type="AspectRatioCode"
                                     autoComplete="off"
-                                    name="CensorshipCode"
-                                    placeholder="CensorshipCode"
+                                    name="AspectRatioCode"
+                                    placeholder="AspectRatioCode"
                                     component={Input}
                                     hidden
                                 />
                                 <FormItem
                                     asterisk
-                                    label="CensorshipName"
+                                    label="AspectRatio"
                                     invalid={
-                                        errors.CensorshipName &&
-                                        touched.CensorshipName
+                                        errors.AspectRatio &&
+                                        touched.AspectRatio
                                     }
-                                    errorMessage={errors.CensorshipName}
+                                    errorMessage={errors.AspectRatio}
                                 >
                                     <Field
-                                        type="CensorshipName"
+                                        type="AspectRatio"
                                         autoComplete="off"
-                                        name="CensorshipName"
-                                        placeholder="Censorship Name"
-                                        component={Input}
-                                    />
-                                </FormItem>
-                                <FormItem
-                                    asterisk
-                                    label="ShortName"
-                                    invalid={
-                                        errors.ShortName && touched.ShortName
-                                    }
-                                    errorMessage={errors.ShortName}
-                                >
-                                    <Field
-                                        type="ShortName"
-                                        autoComplete="off"
-                                        name="ShortName"
-                                        placeholder="Short Name"
+                                        name="AspectRatio"
+                                        placeholder="AspectRatio"
                                         component={Input}
                                     />
                                 </FormItem>
@@ -154,7 +133,6 @@ const CensorshipEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                 }}
                             >
                                 <FormItem
-                                    asterisk
                                     label="Status"
                                     invalid={
                                         errors.IsActive && touched.IsActive
@@ -183,4 +161,4 @@ const CensorshipEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
     )
 }
 
-export default CensorshipEdit
+export default AspectRatioEdit

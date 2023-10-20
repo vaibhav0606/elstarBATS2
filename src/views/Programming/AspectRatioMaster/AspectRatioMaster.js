@@ -1,9 +1,13 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
-import { apiGetCensorshipmaster } from 'services/ProgrammingService'
+import { apiGetAspectratiomaster } from 'services/ProgrammingService'
 import { Button, Card } from 'components/ui'
-import { HiOutlinePencil, HiOutlinePlus, HiPlusCircle } from 'react-icons/hi'
-import CensorshipEdit from './CensorshipEdit'
+import {
+    HiOutlinePencil,
+    HiOutlinePlusCircle,
+    HiPlusCircle,
+} from 'react-icons/hi'
+import AspectRatioEdit from './AspectRatioEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
 import HeaderExtra from 'views/Controls/HeaderExtra'
@@ -35,20 +39,20 @@ const headerExtraContent = (
                     icon={<HiPlusCircle />}
                     onClick={() => openDrawer()}
                 >
-                    Add Censorship
+                    Add AspectRatio
                 </Button>
             </span>
         </span>
     )
 }
 
-const Censorshipmaster = () => {
+const AspectRatiomaster = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [editData, seteditData] = useState([''])
     const [globalFilter, setGlobalFilter] = useState('')
     const [sorting, setSorting] = useState([])
     const [data, setdata] = useState([''])
-    // const [currency, setCurrency] = useState({ value: '', label: '' })
+    const [currency, setCurrency] = useState({ value: '', label: '' })
     const [message, setMessage] = useTimeOutMessage()
     const [log, setlog] = useState('')
 
@@ -60,34 +64,41 @@ const Censorshipmaster = () => {
     const columns = useMemo(
         () => [
             {
-                header: 'CensorshipName',
-                accessorKey: 'CensorshipName',
-            },
-            {
-                header: 'ShortName',
-                accessorKey: 'ShortName',
-            },
-            {
-                header: 'Status',
-                id: 'action',
+                header: 'AspectRatio',
+                accessorKey: 'AspectRatio',
                 cell: (props) => {
                     const row = props.row.original
                     return (
                         <div className="flex items-center">
                             <Badge className={statusColor[row.IsActive]} />
                             <span className="ml-2 rtl:mr-2 capitalize">
-                                {row.IsActive == 1 ? 'Active' : 'InActive'}
+                                {row.AspectRatio}
                             </span>
                         </div>
                     )
                 },
             },
+            // {
+            //     header: 'Status',
+            //     id: 'action',
+            //     cell: (props) => {
+            //         const row = props.row.original
+            //         return (
+            //             <div className="flex items-center">
+            //                 <Badge className={statusColor[row.IsActive]} />
+            //                 <span className="ml-2 rtl:mr-2 capitalize">
+            //                     {row.IsActive == 1 ? 'Active' : 'InActive'}
+            //                 </span>
+            //             </div>
+            //         )
+            //     },
+            // },
         ],
         []
     )
     useEffect(() => {
         ;(async (values) => {
-            const resp = await apiGetCensorshipmaster(values)
+            const resp = await apiGetAspectratiomaster(values)
             setdata(resp.data)
         })()
     }, [])
@@ -97,7 +108,7 @@ const Censorshipmaster = () => {
 
     const onDrawerClose = async (e, values) => {
         setIsOpen(false)
-        const resp = await apiGetCensorshipmaster(values)
+        const resp = await apiGetAspectratiomaster(values)
         setdata(resp.data)
         seteditData([''])
     }
@@ -148,7 +159,7 @@ const Censorshipmaster = () => {
                 </Alert>
             )} */}
             <Card
-                header={<HeaderExtra Component={'Censorship Master'} />}
+                header={<HeaderExtra Component={'AspectRatio Master'} />}
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -170,7 +181,7 @@ const Censorshipmaster = () => {
 
             <Drawer
                 title={
-                    editData.CensorshipName ? (
+                    editData.AspectRatio ? (
                         <p className="text-xl font-medium text-black flex ">
                             <center>
                                 <Button
@@ -179,7 +190,7 @@ const Censorshipmaster = () => {
                                     icon={<HiOutlinePencil />}
                                 ></Button>
                             </center>
-                            Censorship Master
+                            AspectRatio Master
                         </p>
                     ) : (
                         <p className="text-xl font-medium text-black flex ">
@@ -187,10 +198,10 @@ const Censorshipmaster = () => {
                                 <Button
                                     size="xs"
                                     variant="twoTone"
-                                    icon={<HiOutlinePlus />}
+                                    icon={<HiOutlinePlusCircle />}
                                 ></Button>
                             </center>
-                            Censorship Master
+                            AspectRatio Master
                         </p>
                     )
                 }
@@ -199,16 +210,16 @@ const Censorshipmaster = () => {
                 onRequestClose={onDrawerClose}
                 width={600}
             >
-                <CensorshipEdit
+                <AspectRatioEdit
                     onDrawerClose={onDrawerClose}
                     editData={editData}
                     setMessage={setMessage}
                     setlog={setlog}
-                    //currency={currency}
+                    currency={currency}
                 />
             </Drawer>
         </>
     )
 }
 
-export default Censorshipmaster
+export default AspectRatiomaster

@@ -1,9 +1,13 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
-import { apiGetCensorshipmaster } from 'services/ProgrammingService'
+import { apiGetCountryMaster, apiGetStateMaster } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
-import { HiOutlinePencil, HiOutlinePlus, HiPlusCircle } from 'react-icons/hi'
-import CensorshipEdit from './CensorshipEdit'
+import {
+    HiOutlinePencil,
+    HiOutlinePlusCircle,
+    HiPlusCircle,
+} from 'react-icons/hi'
+import StateEdit from './StateEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
 import HeaderExtra from 'views/Controls/HeaderExtra'
@@ -35,20 +39,20 @@ const headerExtraContent = (
                     icon={<HiPlusCircle />}
                     onClick={() => openDrawer()}
                 >
-                    Add Censorship
+                    Add State
                 </Button>
             </span>
         </span>
     )
 }
 
-const Censorshipmaster = () => {
+const Statemaster = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [editData, seteditData] = useState([''])
     const [globalFilter, setGlobalFilter] = useState('')
     const [sorting, setSorting] = useState([])
     const [data, setdata] = useState([''])
-    // const [currency, setCurrency] = useState({ value: '', label: '' })
+    const [Country, setCountry] = useState({ value: '', label: '' })
     const [message, setMessage] = useTimeOutMessage()
     const [log, setlog] = useState('')
 
@@ -60,35 +64,63 @@ const Censorshipmaster = () => {
     const columns = useMemo(
         () => [
             {
-                header: 'CensorshipName',
-                accessorKey: 'CensorshipName',
-            },
-            {
-                header: 'ShortName',
-                accessorKey: 'ShortName',
-            },
-            {
-                header: 'Status',
-                id: 'action',
+                header: 'StateName',
+                accessorKey: 'StateName',
                 cell: (props) => {
                     const row = props.row.original
                     return (
                         <div className="flex items-center">
                             <Badge className={statusColor[row.IsActive]} />
                             <span className="ml-2 rtl:mr-2 capitalize">
-                                {row.IsActive == 1 ? 'Active' : 'InActive'}
+                                {row.StateName}
                             </span>
                         </div>
                     )
                 },
             },
+            {
+                header: 'State Short Name',
+                accessorKey: 'StateShortName',
+            },
+            {
+                header: 'Country',
+                accessorKey: 'CountryCode',
+            },
+            {
+                header: 'State TinNo',
+                accessorKey: 'StateTinNo',
+            },
+            // {
+            //     header: 'Status',
+            //     id: 'action',
+            //     cell: (props) => {
+            //         const row = props.row.original
+            //         return (
+            //             <div className="flex items-center">
+            //                 <Badge className={statusColor[row.IsActive]} />
+            //                 <span className="ml-2 rtl:mr-2 capitalize">
+            //                     {row.IsActive == 1 ? 'Active' : 'InActive'}
+            //                 </span>
+            //             </div>
+            //         )
+            //     },
+            // },
         ],
         []
     )
     useEffect(() => {
         ;(async (values) => {
-            const resp = await apiGetCensorshipmaster(values)
+            const resp = await apiGetStateMaster(values)
             setdata(resp.data)
+        })()
+        ;(async (values) => {
+            const resp = await apiGetCountryMaster(values)
+
+            const Country = resp.data.map((option) => ({
+                value: option.CountryCode,
+                label: option.CountryName,
+            }))
+            setCountry(Country)
         })()
     }, [])
     const openDrawer = () => {
@@ -97,7 +129,8 @@ const Censorshipmaster = () => {
 
     const onDrawerClose = async (e, values) => {
         setIsOpen(false)
-        const resp = await apiGetCensorshipmaster(values)
+        const resp = await apiGetStateMaster(values)
+
         setdata(resp.data)
         seteditData([''])
     }
@@ -148,7 +181,7 @@ const Censorshipmaster = () => {
                 </Alert>
             )} */}
             <Card
-                header={<HeaderExtra Component={'Censorship Master'} />}
+                header={<HeaderExtra Component={'State Master'} />}
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -170,7 +203,7 @@ const Censorshipmaster = () => {
 
             <Drawer
                 title={
-                    editData.CensorshipName ? (
+                    editData.StateName ? (
                         <p className="text-xl font-medium text-black flex ">
                             <center>
                                 <Button
@@ -179,7 +212,7 @@ const Censorshipmaster = () => {
                                     icon={<HiOutlinePencil />}
                                 ></Button>
                             </center>
-                            Censorship Master
+                            State Master
                         </p>
                     ) : (
                         <p className="text-xl font-medium text-black flex ">
@@ -187,10 +220,10 @@ const Censorshipmaster = () => {
                                 <Button
                                     size="xs"
                                     variant="twoTone"
-                                    icon={<HiOutlinePlus />}
+                                    icon={<HiOutlinePlusCircle />}
                                 ></Button>
                             </center>
-                            Censorship Master
+                            State Master
                         </p>
                     )
                 }
@@ -199,16 +232,16 @@ const Censorshipmaster = () => {
                 onRequestClose={onDrawerClose}
                 width={600}
             >
-                <CensorshipEdit
+                <StateEdit
                     onDrawerClose={onDrawerClose}
                     editData={editData}
                     setMessage={setMessage}
                     setlog={setlog}
-                    //currency={currency}
+                    Country={Country}
                 />
             </Drawer>
         </>
     )
 }
 
-export default Censorshipmaster
+export default Statemaster
