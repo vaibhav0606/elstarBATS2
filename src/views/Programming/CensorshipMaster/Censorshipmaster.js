@@ -2,10 +2,11 @@ import { useState, useEffect, useMemo } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
 import { apiGetCensorshipmaster } from 'services/ProgrammingService'
 import { Button, Card } from 'components/ui'
-import { HiPlusCircle } from 'react-icons/hi'
+import { HiOutlinePencil, HiOutlinePlus, HiPlusCircle } from 'react-icons/hi'
 import CensorshipEdit from './CensorshipEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
+import HeaderExtra from 'views/Controls/HeaderExtra'
 
 const headerExtraContent = (
     openDrawer,
@@ -47,7 +48,7 @@ const Censorshipmaster = () => {
     const [globalFilter, setGlobalFilter] = useState('')
     const [sorting, setSorting] = useState([])
     const [data, setdata] = useState([''])
-    const [currency, setCurrency] = useState({ value: '', label: '' })
+    // const [currency, setCurrency] = useState({ value: '', label: '' })
     const [message, setMessage] = useTimeOutMessage()
     const [log, setlog] = useState('')
 
@@ -147,7 +148,7 @@ const Censorshipmaster = () => {
                 </Alert>
             )} */}
             <Card
-                header="Censorship Master"
+                header={<HeaderExtra Component={'Censorship Master'} />}
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -169,9 +170,29 @@ const Censorshipmaster = () => {
 
             <Drawer
                 title={
-                    editData.ViewName
-                        ? 'Edit Censorship Master'
-                        : 'Add Censorship Master'
+                    editData.CensorshipName ? (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiOutlinePencil />}
+                                ></Button>
+                            </center>
+                            Censorship Master
+                        </p>
+                    ) : (
+                        <p className="text-xl font-medium text-black flex ">
+                            <center>
+                                <Button
+                                    size="xs"
+                                    variant="twoTone"
+                                    icon={<HiOutlinePlus />}
+                                ></Button>
+                            </center>
+                            Censorship Master
+                        </p>
+                    )
                 }
                 isOpen={isOpen}
                 onClose={onDrawerClose}
@@ -183,7 +204,7 @@ const Censorshipmaster = () => {
                     editData={editData}
                     setMessage={setMessage}
                     setlog={setlog}
-                    currency={currency}
+                    //currency={currency}
                 />
             </Drawer>
         </>
