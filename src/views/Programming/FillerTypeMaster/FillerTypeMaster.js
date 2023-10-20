@@ -1,13 +1,13 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
-import { apiGetCommercialtypemaster } from 'services/ProgrammingService'
+import { apiGetFillertypemaster } from 'services/ProgrammingService'
 import { Button, Card } from 'components/ui'
 import {
     HiOutlinePencil,
     HiOutlinePlusCircle,
     HiPlusCircle,
 } from 'react-icons/hi'
-import CommercialTypeEdit from './CommercialTypeEdit'
+import FillerTypeEdit from './FillerTypeEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
 import HeaderExtra from 'views/Controls/HeaderExtra'
@@ -39,14 +39,14 @@ const headerExtraContent = (
                     icon={<HiPlusCircle />}
                     onClick={() => openDrawer()}
                 >
-                    Add Commercial Type
+                    Add Filler Type
                 </Button>
             </span>
         </span>
     )
 }
 
-const CommercialTypemaster = () => {
+const FillerTypemaster = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [editData, seteditData] = useState([''])
     const [globalFilter, setGlobalFilter] = useState('')
@@ -64,15 +64,15 @@ const CommercialTypemaster = () => {
     const columns = useMemo(
         () => [
             {
-                header: 'CommercialType Name',
-                accessorKey: 'CommercialTypeName',
+                header: 'FillerType Name',
+                accessorKey: 'FillerTypeName',
                 cell: (props) => {
                     const row = props.row.original
                     return (
                         <div className="flex items-center">
                             <Badge className={statusColor[row.IsActive]} />
                             <span className="ml-2 rtl:mr-2 capitalize">
-                                {row.CommercialTypeName}
+                                {row.FillerTypeName}
                             </span>
                         </div>
                     )
@@ -98,7 +98,7 @@ const CommercialTypemaster = () => {
     )
     useEffect(() => {
         ;(async (values) => {
-            const resp = await apiGetCommercialtypemaster(values)
+            const resp = await apiGetFillertypemaster(values)
             setdata(resp.data)
         })()
     }, [])
@@ -108,7 +108,7 @@ const CommercialTypemaster = () => {
 
     const onDrawerClose = async (e, values) => {
         setIsOpen(false)
-        const resp = await apiGetCommercialtypemaster(values)
+        const resp = await apiGetFillertypemaster(values)
         setdata(resp.data)
         seteditData([''])
     }
@@ -159,7 +159,7 @@ const CommercialTypemaster = () => {
                 </Alert>
             )} */}
             <Card
-                header={<HeaderExtra Component={'CommercialType Master'} />}
+                header={<HeaderExtra Component={'FillerType Master'} />}
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -181,7 +181,7 @@ const CommercialTypemaster = () => {
 
             <Drawer
                 title={
-                    editData.CommercialTypeName ? (
+                    editData.FillerTypeName ? (
                         <p className="text-xl font-medium text-black flex ">
                             <center>
                                 <Button
@@ -190,7 +190,7 @@ const CommercialTypemaster = () => {
                                     icon={<HiOutlinePencil />}
                                 ></Button>
                             </center>
-                            CommercialType Master
+                            FillerType Master
                         </p>
                     ) : (
                         <p className="text-xl font-medium text-black flex ">
@@ -201,7 +201,7 @@ const CommercialTypemaster = () => {
                                     icon={<HiOutlinePlusCircle />}
                                 ></Button>
                             </center>
-                            CommercialType Master
+                            FillerType Master
                         </p>
                     )
                 }
@@ -210,7 +210,7 @@ const CommercialTypemaster = () => {
                 onRequestClose={onDrawerClose}
                 width={600}
             >
-                <CommercialTypeEdit
+                <FillerTypeEdit
                     onDrawerClose={onDrawerClose}
                     editData={editData}
                     setMessage={setMessage}
@@ -222,4 +222,4 @@ const CommercialTypemaster = () => {
     )
 }
 
-export default CommercialTypemaster
+export default FillerTypemaster
