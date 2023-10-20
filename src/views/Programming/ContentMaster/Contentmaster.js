@@ -24,6 +24,9 @@ import TabNav from 'components/ui/Tabs/TabNav'
 import TabContent from 'components/ui/Tabs/TabContent'
 import MapChannel from './MapChannel'
 import SeasonMapping from './SeasonMapping'
+import MapStarcast from './MapStarcast'
+import EpisodeRestrictions from './EpisodeRestrictions'
+import Synopsis from './Synopsis'
 
 const headerExtraContent = (
     openDrawer,
@@ -303,25 +306,23 @@ const Contentmaster = () => {
                             <SeasonMapping />
                         </TabContent>
                         <TabContent value="tab3">
-                            <p>
-                                In C++ its harder to shoot yourself in the foot,
-                                but when you do, you blow off your whole leg.
-                                (Bjarne Stroustrup)
-                            </p>
+                            <MapStarcast />
                         </TabContent>
                         <TabContent value="tab4">
-                            <p>
-                                In C++ its harder to shoot yourself in the foot,
-                                but when you do, you blow off your whole leg.
-                                (Bjarne Stroustrup)
-                            </p>
+                            <Synopsis
+                                onDrawerClose={onDrawerClose}
+                                editData={editData}
+                                setMessage={setMessage}
+                                setlog={setlog}
+                                ContentType={ContentType}
+                                Language={Language}
+                                Censorship={Censorship}
+                                Genre={Genre}
+                                SubGenre={SubGenre}
+                            />
                         </TabContent>
                         <TabContent value="tab5">
-                            <p>
-                                In C++ its harder to shoot yourself in the foot,
-                                but when you do, you blow off your whole leg.
-                                (Bjarne Stroustrup)
-                            </p>
+                            <EpisodeRestrictions />
                         </TabContent>
                     </div>
                 </Tabs>

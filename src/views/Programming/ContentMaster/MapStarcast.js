@@ -5,13 +5,10 @@ import { Button, Input, Notification, toast } from 'components/ui'
 const { Tr, Th, Td, THead, TBody } = Table
 const THD = [
     {
-        name: 'Season No',
+        name: 'StarCastType Name',
     },
     {
-        name: 'Start Episode',
-    },
-    {
-        name: 'End Episode',
+        name: 'StartCast Name',
     },
     {
         name: 'Action',
@@ -28,26 +25,23 @@ const openNotification = (type) => {
         </Notification>
     )
 }
-const SeasonMapping = () => {
+const MapStarcast = () => {
     const [data, setdata] = useState([])
-    const [seasonInput, setSeasonInput] = useState('')
-    const [Start, setStart] = useState('')
-    const [seaEnd, setSEnd] = useState('')
+    const [StarCastType, setStarCastType] = useState('')
+    const [StartCast, setStartCast] = useState('')
     const handleAdd = () => {
-        if (!seasonInput || !Start || !seaEnd) {
+        if (!StarCastType || !StartCast) {
             openNotification('danger')
         } else {
             const newData = {
-                Season: seasonInput, // provide the value from the input field for Season
-                Start: Start, // provide the value from the input field for Start
-                End: seaEnd, // provide the value from the input field for End
+                StarCastType: StarCastType, // provide the value from the input field for Season
+                StartCast: StartCast, // provide the value from the input field for End
             }
             setdata([...data, newData])
         }
 
-        setSeasonInput('')
-        setStart('')
-        setSEnd('')
+        setStarCastType('')
+        setStartCast('')
     }
     return (
         <div>
@@ -64,22 +58,17 @@ const SeasonMapping = () => {
                         <Td>
                             <Input
                                 size="xs"
-                                value={seasonInput}
-                                onChange={(e) => setSeasonInput(e.target.value)}
+                                value={StarCastType}
+                                onChange={(e) =>
+                                    setStarCastType(e.target.value)
+                                }
                             />
                         </Td>
                         <Td>
                             <Input
-                                value={Start}
+                                value={StartCast}
                                 size="xs"
-                                onChange={(e) => setStart(e.target.value)}
-                            />
-                        </Td>
-                        <Td>
-                            <Input
-                                value={seaEnd}
-                                size="xs"
-                                onChange={(e) => setSEnd(e.target.value)}
+                                onChange={(e) => setStartCast(e.target.value)}
                             />
                         </Td>
                         <Td>
@@ -91,13 +80,10 @@ const SeasonMapping = () => {
                     {data.map((e, index) => (
                         <Tr key={index} style={{ border: '1px solid #E3E5EB' }}>
                             <Td style={{ border: '1px solid #E3E5EB' }}>
-                                {e.Season}
+                                {e.StarCastType}
                             </Td>
                             <Td style={{ border: '1px solid #E3E5EB' }}>
-                                {e.Start}
-                            </Td>
-                            <Td style={{ border: '1px solid #E3E5EB' }}>
-                                {e.End}
+                                {e.StartCast}
                             </Td>
                         </Tr>
                     ))}
@@ -106,5 +92,4 @@ const SeasonMapping = () => {
         </div>
     )
 }
-
-export default SeasonMapping
+export default MapStarcast

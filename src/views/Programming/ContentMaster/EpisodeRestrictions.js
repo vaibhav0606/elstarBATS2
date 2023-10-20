@@ -8,10 +8,10 @@ const THD = [
         name: 'Season No',
     },
     {
-        name: 'Start Episode',
+        name: 'Episode No',
     },
     {
-        name: 'End Episode',
+        name: 'Reason',
     },
     {
         name: 'Action',
@@ -28,26 +28,26 @@ const openNotification = (type) => {
         </Notification>
     )
 }
-const SeasonMapping = () => {
+const EpisodeRestrictions = () => {
     const [data, setdata] = useState([])
     const [seasonInput, setSeasonInput] = useState('')
-    const [Start, setStart] = useState('')
-    const [seaEnd, setSEnd] = useState('')
+    const [EpisodeNo, setEpisodeNo] = useState('')
+    const [Reason, setReason] = useState('')
     const handleAdd = () => {
-        if (!seasonInput || !Start || !seaEnd) {
+        if (!seasonInput || !EpisodeNo || !Reason) {
             openNotification('danger')
         } else {
             const newData = {
                 Season: seasonInput, // provide the value from the input field for Season
-                Start: Start, // provide the value from the input field for Start
-                End: seaEnd, // provide the value from the input field for End
+                EpisodeNo: EpisodeNo, // provide the value from the input field for EpisodeNo
+                Reason: Reason, // provide the value from the input field for Reason
             }
             setdata([...data, newData])
         }
 
         setSeasonInput('')
-        setStart('')
-        setSEnd('')
+        setEpisodeNo('')
+        setReason('')
     }
     return (
         <div>
@@ -70,16 +70,16 @@ const SeasonMapping = () => {
                         </Td>
                         <Td>
                             <Input
-                                value={Start}
+                                value={EpisodeNo}
                                 size="xs"
-                                onChange={(e) => setStart(e.target.value)}
+                                onChange={(e) => setEpisodeNo(e.target.value)}
                             />
                         </Td>
                         <Td>
                             <Input
-                                value={seaEnd}
+                                value={Reason}
                                 size="xs"
-                                onChange={(e) => setSEnd(e.target.value)}
+                                onChange={(e) => setReason(e.target.value)}
                             />
                         </Td>
                         <Td>
@@ -94,10 +94,10 @@ const SeasonMapping = () => {
                                 {e.Season}
                             </Td>
                             <Td style={{ border: '1px solid #E3E5EB' }}>
-                                {e.Start}
+                                {e.EpisodeNo}
                             </Td>
                             <Td style={{ border: '1px solid #E3E5EB' }}>
-                                {e.End}
+                                {e.Reason}
                             </Td>
                         </Tr>
                     ))}
@@ -106,5 +106,4 @@ const SeasonMapping = () => {
         </div>
     )
 }
-
-export default SeasonMapping
+export default EpisodeRestrictions

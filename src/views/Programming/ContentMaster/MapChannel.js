@@ -96,7 +96,6 @@ function MapChannel() {
         ]
     }, [])
 
-    console.log(data)
     const table = useReactTable({
         data,
         columns,
