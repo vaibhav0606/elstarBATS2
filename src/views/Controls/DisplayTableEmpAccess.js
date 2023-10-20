@@ -25,7 +25,8 @@ const DisplayTableEmpAccess = ({
     openDialog,
     onDialogOk,
 }) => {
-    //console.log(setGlobalFilter);
+       
+    
     const table = useReactTable({
         data,
         columns,
@@ -51,11 +52,77 @@ const DisplayTableEmpAccess = ({
     const [CheckboxValue, setCheckboxValue] = useState([''])
     const { LoginId } = useSelector((state) => state.auth.session)
     const [datas, setData] = useState([])
-    const functioation = (val, e) => {
-        const { checked, name } = e.target
-    }
+    // const functioation = (val, e) => {
+    //     const { checked, name } = e.target
+    // }
+    const [selectedRows, setSelectedRows] = useState([]);
 
-    console.log(data)
+    // const  functioation = (row, e) => {
+    //     const { checked, name } = e.target;
+    //     row.IsRead = !checked;
+    //     row.IsWrite = !checked; 
+    //     if (name === 'Read' && checked) {
+    //         row.IsRead = checked;
+    //         setSelectedRows([...selectedRows, row]);
+    //     } else if (name === 'Read' && !checked) {
+    //         row.IsRead = !checked;
+    //         setSelectedRows(selectedRows.filter(selectedRow => selectedRow !== row));
+    //     }
+    //     if (name === 'Write' && checked) {
+    //         // Add the row to the selectedRows array
+    //         row.IsWrite = checked;
+    //         setSelectedRows([...selectedRows, row]);
+    //         row.IsWrite = checked;
+    //     } else if (name === 'Write' && !checked) {
+    //         // Remove the row from the selectedRows array
+    //         row.IsWrite = !checked;
+    //         setSelectedRows(selectedRows.filter(selectedRow => selectedRow !== row));
+    //     }
+    
+    //     // Repeat the same logic for the "Write" checkbox if needed.
+    // };
+
+    const functioation = (row, e) => {
+        const { checked, name } = e.target;
+    
+        // Find the index of the row in the selectedRows array
+         
+        const rowIndex = selectedRows.findIndex(selectedRow => selectedRow.FormCode === row.FormCode);
+        console.log('rowIndex' + rowIndex)
+        // if (rowIndex === -1) {
+        //     row = { ...row, IsRead: false, IsWrite: false };
+        //     setSelectedRows([...selectedRows, row]);
+            
+        // }
+       
+            if (name === 'Read') {
+                if (checked) {
+                     row.IsRead = true;
+                } else {
+                    row.IsRead = false;
+                }
+
+            } 
+              
+            if (name === 'Write') {
+                if (checked) {
+                     row.IsWrite = true;
+                } else {
+                    row.IsWrite = false;
+                }
+            }
+        
+    
+        if (rowIndex === -1) {
+            // If the row is not in the selectedRows array, add it
+            setSelectedRows([...selectedRows, row]);
+        } else {
+            // Replace the row in the selectedRows array with the updated row
+            selectedRows[rowIndex] = row;
+            setSelectedRows([...selectedRows]);
+        }
+    };
+    
     return (
         <>
             <h6 className="mb-4">Login Rights</h6>
@@ -151,6 +218,7 @@ const DisplayTableEmpAccess = ({
                                                             e
                                                         )
                                                     }
+                                                     
                                                 />
                                                 &nbsp;&nbsp;
                                                 <Checkbox
@@ -174,6 +242,25 @@ const DisplayTableEmpAccess = ({
             <Button className="mr-2 mb-2 " variant="solid" type="button">
                 Save
             </Button>
+            <Button
+                className="mr-2 mb-2"
+                variant="solid"
+                type="button"
+                onClick={() => {
+                    // Handle the selected rows (rows with "Read" checkbox selected)
+                    console.log('Selected Rows:', selectedRows);
+
+                    // You can perform any other actions with the selected rows here.
+                }}
+            >
+                Save!!!!!!
+            </Button>
+
+
+
+
+
+
 
             {/* <Button
                 className="mr-2 mb-2"
