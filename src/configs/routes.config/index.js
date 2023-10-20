@@ -260,12 +260,48 @@ export const protectedRoutes = [
         ),
         authority: [],
     },
-    
+
     {
         key: 'awardmaster',
         path: '/awardmaster',
         component: React.lazy(() =>
             import('views/Programming/AwardMaster/Awardmaster')
+        ),
+        authority: [],
+    },
+
+    {
+        key: 'commercialtypemaster',
+        path: '/commercialtypemaster',
+        component: React.lazy(() =>
+            import(
+                'views/Programming/CommercialTypeMaster/CommercialTypeMaster'
+            )
+        ),
+        authority: [],
+    },
+    {
+        key: 'promotypemaster',
+        path: '/promotypemaster',
+        component: React.lazy(() =>
+            import('views/Programming/PromoTypeMaster/PromoTypeMaster')
+        ),
+        authority: [],
+    },
+    {
+        key: 'fillertypemaster',
+        path: '/fillertypemaster',
+        component: React.lazy(() =>
+            import('views/Programming/FillerTypeMaster/FillerTypeMaster')
+        ),
+        authority: [],
+    },
+
+    {
+        key: 'contentsegmaster',
+        path: '/contentsegmaster',
+        component: React.lazy(() =>
+            import('views/Programming/ContentsegMaster/Contentsegmaster')
         ),
         authority: [],
     },
