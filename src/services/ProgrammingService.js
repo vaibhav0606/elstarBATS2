@@ -851,7 +851,6 @@ const Putaspectratio = (param, token) => {
     })
 }
 
-
 export async function apiGetfpcorgrepmaster(data) {
     return ApiService.fetchData({
         url: '/fpcorgrep/',
@@ -922,7 +921,6 @@ const Putfpcorgrep = (param, token) => {
     })
 }
 
-
 export async function apiGetawardmaster(data) {
     return ApiService.fetchData({
         url: '/awardmaster/',
@@ -972,7 +970,7 @@ const PutAwardmaster = (param, token) => {
         let config = {
             method: 'put',
             maxBodyLength: Infinity,
-            url: appConfig.apiPrefix +  `/awardmaster/${param.AwardCode}`,
+            url: appConfig.apiPrefix + `/awardmaster/${param.AwardCode}`,
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
@@ -991,6 +989,311 @@ const PutAwardmaster = (param, token) => {
     })
 }
 
+export async function apiGetCommercialtypemaster(data) {
+    return ApiService.fetchData({
+        url: '/commercialtypemaster/',
+        method: 'get',
+        data,
+    })
+}
+
+const Postcommercialtype = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            CommercialTypeName: param.CommercialTypeName,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/commercialtypemaster/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const Putcommercialtype = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            CommercialTypeName: param.CommercialTypeName,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/commercialtypemaster/${param.CommercialTypeCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+export async function apiGetPromotypemaster(data) {
+    return ApiService.fetchData({
+        url: '/promotypemaster/',
+        method: 'get',
+        data,
+    })
+}
+
+const Postpromotype = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            PromoTypeName: param.PromoTypeName,
+            PromoTypeShortName: param.PromoTypeShortName,
+            ChannelSpecific: param.ChannelSpecific ? 1 : 0,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/promotypemaster/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const Putpromotype = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            PromoTypeName: param.PromoTypeName,
+            PromoTypeShortName: param.PromoTypeShortName,
+            ChannelSpecific: param.ChannelSpecific ? 1 : 0,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/promotypemaster/${param.PromoTypeCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+export async function apiGetFillertypemaster(data) {
+    return ApiService.fetchData({
+        url: '/fillertypemaster/',
+        method: 'get',
+        data,
+    })
+}
+
+const Postfillertype = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            FillerTypeName: param.FillerTypeName,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/fillertypemaster/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const Putfillertype = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            FillerTypeName: param.FillerTypeName,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/fillertypemaster/${param.FillerTypeCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+export async function apiGetContentsegmaster(data) {
+    return ApiService.fetchData({
+        url: '/contentsegmaster/',
+        method: 'get',
+        data,
+    })
+}
+
+const Postcontentseg = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            ContentCode: param.ContentCode,
+            OriginalRepeatCode: param.OriginalRepeatCode,
+            SeasonNo: param.SeasonNo,
+            EpisodeNo: param.EpisodeNo,
+            PartNumber: param.PartNumber,
+            SubContentCode: param.SubContentCode,
+            TapeID: param.TapeID,
+            MaximumSegments: param.MaximumSegments,
+            EpisodeCaption: param.EpisodeCaption,
+            EpisodeDuration: param.EpisodeDuration,
+            EpisodeDurationinMin: param.EpisodeDurationinMin,
+            Remarks: param.Remarks,
+            VideoTypeCode: param.VideoTypeCode,
+            AspectRatioCode: param.AspectRatioCode,
+            AssetTypeCode: param.AssetTypeCode,
+            VideoSizeCode: param.VideoSizeCode,
+            VideoFormatTypeCode: param.VideoFormatTypeCode,
+            TXVersionCode: param.TXVersionCode,
+            ShortSynopsis: param.ShortSynopsis,
+            LongSynopsis: param.LongSynopsis,
+            IsReadyToBroadCast: param.IsReadyToBroadCast,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/contentsegmaster/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const Putcontentseg = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            ContentCode: param.ContentCode,
+            OriginalRepeatCode: param.OriginalRepeatCode,
+            SeasonNo: param.SeasonNo,
+            EpisodeNo: param.EpisodeNo,
+            PartNumber: param.PartNumber,
+            SubContentCode: param.SubContentCode,
+            TapeID: param.TapeID,
+            MaximumSegments: param.MaximumSegments,
+            EpisodeCaption: param.EpisodeCaption,
+            EpisodeDuration: param.EpisodeDuration,
+            EpisodeDurationinMin: param.EpisodeDurationinMin,
+            Remarks: param.Remarks,
+            VideoTypeCode: param.VideoTypeCode,
+            AspectRatioCode: param.AspectRatioCode,
+            AssetTypeCode: param.AssetTypeCode,
+            VideoSizeCode: param.VideoSizeCode,
+            VideoFormatTypeCode: param.VideoFormatTypeCode,
+            TXVersionCode: param.TXVersionCode,
+            ShortSynopsis: param.ShortSynopsis,
+            LongSynopsis: param.LongSynopsis,
+            IsReadyToBroadCast: param.IsReadyToBroadCast,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/contentsegmaster/${param.SegmentCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
 
 export {
     Poststarcasttype,
@@ -1015,12 +1318,16 @@ export {
     PutContent,
     Putaspectratio,
     Postaspectratio,
-   Postfpcorgrep,
-   Putfpcorgrep,
-   PostAwardmaster,
-   PutAwardmaster,
-
-
-
-
+    Postfpcorgrep,
+    Putfpcorgrep,
+    PostAwardmaster,
+    PutAwardmaster,
+    Putcommercialtype,
+    Postcommercialtype,
+    Putpromotype,
+    Postpromotype,
+    Putfillertype,
+    Postfillertype,
+    Postcontentseg,
+    Putcontentseg,
 }
