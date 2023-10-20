@@ -7,6 +7,7 @@ import {
     apiGetGenremaster,
     apiGetSubGenremaster,
     apiGetContentsegmaster,
+    apiGetTXVersionmaster,
 } from 'services/ProgrammingService'
 import { apiGetLanguagemaster } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
@@ -68,6 +69,7 @@ const ContentSegmaster = () => {
     const [data, setdata] = useState([''])
     const [ContentType, setContentType] = useState({ value: '', label: '' })
     const [ContentName, setContentName] = useState({ value: '', label: '' })
+    const [TXVersion, setTXVersion] = useState({ value: '', label: '' })
     const [Language, setLanguage] = useState({ value: '', label: '' })
     const [Censorship, setCensorship] = useState({ value: '', label: '' })
     const [message, setMessage] = useTimeOutMessage()
@@ -147,6 +149,14 @@ const ContentSegmaster = () => {
                 label: option.CensorshipName,
             }))
             setCensorship(formattedOptions)
+        })()
+        ;(async (values) => {
+            const TXVersion = await apiGetTXVersionmaster(values)
+            const formattedOptions = TXVersion.data.map((option) => ({
+                value: option.TXVersionCode,
+                label: option.TXVersionName,
+            }))
+            setTXVersion(formattedOptions)
         })()
         // ;(async (values) => {
         //     const Genre = await apiGetGenremaster(values)
@@ -307,6 +317,7 @@ const ContentSegmaster = () => {
                                 ContentName={ContentName}
                                 Language={Language}
                                 Censorship={Censorship}
+                                TXVersion={TXVersion}
                             />
                         </TabContent>
                         <TabContent value="tab2">
