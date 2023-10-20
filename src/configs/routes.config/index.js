@@ -236,6 +236,22 @@ export const protectedRoutes = [
         ),
         authority: [],
     },
+    {
+        key: 'aspectraiomaster',
+        path: '/aspectratiomaster',
+        component: React.lazy(() =>
+            import('views/Programming/AspectRatioMaster/AspectRatioMaster')
+        ),
+        authority: [],
+    },
+    {
+        key: 'statemaster',
+        path: '/statemaster',
+        component: React.lazy(() =>
+            import('views/Master/StateMaster/StateMaster')
+        ),
+        authority: [],
+    },
 
     /** Example purpose only, please remove */
     {
