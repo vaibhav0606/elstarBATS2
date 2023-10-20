@@ -849,6 +849,147 @@ const Putaspectratio = (param, token) => {
     })
 }
 
+
+export async function apiGetfpcorgrepmaster(data) {
+    return ApiService.fetchData({
+        url: '/fpcorgrep/',
+        method: 'get',
+        data,
+    })
+}
+
+const Postfpcorgrep = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            OriginalRepeatName: param.OriginalRepeatName,
+            ShortName: param.ShortName,
+            NewColourCode: param.NewColourCode,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/fpcorgrep/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const Putfpcorgrep = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            OriginalRepeatName: param.OriginalRepeatName,
+            ShortName: param.ShortName,
+            NewColourCode: param.NewColourCode,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/fpcorgrep/${param.OriginalRepeatCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+
+export async function apiGetawardmaster(data) {
+    return ApiService.fetchData({
+        url: '/awardmaster/',
+        method: 'get',
+        data,
+    })
+}
+
+const PostAwardmaster = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            AwardName: param.AwardName,
+            AwardDate: param.AwardDate,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/awardmaster/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const PutAwardmaster = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            AwardName: param.AwardName,
+            AwardDate: param.AwardDate,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/awardmaster/${param.AwardCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+
 export {
     Poststarcasttype,
     Putstarcasttype,
@@ -872,4 +1013,12 @@ export {
     PutContent,
     Putaspectratio,
     Postaspectratio,
+   Postfpcorgrep,
+   Putfpcorgrep,
+   PostAwardmaster,
+   PutAwardmaster,
+
+
+
+
 }

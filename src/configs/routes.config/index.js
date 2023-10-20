@@ -252,6 +252,23 @@ export const protectedRoutes = [
         ),
         authority: [],
     },
+    {
+        key: 'fpcorgrep',
+        path: '/fpcorgrep',
+        component: React.lazy(() =>
+            import('views/Programming/OriginalRepeat/OriginalRepeatmaster')
+        ),
+        authority: [],
+    },
+    
+    {
+        key: 'awardmaster',
+        path: '/awardmaster',
+        component: React.lazy(() =>
+            import('views/Programming/AwardMaster/Awardmaster')
+        ),
+        authority: [],
+    },
 
     /** Example purpose only, please remove */
     {
