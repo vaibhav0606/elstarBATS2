@@ -1,13 +1,13 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
-import { apiGetViewmaster } from 'services/ProgrammingService'
+import { apiGetAspectratiomaster } from 'services/ProgrammingService'
 import { Button, Card } from 'components/ui'
 import {
     HiOutlinePencil,
     HiOutlinePlusCircle,
     HiPlusCircle,
 } from 'react-icons/hi'
-import ViewEdit from './ViewEdit'
+import AspectRatioEdit from './AspectRatioEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
 import HeaderExtra from 'views/Controls/HeaderExtra'
@@ -39,14 +39,14 @@ const headerExtraContent = (
                     icon={<HiPlusCircle />}
                     onClick={() => openDrawer()}
                 >
-                    Add View
+                    Add AspectRatio
                 </Button>
             </span>
         </span>
     )
 }
 
-const Viewmaster = () => {
+const AspectRatiomaster = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [editData, seteditData] = useState([''])
     const [globalFilter, setGlobalFilter] = useState('')
@@ -64,15 +64,15 @@ const Viewmaster = () => {
     const columns = useMemo(
         () => [
             {
-                header: 'ViewName',
-                accessorKey: 'ViewName',
+                header: 'AspectRatio',
+                accessorKey: 'AspectRatio',
                 cell: (props) => {
                     const row = props.row.original
                     return (
                         <div className="flex items-center">
                             <Badge className={statusColor[row.IsActive]} />
                             <span className="ml-2 rtl:mr-2 capitalize">
-                                {row.ViewName}
+                                {row.AspectRatio}
                             </span>
                         </div>
                     )
@@ -98,7 +98,7 @@ const Viewmaster = () => {
     )
     useEffect(() => {
         ;(async (values) => {
-            const resp = await apiGetViewmaster(values)
+            const resp = await apiGetAspectratiomaster(values)
             setdata(resp.data)
         })()
     }, [])
@@ -108,7 +108,7 @@ const Viewmaster = () => {
 
     const onDrawerClose = async (e, values) => {
         setIsOpen(false)
-        const resp = await apiGetViewmaster(values)
+        const resp = await apiGetAspectratiomaster(values)
         setdata(resp.data)
         seteditData([''])
     }
@@ -159,7 +159,7 @@ const Viewmaster = () => {
                 </Alert>
             )} */}
             <Card
-                header={<HeaderExtra Component={'View Master'} />}
+                header={<HeaderExtra Component={'AspectRatio Master'} />}
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
@@ -181,7 +181,7 @@ const Viewmaster = () => {
 
             <Drawer
                 title={
-                    editData.ViewName ? (
+                    editData.AspectRatio ? (
                         <p className="text-xl font-medium text-black flex ">
                             <center>
                                 <Button
@@ -190,7 +190,7 @@ const Viewmaster = () => {
                                     icon={<HiOutlinePencil />}
                                 ></Button>
                             </center>
-                            View Master
+                            AspectRatio Master
                         </p>
                     ) : (
                         <p className="text-xl font-medium text-black flex ">
@@ -201,7 +201,7 @@ const Viewmaster = () => {
                                     icon={<HiOutlinePlusCircle />}
                                 ></Button>
                             </center>
-                            View Master
+                            AspectRatio Master
                         </p>
                     )
                 }
@@ -210,7 +210,7 @@ const Viewmaster = () => {
                 onRequestClose={onDrawerClose}
                 width={600}
             >
-                <ViewEdit
+                <AspectRatioEdit
                     onDrawerClose={onDrawerClose}
                     editData={editData}
                     setMessage={setMessage}
@@ -222,4 +222,4 @@ const Viewmaster = () => {
     )
 }
 
-export default Viewmaster
+export default AspectRatiomaster
