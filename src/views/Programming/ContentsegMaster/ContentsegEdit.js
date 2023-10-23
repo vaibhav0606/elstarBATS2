@@ -342,9 +342,9 @@ const ContentsegEdit = ({
                                 </FormItemcompact>
 
                                 {/* OriginalRepeatName */}
-                                {/* <FormItemcompact
+                                <FormItemcompact
                                     asterisk
-                                    label="OriginalRepeatName"
+                                    label="Original/Repeat"
                                     invalid={
                                         errors.OriginalRepeatCode &&
                                         touched.OriginalRepeatCode
@@ -389,7 +389,7 @@ const ContentsegEdit = ({
                                             />
                                         )}
                                     </Field>
-                                </FormItemcompact> */}
+                                </FormItemcompact>
 
                                 {/* SeasonNo */}
                                 {/* <FormItemcompact
@@ -650,7 +650,7 @@ const ContentsegEdit = ({
 
                                 <FormItemcompact
                                     asterisk
-                                    label="VideoFormateType"
+                                    label="Video Formate Type"
                                     invalid={
                                         errors.VideoFormateTypePara &&
                                         touched.VideoFormateTypePara

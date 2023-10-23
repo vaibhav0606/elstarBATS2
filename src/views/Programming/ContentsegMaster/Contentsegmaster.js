@@ -8,6 +8,7 @@ import {
     apiGetSubGenremaster,
     apiGetContentsegmaster,
     apiGetTXVersionmaster,
+    apiGetfpcorgrepmaster,
 } from 'services/ProgrammingService'
 import { apiGetLanguagemaster } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
@@ -69,6 +70,7 @@ const ContentSegmaster = () => {
     const [data, setdata] = useState([''])
     const [ContentType, setContentType] = useState({ value: '', label: '' })
     const [ContentName, setContentName] = useState({ value: '', label: '' })
+    const [ORGRep, setORGRep] = useState({ value: '', label: '' })
     const [TXVersion, setTXVersion] = useState({ value: '', label: '' })
     const [Language, setLanguage] = useState({ value: '', label: '' })
     const [Censorship, setCensorship] = useState({ value: '', label: '' })
@@ -157,6 +159,14 @@ const ContentSegmaster = () => {
                 label: option.TXVersionName,
             }))
             setTXVersion(formattedOptions)
+        })()
+        ;(async (values) => {
+            const ORGRep = await apiGetfpcorgrepmaster(values)
+            const formattedOptions = ORGRep.data.map((option) => ({
+                value: option.OriginalRepeatCode,
+                label: option.OriginalRepeatName,
+            }))
+            setORGRep(formattedOptions)
         })()
         // ;(async (values) => {
         //     const Genre = await apiGetGenremaster(values)
@@ -315,6 +325,7 @@ const ContentSegmaster = () => {
                                 setlog={setlog}
                                 ContentType={ContentType}
                                 ContentName={ContentName}
+                                ORGRep={ORGRep}
                                 Language={Language}
                                 Censorship={Censorship}
                                 TXVersion={TXVersion}
