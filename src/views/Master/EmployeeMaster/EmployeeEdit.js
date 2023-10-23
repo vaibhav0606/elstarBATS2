@@ -66,8 +66,8 @@ const validationSchema = Yup.object().shape({
         .max(100, 'Too Long!')
         .required('Emp_Description Required'),
     RegionCode: Yup.string().required('RegionCode Required'),
-    IsActive: Yup.string().required('IsActives Required'),
-    rememberMe: Yup.bool(),
+    //IsActive: Yup.string().required('IsActives Required'),
+    //rememberMe: Yup.bool(),
 })
 
 const AddLocation = async (values, token, setMessage, setlog, navigate) => {
@@ -117,22 +117,9 @@ const ProductForm = forwardRef((props, ref) => {
     const { token } = useSelector((state) => state.auth.session)
     const { state } = useLocation()
     const initialData = {
-        id: '',
-        name: '',
-        productCode: '',
-        img: '',
+        img: state?.editData.Emp_Image || '',
         imgList: [],
-        category: '',
-        price: 0,
-        stock: 0,
-        status: 0,
-        costPerItem: 0,
-        bulkDiscountPrice: 0,
-        taxRate: 6,
         tags: [],
-        brand: '',
-        vendor: '',
-        description: '',
         EmployeeCode: state?.editData.EmployeeCode || '',
         Emp_FirstName: state?.editData.Emp_FirstName || '',
         Emp_LastName: state?.editData.Emp_LastName || '',
@@ -184,15 +171,10 @@ const ProductForm = forwardRef((props, ref) => {
                 onSubmit={(values, { setSubmitting }) => {
                     const formData = cloneDeep(values)
                     formData.tags = formData.tags.map((tag) => tag.value)
-                    if (type === 'new') {
-                        formData.id = newId
-                        if (formData.imgList.length > 0) {
-                            formData.img = formData.imgList[0].img
-                        }
-                    }
+
                     onFormSubmit?.(formData, setSubmitting)
                     setTimeout(() => {
-                        if (!state.editData.EmployeeCode) {
+                        if (state === null) {
                             new Promise((resolve, reject) => {
                                 AddLocation(
                                     values,

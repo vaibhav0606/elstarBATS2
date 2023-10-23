@@ -27,6 +27,10 @@ const EmpLoginRights = ({
             setdata(resp.data)
         })()
     }, [])
+    const onDrawerClose = async (values) => {
+        const resp = await apiGetFormmaster(values)
+        setdata(resp.data)
+    }
     const columns = useMemo(
         () => [
             {
@@ -112,7 +116,7 @@ const EmpLoginRights = ({
                 handleClicks={handleClicks}
                 game={game}
                 handleClickPrevious={handleClickPrevious}
-                onDialogOk={onDialogOk}
+                onDrawerClose={onDrawerClose}
             />
         </Card>
     )

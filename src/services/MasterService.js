@@ -372,7 +372,7 @@ const PostEmp = (param, token) => {
             Emp_Code: param.Emp_Code,
             Emp_Email: param.Emp_Email,
             Emp_Addr1: param.Emp_Addr1,
-            Emp_Addr2: param.Emp_Addr2 || 'NA',
+            Emp_Addr2: param.Emp_Addr1 || 'NA',
             PlaceCode: param.PlaceCode,
             StateCode: param.StateCode,
             CountryCode: param.CountryCode,
@@ -383,7 +383,7 @@ const PostEmp = (param, token) => {
             Emp_DOJ: param.Emp_DOJ,
             Emp_DOL: param.Emp_DOL || '0000',
             Emp_BloodGroup: param.Emp_BloodGroup,
-            Emp_Image: '1.jpg',
+            Emp_Image: param.img,
             DepartmentCode: param.DepartmentCode,
             DesignationCode: param.DesignationCode,
             ReportingTo: param.ReportingTo || 0,
@@ -422,7 +422,7 @@ const PutEmp = (param, token) => {
             Emp_Code: param.Emp_Code,
             Emp_Email: param.Emp_Email,
             Emp_Addr1: param.Emp_Addr1,
-            Emp_Addr2: param.Emp_Addr2 || 'NA',
+            Emp_Addr2: param.Emp_Addr1 || 'NA',
             PlaceCode: param.PlaceCode,
             StateCode: param.StateCode,
             CountryCode: param.CountryCode,
@@ -433,7 +433,7 @@ const PutEmp = (param, token) => {
             Emp_DOJ: param.Emp_DOJ,
             Emp_DOL: param.Emp_DOL,
             Emp_BloodGroup: param.Emp_BloodGroup,
-            Emp_Image: '1.jpg',
+            Emp_Image: param.imgList[0]?.img,
             DepartmentCode: param.DepartmentCode,
             DesignationCode: param.DesignationCode,
             ReportingTo: param.ReportingTo,
@@ -1272,6 +1272,36 @@ const Putstate = (param, token) => {
     })
 }
 
+export async function apiGetgetrights(LoginId) {
+    return ApiService.fetchData({
+        url: `/rights/getrights/${LoginId}`,
+        method: 'get',
+    })
+}
+const PostRights = (data, token) => {
+    return new Promise((resolve, reject) => {
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/rights/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
 export {
     PostEntity,
     PutEntity,
@@ -1305,4 +1335,5 @@ export {
     Putplace,
     Putstate,
     Poststate,
+    PostRights,
 }
