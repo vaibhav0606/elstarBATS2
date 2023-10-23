@@ -69,6 +69,10 @@ const Employee = () => {
                 header: 'Employee Name',
                 accessorKey: 'Emp_FirstName',
             },
+            // {
+            //     header: 'Employee Name',
+            //     accessorKey: 'Emp_Image',
+            // },
             {
                 header: 'Employee Code',
                 accessorKey: 'Emp_Code',
@@ -122,6 +126,10 @@ const Employee = () => {
         })()
     }, [])
 
+    const onDrawerClose = async (e, values) => {
+        const resp = await apiGetEmployeemaster(values)
+        setdata(resp.data)
+    }
     function DebouncedInput({
         value: initialValue,
         onChange,
@@ -180,6 +188,7 @@ const Employee = () => {
                     setSorting={setSorting}
                     setGlobalFilter={setGlobalFilter}
                     seteditData={seteditData}
+                    onDrawerClose={onDrawerClose}
                 />
             </Card>
         </>

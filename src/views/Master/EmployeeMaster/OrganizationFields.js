@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { AdaptableCard } from 'components/shared'
-import { Input, FormItem, Select, FormItemcompact } from 'components/ui'
+import {
+    Input,
+    FormItem,
+    Select,
+    FormItemcompact,
+    Switcher,
+} from 'components/ui'
 import CreatableSelect from 'react-select/creatable'
 import { Field } from 'formik'
 import {
@@ -243,6 +249,24 @@ const OrganizationFields = (props) => {
                             )}
                         </Field>
                     </FormItemcompact>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="col-span-1">
+                        <FormItem
+                            asterisk
+                            label="Status"
+                            invalid={errors.IsActive && touched.IsActive}
+                            errorMessage={errors.IsActive}
+                        >
+                            <div>
+                                <Field
+                                    size="sm"
+                                    name="IsActive"
+                                    component={Switcher}
+                                />
+                            </div>
+                        </FormItem>
+                    </div>
                 </div>
             </div>
         </AdaptableCard>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Checkbox, ScrollBar, Table } from 'components/ui'
+import { Alert, Checkbox, ScrollBar, Table } from 'components/ui'
 import {
     flexRender,
     getCoreRowModel,
@@ -13,6 +13,8 @@ import {
 } from '@tanstack/react-table'
 import { Button } from 'components/ui'
 import { useSelector } from 'react-redux'
+import { PostRights, apiGetgetrights } from 'services/MasterService'
+import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 
 const DisplayTableEmpAccess = ({
     data,
@@ -21,12 +23,8 @@ const DisplayTableEmpAccess = ({
     globalFilter,
     setSorting,
     setGlobalFilter,
-    seteditData,
-    openDialog,
-    onDialogOk,
+    onDrawerClose,
 }) => {
-       
-    
     const table = useReactTable({
         data,
         columns,
@@ -42,89 +40,102 @@ const DisplayTableEmpAccess = ({
         getSortedRowModel: getSortedRowModel(),
         getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
-        // getPaginationRowModel: getPaginationRowModel(),
         getFacetedRowModel: getFacetedRowModel(),
         getFacetedUniqueValues: getFacetedUniqueValues(),
         getFacetedMinMaxValues: getFacetedMinMaxValues(),
     })
     const { Tr, Th, Td, THead, TBody, Sorter } = Table
     const [first, setfirst] = useState(1)
-    const [CheckboxValue, setCheckboxValue] = useState([''])
     const { LoginId } = useSelector((state) => state.auth.session)
-    const [datas, setData] = useState([])
-    // const functioation = (val, e) => {
-    //     const { checked, name } = e.target
-    // }
-    const [selectedRows, setSelectedRows] = useState([]);
-
-    // const  functioation = (row, e) => {
-    //     const { checked, name } = e.target;
-    //     row.IsRead = !checked;
-    //     row.IsWrite = !checked; 
-    //     if (name === 'Read' && checked) {
-    //         row.IsRead = checked;
-    //         setSelectedRows([...selectedRows, row]);
-    //     } else if (name === 'Read' && !checked) {
-    //         row.IsRead = !checked;
-    //         setSelectedRows(selectedRows.filter(selectedRow => selectedRow !== row));
-    //     }
-    //     if (name === 'Write' && checked) {
-    //         // Add the row to the selectedRows array
-    //         row.IsWrite = checked;
-    //         setSelectedRows([...selectedRows, row]);
-    //         row.IsWrite = checked;
-    //     } else if (name === 'Write' && !checked) {
-    //         // Remove the row from the selectedRows array
-    //         row.IsWrite = !checked;
-    //         setSelectedRows(selectedRows.filter(selectedRow => selectedRow !== row));
-    //     }
-    
-    //     // Repeat the same logic for the "Write" checkbox if needed.
-    // };
+    const tokenS = useSelector((state) => state.auth.session.token)
+    const [datas, setData] = useState([''])
+    const [message, setMessage] = useTimeOutMessage()
+    const [log, setlog] = useState('')
+    const [resultArray, setResultArray] = useState([])
+    const [selectedRows, setSelectedRows] = useState([])
+    console.log(LoginId)
+    useEffect(() => {
+        ;(async (value) => {
+            const resp = await apiGetgetrights(LoginId)
+            setData(resp.data)
+        })()
+    }, [])
 
     const functioation = (row, e) => {
-        const { checked, name } = e.target;
-    
-        // Find the index of the row in the selectedRows array
-         
-        const rowIndex = selectedRows.findIndex(selectedRow => selectedRow.FormCode === row.FormCode);
-        console.log('rowIndex' + rowIndex)
-        // if (rowIndex === -1) {
-        //     row = { ...row, IsRead: false, IsWrite: false };
-        //     setSelectedRows([...selectedRows, row]);
-            
-        // }
-       
-            if (name === 'Read') {
-                if (checked) {
-                     row.IsRead = true;
-                } else {
-                    row.IsRead = false;
-                }
+        const { checked, name } = e.target
 
-            } 
-              
-            if (name === 'Write') {
-                if (checked) {
-                     row.IsWrite = true;
-                } else {
-                    row.IsWrite = false;
-                }
+        const rowIndex = selectedRows.findIndex(
+            (selectedRow) => selectedRow.FormCode === row.FormCode
+        )
+        console.log('rowIndex' + rowIndex)
+
+        if (name === 'Read') {
+            if (checked) {
+                row.IsRead = true
+            } else {
+                row.IsRead = false
             }
-        
-    
+        }
+
+        if (name === 'Write') {
+            if (checked) {
+                row.IsWrite = true
+            } else {
+                row.IsWrite = false
+            }
+        }
+
         if (rowIndex === -1) {
             // If the row is not in the selectedRows array, add it
-            setSelectedRows([...selectedRows, row]);
+            setSelectedRows([...selectedRows, row])
         } else {
             // Replace the row in the selectedRows array with the updated row
-            selectedRows[rowIndex] = row;
-            setSelectedRows([...selectedRows]);
+            selectedRows[rowIndex] = row
+            setSelectedRows([...selectedRows])
         }
-    };
-    
+
+        const extractedData = selectedRows.map((item) => ({
+            LoginCode: LoginId,
+            FormCode: item.FormCode,
+            CanRead: item.IsRead ? 1 : 0,
+            CanWrite: item.IsWrite ? 1 : 0,
+            SubModuleCode: item.SubModule.SubModuleCode,
+            ModuleCode: item.module.ModuleCode,
+        }))
+
+        setResultArray(extractedData)
+    }
+
+    const onDrawerClose2 = async () => {
+        const resp2 = await apiGetgetrights(LoginId)
+        setData(resp2.data)
+    }
+    const addRights = async (values, token) => {
+        try {
+            const resp = await PostRights(values, token)
+            if (resp.status === 200) {
+                setlog('success')
+                setMessage('Data Inserted Successfully')
+                onDrawerClose2()
+                onDrawerClose(LoginId)
+                return
+            } else if (resp.status === 'Server Error') {
+                setlog('error')
+                setMessage('Server Error')
+                return
+            }
+        } catch (errors) {
+            return {}
+        }
+    }
+
     return (
         <>
+            {message && (
+                <Alert className="mb-4" type={log} showIcon>
+                    {message}
+                </Alert>
+            )}
             <h6 className="mb-4">Login Rights</h6>
             <div className="overflow-y-auto h-96 mb-6">
                 {/* <Button onClick={() => setfirst(1)}>IsActive</Button>
@@ -193,6 +204,21 @@ const DisplayTableEmpAccess = ({
                                     (row) => row.original.IsActive === first
                                 )
                                 .map((row) => {
+                                    const filteredDatas = datas.filter(
+                                        (e) =>
+                                            e.Form.FormCode ===
+                                                row.original.FormCode &&
+                                            e.CanRead === 1
+                                    )
+                                    const filteredData2 = datas.filter(
+                                        (e) =>
+                                            e.Form.FormCode ===
+                                                row.original.FormCode &&
+                                            e.CanWrite === 1
+                                    )
+                                    const isCheck = filteredDatas.length > 0
+                                    const isCheck2 = filteredData2.length > 0
+                                    console.log(filteredDatas)
                                     return (
                                         <Tr key={row.id}>
                                             {row
@@ -210,26 +236,53 @@ const DisplayTableEmpAccess = ({
                                                     )
                                                 })}
                                             <Td>
-                                                <Checkbox
-                                                    name="Read"
-                                                    onClick={(e) =>
-                                                        functioation(
-                                                            row.original,
-                                                            e
-                                                        )
-                                                    }
-                                                     
-                                                />
+                                                {isCheck ? (
+                                                    <Checkbox
+                                                        name="Read"
+                                                        checked={true}
+                                                        onClick={(e) =>
+                                                            functioation(
+                                                                row.original,
+                                                                e
+                                                            )
+                                                        }
+                                                    />
+                                                ) : (
+                                                    <Checkbox
+                                                        name="Read"
+                                                        onClick={(e) =>
+                                                            functioation(
+                                                                row.original,
+                                                                e
+                                                            )
+                                                        }
+                                                    />
+                                                )}
                                                 &nbsp;&nbsp;
-                                                <Checkbox
-                                                    name="Write"
-                                                    onClick={(e) =>
-                                                        functioation(
-                                                            row.original,
-                                                            e
-                                                        )
-                                                    }
-                                                />
+                                                {isCheck2 ? (
+                                                    <Checkbox
+                                                        name="Write"
+                                                        type="checkbox"
+                                                        checked={true}
+                                                        onClick={(e) =>
+                                                            functioation(
+                                                                row.original,
+                                                                e
+                                                            )
+                                                        }
+                                                    />
+                                                ) : (
+                                                    <Checkbox
+                                                        name="Write"
+                                                        type="checkbox"
+                                                        onClick={(e) =>
+                                                            functioation(
+                                                                row.original,
+                                                                e
+                                                            )
+                                                        }
+                                                    />
+                                                )}
                                             </Td>
                                         </Tr>
                                     )
@@ -239,28 +292,22 @@ const DisplayTableEmpAccess = ({
                 </ScrollBar>
             </div>
 
-            <Button className="mr-2 mb-2 " variant="solid" type="button">
+            {/* <Button className="mr-2 mb-2 " variant="solid" type="button">
                 Save
-            </Button>
+            </Button> */}
             <Button
                 className="mr-2 mb-2"
                 variant="solid"
                 type="button"
                 onClick={() => {
                     // Handle the selected rows (rows with "Read" checkbox selected)
-                    console.log('Selected Rows:', selectedRows);
-
+                    console.log('Selected Rows:', selectedRows)
+                    addRights(resultArray, tokenS)
                     // You can perform any other actions with the selected rows here.
                 }}
             >
-                Save!!!!!!
+                Save
             </Button>
-
-
-
-
-
-
 
             {/* <Button
                 className="mr-2 mb-2"
