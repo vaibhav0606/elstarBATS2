@@ -127,7 +127,7 @@ const DepartmentEdit = ({
                                 />
                                 <FormItem
                                     asterisk
-                                    label="Department Name"
+                                    label="Department"
                                     invalid={
                                         errors.DepartmentName &&
                                         touched.DepartmentName
@@ -139,7 +139,7 @@ const DepartmentEdit = ({
                                         type="Department Name"
                                         autoComplete="off"
                                         name="DepartmentName"
-                                        placeholder="Department Name"
+                                        placeholder="Department  "
                                         component={Input}
                                     />
                                 </FormItem>

@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
 import { apiGetEntitymaster } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
-import { HiOutlinePencil, HiPlusCircle, HiOutlinePlus } from 'react-icons/hi'
+import { HiOutlinePencil, HiPlusCircle } from 'react-icons/hi'
 import EntityEdit from './EntityEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
@@ -227,7 +227,7 @@ const Entitymaster = () => {
                                 <Button
                                     size="xs"
                                     variant="twoTone"
-                                    icon={<HiOutlinePlus />}
+                                    icon={<HiPlusCircle />}
                                 ></Button>
                             </center>
                             Entity Master

@@ -1055,6 +1055,13 @@ export async function apiGetChannelmaster(data) {
         data,
     })
 }
+export async function apiGetGenremaster(data) {
+    return ApiService.fetchData({
+        url: '/genremaster/',
+        method: 'get',
+        data,
+    })
+}
 
 const Postchannel = (param, token) => {
     return new Promise((resolve, reject) => {

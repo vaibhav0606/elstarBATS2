@@ -20,10 +20,10 @@ const validationSchema = Yup.object().shape({
         .min(1, 'Too Short!')
         .max(4, 'Too Long!')
         .required('ShortName Required'),
-    TimeZoneCode: Yup.string()
-        .min(1, 'Too Short!')
-        .max(200, 'Too Long!')
-        .required('TimeZone Required'),
+    // TimeZoneCode: Yup.string()
+    //     .min(1, 'Too Short!')
+    //     .max(200, 'Too Long!')
+    //     .required('TimeZone Required'),
     CurrencyCode: Yup.string()
         .min(1, 'Too Short!')
         .max(200, 'Too Long!')
@@ -85,7 +85,7 @@ const LocationEdit = ({
                 initialValues={{
                     LocationCode: editData.LocationCode || '',
                     LocationName: editData.LocationName || '',
-                    TimeZoneCode: editData.TimeZoneCode || '',
+                    //TimeZoneCode: editData.TimeZoneCode || '',
                     ShortName: editData.ShortName || '',
                     CurrencyCode: editData.CurrencyCode || '',
 
@@ -139,7 +139,7 @@ const LocationEdit = ({
 
                                 <FormItem
                                     asterisk
-                                    label="Location Name"
+                                    label="Location"
                                     invalid={
                                         errors.LocationName &&
                                         touched.LocationName
@@ -151,11 +151,11 @@ const LocationEdit = ({
                                         type="LocationName"
                                         autoComplete="off"
                                         name="LocationName"
-                                        placeholder="Location Name"
+                                        placeholder="Location"
                                         component={Input}
                                     />
                                 </FormItem>
-                                <FormItem
+                                 {/* <FormItem
                                     asterisk
                                     label="TimeZone"
                                     invalid={
@@ -172,7 +172,7 @@ const LocationEdit = ({
                                         placeholder="TimeZone"
                                         component={Input}
                                     />
-                                </FormItem>
+                                </FormItem>   */}
 
                                 <FormItem
                                     asterisk
@@ -188,7 +188,7 @@ const LocationEdit = ({
                                         maxlength="4"
                                         autoComplete="off"
                                         name="ShortName"
-                                        placeholder="ShortName"
+                                        placeholder="Short Name"
                                         component={Input}
                                     />
                                 </FormItem>
@@ -229,8 +229,10 @@ const LocationEdit = ({
                                         )}
                                     </Field>
                                 </FormItem>
-
-                                <FormItem
+ 
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            <FormItem
                                     label="Status"
                                     invalid={
                                         errors.IsActive && touched.IsActive

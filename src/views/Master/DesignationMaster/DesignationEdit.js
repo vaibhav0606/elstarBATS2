@@ -122,13 +122,13 @@ const DesignationEdit = ({
                                     type="DesignationCode"
                                     autoComplete="off"
                                     name="DesignationCode"
-                                    placeholder="Designation Name"
+                                    placeholder="Designation"
                                     component={Input}
                                     hidden
                                 />
                                 <FormItem
                                     asterisk
-                                    label="Designation Name"
+                                    label="Designation"
                                     invalid={
                                         errors.DesignationName &&
                                         touched.DesignationName

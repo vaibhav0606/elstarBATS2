@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
-import { apiGetChannelmaster, apiGetStateMaster } from 'services/MasterService'
+import { apiGetChannelmaster, apiGetStateMaster,apiGetGenremaster } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
 import { HiOutlinePencil, HiPlusCircle } from 'react-icons/hi'
 import ChannelEdit from './ChannelEdit'
@@ -49,6 +49,8 @@ const Channelmaster = () => {
     const [sorting, setSorting] = useState([])
     const [data, setdata] = useState([''])
     const [state, setstate] = useState([''])
+    const [genre, setgenre] = useState([''])
+     
 
     const [message, setMessage] = useTimeOutMessage()
     const [log, setlog] = useState('')
@@ -131,6 +133,15 @@ const Channelmaster = () => {
                 label: option.StateName,
             }))
             setstate(formattedOptions)
+        })()
+        ;(async (values) => {
+            const Genre = await apiGetGenremaster(values)
+
+            const formattedOptions = Genre.data.map((option) => ({
+                value: option.GenreCode,
+                label: option.GenreName,
+            }))
+            setgenre(formattedOptions)
         })()
     }, [])
 
@@ -253,6 +264,7 @@ const Channelmaster = () => {
                     setMessage={setMessage}
                     setlog={setlog}
                     State={state}
+                    Genre={genre}
                 />
             </Drawer>
         </>

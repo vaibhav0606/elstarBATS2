@@ -67,7 +67,7 @@ const Placemaster = () => {
     const columns = useMemo(
         () => [
             {
-                header: 'PlaceName',
+                header: 'Place',
                 accessorKey: 'PlaceName',
                 cell: (props) => {
                     const row = props.row.original
@@ -96,7 +96,7 @@ const Placemaster = () => {
             //     },
             // },
             {
-                header: 'State Name',
+                header: 'State',
                 accessorKey: 'State',
                 cell: (props) => {
                     const { State } = props.row.original
@@ -110,7 +110,7 @@ const Placemaster = () => {
                 },
             },
             {
-                header: 'Country Name',
+                header: 'Country',
                 accessorKey: 'Country',
                 cell: (props) => {
                     const { Country } = props.row.original
