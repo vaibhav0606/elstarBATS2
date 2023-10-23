@@ -63,7 +63,7 @@ const Locationmaster = () => {
     const columns = useMemo(
         () => [
             {
-                header: 'Location Name',
+                header: 'Location',
                 accessorKey: 'LocationName',
                 cell: (props) => {
                     const row = props.row.original
@@ -81,10 +81,10 @@ const Locationmaster = () => {
                 header: 'Short Name',
                 accessorKey: 'ShortName',
             },
-            {
-                header: 'TimeZone Code',
-                accessorKey: 'TimeZoneCode',
-            },
+            //{
+                //header: 'TimeZone Code',
+              //  accessorKey: 'TimeZoneCode',
+            //},
             // {
             //     header: 'Status',
             //     id: 'action',

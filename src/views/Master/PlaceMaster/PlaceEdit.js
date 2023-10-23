@@ -141,7 +141,7 @@ const PlaceEdit = ({
                                 />
                                 <FormItem
                                     asterisk
-                                    label="Place Name"
+                                    label="Place"
                                     invalid={
                                         errors.PlaceName && touched.PlaceName
                                     }
@@ -247,7 +247,7 @@ const PlaceEdit = ({
 
                                 <FormItem
                                     asterisk
-                                    label="CountryName"
+                                    label="Country"
                                     invalid={
                                         errors.CountryCode &&
                                         touched.CountryCode

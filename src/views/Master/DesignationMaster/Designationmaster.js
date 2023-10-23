@@ -63,7 +63,7 @@ const Designationmaster = () => {
     const columns = useMemo(
         () => [
             {
-                header: 'Designation Name',
+                header: 'Designation',
                 accessorKey: 'DesignationName',
                 cell: (props) => {
                     const row = props.row.original

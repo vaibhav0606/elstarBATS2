@@ -21,7 +21,7 @@ const enity = [
     {
         category: 'text',
         asterisk: true,
-        lable: 'Address',
+        lable: 'Parmanet Address',
         placeholder: 'Parmanet Address',
         name: 'PermAddress',
         type: 'text',
@@ -30,8 +30,8 @@ const enity = [
     {
         category: 'text',
         asterisk: true,
-        lable: 'Address',
-        placeholder: 'Corp Address',
+        lable: 'Corporate Address',
+        placeholder: 'Corporate Address',
         name: 'CorpAddress',
         type: 'text',
         width: '100%',

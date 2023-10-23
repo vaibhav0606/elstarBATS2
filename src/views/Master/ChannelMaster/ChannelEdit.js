@@ -20,10 +20,10 @@ const validationSchema = Yup.object().shape({
         .min(1, 'Too Short!')
         .max(100, 'Too Long!')
         .required('Short Name Required'),
-    ChannelGenre: Yup.string()
-        .min(3, 'Too Short!')
-        .max(100, 'Too Long!')
-        .required('ChannelGenre Required'),
+    // ChannelGenre: Yup.string()
+    //     .min(3, 'Too Short!')
+    //     .max(100, 'Too Long!')
+    //     .required('ChannelGenre Required'),
     ChannelContentType: Yup.string()
         .min(1, 'Too Short!')
         .max(50, 'Too Long!')
@@ -46,6 +46,7 @@ const ChannelEdit = ({
     setMessage,
     setlog,
     State,
+    Genre
 }) => {
     const token = useSelector((state) => state.auth.session.token)
 
@@ -90,7 +91,7 @@ const ChannelEdit = ({
                     ChannelCode: editData.ChannelCode,
                     ChannelName: editData.ChannelName,
                     ShortName: editData.ShortName,
-                    ChannelGenre: editData.ChannelGenre,
+                    ChannelGenre: editData.GenreMaster?.GenreCode,
                     ChannelContentType: editData.ChannelContentType,
                     SACCode: editData.SACCode,
                     GSTN_id: editData.GSTN_id,
@@ -101,6 +102,7 @@ const ChannelEdit = ({
                 onSubmit={(values, { resetForm, setSubmitting }) => {
                     setTimeout(() => {
                         if (!editData.ChannelCode) {
+                            
                             new Promise((resolve, reject) => {
                                 AddChannel(values, token)
                                     .then((response) => {
@@ -179,7 +181,7 @@ const ChannelEdit = ({
                                         component={Input}
                                     />
                                 </FormItem>
-                                <FormItem
+                                {/* <FormItem
                                     asterisk
                                     label="Channel Genre"
                                     invalid={
@@ -197,6 +199,40 @@ const ChannelEdit = ({
                                         placeholder="ChannelGenre Name"
                                         component={Input}
                                     />
+                                </FormItem> */}
+                                <FormItem
+                                    asterisk
+                                    label="Genre"
+                                    invalid={errors.GenreCode && touched.GenreCode}
+                                    errorMessage={errors.GenreCode}
+                                    style={{ width: '250px' }}
+                                >
+                                    <Field
+                                        size="sm"
+                                        name="ChannelGenre"
+                                        style={{ width: '250px' }}
+                                    >
+                                        {({ field, form }) => (
+                                            <Select
+                                                style={{ width: '250px' }}
+                                                field={field}
+                                                form={form}
+                                                className="mb-4 w-50"
+                                                options={Genre}
+                                                value={Genre.filter(
+                                                    (option) =>
+                                                        option.value ===
+                                                        values.ChannelGenre
+                                                )}
+                                                onChange={(option) =>
+                                                    form.setFieldValue(
+                                                        field.name,
+                                                        option?.value
+                                                    )
+                                                }
+                                            />
+                                        )}
+                                    </Field>
                                 </FormItem>
                                 <FormItem
                                     asterisk

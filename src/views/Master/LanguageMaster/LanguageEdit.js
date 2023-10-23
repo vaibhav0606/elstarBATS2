@@ -133,7 +133,7 @@ const LanguageEdit = ({
                                 />
                                 <FormItem
                                     asterisk
-                                    label="Language Name"
+                                    label="Language"
                                     invalid={
                                         errors.LanguageName &&
                                         touched.LanguageName
@@ -146,7 +146,7 @@ const LanguageEdit = ({
                                         maxlength="20"
                                         autoComplete="off"
                                         name="LanguageName"
-                                        placeholder="Language Name"
+                                        placeholder="Language"
                                         component={Input}
                                     />
                                 </FormItem>

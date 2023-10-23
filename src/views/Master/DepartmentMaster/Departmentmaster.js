@@ -63,7 +63,7 @@ const Departmentmaster = () => {
     const columns = useMemo(
         () => [
             {
-                header: 'Department Name',
+                header: 'Department',
                 accessorKey: 'DepartmentName',
                 cell: (props) => {
                     const row = props.row.original
