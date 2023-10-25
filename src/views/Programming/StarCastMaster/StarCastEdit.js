@@ -10,6 +10,7 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { Poststarcast, Putstarcast } from 'services/ProgrammingService'
 import { useSelector } from 'react-redux'
+import React, { forwardRef } from 'react'
 
 const validationSchema = Yup.object().shape({
     StarCastName: Yup.string()
@@ -39,14 +40,23 @@ const options2 = [
     { value: 'Female', label: 'Female' },
     { value: 'Other', label: 'Other' },
 ]
-const StarCastEdit = ({
-    onDrawerClose,
-    editData,
-    setMessage,
-    setlog,
-    Country,
-    StarCastType,
-}) => {
+// const StarCastEdit = ({
+//     onDrawerClose,
+//     editData,
+//     setMessage,
+//     setlog,
+//     Country,
+//     StarCastType,
+// }) => {
+const StarCastEdit = forwardRef((props, ref) => {
+    const {
+        onDrawerClose,
+        editData,
+        setMessage,
+        setlog,
+        Country,
+        StarCastType,
+    } = props
     const token = useSelector((state) => state.auth.session.token)
     //console.log(currency)
 
@@ -87,6 +97,7 @@ const StarCastEdit = ({
     return (
         <div>
             <Formik
+                innerRef={ref}
                 initialValues={{
                     StarCastCode: editData.StarCastCode || '',
                     StarCastName: editData.StarCastName || '',
@@ -322,17 +333,17 @@ const StarCastEdit = ({
                                     </div>
                                 </FormItem>
                             </div>
-                            <FormItem>
+                            {/* <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit
                                 </Button>
-                            </FormItem>
+                            </FormItem> */}
                         </FormContainer>
                     </Form>
                 )}
             </Formik>
         </div>
     )
-}
+})
 
 export default StarCastEdit

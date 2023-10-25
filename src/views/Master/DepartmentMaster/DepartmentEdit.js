@@ -10,6 +10,7 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { Postdepartment, Putdepartment } from 'services/MasterService'
 import { useSelector } from 'react-redux'
+import React, { forwardRef } from 'react'
 
 const validationSchema = Yup.object().shape({
     DepartmentName: Yup.string()
@@ -27,13 +28,15 @@ const options = [
     { value: 'foo', label: 'Foo' },
     { value: 'bar', label: 'Bar' },
 ]
-const DepartmentEdit = ({
-    onDrawerClose,
-    editData,
-    setMessage,
-    setlog,
-    currency,
-}) => {
+// const DepartmentEdit = ({
+//     onDrawerClose,
+//     editData,
+//     setMessage,
+//     setlog,
+//     currency,
+// }) => {
+const DepartmentEdit = forwardRef((props, ref) => {
+    const { onDrawerClose, editData, setMessage, setlog, currency } = props
     const token = useSelector((state) => state.auth.session.token)
     //console.log(currency)
 
@@ -74,6 +77,7 @@ const DepartmentEdit = ({
     return (
         <div>
             <Formik
+                innerRef={ref}
                 initialValues={{
                     DepartmentCode: editData.DepartmentCode || '',
                     DepartmentName: editData.DepartmentName || '',
@@ -180,17 +184,17 @@ const DepartmentEdit = ({
                                     </div>
                                 </FormItem>
                             </div>
-                            <FormItem>
+                            {/* <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit
                                 </Button>
-                            </FormItem>
+                            </FormItem> */}
                         </FormContainer>
                     </Form>
                 )}
             </Formik>
         </div>
     )
-}
+})
 
 export default DepartmentEdit

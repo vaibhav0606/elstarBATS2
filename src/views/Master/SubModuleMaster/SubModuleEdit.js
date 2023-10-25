@@ -10,6 +10,7 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { PostSubmodule, PutSubmodule } from 'services/MasterService'
 import { useSelector } from 'react-redux'
+import React, { forwardRef } from 'react'
 
 const validationSchema = Yup.object().shape({
     SubModuleName: Yup.string()
@@ -33,13 +34,15 @@ const options = [
     { value: 'foo', label: 'Foo' },
     { value: 'bar', label: 'Bar' },
 ]
-const SubModuleEdit = ({
-    onDrawerClose,
-    editData,
-    setMessage,
-    setlog,
-    module,
-}) => {
+// const SubModuleEdit = ({
+//     onDrawerClose,
+//     editData,
+//     setMessage,
+//     setlog,
+//     module,
+// }) => {
+const SubModuleEdit = forwardRef((props, ref) => {
+    const { onDrawerClose, editData, setMessage, setlog, module } = props
     const token = useSelector((state) => state.auth.session.token)
     //console.log(currency)
 
@@ -80,6 +83,7 @@ const SubModuleEdit = ({
     return (
         <div>
             <Formik
+                innerRef={ref}
                 initialValues={{
                     SubModuleCode: editData.SubModuleCode || '',
                     SubModuleName: editData.SubModuleName || '',
@@ -236,17 +240,17 @@ const SubModuleEdit = ({
                                     </div>
                                 </FormItem>
                             </div>
-                            <FormItem>
+                            {/* <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit
                                 </Button>
-                            </FormItem>
+                            </FormItem> */}
                         </FormContainer>
                     </Form>
                 )}
             </Formik>
         </div>
     )
-}
+})
 
 export default SubModuleEdit

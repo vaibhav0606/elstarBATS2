@@ -10,6 +10,7 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { PostSupplier, PutSupplier } from 'services/ProgrammingService'
 import { useSelector } from 'react-redux'
+import React, { forwardRef } from 'react'
 
 const validationSchema = Yup.object().shape({
     SupplierName: Yup.string()
@@ -75,16 +76,27 @@ const validationSchema = Yup.object().shape({
     rememberMe: Yup.bool(),
 })
 
-const SupplierEdit = ({
-    onDrawerClose,
-    editData,
-    setMessage,
-    setlog,
-    State,
-    Zone,
-    Country,
-    place,
-}) => {
+// const SupplierEdit = ({
+//     onDrawerClose,
+//     editData,
+//     setMessage,
+//     setlog,
+//     State,
+//     Zone,
+//     Country,
+//     place,
+//}) => {
+const SupplierEdit = forwardRef((props, ref) => {
+    const {
+        onDrawerClose,
+        editData,
+        setMessage,
+        setlog,
+        State,
+        Zone,
+        Country,
+        place,
+    } = props
     const token = useSelector((state) => state.auth.session.token)
 
     const AddSupplier = async (values, token) => {
@@ -124,6 +136,7 @@ const SupplierEdit = ({
     return (
         <div>
             <Formik
+                innerRef={ref}
                 initialValues={{
                     SupplierCode: editData.SupplierCode || '',
                     SupplierName: editData.SupplierName || '',
@@ -502,17 +515,17 @@ const SupplierEdit = ({
                                     </div>
                                 </FormItem>
                             </div>
-                            <FormItem>
+                            {/* <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit
                                 </Button>
-                            </FormItem>
+                            </FormItem> */}
                         </FormContainer>
                     </Form>
                 )}
             </Formik>
         </div>
     )
-}
+})
 
 export default SupplierEdit

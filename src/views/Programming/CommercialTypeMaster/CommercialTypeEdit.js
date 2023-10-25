@@ -6,6 +6,7 @@ import {
     Putcommercialtype,
 } from 'services/ProgrammingService'
 import { useSelector } from 'react-redux'
+import React, { forwardRef } from 'react'
 
 const validationSchema = Yup.object().shape({
     CommercialTypeName: Yup.string()
@@ -15,12 +16,15 @@ const validationSchema = Yup.object().shape({
     IsActive: Yup.string().required('IsActives Required'),
     rememberMe: Yup.bool(),
 })
-const CommercialTypeEdit = ({
-    onDrawerClose,
-    editData,
-    setMessage,
-    setlog,
-}) => {
+// const CommercialTypeEdit = ({
+//     onDrawerClose,
+//     editData,
+//     setMessage,
+//     setlog,
+// }) => {
+const CommercialTypeEdit = forwardRef((props, ref) => {
+    const { onDrawerClose, editData, setMessage, setlog } = props
+
     const token = useSelector((state) => state.auth.session.token)
     //console.log(currency)
 
@@ -61,6 +65,7 @@ const CommercialTypeEdit = ({
     return (
         <div>
             <Formik
+                innerRef={ref}
                 initialValues={{
                     CommercialTypeCode: editData.CommercialTypeCode || '',
                     CommercialTypeName: editData.CommercialTypeName || '',
@@ -156,17 +161,17 @@ const CommercialTypeEdit = ({
                                 </FormItem>
                             </div>
 
-                            <FormItem>
+                            {/* <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit
                                 </Button>
-                            </FormItem>
+                            </FormItem> */}
                         </FormContainer>
                     </Form>
                 )}
             </Formik>
         </div>
     )
-}
+})
 
 export default CommercialTypeEdit

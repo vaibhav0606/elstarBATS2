@@ -3,6 +3,7 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { Postzone, Putzone } from 'services/MasterService'
 import { useSelector } from 'react-redux'
+import React, { forwardRef } from 'react'
 
 const validationSchema = Yup.object().shape({
     ZoneName: Yup.string()
@@ -20,13 +21,15 @@ const options = [
     { value: 'foo', label: 'Foo' },
     { value: 'bar', label: 'Bar' },
 ]
-const ZoneEdit = ({
-    onDrawerClose,
-    editData,
-    setMessage,
-    setlog,
-    currency,
-}) => {
+// const ZoneEdit = ({
+//     onDrawerClose,
+//     editData,
+//     setMessage,
+//     setlog,
+//     currency,
+// }) => {
+const ZoneEdit = forwardRef((props, ref) => {
+    const { onDrawerClose, editData, setMessage, setlog, currency } = props
     const token = useSelector((state) => state.auth.session.token)
     //console.log(currency)
 
@@ -67,6 +70,7 @@ const ZoneEdit = ({
     return (
         <div>
             <Formik
+                innerRef={ref}
                 initialValues={{
                     ZoneCode: editData.ZoneCode || '',
                     ZoneName: editData.ZoneName || '',
@@ -177,17 +181,17 @@ const ZoneEdit = ({
                                     </div>
                                 </FormItem>
                             </div>
-                            <FormItem>
+                            {/* <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit
                                 </Button>
-                            </FormItem>
+                            </FormItem> */}
                         </FormContainer>
                     </Form>
                 )}
             </Formik>
         </div>
     )
-}
+})
 
 export default ZoneEdit

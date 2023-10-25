@@ -3,6 +3,7 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { PosttimeZone, PuttimeZone } from 'services/MasterService'
 import { useSelector } from 'react-redux'
+import React, { forwardRef } from 'react'
 
 const validationSchema = Yup.object().shape({
     TimeZoneName: Yup.string()
@@ -20,13 +21,16 @@ const options = [
     { value: 'foo', label: 'Foo' },
     { value: 'bar', label: 'Bar' },
 ]
-const TimeZoneEdit = ({
-    onDrawerClose,
-    editData,
-    setMessage,
-    setlog,
-    currency,
-}) => {
+// const TimeZoneEdit = ({
+//     onDrawerClose,
+//     editData,
+//     setMessage,
+//     setlog,
+//     currency,
+// }) => {
+const TimeZoneEdit = forwardRef((props, ref) => {
+    const { onDrawerClose, editData, setMessage, setlog, Module, SubModule } =
+        props
     const token = useSelector((state) => state.auth.session.token)
     //console.log(currency)
 
@@ -67,6 +71,7 @@ const TimeZoneEdit = ({
     return (
         <div>
             <Formik
+                innerRef={ref}
                 initialValues={{
                     TimeZoneCode: editData.TimeZoneCode || '',
                     TimeZoneName: editData.TimeZoneName || '',
@@ -177,17 +182,17 @@ const TimeZoneEdit = ({
                                     </div>
                                 </FormItem>
                             </div>
-                            <FormItem>
+                            {/* <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit
                                 </Button>
-                            </FormItem>
+                            </FormItem> */}
                         </FormContainer>
                     </Form>
                 )}
             </Formik>
         </div>
     )
-}
+})
 
 export default TimeZoneEdit
