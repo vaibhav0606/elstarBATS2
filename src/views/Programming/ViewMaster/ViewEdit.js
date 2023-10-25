@@ -3,6 +3,7 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { Postview, Putview } from 'services/ProgrammingService'
 import { useSelector } from 'react-redux'
+import React, { forwardRef } from 'react'
 
 const validationSchema = Yup.object().shape({
     ViewName: Yup.string()
@@ -12,7 +13,9 @@ const validationSchema = Yup.object().shape({
     IsActive: Yup.string().required('IsActives Required'),
     rememberMe: Yup.bool(),
 })
-const ViewEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
+// const ViewEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
+const ViewEdit = forwardRef((props, ref) => {
+    const { onDrawerClose, editData, setMessage, setlog } = props
     const token = useSelector((state) => state.auth.session.token)
     //console.log(currency)
 
@@ -53,6 +56,7 @@ const ViewEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
     return (
         <div>
             <Formik
+                innerRef={ref}
                 initialValues={{
                     ViewCode: editData.ViewCode || '',
                     ViewName: editData.ViewName || '',
@@ -147,18 +151,18 @@ const ViewEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                     </div>
                                 </FormItem>
                             </div>
-
+                            {/* 
                             <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit
                                 </Button>
-                            </FormItem>
+                            </FormItem> */}
                         </FormContainer>
                     </Form>
                 )}
             </Formik>
         </div>
     )
-}
+})
 
 export default ViewEdit

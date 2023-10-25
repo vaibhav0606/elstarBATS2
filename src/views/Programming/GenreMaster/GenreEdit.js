@@ -3,6 +3,7 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { Postgenre, Putgenre } from 'services/ProgrammingService'
 import { useSelector } from 'react-redux'
+import React, { forwardRef } from 'react'
 
 const validationSchema = Yup.object().shape({
     GenreName: Yup.string()
@@ -12,7 +13,9 @@ const validationSchema = Yup.object().shape({
     IsActive: Yup.string().required('IsActives Required'),
     rememberMe: Yup.bool(),
 })
-const GenreEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
+//const GenreEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
+const GenreEdit = forwardRef((props, ref) => {
+    const { onDrawerClose, editData, setMessage, setlog } = props
     const token = useSelector((state) => state.auth.session.token)
     //console.log(currency)
 
@@ -53,6 +56,7 @@ const GenreEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
     return (
         <div>
             <Formik
+                innerRef={ref}
                 initialValues={{
                     GenreCode: editData.GenreCode || '',
                     GenreName: editData.GenreName || '',
@@ -148,17 +152,17 @@ const GenreEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                 </FormItem>
                             </div>
 
-                            <FormItem>
+                            {/* <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit
                                 </Button>
-                            </FormItem>
+                            </FormItem> */}
                         </FormContainer>
                     </Form>
                 )}
             </Formik>
         </div>
     )
-}
+})
 
 export default GenreEdit

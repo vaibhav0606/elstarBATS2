@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
 import { apiGetawardmaster } from 'services/ProgrammingService'
 import { Button, Card } from 'components/ui'
@@ -11,6 +11,7 @@ import AwardEdit from './AwardEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
 import HeaderExtra from 'views/Controls/HeaderExtra'
+import DrawerFooter from 'views/Controls/DrawerFooter'
 
 const headerExtraContent = (
     openDrawer,
@@ -55,8 +56,11 @@ const Awardmaster = () => {
     //const [currency, setCurrency] = useState({ value: '', label: '' })
     const [message, setMessage] = useTimeOutMessage()
     const [log, setlog] = useState('')
+    const formikRef = useRef()
+    const formSubmit = () => {
+        formikRef.current?.submitForm()
+    }
 
-  
     const statusColor = {
         1: 'bg-emerald-500',
         0: 'bg-red-500',
@@ -67,16 +71,16 @@ const Awardmaster = () => {
                 header: 'Award Name',
                 accessorKey: 'AwardName',
                 cell: (props) => {
-                            const row = props.row.original
-                            return (
-                                <div className="flex items-center">
-                                    <Badge className={statusColor[row.IsActive]} />
-                                    <span className="ml-2 rtl:mr-2 capitalize">
-                                        {row.AwardName}
-                                    </span>
-                                </div>
-                            )
-                        },
+                    const row = props.row.original
+                    return (
+                        <div className="flex items-center">
+                            <Badge className={statusColor[row.IsActive]} />
+                            <span className="ml-2 rtl:mr-2 capitalize">
+                                {row.AwardName}
+                            </span>
+                        </div>
+                    )
+                },
             },
             {
                 header: 'Award Date ',
@@ -211,21 +215,25 @@ const Awardmaster = () => {
                             </center>
                             Award Master
                         </p>
-                        
                     )
-                    
                 }
                 isOpen={isOpen}
                 onClose={onDrawerClose}
                 onRequestClose={onDrawerClose}
                 width={600}
+                footer={
+                    <DrawerFooter
+                        onCancel={onDrawerClose}
+                        onSaveClick={formSubmit}
+                    />
+                }
             >
                 <AwardEdit
+                    ref={formikRef}
                     onDrawerClose={onDrawerClose}
                     editData={editData}
                     setMessage={setMessage}
                     setlog={setlog}
-                     
                 />
             </Drawer>
         </>

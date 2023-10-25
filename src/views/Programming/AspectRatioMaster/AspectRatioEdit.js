@@ -3,6 +3,7 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { Postaspectratio, Putaspectratio } from 'services/ProgrammingService'
 import { useSelector } from 'react-redux'
+import React, { forwardRef } from 'react'
 
 const validationSchema = Yup.object().shape({
     AspectRatio: Yup.string()
@@ -12,7 +13,14 @@ const validationSchema = Yup.object().shape({
     IsActive: Yup.string().required('IsActives Required'),
     rememberMe: Yup.bool(),
 })
-const AspectRatioEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
+// const AspectRatioEdit = ({
+//     onDrawerClose,
+//      editData,
+//      setMessage,
+//       setlog }) => {
+const AspectRatioEdit = forwardRef((props, ref) => {
+    const { onDrawerClose, editData, setMessage, setlog } = props
+
     const token = useSelector((state) => state.auth.session.token)
     //console.log(currency)
 
@@ -53,6 +61,7 @@ const AspectRatioEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
     return (
         <div>
             <Formik
+                innerRef={ref}
                 initialValues={{
                     AspectRatioCode: editData.AspectRatioCode || '',
                     AspectRatio: editData.AspectRatio || '',
@@ -148,17 +157,17 @@ const AspectRatioEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                 </FormItem>
                             </div>
 
-                            <FormItem>
+                            {/* <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit
                                 </Button>
-                            </FormItem>
+                            </FormItem> */}
                         </FormContainer>
                     </Form>
                 )}
             </Formik>
         </div>
     )
-}
+})
 
 export default AspectRatioEdit

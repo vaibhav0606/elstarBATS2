@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
 import {
     apiGetDepartmentmaster,
@@ -10,6 +10,7 @@ import DepartmentEdit from './DepartmentEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
 import HeaderExtra from 'views/Controls/HeaderExtra'
+import DrawerFooter from 'views/Controls/DrawerFooter'
 
 const headerExtraContent = (
     openDrawer,
@@ -54,6 +55,10 @@ const Departmentmaster = () => {
     const [currency, setCurrency] = useState({ value: '', label: '' })
     const [message, setMessage] = useTimeOutMessage()
     const [log, setlog] = useState('')
+    const formikRef = useRef()
+    const formSubmit = () => {
+        formikRef.current?.submitForm()
+    }
 
     const statusColor = {
         1: 'bg-emerald-500',
@@ -68,11 +73,13 @@ const Departmentmaster = () => {
                 cell: (props) => {
                     const row = props.row.original
                     return (
-                        <div className="flex items-center">
-                            <Badge className={statusColor[row.IsActive]} />
-                            <span className="ml-2 rtl:mr-2 capitalize">
-                                {row.DepartmentName}
-                            </span>
+                        <div>
+                            <div className="flex items-center">
+                                <Badge className={statusColor[row.IsActive]} />
+                                <span className="ml-2 rtl:mr-2 capitalize">
+                                    {row.DepartmentName}
+                                </span>
+                            </div>
                         </div>
                     )
                 },
@@ -222,8 +229,15 @@ const Departmentmaster = () => {
                         ? window.screen.width / 3
                         : window.screen.width / 1.5
                 }
+                footer={
+                    <DrawerFooter
+                        onCancel={onDrawerClose}
+                        onSaveClick={formSubmit}
+                    />
+                }
             >
                 <DepartmentEdit
+                    ref={formikRef}
                     onDrawerClose={onDrawerClose}
                     editData={editData}
                     setMessage={setMessage}

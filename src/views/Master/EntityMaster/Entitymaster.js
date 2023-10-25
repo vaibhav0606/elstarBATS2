@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
 import { apiGetEntitymaster } from 'services/MasterService'
 import { Button, Card } from 'components/ui'
@@ -7,6 +7,7 @@ import EntityEdit from './EntityEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
 import HeaderExtra from 'views/Controls/HeaderExtra'
+import DrawerFooter from 'views/Controls/DrawerFooter'
 
 const headerExtraContent = (
     openDrawer,
@@ -74,6 +75,10 @@ const Entitymaster = () => {
     const [data, setdata] = useState([''])
     const [message, setMessage] = useTimeOutMessage()
     const [log, setlog] = useState('')
+    const formikRef = useRef()
+    const formSubmit = () => {
+        formikRef.current?.submitForm()
+    }
     console.log(window.screen.width)
     const statusColor = {
         1: 'bg-emerald-500',
@@ -242,8 +247,15 @@ const Entitymaster = () => {
                         ? window.screen.width / 3
                         : window.screen.width / 1.5
                 }
+                footer={
+                    <DrawerFooter
+                        onCancel={onDrawerClose}
+                        onSaveClick={formSubmit}
+                    />
+                }
             >
                 <EntityEdit
+                    ref={formikRef}
                     onDrawerClose={onDrawerClose}
                     editData={editData}
                     setMessage={setMessage}

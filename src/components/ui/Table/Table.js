@@ -35,8 +35,9 @@ Table.propTypes = {
     hoverable: PropTypes.bool,
     compact: PropTypes.bool,
     asElement: PropTypes.string,
-    borderlessRow: true,
+    borderlessRow: PropTypes.func,
 }
+ 
 
 Table.defaultProps = {
     hoverable: true,
@@ -44,5 +45,6 @@ Table.defaultProps = {
     asElement: 'table',
     borderlessRow: true,
 }
+ 
 
 export default Table

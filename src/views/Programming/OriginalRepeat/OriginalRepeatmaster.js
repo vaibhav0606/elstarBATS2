@@ -1,5 +1,5 @@
-import { useState, useEffect, useMemo } from 'react'
-import { Badge, Drawer, Input, Alert,Tag } from 'components/ui'
+import { useState, useEffect, useMemo, useRef } from 'react'
+import { Badge, Drawer, Input, Alert, Tag } from 'components/ui'
 import { apiGetfpcorgrepmaster } from 'services/ProgrammingService'
 import { Button, Card } from 'components/ui'
 import {
@@ -11,6 +11,7 @@ import OriginalRepeatEdit from './OriginalRepeatEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
 import HeaderExtra from 'views/Controls/HeaderExtra'
+import DrawerFooter from 'views/Controls/DrawerFooter'
 
 const headerExtraContent = (
     openDrawer,
@@ -55,6 +56,10 @@ const Fpcorgrep = () => {
     const [currency, setCurrency] = useState({ value: '', label: '' })
     const [message, setMessage] = useTimeOutMessage()
     const [log, setlog] = useState('')
+    const formikRef = useRef()
+    const formSubmit = () => {
+        formikRef.current?.submitForm()
+    }
 
     const statusColor = {
         1: 'bg-emerald-500',
@@ -71,8 +76,8 @@ const Fpcorgrep = () => {
                     return (
                         <div className="flex items-center">
                             <Badge className={statusColor[row.IsActive]} />
-                            <span   className="ml-2 rtl:mr-2 capitalize">
-                                { row.OriginalRepeatName }
+                            <span className="ml-2 rtl:mr-2 capitalize">
+                                {row.OriginalRepeatName}
                             </span>
                         </div>
                     )
@@ -97,27 +102,32 @@ const Fpcorgrep = () => {
                 //     )
                 // },
                 cell: (props) => {
-                     console.log(props);
-                     const row = props.row.original
-                //     return <Tag 
-                //     className="  rounded border-0"
-                     
-                //     > 
-                //     <span style={{backgroundColor: row.NewColourCode}}></span>
-                //      {row.OriginalRepeatName}
-                // </Tag> 
-                return  <div style={{
-                    height: '20px',
-                    width: '100%',
-                    backgroundColor: row.NewColourCode,
-                  }}>  </div>
+                    console.log(props)
+                    const row = props.row.original
+                    //     return <Tag
+                    //     className="  rounded border-0"
+
+                    //     >
+                    //     <span style={{backgroundColor: row.NewColourCode}}></span>
+                    //      {row.OriginalRepeatName}
+                    // </Tag>
+                    return (
+                        <div
+                            style={{
+                                height: '20px',
+                                width: '100%',
+                                backgroundColor: row.NewColourCode,
+                            }}
+                        >
+                            {' '}
+                        </div>
+                    )
                 },
-            //},
-            // {
-            //     header: 'Status',
-            //     id: 'action',
-              
-             },
+                //},
+                // {
+                //     header: 'Status',
+                //     id: 'action',
+            },
         ],
         []
     )
@@ -234,8 +244,15 @@ const Fpcorgrep = () => {
                 onClose={onDrawerClose}
                 onRequestClose={onDrawerClose}
                 width={600}
+                footer={
+                    <DrawerFooter
+                        onCancel={onDrawerClose}
+                        onSaveClick={formSubmit}
+                    />
+                }
             >
                 <OriginalRepeatEdit
+                    ref={formikRef}
                     onDrawerClose={onDrawerClose}
                     editData={editData}
                     setMessage={setMessage}

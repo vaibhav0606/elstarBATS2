@@ -10,6 +10,7 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { Postcurrency, Putcurrency } from 'services/MasterService'
 import { useSelector } from 'react-redux'
+import React, { forwardRef } from 'react'
 
 const validationSchema = Yup.object().shape({
     CurrencyName: Yup.string()
@@ -30,13 +31,15 @@ const options = [
     { value: 'foo', label: 'Foo' },
     { value: 'bar', label: 'Bar' },
 ]
-const CurrencyEdit = ({
-    onDrawerClose,
-    editData,
-    setMessage,
-    setlog,
-    currency,
-}) => {
+// const CurrencyEdit = ({
+//     onDrawerClose,
+//     editData,
+//     setMessage,
+//     setlog,
+//     currency,
+// }) => {
+const CurrencyEdit = forwardRef((props, ref) => {
+    const { onDrawerClose, editData, setMessage, setlog, currency } = props
     const token = useSelector((state) => state.auth.session.token)
     //console.log(currency)
 
@@ -77,6 +80,7 @@ const CurrencyEdit = ({
     return (
         <div>
             <Formik
+                innerRef={ref}
                 initialValues={{
                     CurrencyCode: editData.CurrencyCode || '',
                     CurrencyName: editData.CurrencyName || '',
@@ -185,17 +189,17 @@ const CurrencyEdit = ({
                                     />
                                 </FormItem>
                             </div>
-                            <FormItem>
+                            {/* <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit
                                 </Button>
-                            </FormItem>
+                            </FormItem> */}
                         </FormContainer>
                     </Form>
                 )}
             </Formik>
         </div>
     )
-}
+})
 
 export default CurrencyEdit

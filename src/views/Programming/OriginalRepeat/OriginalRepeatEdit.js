@@ -3,20 +3,23 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { Postfpcorgrep, Putfpcorgrep } from 'services/ProgrammingService'
 import { useSelector } from 'react-redux'
+import React, { forwardRef } from 'react'
 
 const validationSchema = Yup.object().shape({
     OriginalRepeatName: Yup.string()
         .min(3, 'Too Short!')
         .max(50, 'Too Long!')
         .required('OriginalRepeatName Required'),
-        ShortName: Yup.string()
+    ShortName: Yup.string()
         .min(3, 'Too Short!')
         .max(50, 'Too Long!')
         .required('ShortName Required'),
     IsActive: Yup.string().required('IsActives Required'),
     rememberMe: Yup.bool(),
 })
-const OriginalRepeatEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
+//const OriginalRepeatEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
+const OriginalRepeatEdit = forwardRef((props, ref) => {
+    const { onDrawerClose, editData, setMessage, setlog } = props
     const token = useSelector((state) => state.auth.session.token)
     //console.log(currency)
 
@@ -57,6 +60,7 @@ const OriginalRepeatEdit = ({ onDrawerClose, editData, setMessage, setlog }) => 
     return (
         <div>
             <Formik
+                innerRef={ref}
                 initialValues={{
                     OriginalRepeatCode: editData.OriginalRepeatCode || '',
                     OriginalRepeatName: editData.OriginalRepeatName || '',
@@ -118,7 +122,8 @@ const OriginalRepeatEdit = ({ onDrawerClose, editData, setMessage, setlog }) => 
                                     asterisk
                                     label="OriginalRepeat Name"
                                     invalid={
-                                        errors.OriginalRepeatName && touched.OriginalRepeatName
+                                        errors.OriginalRepeatName &&
+                                        touched.OriginalRepeatName
                                     }
                                     errorMessage={errors.OriginalRepeatName}
                                 >
@@ -150,7 +155,8 @@ const OriginalRepeatEdit = ({ onDrawerClose, editData, setMessage, setlog }) => 
                                     asterisk
                                     label="Colour"
                                     invalid={
-                                        errors.NewColourCode && touched.NewColourCode
+                                        errors.NewColourCode &&
+                                        touched.NewColourCode
                                     }
                                     errorMessage={errors.NewColourCode}
                                 >
@@ -161,7 +167,6 @@ const OriginalRepeatEdit = ({ onDrawerClose, editData, setMessage, setlog }) => 
                                         placeholder="Colour"
                                         component={Input}
                                     />
-                                       
                                 </FormItem>
                             </div>
                             <div
@@ -187,17 +192,17 @@ const OriginalRepeatEdit = ({ onDrawerClose, editData, setMessage, setlog }) => 
                                 </FormItem>
                             </div>
 
-                            <FormItem>
+                            {/* <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit
                                 </Button>
-                            </FormItem>
+                            </FormItem> */}
                         </FormContainer>
                     </Form>
                 )}
             </Formik>
         </div>
     )
-}
+})
 
 export default OriginalRepeatEdit

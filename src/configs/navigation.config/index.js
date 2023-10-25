@@ -238,10 +238,10 @@ const navigationConfig = [
         authority: [],
         subMenu: [
             {
-                key: 'suppliermastertable.item2',
+                key: 'suppliermastertable',
                 path: '',
                 title: 'Content Management',
-                translateKey: 'nav.suppliermastertable.item2',
+                translateKey: 'nav.suppliermastertable',
                 type: NAV_ITEM_TYPE_COLLAPSE,
                 authority: [],
                 subMenu: [

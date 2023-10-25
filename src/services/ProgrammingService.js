@@ -577,7 +577,7 @@ const PostSupplier = (param, token) => {
             SupplierERPCode: param.SupplierERPCode,
             Address1: param.Address1,
             Address2: param.Address2,
-            Pin: '' + param.Pin + '',
+            Pin: '' + param.Pin + '', // Convert int to string
             CountryCode: param.CountryCode,
             StateCode: param.State,
             PlaceCode: param.PlaceCode,
@@ -635,138 +635,6 @@ const PutSupplier = (param, token) => {
             method: 'put',
             maxBodyLength: Infinity,
             url: `http://103.14.97.155:3000/suppliermastertable/${param.SupplierCode}`,
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            },
-            data: data,
-        }
-
-        axios
-            .request(config)
-            .then((response) => {
-                resolve(response)
-            })
-            .catch((errors) => {
-                reject(errors)
-            })
-    })
-}
-
-export async function apiGetContentmaster(data) {
-    return ApiService.fetchData({
-        url: '/contentmaster/',
-        method: 'get',
-        data,
-    })
-}
-
-const PostContent = (param, token) => {
-    return new Promise((resolve, reject) => {
-        let data = JSON.stringify({
-            ContentName: param.ContentName,
-            ShortName: param.ShortName,
-            ERPCode: param.ERPCode,
-            ContentTypeCode: param.ContentTypeCode,
-            ClassificationCode: param.ClassificationCode,
-            ViewCode: param.ViewCode,
-            LanguageCode: param.LanguageCode,
-            CensorshipCode: param.CensorshipCode,
-            BlackWhite: param.BlackWhite,
-            InHouseOutHouse: param.InHouseOutHouse,
-            FPCReleaseDate: param.FPCReleaseDate,
-            SlotDuration: param.SlotDuration,
-            Synopsis: param.Synopsis,
-            GroupName: param.GroupName,
-            IsSubProgram: param.IsSubProgram,
-            IsEpRestriction: param.IsEpRestriction,
-            IsRecorded: param.IsRecorded,
-            AllowOverBooking: param.AllowOverBooking,
-            IgnoreRODPSpots: param.IgnoreRODPSpots,
-            GenreCode: param.GenreCode,
-            SubGenreCode: param.SubGenreCode,
-            AspectRatio: param.AspectRatio,
-            SD: param.SD,
-            HD: param.HD,
-            UHD: param.UHD,
-            IsGeneric: param.IsGeneric,
-            EPGContentName: param.EPGContentName,
-            GenericSynopsis: param.GenericSynopsis,
-            ApprovedStatus: param.ApprovedStatus,
-            AppRejRemark: param.AppRejRemark,
-            Content_Image: '1.png',
-            MetaData: param.MetaData,
-            TxMasterCode: param.TxMasterCode,
-            VideoTypeCode: param.VideoTypeCode,
-            IsActive: param.IsActive ? 1 : 0,
-        })
-
-        let config = {
-            method: 'post',
-            maxBodyLength: Infinity,
-            url: 'http://103.14.97.155:3000/contentmaster/',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`,
-            },
-            data: data,
-        }
-
-        axios
-            .request(config)
-            .then((response) => {
-                resolve(response)
-            })
-            .catch((errors) => {
-                reject(errors)
-            })
-    })
-}
-
-const PutContent = (param, token) => {
-    return new Promise((resolve, reject) => {
-        let data = JSON.stringify({
-            ContentName: param.ContentName,
-            ShortName: param.ShortName,
-            ERPCode: param.ERPCode,
-            ContentTypeCode: param.ContentTypeCode,
-            ClassificationCode: param.ClassificationCode,
-            ViewCode: param.ViewCode,
-            LanguageCode: param.LanguageCode,
-            CensorshipCode: param.CensorshipCode,
-            BlackWhite: param.BlackWhite,
-            InHouseOutHouse: param.InHouseOutHouse,
-            FPCReleaseDate: param.FPCReleaseDate,
-            SlotDuration: param.SlotDuration,
-            Synopsis: param.Synopsis,
-            GroupName: param.GroupName,
-            IsSubProgram: param.IsSubProgram,
-            IsEpRestriction: param.IsEpRestriction,
-            IsRecorded: param.IsRecorded,
-            AllowOverBooking: param.AllowOverBooking,
-            IgnoreRODPSpots: param.IgnoreRODPSpots,
-            GenreCode: param.GenreCode,
-            SubGenreCode: param.SubGenreCode,
-            AspectRatio: param.AspectRatio,
-            SD: param.SD,
-            HD: param.HD,
-            UHD: param.UHD,
-            IsGeneric: param.IsGeneric,
-            EPGContentName: param.EPGContentName,
-            GenericSynopsis: param.GenericSynopsis,
-            ApprovedStatus: param.ApprovedStatus,
-            AppRejRemark: param.AppRejRemark,
-            Content_Image: '1.png',
-            MetaData: param.MetaData,
-            TxMasterCode: param.TxMasterCode,
-            VideoTypeCode: param.VideoTypeCode,
-            IsActive: param.IsActive ? 1 : 0,
-        })
-
-        let config = {
-            method: 'put',
-            maxBodyLength: Infinity,
-            url: `http://103.14.97.155:3000/contentmaster/${param.ContentCode}`,
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,
@@ -1360,6 +1228,276 @@ const Putpattern = (param, token) => {
             method: 'put',
             maxBodyLength: Infinity,
             url: `http://103.14.97.155:3000/patternmaster/${param.PatternCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+// export async function apiGetContentmaster(data) {
+//     return ApiService.fetchData({
+//         url: '/contentmaster/',
+//         method: 'get',
+//         data,
+//     })
+// }
+
+// const Postcontentmaster = (param, token) => {
+//     return new Promise((resolve, reject) => {
+//         let data = JSON.stringify({
+//             ContentName: param.ContentName,
+//             ShortName: param.ShortName,
+//             ERPCode: param.ERPCode,
+//             ContentTypeCode: param.ContentTypeCode,
+//             ContentClassification: param.ContentClassification,
+//             ViewCode: param.ViewCode,
+//             LanguageCode: param.LanguageCode,
+//             CensorshipCode: param.CensorshipCode,
+//             BlackWhite: param.BlackWhite,
+//             InHouseOutHouse: param.InHouseOutHouse,
+//             FPCReleaseDate: param.FPCReleaseDate,
+//             SlotDuration: param.SlotDuration,
+//             Synopsis: param.Synopsis,
+//             GroupName: param.GroupName,
+//             IsSubProgram: param.IsSubProgram,
+//             IsEpRestriction: param.IsEpRestriction,
+//             IsRecorded: param.IsRecorded,
+//             AllowOverBooking: param.AllowOverBooking,
+//             IgnoreRODPSpots: param.IgnoreRODPSpots,
+//             GenreCode: param.GenreCode,
+//             SubGenreCode: param.SubGenreCode,
+//             AspectRatio: param.AspectRatio,
+//             SD: param.SD,
+//             HD: param.HD,
+//             UHD: param.UHD,
+//             IsGeneric: param.IsGeneric,
+//             EPGContentName: param.EPGContentName,
+//             GenericSynopsis: param.GenericSynopsis,
+//             ApprovedStatus: param.ApprovedStatus,
+//             AppRejRemark: param.AppRejRemark,
+//             Content_Image: param.Content_Image,
+//             MetaData: param.MetaData,
+//             TxMasterCode: param.TxMasterCode,
+//             VideoTypeCode: param.VideoTypeCode,
+//             IsActive: param.IsActive ? 1 : 0,
+//         })
+
+//         let config = {
+//             method: 'post',
+//             maxBodyLength: Infinity,
+//             url: `${appConfig.apiPrefix}/contentmaster/`,
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 Authorization: `Bearer ${token}`,
+//             },
+//             data: data,
+//         }
+
+//         axios
+//             .request(config)
+//             .then((response) => {
+//                 resolve(response)
+//             })
+//             .catch((errors) => {
+//                 reject(errors)
+//             })
+//     })
+// }
+
+// const Putcontentmaster = (param, token) => {
+//     return new Promise((resolve, reject) => {
+//         let data = JSON.stringify({
+//             ContentName: param.ContentName,
+//             ShortName: param.ShortName,
+//             ERPCode: param.ERPCode,
+//             ContentTypeCode: param.ContentTypeCode,
+//             ContentClassification: param.ContentClassification,
+//             ViewCode: param.ViewCode,
+//             LanguageCode: param.LanguageCode,
+//             CensorshipCode: param.CensorshipCode,
+//             BlackWhite: param.BlackWhite,
+//             InHouseOutHouse: param.InHouseOutHouse,
+//             FPCReleaseDate: param.FPCReleaseDate,
+//             SlotDuration: param.SlotDuration,
+//             Synopsis: param.Synopsis,
+//             GroupName: param.GroupName,
+//             IsSubProgram: param.IsSubProgram,
+//             IsEpRestriction: param.IsEpRestriction,
+//             IsRecorded: param.IsRecorded,
+//             AllowOverBooking: param.AllowOverBooking,
+//             IgnoreRODPSpots: param.IgnoreRODPSpots,
+//             GenreCode: param.GenreCode,
+//             SubGenreCode: param.SubGenreCode,
+//             AspectRatio: param.AspectRatio,
+//             SD: param.SD,
+//             HD: param.HD,
+//             UHD: param.UHD,
+//             IsGeneric: param.IsGeneric,
+//             EPGContentName: param.EPGContentName,
+//             GenericSynopsis: param.GenericSynopsis,
+//             ApprovedStatus: param.ApprovedStatus,
+//             AppRejRemark: param.AppRejRemark,
+//             Content_Image: param.Content_Image,
+//             MetaData: param.MetaData,
+//             TxMasterCode: param.TxMasterCode,
+//             VideoTypeCode: param.VideoTypeCode,
+//             IsActive: param.IsActive ? 1 : 0,
+//         })
+
+//         let config = {
+//             method: 'put',
+//             maxBodyLength: Infinity,
+//             url: `${appConfig.apiPrefix}/contentmaster/${param.ContentCode}`,
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 Authorization: `Bearer ${token}`,
+//             },
+//             data: data,
+//         }
+
+//         axios
+//             .request(config)
+//             .then((response) => {
+//                 resolve(response)
+//             })
+//             .catch((errors) => {
+//                 reject(errors)
+//             })
+//     })
+// }
+
+export async function apiGetContentmaster(data) {
+    return ApiService.fetchData({
+        url: '/contentmaster/',
+        method: 'get',
+        data,
+    })
+}
+
+const PostContent = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            ContentName: param.ContentName,
+            ShortName: param.ShortName,
+            ERPCode: param.ERPCode || 'NA', // Send NA Vlaue by defoult
+            ContentTypeCode: param.ContentTypeCode,
+            ContentClassification: param.ClassificationCode,
+            LanguageCode: param.LanguageCode,
+            FPCReleaseDate: param.FPCReleaseDate,
+            SlotDuration: param.SlotDuration,
+            GenreCode: param.GenreCode,
+            SubGenreCode: param.SubGenreCode,
+            CensorshipCode: param.CensorshipCode,
+            TxMasterCode: param.TxMasterCode,
+
+            ViewCode: param.ViewCode || 0,
+            BlackWhite: param.BlackWhite || 0,
+            InHouseOutHouse: param.InHouseOutHouse || 0,
+            Synopsis: param.Synopsis || 'NA',
+            GroupName: param.GroupName || 0,
+            IsSubProgram: param.IsSubProgram || 0,
+            IsEpRestriction: param.IsEpRestriction || 0,
+            IsRecorded: param.IsRecorded || 0,
+            AllowOverBooking: param.AllowOverBooking || 0,
+
+            IgnoreRODPSpots: param.IgnoreRODPSpots,
+            AspectRatio: param.AspectRatio,
+            SD: param.SD,
+            HD: param.HD,
+            UHD: param.UHD,
+            IsGeneric: param.IsGeneric,
+            EPGContentName: param.EPGContentName,
+            GenericSynopsis: param.GenericSynopsis,
+            ApprovedStatus: param.ApprovedStatus,
+            AppRejRemark: param.AppRejRemark,
+            Content_Image: '1.png',
+            MetaData: param.MetaData,
+            VideoTypeCode: param.VideoTypeCode,
+
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/contentmaster/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const PutContent = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            ContentName: param.ContentName,
+            ShortName: param.ShortName,
+            ERPCode: param.ERPCode || 'NA', // Send NA Vlaue by defoult
+            ContentTypeCode: param.ContentTypeCode,
+            ContentClassification: param.ClassificationCode,
+            LanguageCode: param.LanguageCode,
+            FPCReleaseDate: param.FPCReleaseDate,
+            SlotDuration: param.SlotDuration,
+            GenreCode: param.GenreCode,
+            SubGenreCode: param.SubGenreCode,
+            CensorshipCode: param.CensorshipCode,
+            TxMasterCode: param.TxMasterCode,
+
+            ViewCode: param.ViewCode || 0,
+            BlackWhite: param.BlackWhite || 0,
+            InHouseOutHouse: param.InHouseOutHouse || 0,
+            Synopsis: param.Synopsis || 'NA',
+            GroupName: param.GroupName || 0,
+            IsSubProgram: param.IsSubProgram || 0,
+            IsEpRestriction: param.IsEpRestriction || 0,
+            IsRecorded: param.IsRecorded || 0,
+            AllowOverBooking: param.AllowOverBooking || 0,
+
+            IgnoreRODPSpots: param.IgnoreRODPSpots,
+            AspectRatio: param.AspectRatio,
+            SD: param.SD,
+            HD: param.HD,
+            UHD: param.UHD,
+            IsGeneric: param.IsGeneric,
+            EPGContentName: param.EPGContentName,
+            GenericSynopsis: param.GenericSynopsis,
+            ApprovedStatus: param.ApprovedStatus,
+            AppRejRemark: param.AppRejRemark,
+            Content_Image: '1.png',
+            MetaData: param.MetaData,
+            VideoTypeCode: param.VideoTypeCode,
+
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/contentmaster/${param.ContentCode}`,
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${token}`,

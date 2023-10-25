@@ -10,6 +10,7 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { Postchannel, Putchannel } from 'services/MasterService'
 import { useSelector } from 'react-redux'
+import React, { forwardRef } from 'react'
 
 const validationSchema = Yup.object().shape({
     ChannelName: Yup.string()
@@ -40,14 +41,16 @@ const validationSchema = Yup.object().shape({
     rememberMe: Yup.bool(),
 })
 
-const ChannelEdit = ({
-    onDrawerClose,
-    editData,
-    setMessage,
-    setlog,
-    State,
-    Genre
-}) => {
+// const ChannelEdit = ({
+//     onDrawerClose,
+//     editData,
+//     setMessage,
+//     setlog,
+//     State,
+//     Genre
+// }) => {
+const ChannelEdit = forwardRef((props, ref) => {
+    const { onDrawerClose, editData, setMessage, setlog, State, Genre } = props
     const token = useSelector((state) => state.auth.session.token)
 
     const AddChannel = async (values, token) => {
@@ -87,6 +90,7 @@ const ChannelEdit = ({
     return (
         <div>
             <Formik
+                innerRef={ref}
                 initialValues={{
                     ChannelCode: editData.ChannelCode,
                     ChannelName: editData.ChannelName,
@@ -102,7 +106,6 @@ const ChannelEdit = ({
                 onSubmit={(values, { resetForm, setSubmitting }) => {
                     setTimeout(() => {
                         if (!editData.ChannelCode) {
-                            
                             new Promise((resolve, reject) => {
                                 AddChannel(values, token)
                                     .then((response) => {
@@ -203,7 +206,9 @@ const ChannelEdit = ({
                                 <FormItem
                                     asterisk
                                     label="Genre"
-                                    invalid={errors.GenreCode && touched.GenreCode}
+                                    invalid={
+                                        errors.GenreCode && touched.GenreCode
+                                    }
                                     errorMessage={errors.GenreCode}
                                     style={{ width: '250px' }}
                                 >
@@ -342,17 +347,17 @@ const ChannelEdit = ({
                                     </div>
                                 </FormItem>
                             </div>
-                            <FormItem>
+                            {/* <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit
                                 </Button>
-                            </FormItem>
+                            </FormItem> */}
                         </FormContainer>
                     </Form>
                 )}
             </Formik>
         </div>
     )
-}
+})
 
 export default ChannelEdit

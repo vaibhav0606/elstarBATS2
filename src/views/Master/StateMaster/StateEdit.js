@@ -10,6 +10,7 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { Poststate, Putstate } from 'services/MasterService'
 import { useSelector } from 'react-redux'
+import React, { forwardRef } from 'react'
 
 const validationSchema = Yup.object().shape({
     StateName: Yup.string()
@@ -31,13 +32,15 @@ const validationSchema = Yup.object().shape({
     IsActive: Yup.string().required('IsActives Required'),
     rememberMe: Yup.bool(),
 })
-const StateEdit = ({
-    onDrawerClose,
-    editData,
-    setMessage,
-    setlog,
-    Country,
-}) => {
+// const StateEdit = ({
+//     onDrawerClose,
+//     editData,
+//     setMessage,
+//     setlog,
+//     Country,
+// }) => {
+const StateEdit = forwardRef((props, ref) => {
+    const { onDrawerClose, editData, setMessage, setlog, Country } = props
     const token = useSelector((state) => state.auth.session.token)
     //console.log(currency)
 
@@ -78,6 +81,7 @@ const StateEdit = ({
     return (
         <div>
             <Formik
+                innerRef={ref}
                 initialValues={{
                     StateCode: editData.StateCode || '',
                     StateName: editData.StateName || '',
@@ -259,17 +263,17 @@ const StateEdit = ({
                                 </FormItem>
                             </div>
 
-                            <FormItem>
+                            {/* <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit
                                 </Button>
-                            </FormItem>
+                            </FormItem> */}
                         </FormContainer>
                     </Form>
                 )}
             </Formik>
         </div>
     )
-}
+})
 
 export default StateEdit
