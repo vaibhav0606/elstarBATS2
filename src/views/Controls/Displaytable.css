@@ -8,7 +8,7 @@ th {
     width: 7%;  
   }
   .actions{
-    width: 10%;
+    width: 11%;
   }
   
   /* Style the body of the table */
@@ -28,7 +28,7 @@ th {
   
   /* Style table cells */
   td {
-    text-align: center;
+    text-align: left;
     padding: 3px;
     border: 0.1px solid #e2e2e2;
     white-space: nowrap; /* Prevent text from wrapping */
@@ -38,7 +38,7 @@ th {
   
   /* Center text in the "Actions" column */
   td.actions {
-    text-align: center;
+    text-align: left;
   }
   
   /* Style the scrollbar for the body */
