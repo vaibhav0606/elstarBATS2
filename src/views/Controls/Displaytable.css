@@ -1,0 +1,52 @@
+/* Set a specific width for each header cell */
+th {
+    min-width: 150px; /* Adjust this width as needed */
+  }
+  
+  /* Style the "Sr." header cell to make it shorter */
+  .srno {
+    width: 7%;  
+  }
+  .actions{
+    width: 10%;
+  }
+  
+  /* Style the body of the table */
+  tbody {
+    display: block;
+    overflow-y: auto;
+    height: 300px;
+  }
+  
+  /* Style table rows */
+  tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    border: 0.1px solid #d1d0d0;
+  }
+  
+  /* Style table cells */
+  td {
+    text-align: center;
+    padding: 3px;
+    border: 0.1px solid #e2e2e2;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflowed text */
+    text-overflow: ellipsis; /* Add ellipsis (...) for long text */
+  }
+  
+  /* Center text in the "Actions" column */
+  td.actions {
+    text-align: center;
+  }
+  
+  /* Style the scrollbar for the body */
+  tbody::-webkit-scrollbar {
+    width: 12px; /* Adjust the width of the scrollbar as needed */
+  }
+  
+  tbody::-webkit-scrollbar-thumb {
+    background-color: #d8d7d7; /* Customize the scrollbar thumb color */
+  }
+  
