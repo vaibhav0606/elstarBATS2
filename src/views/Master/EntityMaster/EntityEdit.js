@@ -5,6 +5,7 @@ import { PostEntity, PutEntity } from 'services/MasterService'
 import { useSelector } from 'react-redux'
 import enity from 'views/UsefullComp/Admin/Enity'
 import InputField from 'views/Controls/InputField'
+import React, { forwardRef } from 'react'
 
 const validationSchema = Yup.object().shape({
     entityname: Yup.string()
@@ -40,7 +41,9 @@ const validationSchema = Yup.object().shape({
     rememberMe: Yup.bool(),
 })
 
-const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
+//const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
+const EntityEdit = forwardRef((props, ref) => {
+    const { onDrawerClose, editData, setMessage, setlog } = props
     const token = useSelector((state) => state.auth.session.token)
 
     const AddEntity = async (values, token) => {
@@ -80,6 +83,7 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
     return (
         <div>
             <Formik
+                innerRef={ref}
                 initialValues={{
                     EntityCode: editData.EntityCode,
                     entityname: editData.EntityName,
@@ -158,17 +162,17 @@ const EntityEdit = ({ onDrawerClose, editData, setMessage, setlog }) => {
                                     </div>
                                 ))}
                             </div>
-                            <FormItem>
+                            {/* <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit
                                 </Button>
-                            </FormItem>
+                            </FormItem> */}
                         </FormContainer>
                     </Form>
                 )}
             </Formik>
         </div>
     )
-}
+})
 
 export default EntityEdit

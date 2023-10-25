@@ -10,6 +10,7 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { Postcontenttype, Putcontenttype } from 'services/ProgrammingService'
 import { useSelector } from 'react-redux'
+import React, { forwardRef } from 'react'
 
 const validationSchema = Yup.object().shape({
     ContentTypeName: Yup.string()
@@ -22,13 +23,15 @@ const options = [
     { value: 'foo', label: 'Foo' },
     { value: 'bar', label: 'Bar' },
 ]
-const ContentTypeEdit = ({
-    onDrawerClose,
-    editData,
-    setMessage,
-    setlog,
-    // currency,
-}) => {
+// const ContentTypeEdit = ({
+//     onDrawerClose,
+//     editData,
+//     setMessage,
+//     setlog,
+//     // currency,
+// }) => {
+const ContentTypeEdit = forwardRef((props, ref) => {
+    const { onDrawerClose, editData, setMessage, setlog } = props
     const token = useSelector((state) => state.auth.session.token)
     //console.log(currency)
 
@@ -69,6 +72,7 @@ const ContentTypeEdit = ({
     return (
         <div>
             <Formik
+                innerRef={ref}
                 initialValues={{
                     ContentTypeCode: editData.ContentTypeCode || '',
                     ContentTypeName: editData.ContentTypeName || '',
@@ -234,17 +238,17 @@ const ContentTypeEdit = ({
                                     </div>
                                 </FormItem>
                             </div>
-                            <FormItem>
+                            {/* <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit
                                 </Button>
-                            </FormItem>
+                            </FormItem> */}
                         </FormContainer>
                     </Form>
                 )}
             </Formik>
         </div>
     )
-}
+})
 
 export default ContentTypeEdit

@@ -10,6 +10,7 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { Postplace, Putplace } from 'services/MasterService'
 import { useSelector } from 'react-redux'
+import React, { forwardRef } from 'react'
 
 const validationSchema = Yup.object().shape({
     PlaceName: Yup.string()
@@ -38,15 +39,26 @@ const validationSchema = Yup.object().shape({
     rememberMe: Yup.bool(),
 })
 
-const PlaceEdit = ({
-    onDrawerClose,
-    editData,
-    setMessage,
-    setlog,
-    State,
-    Zone,
-    Country,
-}) => {
+// const PlaceEdit = ({
+//     onDrawerClose,
+//     editData,
+//     setMessage,
+//     setlog,
+//     State,
+//     Zone,
+//     Country,
+// }) => {
+const PlaceEdit = forwardRef((props, ref) => {
+    const {
+        onDrawerClose,
+        editData,
+        setMessage,
+        setlog,
+        State,
+        Zone,
+        Country,
+    } = props
+
     const token = useSelector((state) => state.auth.session.token)
 
     const AddPlace = async (values, token) => {
@@ -86,6 +98,7 @@ const PlaceEdit = ({
     return (
         <div>
             <Formik
+                innerRef={ref}
                 initialValues={{
                     PlaceCode: editData.PlaceCode,
                     PlaceName: editData.PlaceName,
@@ -304,17 +317,17 @@ const PlaceEdit = ({
                                     </div>
                                 </FormItem>
                             </div>
-                            <FormItem>
+                            {/* <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit
                                 </Button>
-                            </FormItem>
+                            </FormItem> */}
                         </FormContainer>
                     </Form>
                 )}
             </Formik>
         </div>
     )
-}
+})
 
 export default PlaceEdit

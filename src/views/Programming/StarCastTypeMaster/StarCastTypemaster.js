@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
 import {
     apiGetStarCastTypemaster,
@@ -14,6 +14,7 @@ import StarCastTypeEdit from './StarCastTypeEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
 import HeaderExtra from 'views/Controls/HeaderExtra'
+import DrawerFooter from 'views/Controls/DrawerFooter'
 
 const headerExtraContent = (
     openDrawer,
@@ -58,6 +59,10 @@ const StarCastTypemaster = () => {
     const [currency, setCurrency] = useState({ value: '', label: '' })
     const [message, setMessage] = useTimeOutMessage()
     const [log, setlog] = useState('')
+    const formikRef = useRef()
+    const formSubmit = () => {
+        formikRef.current?.submitForm()
+    }
 
     const statusColor = {
         1: 'bg-emerald-500',
@@ -201,8 +206,15 @@ const StarCastTypemaster = () => {
                 onClose={onDrawerClose}
                 onRequestClose={onDrawerClose}
                 width={600}
+                footer={
+                    <DrawerFooter
+                        onCancel={onDrawerClose}
+                        onSaveClick={formSubmit}
+                    />
+                }
             >
                 <StarCastTypeEdit
+                    ref={formikRef}
                     onDrawerClose={onDrawerClose}
                     editData={editData}
                     setMessage={setMessage}

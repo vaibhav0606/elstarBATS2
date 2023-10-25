@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
 import { apiGetViewmaster } from 'services/ProgrammingService'
 import { Button, Card } from 'components/ui'
@@ -11,6 +11,7 @@ import ViewEdit from './ViewEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
 import HeaderExtra from 'views/Controls/HeaderExtra'
+import DrawerFooter from 'views/Controls/DrawerFooter'
 
 const headerExtraContent = (
     openDrawer,
@@ -55,7 +56,10 @@ const Viewmaster = () => {
     const [currency, setCurrency] = useState({ value: '', label: '' })
     const [message, setMessage] = useTimeOutMessage()
     const [log, setlog] = useState('')
-
+    const formikRef = useRef()
+    const formSubmit = () => {
+        formikRef.current?.submitForm()
+    }
     const statusColor = {
         1: 'bg-emerald-500',
         0: 'bg-red-500',
@@ -209,8 +213,15 @@ const Viewmaster = () => {
                 onClose={onDrawerClose}
                 onRequestClose={onDrawerClose}
                 width={600}
+                footer={
+                    <DrawerFooter
+                        onCancel={onDrawerClose}
+                        onSaveClick={formSubmit}
+                    />
+                }
             >
                 <ViewEdit
+                    ref={formikRef}
                     onDrawerClose={onDrawerClose}
                     editData={editData}
                     setMessage={setMessage}

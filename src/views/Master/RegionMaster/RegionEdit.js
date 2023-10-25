@@ -10,6 +10,7 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { PostRegion, PutRegion } from 'services/MasterService'
 import { useSelector } from 'react-redux'
+import React, { forwardRef } from 'react'
 
 const validationSchema = Yup.object().shape({
     RegionName: Yup.string()
@@ -31,7 +32,9 @@ const options = [
     { value: 'foo', label: 'Foo' },
     { value: 'bar', label: 'Bar' },
 ]
-const RegionEdit = ({ onDrawerClose, editData, setMessage, setlog, Zone }) => {
+//const RegionEdit = ({ onDrawerClose, editData, setMessage, setlog, Zone }) => {
+const RegionEdit = forwardRef((props, ref) => {
+    const { onDrawerClose, editData, setMessage, setlog, Zone } = props
     const token = useSelector((state) => state.auth.session.token)
     console.log(editData)
 
@@ -72,6 +75,7 @@ const RegionEdit = ({ onDrawerClose, editData, setMessage, setlog, Zone }) => {
     return (
         <div>
             <Formik
+                innerRef={ref}
                 initialValues={{
                     RegionCode: editData.RegionCode || '',
                     RegionName: editData.RegionName || '',
@@ -213,17 +217,17 @@ const RegionEdit = ({ onDrawerClose, editData, setMessage, setlog, Zone }) => {
                                 </div>
                             </FormItem>
 
-                            <FormItem>
+                            {/* <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit
                                 </Button>
-                            </FormItem>
+                            </FormItem> */}
                         </FormContainer>
                     </Form>
                 )}
             </Formik>
         </div>
     )
-}
+})
 
 export default RegionEdit

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
 import {
     apiGetDesignationmaster,
@@ -10,6 +10,7 @@ import DesignationEdit from './DesignationEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
 import HeaderExtra from 'views/Controls/HeaderExtra'
+import DrawerFooter from 'views/Controls/DrawerFooter'
 
 const headerExtraContent = (
     openDrawer,
@@ -54,6 +55,10 @@ const Designationmaster = () => {
     const [currency, setCurrency] = useState({ value: '', label: '' })
     const [message, setMessage] = useTimeOutMessage()
     const [log, setlog] = useState('')
+    const formikRef = useRef()
+    const formSubmit = () => {
+        formikRef.current?.submitForm()
+    }
 
     const statusColor = {
         1: 'bg-emerald-500',
@@ -222,8 +227,15 @@ const Designationmaster = () => {
                         ? window.screen.width / 3
                         : window.screen.width / 1.5
                 }
+                footer={
+                    <DrawerFooter
+                        onCancel={onDrawerClose}
+                        onSaveClick={formSubmit}
+                    />
+                }
             >
                 <DesignationEdit
+                    ref={formikRef}
                     onDrawerClose={onDrawerClose}
                     editData={editData}
                     setMessage={setMessage}

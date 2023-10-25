@@ -1,12 +1,17 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { Badge, Drawer, Input, Alert } from 'components/ui'
-import { apiGetChannelmaster, apiGetStateMaster,apiGetGenremaster } from 'services/MasterService'
+import {
+    apiGetChannelmaster,
+    apiGetStateMaster,
+    apiGetGenremaster,
+} from 'services/MasterService'
 import { Button, Card } from 'components/ui'
 import { HiOutlinePencil, HiPlusCircle } from 'react-icons/hi'
 import ChannelEdit from './ChannelEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
 import DisplayTable from 'views/Controls/DisplayTable'
 import HeaderExtra from 'views/Controls/HeaderExtra'
+import DrawerFooter from 'views/Controls/DrawerFooter'
 
 const headerExtraContent = (
     openDrawer,
@@ -50,7 +55,10 @@ const Channelmaster = () => {
     const [data, setdata] = useState([''])
     const [state, setstate] = useState([''])
     const [genre, setgenre] = useState([''])
-     
+    const formikRef = useRef()
+    const formSubmit = () => {
+        formikRef.current?.submitForm()
+    }
 
     const [message, setMessage] = useTimeOutMessage()
     const [log, setlog] = useState('')
@@ -257,8 +265,15 @@ const Channelmaster = () => {
                         ? window.screen.width / 3
                         : window.screen.width / 1.5
                 }
+                footer={
+                    <DrawerFooter
+                        onCancel={onDrawerClose}
+                        onSaveClick={formSubmit}
+                    />
+                }
             >
                 <ChannelEdit
+                    ref={formikRef}
                     onDrawerClose={onDrawerClose}
                     editData={editData}
                     setMessage={setMessage}
