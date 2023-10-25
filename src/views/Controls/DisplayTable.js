@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useGlobalFilter } from '@tanstack/react-table';
 import { Table } from 'components/ui'
 import {
     flexRender,
@@ -10,6 +11,9 @@ import {
 import { Button } from 'components/ui'
 import { HiOutlinePencil } from 'react-icons/hi'
 import { useSelector } from 'react-redux'
+import GlobalFilter from './filters';
+
+
 
 const DisplayTable = ({
     data,
@@ -22,6 +26,7 @@ const DisplayTable = ({
     openDrawer,
 }) => {
     //console.log(setGlobalFilter);
+  
     const table = useReactTable({
         data,
         columns,
@@ -34,11 +39,11 @@ const DisplayTable = ({
         enableColumnResizing: true,
         getCoreRowModel: getCoreRowModel(),
         getSortedRowModel: getSortedRowModel(),
-        getCoreRowModel: getCoreRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
     })
-    const { Tr, Th, Td, THead, TBody, Sorter } = Table
+    const { Tr, Th, Td, THead, TBody, Sorter  } = Table
     const themeColor = useSelector((state) => state.theme.themeColor)
+   
     return (
         <>
             <Table>
@@ -52,7 +57,7 @@ const DisplayTable = ({
                     {table.getHeaderGroups().map((headerGroup) => (
                         <Tr key={headerGroup.id}>
                             <Th>
-                                <p className="text-black capitalize">#</p>
+                                <p className="text-black capitalize">Sr.</p>
                             </Th>
 
                             {headerGroup.headers.map((header) => {
@@ -83,6 +88,14 @@ const DisplayTable = ({
                                                             <Sorter
                                                                 sort={header.column.getIsSorted()}
                                                             />
+                                                              
+                                                                <div>
+                                                                    <GlobalFilter
+                                                                        column={header.column}
+                                                                        themeColor={themeColor}
+                                                                    />
+                                                                </div>
+                                                            
                                                             <div
                                                                 className={`table-resizer cursor-all-scroll ${
                                                                     header.column.getIsResizing()
