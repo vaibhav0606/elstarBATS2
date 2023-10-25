@@ -193,7 +193,8 @@ const DisplayTableEmpAccess = ({
                                             </Th>
                                         )
                                     })}
-                                    <Th>Read Write</Th>
+                                    <Th>Read</Th>
+                                    <Th>Write</Th>
                                 </Tr>
                             ))}
                         </THead>
@@ -258,7 +259,8 @@ const DisplayTableEmpAccess = ({
                                                         }
                                                     />
                                                 )}
-                                                &nbsp;&nbsp;
+                                            </Td>
+                                            <Td>
                                                 {isCheck2 ? (
                                                     <Checkbox
                                                         name="Write"

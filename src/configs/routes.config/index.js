@@ -305,6 +305,30 @@ export const protectedRoutes = [
         ),
         authority: [],
     },
+    {
+        key: 'viewmaster',
+        path: '/viewmaster',
+        component: React.lazy(() =>
+            import('views/Programming/ViewMaster/Viewmaster')
+        ),
+        authority: [],
+    },
+    {
+        key: 'patterMaster',
+        path: '/patterMaster',
+        component: React.lazy(() =>
+            import('views/Programming/PatternMaster/Patternmaster')
+        ),
+        authority: [],
+    },
+    {
+        key: 'patterMaster',
+        path: '/patternEdit',
+        component: React.lazy(() =>
+            import('views/Programming/PatternMaster/PatternEdit')
+        ),
+        authority: [],
+    },
 
     /** Example purpose only, please remove */
     {

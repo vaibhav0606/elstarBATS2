@@ -56,9 +56,11 @@ const DisplayTable = ({
                     variant="solid"
                 >
                     {table.getHeaderGroups().map((headerGroup) => (
+
                         <Tr   key={headerGroup.id}>
                             <Th className="srno" >
                                 <p className="text-black capitalize">Sr.</p>
+
                             </Th>
 
                             {headerGroup.headers.map((header) => {
@@ -125,8 +127,10 @@ const DisplayTable = ({
                     <ScrollBar>
                     {table.getRowModel().rows.map((row, index) => {
                         return (
+
                             <Tr key={row.id} className="border-y">
                                 <Td className="text-xs text-black font-light text-center capitalize srno">
+
                                     {index + 1}
                                 </Td>
 
