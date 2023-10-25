@@ -1294,6 +1294,89 @@ const Putcontentseg = (param, token) => {
             })
     })
 }
+export async function apiGetPatternmaster(data) {
+    return ApiService.fetchData({
+        url: '/patternmaster/',
+        method: 'get',
+        data,
+    })
+}
+
+const Postpattern = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            PatternName: param.PatternName,
+            ActualDuration: param.ActualDuration,
+            TotalDuration: param.TotalDuration,
+            minFormat: param.minFormat,
+            NoOfSeg: param.NoOfSeg,
+            CommercialDuration: param.CommercialDuration,
+            SegmentDuration: param.SegmentDuration,
+            TotalDurInSec: param.TotalDurInSec,
+            KillDate: param.KillDate,
+            ProgramType: param.ProgramType,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/patternmaster/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const Putpattern = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            PatternName: param.PatternName,
+            ActualDuration: param.ActualDuration,
+            TotalDuration: param.TotalDuration,
+            minFormat: param.minFormat,
+            NoOfSeg: param.NoOfSeg,
+            CommercialDuration: param.CommercialDuration,
+            SegmentDuration: param.SegmentDuration,
+            TotalDurInSec: param.TotalDurInSec,
+            KillDate: param.KillDate,
+            ProgramType: param.ProgramType,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/patternmaster/${param.PatternCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
 
 export {
     Poststarcasttype,
@@ -1330,4 +1413,6 @@ export {
     Postfillertype,
     Postcontentseg,
     Putcontentseg,
+    Postpattern,
+    Putpattern,
 }

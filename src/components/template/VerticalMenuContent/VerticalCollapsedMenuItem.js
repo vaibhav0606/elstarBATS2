@@ -18,7 +18,11 @@ const DefaultItem = ({ nav, onLinkClick, userAuthority }) => {
                             <Trans
                                 i18nKey={nav.translateKey}
                                 //defaults={nav.title}
-                                defaults={<p  className='text-sm font-normal'>{nav.title}</p>}
+                                defaults={
+                                    <p className="text-sm font-normal">
+                                        --{nav.title}
+                                    </p>
+                                }
                             />
                         </span>
                     </>
@@ -50,7 +54,11 @@ const DefaultItem = ({ nav, onLinkClick, userAuthority }) => {
                                     <span>
                                         <Trans
                                             i18nKey={subNav.translateKey}
-                                            defaults={<p  className='text-xs font-normal'>-- {subNav.title}</p>}
+                                            defaults={
+                                                <p className="text-xs font-normal">
+                                                    -- {subNav.title}
+                                                </p>
+                                            }
                                         />
                                     </span>
                                 </Link>
@@ -58,7 +66,11 @@ const DefaultItem = ({ nav, onLinkClick, userAuthority }) => {
                                 <span>
                                     <Trans
                                         i18nKey={subNav.translateKey}
-                                        defaults={<p  className='text-xs font-normal'>{subNav.title}</p>}
+                                        defaults={
+                                            <p className="text-xs font-normal">
+                                                {subNav.title}
+                                            </p>
+                                        }
                                     />
                                 </span>
                             )}
@@ -108,16 +120,17 @@ const CollapsedItem = ({ nav, onLinkClick, userAuthority, direction }) => {
                                     <span>
                                         <Trans
                                             i18nKey={subNav.translateKey}
-                                            defaults={<p  className='text-xs font-normal'>{subNav.title}</p>}
+                                            defaults={
+                                                <p className="text-xs font-normal">
+                                                    {subNav.title}
+                                                </p>
+                                            }
                                         />
                                     </span>
                                 </Link>
                             ) : (
                                 <span>
-                                    <Trans
-                                        i18nKey={subNav.translateKey}
-                                        
-                                    />
+                                    <Trans i18nKey={subNav.translateKey} />
                                 </span>
                             )}
                         </Dropdown.Item>

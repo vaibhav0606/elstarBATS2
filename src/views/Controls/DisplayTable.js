@@ -52,7 +52,9 @@ const DisplayTable = ({
                     {table.getHeaderGroups().map((headerGroup) => (
                         <Tr key={headerGroup.id}>
                             <Th>
-                                <p className="text-black capitalize">#</p>
+                                <p className="text-black capitalize text-center">
+                                    Sr.No
+                                </p>
                             </Th>
 
                             {headerGroup.headers.map((header) => {
@@ -112,7 +114,10 @@ const DisplayTable = ({
                     {table.getRowModel().rows.map((row, index) => {
                         return (
                             <Tr key={row.id}>
-                                <Td className="text-xs text-black font-light border-y capitalize">
+                                <Td
+                                    className="text-xs text-black font-light border-y capitalize
+                                text-center"
+                                >
                                     {index + 1}
                                 </Td>
 
