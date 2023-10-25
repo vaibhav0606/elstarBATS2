@@ -10,6 +10,7 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { PostForm, PutForm } from 'services/MasterService'
 import { useSelector } from 'react-redux'
+import React, { forwardRef } from 'react'
 
 const validationSchema = Yup.object().shape({
     FormName: Yup.string()
@@ -48,16 +49,26 @@ const options = [
     { value: 'foo', label: 'Foo' },
     { value: 'bar', label: 'Bar' },
 ]
-const FormEdit = ({
-    onDrawerClose,
-    editData,
-    setMessage,
-    setlog,
-    Module,
-    SubModule,
-}) => {
+// const FormEdit = forwardRef({
+//     onDrawerClose,
+//     editData,
+//     setMessage,
+//     setlog,
+//     Module,
+//     SubModule,
+//     ref
+// }) => {
+    const FormEdit = forwardRef((props, ref) => {
+        const {   onDrawerClose,
+            editData,
+            setMessage,
+            setlog,
+            Module,
+            SubModule, } = props
+
     const token = useSelector((state) => state.auth.session.token)
     console.log(Module)
+    
 
     const AddForm = async (values, token) => {
         try {
@@ -96,6 +107,7 @@ const FormEdit = ({
     return (
         <div>
             <Formik
+             innerRef={ref}
                 initialValues={{
                     FormCode: editData.FormCode || '',
                     FormName: editData.FormName || '',
@@ -255,7 +267,7 @@ const FormEdit = ({
                                     >
                                         <Field
                                             size="md"
-                                            type="Index Number"
+                                            type="Number"
                                             autoComplete="off"
                                             name="IndexNum"
                                             placeholder="Index Number"
@@ -326,17 +338,17 @@ const FormEdit = ({
                                     />
                                 </div>
                             </FormItem>
-                            <FormItem>
+                            {/* <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit
                                 </Button>
-                            </FormItem>
+                            </FormItem> */}
                         </FormContainer>
                     </Form>
                 )}
             </Formik>
         </div>
     )
-}
+})
 
 export default FormEdit
