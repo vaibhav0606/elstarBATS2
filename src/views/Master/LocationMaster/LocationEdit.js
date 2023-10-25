@@ -10,6 +10,7 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { Postlocation, Putlocation } from 'services/MasterService'
 import { useSelector } from 'react-redux'
+import React, { forwardRef } from 'react'
 
 const validationSchema = Yup.object().shape({
     LocationName: Yup.string()
@@ -35,13 +36,20 @@ const options = [
     { value: 'foo', label: 'Foo' },
     { value: 'bar', label: 'Bar' },
 ]
-const LocationEdit = ({
-    onDrawerClose,
-    editData,
-    setMessage,
-    setlog,
-    currency,
-}) => {
+// const LocationEdit = ({
+//     onDrawerClose,
+//     editData,
+//     setMessage,
+//     setlog,
+//     currency,
+// }) => {
+    const LocationEdit = forwardRef((props, ref) => {
+        const {   onDrawerClose,
+            editData,
+            setMessage,
+            setlog,
+             currency } = props
+
     const token = useSelector((state) => state.auth.session.token)
     //console.log(currency)
 
@@ -82,6 +90,7 @@ const LocationEdit = ({
     return (
         <div>
             <Formik
+                innerRef={ref}
                 initialValues={{
                     LocationCode: editData.LocationCode || '',
                     LocationName: editData.LocationName || '',
@@ -248,17 +257,17 @@ const LocationEdit = ({
                                     </div>
                                 </FormItem>
                             </div>
-                            <FormItem>
+                            {/* <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit
                                 </Button>
-                            </FormItem>
+                            </FormItem> */}
                         </FormContainer>
                     </Form>
                 )}
             </Formik>
         </div>
     )
-}
+})
 
 export default LocationEdit

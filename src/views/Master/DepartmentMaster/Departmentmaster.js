@@ -68,11 +68,13 @@ const Departmentmaster = () => {
                 cell: (props) => {
                     const row = props.row.original
                     return (
+                        <div>
                         <div className="flex items-center">
                             <Badge className={statusColor[row.IsActive]} />
                             <span className="ml-2 rtl:mr-2 capitalize">
                                 {row.DepartmentName}
                             </span>
+                        </div>
                         </div>
                     )
                 },

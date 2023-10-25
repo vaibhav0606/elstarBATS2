@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useGlobalFilter } from '@tanstack/react-table';
-import { Table } from 'components/ui'
+import { ScrollBar, Table } from 'components/ui'
 import {
     flexRender,
     getCoreRowModel,
@@ -12,6 +12,7 @@ import { Button } from 'components/ui'
 import { HiOutlinePencil } from 'react-icons/hi'
 import { useSelector } from 'react-redux'
 import GlobalFilter from './filters';
+import './Displaytable.css';
 
 
 
@@ -26,7 +27,7 @@ const DisplayTable = ({
     openDrawer,
 }) => {
     //console.log(setGlobalFilter);
-  
+
     const table = useReactTable({
         data,
         columns,
@@ -41,22 +42,22 @@ const DisplayTable = ({
         getSortedRowModel: getSortedRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
     })
-    const { Tr, Th, Td, THead, TBody, Sorter  } = Table
+    const { Tr, Th, Td, THead, TBody, Sorter } = Table
     const themeColor = useSelector((state) => state.theme.themeColor)
-   
+
     return (
-        <>
+        <div style={{ height: '400px', overflowY: 'auto' }}>
             <Table>
                 <THead
-                    className="border-b-2 "
+                    className="border-b-1 "
                     style={{
                         borderColor: themeColor,
                     }}
                     variant="solid"
                 >
                     {table.getHeaderGroups().map((headerGroup) => (
-                        <Tr key={headerGroup.id}>
-                            <Th>
+                        <Tr   key={headerGroup.id}>
+                            <Th className="srno" >
                                 <p className="text-black capitalize">Sr.</p>
                             </Th>
 
@@ -88,20 +89,19 @@ const DisplayTable = ({
                                                             <Sorter
                                                                 sort={header.column.getIsSorted()}
                                                             />
-                                                              
-                                                                <div>
-                                                                    <GlobalFilter
-                                                                        column={header.column}
-                                                                        themeColor={themeColor}
-                                                                    />
-                                                                </div>
-                                                            
+
+                                                            {/* <div>
+                                                                <GlobalFilter
+                                                                    column={header.column}
+                                                                    themeColor={themeColor}
+                                                                />
+                                                            </div> */}
+
                                                             <div
-                                                                className={`table-resizer cursor-all-scroll ${
-                                                                    header.column.getIsResizing()
+                                                                className={`cursor-all-scroll ${header.column.getIsResizing()
                                                                         ? 'isResizing'
                                                                         : ''
-                                                                }`}
+                                                                    }`}
                                                                 onMouseDown={header.getResizeHandler()}
                                                                 onTouchStart={header.getResizeHandler()}
                                                             ></div>
@@ -113,7 +113,7 @@ const DisplayTable = ({
                                     </Th>
                                 )
                             })}
-                            <Th>
+                            <Th className="actions" >
                                 <center className="text-black capitalize">
                                     Actions
                                 </center>
@@ -121,11 +121,12 @@ const DisplayTable = ({
                         </Tr>
                     ))}
                 </THead>
-                <TBody>
+                <TBody>   
+                    <ScrollBar>
                     {table.getRowModel().rows.map((row, index) => {
                         return (
-                            <Tr key={row.id}>
-                                <Td className="text-xs text-black font-light border-y capitalize">
+                            <Tr key={row.id} className="border-y">
+                                <Td className="text-xs text-black font-light text-center capitalize srno">
                                     {index + 1}
                                 </Td>
 
@@ -133,7 +134,7 @@ const DisplayTable = ({
                                     return (
                                         <Td
                                             key={cell.id}
-                                            className="text-xs text-black font-light border-y capitalize"
+                                            className="text-xs text-black font-light  capitalize"
                                         >
                                             <p className="text-black capitalize">
                                                 {flexRender(
@@ -149,7 +150,7 @@ const DisplayTable = ({
                                         seteditData(row.original)
                                         openDrawer()
                                     }}
-                                    className="text-xs text-black font-medium border-y"
+                                    className="text-xs text-black font-medium actions"
                                 >
                                     <center>
                                         <Button
@@ -162,12 +163,13 @@ const DisplayTable = ({
                             </Tr>
                         )
                     })}
+                    </ScrollBar>
                 </TBody>
             </Table>
             <div className="flex  justify-start mt-2">
                 <h1 className="text-xs  font-light">Records : {data.length}</h1>
             </div>
-        </>
+        </div>
     )
 }
 

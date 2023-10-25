@@ -10,6 +10,7 @@ import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { Postmodule, Putmodule } from 'services/MasterService'
 import { useSelector } from 'react-redux'
+import React, { forwardRef } from 'react'
 
 const validationSchema = Yup.object().shape({
     ModuleName: Yup.string()
@@ -27,13 +28,21 @@ const options = [
     { value: 'foo', label: 'Foo' },
     { value: 'bar', label: 'Bar' },
 ]
-const ModuleEdit = ({
-    onDrawerClose,
-    editData,
-    setMessage,
-    setlog,
-    module,
-}) => {
+// const ModuleEdit = ({
+//     onDrawerClose,
+//     editData,
+//     setMessage,
+//     setlog,
+//     module,
+// }) => {
+
+    const ModuleEdit = forwardRef((props, ref) => {
+        const {   onDrawerClose,
+            editData,
+            setMessage,
+            setlog,
+            module , } = props
+
     const token = useSelector((state) => state.auth.session.token)
     //console.log(currency)
 
@@ -74,6 +83,7 @@ const ModuleEdit = ({
     return (
         <div>
             <Formik
+                innerRef={ref}  
                 initialValues={{
                     ModuleCode: editData.ModuleCode || '',
                     ModuleName: editData.ModuleName || '',
@@ -184,17 +194,17 @@ const ModuleEdit = ({
                                     </div>
                                 </FormItem>
                             </div>
-                            <FormItem>
+                            {/* <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit
                                 </Button>
-                            </FormItem>
+                            </FormItem> */}
                         </FormContainer>
                     </Form>
                 )}
             </Formik>
         </div>
     )
-}
+})
 
 export default ModuleEdit

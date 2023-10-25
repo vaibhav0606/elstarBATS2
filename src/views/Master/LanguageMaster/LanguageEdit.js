@@ -9,7 +9,9 @@ import {
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
 import { Postlanguage, Putlanguage } from 'services/MasterService'
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux' 
+import React, { forwardRef } from 'react'
+ 
 
 const validationSchema = Yup.object().shape({
     LanguageName: Yup.string()
@@ -27,13 +29,22 @@ const options = [
     { value: 'foo', label: 'Foo' },
     { value: 'bar', label: 'Bar' },
 ]
-const LanguageEdit = ({
-    onDrawerClose,
-    editData,
-    setMessage,
-    setlog,
-    currency,
-}) => {
+// const LanguageEdit = ({
+//     onDrawerClose,
+//     editData,
+//     setMessage,
+//     setlog,
+//     currency,
+// }) => {
+
+
+    const LanguageEdit = forwardRef((props, ref) => {
+        const {   onDrawerClose,
+            editData,
+            setMessage,
+            setlog,
+             currency } = props
+
     const token = useSelector((state) => state.auth.session.token)
     //console.log(currency)
 
@@ -74,6 +85,7 @@ const LanguageEdit = ({
     return (
         <div>
             <Formik
+                innerRef={ref}
                 initialValues={{
                     LanguageCode: editData.LanguageCode || '',
                     LanguageName: editData.LanguageName || '',
@@ -197,17 +209,17 @@ const LanguageEdit = ({
                                 </FormItem>
                             </div>
 
-                            <FormItem>
+                            {/* <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit
                                 </Button>
-                            </FormItem>
+                            </FormItem> */}
                         </FormContainer>
                     </Form>
                 )}
             </Formik>
         </div>
     )
-}
 
+})
 export default LanguageEdit
