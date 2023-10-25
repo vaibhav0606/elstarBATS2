@@ -13,6 +13,7 @@ import * as Yup from 'yup'
 import { PostContent, PutContent } from 'services/ProgrammingService'
 import { useSelector } from 'react-redux'
 import { HiCake } from 'react-icons/hi'
+import Checkbox from 'components/ui/Checkbox'
 
 const validationSchema = Yup.object().shape({
     ContentName: Yup.string()
@@ -69,31 +70,22 @@ const validationSchema = Yup.object().shape({
     rememberMe: Yup.bool(),
 })
 
-const options2 = [
-    { value: 'EPISODIC', label: 'EPISODIC' },
-    { value: 'NONEPISODIC', label: 'NONEPISODIC' },
-]
-const options3 = [
-    { value: 'GENERAL', label: 'GENERAL' },
-    { value: 'ADULTS', label: 'ADULTS' },
-    { value: 'FEMALES', label: 'FEMALES' },
-    { value: 'MALES', label: 'MALES' },
-    { value: 'KIDS', label: 'KIDS' },
-    { value: 'FAMILY', label: 'FAMILY' },
+const VideoTypePara = [
+    { value: 'HD', label: 'HD' },
+    { value: 'SD', label: 'SD' },
 ]
 
-const Synopsis = ({
-    onDrawerClose,
-    editData,
-    setMessage,
-    setlog,
-    ContentType,
-    Language,
-    Censorship,
-    Genre,
-    SubGenre,
-}) => {
+const AspectRatioPara = [
+    { value: '16:9', label: '16:9' },
+    { value: '4:3', label: '4:3' },
+]
+
+const Synopsis = ({ onDrawerClose, editData, setMessage, setlog }) => {
     const token = useSelector((state) => state.auth.session.token)
+
+    const onCheck = (value, e) => {
+        console.log(value, e)
+    }
 
     const AddContent = async (values, token) => {
         try {
@@ -143,10 +135,6 @@ const Synopsis = ({
                     CensorshipCode: editData.Censorship?.CensorshipCode || '',
                     FPCReleaseDate:
                         editData.FPCReleaseDate?.FPCReleaseDate || '',
-                    SlotDuration: editData.SlotDuration,
-                    GenreCode: editData.Genre?.GenreCode || '',
-                    SubGenreCode: editData.SubGenre?.SubGenreCode || '',
-                    TxMasterCode: editData.TxMasterCode,
 
                     IsActive: editData.IsActive === 1 ? true : false,
                 }}
@@ -196,70 +184,124 @@ const Synopsis = ({
                                     component={Input}
                                     hidden
                                 />
+
                                 <FormItemcompact
-                                    asterisk
-                                    label="ContentName"
+                                    label="Synopsis"
                                     invalid={
-                                        errors.ContentName &&
-                                        touched.ContentName
+                                        errors.Synopsis && touched.Synopsis
                                     }
-                                    errorMessage={errors.ContentName}
+                                    errorMessage={errors.Synopsis}
                                 >
                                     <Field
-                                        type="ContentName"
+                                        type="text"
                                         autoComplete="off"
-                                        name="ContentName"
-                                        placeholder="Content Name"
+                                        name="Synopsis"
+                                        placeholder="Synopsis"
+                                        component={Input}
+                                        textArea
+                                    />
+                                </FormItemcompact>
+                                <FormItemcompact
+                                    label="Generic Synopsis"
+                                    invalid={
+                                        errors.GenericSynopsis &&
+                                        touched.GenericSynopsis
+                                    }
+                                    errorMessage={errors.GenericSynopsis}
+                                >
+                                    <Field
+                                        type="text"
+                                        autoComplete="off"
+                                        name="GenericSynopsis"
+                                        placeholder="Generic Synopsis"
+                                        component={Input}
+                                        textArea
+                                    />
+                                </FormItemcompact>
+
+                                <FormItemcompact
+                                    label="EPG Content Name"
+                                    invalid={
+                                        errors.EPGContentName &&
+                                        touched.EPGContentName
+                                    }
+                                    errorMessage={errors.EPGContentName}
+                                >
+                                    <Field
+                                        type="EPGContentName"
+                                        autoComplete="off"
+                                        name="EPGContentName"
+                                        placeholder="EPG Content Name"
+                                        component={Input}
+                                    />
+                                </FormItemcompact>
+
+                                <FormItemcompact
+                                    label="Meta Data"
+                                    invalid={
+                                        errors.MetaData && touched.MetaData
+                                    }
+                                    errorMessage={errors.MetaData}
+                                >
+                                    <Field
+                                        type="MetaData"
+                                        autoComplete="off"
+                                        name="MetaData"
+                                        placeholder="Meta Data"
                                         component={Input}
                                     />
                                 </FormItemcompact>
                             </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 <FormItemcompact
                                     asterisk
-                                    label="ShortName"
+                                    label="InHouse/OutHouse"
                                     invalid={
-                                        errors.ShortName && touched.ShortName
+                                        errors.InHouseOutHouse &&
+                                        touched.InHouseOutHouse
                                     }
-                                    errorMessage={errors.ShortName}
+                                    errorMessage={errors.InHouseOutHouse}
                                 >
-                                    <Field
-                                        type="ShortName"
-                                        autoComplete="off"
-                                        name="ShortName"
-                                        placeholder="Short Name"
-                                        component={Input}
-                                    />
+                                    <div>
+                                        <Field
+                                            name="InHouseOutHouse"
+                                            component={Switcher}
+                                        />
+                                    </div>
+                                </FormItemcompact>
+
+                                <FormItemcompact
+                                    //asterisk
+                                    label=" "
+                                    invalid={
+                                        errors.GroupName && touched.GroupName
+                                    }
+                                    errorMessage={errors.GroupName}
+                                >
+                                    <div>
+                                        <Checkbox
+                                            defaultChecked
+                                            onChange={onCheck}
+                                        >
+                                            Is Group Name
+                                        </Checkbox>
+                                    </div>
                                 </FormItemcompact>
 
                                 <FormItemcompact
                                     asterisk
-                                    label="ERPCode"
-                                    invalid={errors.ERPCode && touched.ERPCode}
-                                    errorMessage={errors.ERPCode}
-                                >
-                                    <Field
-                                        type="ERPCode"
-                                        autoComplete="off"
-                                        name="ERPCode"
-                                        placeholder="ERPCode"
-                                        component={Input}
-                                    />
-                                </FormItemcompact>
-
-                                <FormItemcompact
-                                    asterisk
-                                    label="ContentType"
+                                    label="Video Type"
                                     invalid={
-                                        errors.ContentTypeCode &&
-                                        touched.ContentTypeCode
+                                        errors.VideoTypeCode &&
+                                        touched.VideoTypeCode
                                     }
-                                    errorMessage={errors.ContentTypeCode}
+                                    errorMessage={errors.VideoTypeCode}
                                     style={{ width: '250px' }}
                                 >
                                     <Field
                                         size="sm"
-                                        name="ContentTypeCode"
+                                        name="VideoTypeCode"
                                         style={{ width: '250px' }}
                                     >
                                         {({ field, form }) => (
@@ -267,11 +309,11 @@ const Synopsis = ({
                                                 style={{ width: '250px' }}
                                                 field={field}
                                                 form={form}
-                                                options={ContentType}
-                                                value={ContentType.filter(
+                                                options={VideoTypePara}
+                                                value={VideoTypePara.filter(
                                                     (option) =>
                                                         option.value ===
-                                                        values.ContentTypeCode
+                                                        values.VideoTypeCode
                                                 )}
                                                 onChange={(option) =>
                                                     form.setFieldValue(
@@ -286,280 +328,7 @@ const Synopsis = ({
 
                                 <FormItemcompact
                                     asterisk
-                                    label="ContentClassification"
-                                    invalid={
-                                        errors.ClassificationCode &&
-                                        touched.ClassificationCode
-                                    }
-                                    errorMessage={errors.ClassificationCode}
-                                    style={{ width: '250px' }}
-                                >
-                                    <Field
-                                        name="ContentClassification"
-                                        style={{ width: '250px' }}
-                                    >
-                                        {({ field, form }) => (
-                                            <Select
-                                                style={{ width: '250px' }}
-                                                field={field}
-                                                form={form}
-                                                options={options2}
-                                                value={options2.filter(
-                                                    (option) =>
-                                                        option.value ===
-                                                        values.ClassificationCode
-                                                )}
-                                                onChange={(option) =>
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        option?.value
-                                                    )
-                                                }
-                                            />
-                                        )}
-                                    </Field>
-                                </FormItemcompact>
-
-                                <FormItemcompact
-                                    asterisk
-                                    label="Audience"
-                                    invalid={
-                                        errors.Audience && touched.Audience
-                                    }
-                                    errorMessage={errors.Audience}
-                                    style={{ width: '250px' }}
-                                >
-                                    <Field
-                                        name="Audience"
-                                        style={{ width: '250px' }}
-                                    >
-                                        {({ field, form }) => (
-                                            <Select
-                                                style={{ width: '250px' }}
-                                                field={field}
-                                                form={form}
-                                                options={options3}
-                                                value={options3.filter(
-                                                    (option) =>
-                                                        option.value ===
-                                                        values.Audience
-                                                )}
-                                                onChange={(option) =>
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        option?.value
-                                                    )
-                                                }
-                                            />
-                                        )}
-                                    </Field>
-                                </FormItemcompact>
-
-                                <FormItemcompact
-                                    asterisk
-                                    label="Language"
-                                    invalid={
-                                        errors.LanguageCode &&
-                                        touched.LanguageCode
-                                    }
-                                    errorMessage={errors.LanguageCode}
-                                    style={{ width: '250px' }}
-                                >
-                                    <Field
-                                        size="sm"
-                                        name="Language"
-                                        style={{ width: '250px' }}
-                                    >
-                                        {({ field, form }) => (
-                                            <Select
-                                                style={{ width: '250px' }}
-                                                field={field}
-                                                form={form}
-                                                options={Language}
-                                                value={Language.filter(
-                                                    (option) =>
-                                                        option.value ===
-                                                        values.LanguageCode
-                                                )}
-                                                onChange={(option) =>
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        option?.value
-                                                    )
-                                                }
-                                            />
-                                        )}
-                                    </Field>
-                                </FormItemcompact>
-
-                                {/* <FormItemcompact
-                                    asterisk
-                                    label="Censorship"
-                                    invalid={
-                                        errors.CensorshipCode &&
-                                        touched.CensorshipCode
-                                    }
-                                    errorMessage={errors.CensorshipCode}
-                                    style={{ width: '250px' }}
-                                >
-                                    <Field
-                                        size="sm"
-                                        name="Censorship"
-                                        style={{ width: '250px' }}
-                                    >
-                                        {({ field, form }) => (
-                                            <Select
-                                                style={{ width: '250px' }}
-                                                field={field}
-                                                form={form}
-                                               
-                                                options={Censorship}
-                                                value={Censorship.filter(
-                                                    (option) =>
-                                                        option.value ===
-                                                        values.CensorshipCode
-                                                )}
-                                                onChange={(option) =>
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        option?.value
-                                                    )
-                                                }
-                                            />
-                                        )}
-                                    </Field>
-                                </FormItemcompact> */}
-
-                                <FormItemcompact
-                                    label="Content Release Date"
-                                    invalid={
-                                        errors.FPCReleaseDate &&
-                                        touched.FPCReleaseDate
-                                    }
-                                    errorMessage={errors.FPCReleaseDate}
-                                >
-                                    <Field
-                                        name="FPCReleaseDate"
-                                        placeholder="Date"
-                                    >
-                                        {({ field, form }) => (
-                                            <DatePicker
-                                                field={field}
-                                                form={form}
-                                                value={field.value}
-                                                prefix={
-                                                    <HiCake className="text-xl" />
-                                                }
-                                                onChange={(date) => {
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        date
-                                                    )
-                                                }}
-                                            />
-                                        )}
-                                    </Field>
-                                </FormItemcompact>
-                                <FormItemcompact
-                                    asterisk
-                                    label="Slot Duration In Mins."
-                                    invalid={
-                                        errors.SlotDuration &&
-                                        touched.SlotDuration
-                                    }
-                                    errorMessage={errors.SlotDuration}
-                                >
-                                    <Field
-                                        type="SlotDuration"
-                                        autoComplete="off"
-                                        name="SlotDuration"
-                                        placeholder="Slot Duration"
-                                        component={Input}
-                                    />
-                                </FormItemcompact>
-
-                                <FormItemcompact
-                                    asterisk
-                                    label="Genre"
-                                    invalid={
-                                        errors.GenreCode && touched.GenreCode
-                                    }
-                                    errorMessage={errors.GenreCode}
-                                    style={{ width: '250px' }}
-                                >
-                                    <Field
-                                        size="sm"
-                                        name="Genre"
-                                        style={{ width: '250px' }}
-                                    >
-                                        {({ field, form }) => (
-                                            <Select
-                                                style={{ width: '250px' }}
-                                                field={field}
-                                                form={form}
-                                                options={Genre}
-                                                value={Genre.filter(
-                                                    (option) =>
-                                                        option.value ===
-                                                        values.GenreCode
-                                                )}
-                                                onChange={(option) =>
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        option?.value
-                                                    )
-                                                }
-                                            />
-                                        )}
-                                    </Field>
-                                </FormItemcompact>
-
-                                <FormItemcompact
-                                    asterisk
-                                    label="SubGenre"
-                                    invalid={
-                                        errors.SubGenreCode &&
-                                        touched.SubGenreCode
-                                    }
-                                    errorMessage={errors.SubGenreCode}
-                                    style={{ width: '250px' }}
-                                >
-                                    <Field
-                                        size="sm"
-                                        name="SubGenre"
-                                        style={{ width: '250px' }}
-                                    >
-                                        {({ field, form }) => (
-                                            <Select
-                                                style={{ width: '250px' }}
-                                                field={field}
-                                                form={form}
-                                                options={SubGenre}
-                                                value={SubGenre.filter(
-                                                    (option) =>
-                                                        option.value ===
-                                                        values.SubGenreCode
-                                                )}
-                                                onChange={(option) =>
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        option?.value
-                                                    )
-                                                }
-                                            />
-                                        )}
-                                    </Field>
-                                </FormItemcompact>
-                            </div>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
-                                <FormItemcompact
-                                    asterisk
-                                    label="Status"
+                                    label="Colored/B&W"
                                     invalid={
                                         errors.IsActive && touched.IsActive
                                     }
@@ -572,7 +341,116 @@ const Synopsis = ({
                                         />
                                     </div>
                                 </FormItemcompact>
+
+                                <FormItemcompact
+                                    //asterisk
+                                    label=" "
+                                    invalid={
+                                        errors.IgnoreRODPSpots &&
+                                        touched.IgnoreRODPSpots
+                                    }
+                                    errorMessage={errors.IgnoreRODPSpots}
+                                >
+                                    <div>
+                                        <Checkbox
+                                            defaultChecked
+                                            onChange={onCheck}
+                                        >
+                                            Is Ignore RODP Spots
+                                        </Checkbox>
+                                    </div>
+                                </FormItemcompact>
+
+                                <FormItemcompact
+                                    asterisk
+                                    label="Aspect Radio"
+                                    invalid={
+                                        errors.AspectRatio &&
+                                        touched.AspectRatio
+                                    }
+                                    errorMessage={errors.AspectRatio}
+                                    style={{ width: '250px' }}
+                                >
+                                    <Field
+                                        size="sm"
+                                        name="AspectRatio"
+                                        style={{ width: '250px' }}
+                                    >
+                                        {({ field, form }) => (
+                                            <Select
+                                                style={{ width: '250px' }}
+                                                field={field}
+                                                form={form}
+                                                options={AspectRatioPara}
+                                                value={AspectRatioPara.filter(
+                                                    (option) =>
+                                                        option.value ===
+                                                        values.AspectRatio
+                                                )}
+                                                onChange={(option) =>
+                                                    form.setFieldValue(
+                                                        field.name,
+                                                        option?.value
+                                                    )
+                                                }
+                                            />
+                                        )}
+                                    </Field>
+                                </FormItemcompact>
+
+                                <FormItemcompact
+                                    asterisk
+                                    label="Recoreded/Live"
+                                    invalid={
+                                        errors.IsActive && touched.IsActive
+                                    }
+                                    errorMessage={errors.IsActive}
+                                >
+                                    <div>
+                                        <Field
+                                            name="IsActive"
+                                            component={Switcher}
+                                        />
+                                    </div>
+                                </FormItemcompact>
+
+                                <FormItemcompact
+                                    asterisk
+                                    label="Default Seg#"
+                                    invalid={
+                                        errors.SlotDuration &&
+                                        touched.SlotDuration
+                                    }
+                                    errorMessage={errors.SlotDuration}
+                                >
+                                    <Field
+                                        type="SlotDuration"
+                                        autoComplete="off"
+                                        name="SlotDuration"
+                                        placeholder="Default Seg"
+                                        component={Input}
+                                    />
+                                </FormItemcompact>
+
+                                <FormItemcompact
+                                    asterisk
+                                    label="Default Seg Duration"
+                                    invalid={
+                                        errors.SlotDuration &&
+                                        touched.SlotDuration
+                                    }
+                                    errorMessage={errors.SlotDuration}
+                                >
+                                    <Field
+                                        type="SlotDuration"
+                                        autoComplete="off"
+                                        name="SlotDuration"
+                                        placeholder="Default Seg Duration"
+                                        component={Input}
+                                    />
+                                </FormItemcompact>
                             </div>
+
                             <FormItemcompact>
                                 <Button variant="solid" type="submit">
                                     Submit

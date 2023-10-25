@@ -34,7 +34,7 @@ const validationSchema = Yup.object().shape({
     //     .required('ContentType Required'),
     Audience: Yup.string().required('Audience Required'),
     ClassificationCode: Yup.string()
-        .min(3, 'Too Short!')
+        .min(1, 'Too Short!')
         .max(50, 'Too Long!')
         .required('ClassificationCode Required'),
     LanguageCode: Yup.string()
@@ -67,6 +67,7 @@ const validationSchema = Yup.object().shape({
     //     .required('TxMasterCode Required'),
 
     IsActive: Yup.string().required('IsActives Required'),
+
     rememberMe: Yup.bool(),
 })
 
@@ -156,10 +157,8 @@ const ContentEdit = ({
                     SlotDuration: editData.SlotDuration,
                     GenreCode: editData.Genre?.GenreCode || '',
                     SubGenreCode: editData.SubGenre?.SubGenreCode || '',
-
                     CensorshipCode: editData.Censorship?.CensorshipCode || '',
                     TxMasterCode: editData.TxMasterCode,
-
                     IsActive: editData.IsActive === 1 ? true : false,
                 }}
                 validationSchema={validationSchema}
