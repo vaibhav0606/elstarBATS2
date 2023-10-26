@@ -19,8 +19,11 @@ const DefaultItem = ({ nav, onLinkClick, userAuthority }) => {
                                 i18nKey={nav.translateKey}
                                 //defaults={nav.title}
                                 defaults={
-                                    <p className="text-sm font-normal">
-                                        --{nav.title}
+                                    <p
+                                        className=" font-normal"
+                                        style={{ fontSize: '13px' }}
+                                    >
+                                        -- {nav.title}
                                     </p>
                                 }
                             />
