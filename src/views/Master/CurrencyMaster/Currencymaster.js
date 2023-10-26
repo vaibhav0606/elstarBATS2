@@ -68,10 +68,22 @@ const Currencymaster = () => {
                 header: 'Currency Name',
                 accessorKey: 'CurrencyName',
             },
-            // {
-            //     header: 'Currency Image',
-            //     accessorKey: 'Currency_image',
-            // },
+            {
+                header: 'Currency Image',
+                accessorKey: 'Currency_image',
+                cell: (props) => {
+                    const row = props.row.original
+
+                    return (
+                        <div className="flex items-center">
+                            <img
+                                src={`data:image/jpeg;base64,${row.Currency_image}`}
+                                style={{ height: '30px', width: '30px' }}
+                            />
+                        </div>
+                    )
+                },
+            },
             {
                 header: 'Currency Symbol',
                 accessorKey: 'CurrencySymbol',

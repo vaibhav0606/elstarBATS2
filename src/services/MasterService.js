@@ -846,11 +846,11 @@ const PutSubmodule = (param, token) => {
     })
 }
 
-const Postcurrency = (param, token) => {
+const Postcurrency = (param, token, binaryData) => {
     return new Promise((resolve, reject) => {
         let data = JSON.stringify({
             CurrencyName: param.CurrencyName,
-            Currency_image: 'string',
+            Currency_image: param.Currency_image,
             CurrencySymbol: param.CurrencySymbol,
             ShortName: param.ShortName,
         })
@@ -877,11 +877,11 @@ const Postcurrency = (param, token) => {
     })
 }
 
-const Putcurrency = (param, token) => {
+const Putcurrency = (param, token, binaryData) => {
     return new Promise((resolve, reject) => {
         let data = JSON.stringify({
             CurrencyName: param.CurrencyName,
-            Currency_image: '1.png',
+            Currency_image: param.Currency_image,
             CurrencySymbol: param.CurrencySymbol,
             ShortName: param.ShortName,
         })
