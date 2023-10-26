@@ -6,6 +6,13 @@ import {
     HiOutlineViewGridAdd,
     HiOutlineHome,
 } from 'react-icons/hi'
+import {
+    FcFilingCabinet,
+    FcSettings,
+    FcConferenceCall,
+    FcCollaboration,
+    FcPlanner,
+} from 'react-icons/fc'
 
 import { BsArrowBarRight } from 'react-icons/bs'
 const navigationIcon = {
@@ -15,6 +22,11 @@ const navigationIcon = {
     HiAcademicCap: <BsArrowBarRight />,
     groupSingleMenu: <HiOutlineDesktopComputer />,
     groupCollapseMenu: <HiOutlineColorSwatch />,
+    FcFilingCabinet: <FcFilingCabinet />,
+    FcSettings: <FcSettings />,
+    FcConferenceCall: <FcConferenceCall />,
+    FcCollaboration: <FcCollaboration />,
+    FcPlanner: <FcPlanner />,
 }
 
 export default navigationIcon

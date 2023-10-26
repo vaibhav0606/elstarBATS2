@@ -5,7 +5,7 @@ import {
     Checkbox,
     FormItem,
     FormContainer,
-    Alert
+    Alert,
 } from 'components/ui'
 import { StickyFooter, ConfirmDialog } from 'components/shared'
 import { PasswordInput, ActionLink } from 'components/shared'
@@ -20,7 +20,7 @@ const validationSchema = Yup.object().shape({
     password: Yup.string().required('Please enter your password'),
     rememberMe: Yup.bool(),
 })
-const APP_NAME = "BATS"
+const APP_NAME = 'BATS'
 
 const SignInForm = (props) => {
     const {
@@ -56,8 +56,8 @@ const SignInForm = (props) => {
             <Formik
                 // Remove this initial value
                 initialValues={{
-                    userName: 'admin',
-                    password: 'admin',
+                    userName: 'akash',
+                    password: 'akash',
                     rememberMe: true,
                 }}
                 validationSchema={validationSchema}
@@ -91,7 +91,8 @@ const SignInForm = (props) => {
                                         />
                                     </FormItem>
 
-                                    <Button className="mb-8"
+                                    <Button
+                                        className="mb-8"
                                         block
                                         onClick={() => {
                                             if (
@@ -108,10 +109,6 @@ const SignInForm = (props) => {
                                     >
                                         Continue
                                     </Button>
-                                    
-                                
-                                     
-                                  
                                 </>
                             )}
                             {isshow ? null : (
