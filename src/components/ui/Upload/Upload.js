@@ -195,6 +195,10 @@ const Upload = React.forwardRef((props, ref) => {
             {tip}
             {showList && (
                 <div className="upload-file-list">
+                    {/* <img
+                        src={`data:image/jpeg;base64,${files}`}
+                        style={{ height: '70px', width: '100px' }}
+                    /> */}
                     {files.map((file, index) => (
                         <FileItem file={file} key={file.name + index}>
                             <CloseButton
