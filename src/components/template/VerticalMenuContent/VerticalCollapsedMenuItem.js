@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import VerticalMenuIcon from './VerticalMenuIcon'
 import { Trans } from 'react-i18next'
 import { AuthorityCheck } from 'components/shared'
+import navigationIcon from 'configs/navigation-icon.config'
 
 const { MenuItem, MenuCollapse } = Menu
 
@@ -23,7 +24,7 @@ const DefaultItem = ({ nav, onLinkClick, userAuthority }) => {
                                         className=" font-normal"
                                         style={{ fontSize: '13px' }}
                                     >
-                                        -- {nav.title}
+                                        &nbsp;{nav.title}
                                     </p>
                                 }
                             />
@@ -58,8 +59,13 @@ const DefaultItem = ({ nav, onLinkClick, userAuthority }) => {
                                         <Trans
                                             i18nKey={subNav.translateKey}
                                             defaults={
-                                                <p className="text-xs font-normal">
-                                                    -- {subNav.title}
+                                                <p className="text-xs font-normal flex ">
+                                                    {subNav.icon &&
+                                                        navigationIcon[
+                                                            subNav.icon
+                                                        ]}
+                                                    &nbsp;
+                                                    {subNav.title}
                                                 </p>
                                             }
                                         />

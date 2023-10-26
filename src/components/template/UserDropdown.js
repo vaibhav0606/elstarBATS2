@@ -6,6 +6,7 @@ import useAuth from 'utils/hooks/useAuth'
 import { Link } from 'react-router-dom'
 import classNames from 'classnames'
 import { HiOutlineUser, HiOutlineLogout } from 'react-icons/hi'
+import { useSelector } from 'react-redux'
 
 const dropdownItemList = []
 
@@ -14,13 +15,13 @@ export const UserDropdown = ({ className }) => {
     // const userInfo = useSelector((state) => state.auth.user)
 
     const { signOut } = useAuth()
-
+    const Username = useSelector((state) => state.auth.session.Username)
     const UserAvatar = (
         <div className={classNames(className, 'flex items-center gap-2')}>
             <Avatar size={32} shape="circle" icon={<HiOutlineUser />} />
             <div className="hidden md:block">
                 {/* <div className="text-xs capitalize">admin</div> */}
-                <div className="font-bold">Admin</div>
+                <div className="font-bold capitalize">{Username}</div>
             </div>
         </div>
     )
@@ -36,8 +37,8 @@ export const UserDropdown = ({ className }) => {
                     <div className="py-2 px-3 flex items-center gap-2">
                         <Avatar shape="circle" icon={<HiOutlineUser />} />
                         <div>
-                            <div className="font-bold text-gray-900 dark:text-gray-100">
-                            Admin
+                            <div className="font-bold text-gray-900 dark:text-gray-100 capitalize">
+                                {Username}
                             </div>
                             {/* <div className="text-xs">user01@mail.com</div> */}
                         </div>
@@ -50,8 +51,8 @@ export const UserDropdown = ({ className }) => {
                         eventKey={item.label}
                         className="mb-1 px-0"
                     >
-                        <Link 
-                            className="flex h-full w-full px-2" 
+                        <Link
+                            className="flex h-full w-full px-2"
                             to={item.path}
                         >
                             <span className="flex gap-2 items-center w-full">
