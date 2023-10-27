@@ -27,6 +27,7 @@ import SeasonMapping from './SeasonMapping'
 import MapStarcast from './MapStarcast'
 import EpisodeRestrictions from './EpisodeRestrictions'
 import Synopsis from './Synopsis'
+import { Link, useNavigate } from 'react-router-dom'
 
 const headerExtraContent = (
     openDrawer,
@@ -57,6 +58,18 @@ const headerExtraContent = (
                 >
                     Add Content
                 </Button>
+            </span>
+            <span className="mr-1 font-semibold">
+                <Link to={'/addcontent'}>
+                    <Button
+                        block
+                        variant="solid"
+                        size="sm"
+                        icon={<HiPlusCircle />}
+                    >
+                        Add Employee
+                    </Button>
+                </Link>
             </span>
         </span>
     )
