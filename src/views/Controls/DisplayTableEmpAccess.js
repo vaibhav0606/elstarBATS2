@@ -53,7 +53,7 @@ const DisplayTableEmpAccess = ({
     const [log, setlog] = useState('')
     const [resultArray, setResultArray] = useState([])
     const [selectedRows, setSelectedRows] = useState([])
-    console.log(LoginId)
+    // console.log(LoginId)
     useEffect(() => {
         ;(async (value) => {
             const resp = await apiGetgetrights(LoginId)
@@ -219,7 +219,7 @@ const DisplayTableEmpAccess = ({
                                     )
                                     const isCheck = filteredDatas.length > 0
                                     const isCheck2 = filteredData2.length > 0
-                                    console.log(filteredDatas)
+                                    // console.log(filteredDatas)
                                     return (
                                         <Tr key={row.id}>
                                             {row
