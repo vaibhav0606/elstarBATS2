@@ -82,6 +82,7 @@ const PartternDetail = forwardRef((props, ref) => {
                         </>
                     ) : null}
                 </div>
+
                 <div className="lg:col-span-1">
                     <Checkbox onChange={onCheck}>Program Type</Checkbox>
                 </div>

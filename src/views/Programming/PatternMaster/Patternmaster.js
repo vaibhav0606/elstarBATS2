@@ -157,7 +157,7 @@ const Patternmaster = () => {
                 </Alert>
             )} */}
             <Card
-                header={<HeaderExtra Component={'PromoType Master'} />}
+                header={<HeaderExtra Component={'Pattern Master'} />}
                 headerExtra={headerExtraContent(
                     openDrawer,
                     DebouncedInput,
