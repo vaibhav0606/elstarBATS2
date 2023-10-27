@@ -156,9 +156,12 @@ const PromoTypeEdit = () => {
                                     </Card>
                                 </div>
                             </div>
+                            <br></br>
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                                 <div className="lg:col-span-2">
                                     <Card>
+                                        {/* <h5>Details2</h5> */}
+                                        <br></br>
                                         <TypeBox
                                             values={values}
                                             touched={touched}
@@ -167,7 +170,7 @@ const PromoTypeEdit = () => {
                                     </Card>
                                 </div>
                             </div>
-
+                            <br></br>
                             <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit

@@ -131,7 +131,7 @@ const HeaderDuration = forwardRef((props, ref) => {
                 <div className="lg:col-span-1">
                     <FormItemcompact
                         asterisk
-                        label="No Fo Seg "
+                        label="No Of Seg "
                         invalid={errors.NoOfSeg && touched.NoOfSeg}
                         errorMessage={errors.NoOfSeg}
                     >
