@@ -9,7 +9,7 @@ import CustomerProfile from './CustomerProfile'
 // import PaymentHistory from './components/PaymentHistory'
 // import CurrentSubscription from './components/CurrentSubscription'
 import Dataexpand from './dataexpand'
-import Exapanding from 'views/Programming/PatternMaster/Exapanding'
+// import Exapanding from 'views/Programming/PatternMaster/Exapanding'
 import isEmpty from 'lodash/isEmpty'
 import { apiGetEmpbyid } from 'services/MasterService'
 import { useLocation } from 'react-router'
@@ -41,7 +41,7 @@ const EmployeeView = () => {
                         <div className="col-span-5">
                             <AdaptableCard>
                                 <Dataexpand/>{/* <CurrentSubscription />*/}
-                                <Exapanding />
+                                {/* <Exapanding /> */}
                                 <EmpLoginRights />
                                 {/* <PaymentMethods data={data.paymentMethod} /> */}
                             </AdaptableCard>
