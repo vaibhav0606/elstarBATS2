@@ -5,10 +5,14 @@ import VerticalMenuIcon from './VerticalMenuIcon'
 import { Trans } from 'react-i18next'
 import { AuthorityCheck } from 'components/shared'
 import navigationIcon from 'configs/navigation-icon.config'
+import { useSelector } from 'react-redux'
 
 const { MenuItem, MenuCollapse } = Menu
 
 const DefaultItem = ({ nav, onLinkClick, userAuthority }) => {
+    const primaryFontLevel = useSelector(
+        (state) => state.theme.primaryFontLevel
+    )
     return (
         <AuthorityCheck userAuthority={userAuthority} authority={nav.authority}>
             <MenuCollapse
@@ -22,7 +26,9 @@ const DefaultItem = ({ nav, onLinkClick, userAuthority }) => {
                                 defaults={
                                     <p
                                         className=" font-normal"
-                                        style={{ fontSize: '13px' }}
+                                        style={{
+                                            fontSize: 12 + primaryFontLevel,
+                                        }}
                                     >
                                         &nbsp;{nav.title}
                                     </p>
@@ -34,7 +40,6 @@ const DefaultItem = ({ nav, onLinkClick, userAuthority }) => {
                 key={nav.key}
                 eventKey={nav.key}
                 expanded={false}
-                className="mb-2"
             >
                 {nav.subMenu.map((subNav) => (
                     <AuthorityCheck
@@ -42,7 +47,10 @@ const DefaultItem = ({ nav, onLinkClick, userAuthority }) => {
                         authority={subNav.authority}
                         key={subNav.key}
                     >
-                        <MenuItem eventKey={subNav.key}>
+                        <MenuItem
+                            eventKey={subNav.key}
+                            style={{ marginBottom: 1 }}
+                        >
                             {subNav.path ? (
                                 <Link
                                     className="h-full w-full flex items-center"
@@ -59,11 +67,25 @@ const DefaultItem = ({ nav, onLinkClick, userAuthority }) => {
                                         <Trans
                                             i18nKey={subNav.translateKey}
                                             defaults={
-                                                <p className="text-xs font-normal flex ">
-                                                    {subNav.icon &&
-                                                        navigationIcon[
-                                                            subNav.icon
-                                                        ]}
+                                                <p
+                                                    className=" font-normal flex "
+                                                    style={{
+                                                        fontSize:
+                                                            10 +
+                                                            primaryFontLevel,
+                                                        display: 'flex',
+                                                    }}
+                                                >
+                                                    <p
+                                                        style={{
+                                                            marginTop: '2px',
+                                                        }}
+                                                    >
+                                                        {subNav.icon &&
+                                                            navigationIcon[
+                                                                subNav.icon
+                                                            ]}
+                                                    </p>
                                                     &nbsp;
                                                     {subNav.title}
                                                 </p>
