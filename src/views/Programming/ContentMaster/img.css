@@ -1,0 +1,17 @@
+.custom-button_img {
+    background-color: transparent; /* Change to your desired background color */
+    color: #fff; /* Change to your desired text color */
+     /* Adjust padding as needed */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-top:8%;
+    width: 50%;
+  }
+  
+  .custom-button_img img {
+    margin-right: 8px; /* Adjust the margin as needed */
+ 
+  }
