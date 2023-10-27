@@ -29,6 +29,7 @@ const initialState = {
     direction: themeConfig.direction,
     mode: themeConfig.mode,
     primaryColorLevel: themeConfig.primaryColorLevel,
+    primaryFontLevel: themeConfig.primaryFontLevel,
     panelExpand: themeConfig.panelExpand,
     navMode: initialNavMode(),
     layout: themeConfig.layout,
@@ -130,6 +131,9 @@ export const themeSlice = createSlice({
         setThemeColorLevel: (state, action) => {
             state.primaryColorLevel = action.payload
         },
+        setThemeFontLevel: (state, action) => {
+            state.primaryFontLevel = action.payload
+        },
     },
 })
 
@@ -143,6 +147,7 @@ export const {
     setThemeColor,
     setThemeColorLevel,
     setPreviousLayout,
+    setThemeFontLevel,
 } = themeSlice.actions
 
 export default themeSlice.reducer

@@ -2,44 +2,44 @@ import {
     NAV_ITEM_TYPE_COLLAPSE,
     NAV_ITEM_TYPE_ITEM,
 } from 'constants/navigation.constant'
-
+import { ADMIN, USER } from 'constants/roles.constant'
 const navigationConfig = [
-    {
-        key: 'Dashboard',
-        path: '/Dashboard',
-        title: 'Home',
-        translateKey: 'nav.Dashboard',
-        icon: 'home',
-        type: NAV_ITEM_TYPE_ITEM,
-        authority: [],
-        subMenu: [],
-    },
+    // {
+    //     key: 'Dashboard',
+    //     path: '/Dashboard',
+    //     title: 'Home',
+    //     translateKey: 'nav.Dashboard',
+    //     icon: 'home',
+    //     type: NAV_ITEM_TYPE_ITEM,
+    //    authority: [ADMIN, USER],
+    //     subMenu: [],
+    // },
     {
         key: 'Admin',
         path: '',
         title: 'Admin',
-        translateKey: 'nav.Admin',
+        translateKey: 'Admin',
         icon: 'groupSingleMenu',
         type: NAV_ITEM_TYPE_COLLAPSE,
-        authority: [],
+        authority: [ADMIN, USER],
         subMenu: [
             {
                 key: 'UserManagement',
                 path: '',
                 icon: 'FcConferenceCall',
                 title: 'User Management',
-                translateKey: 'nav.UserManagement',
+                translateKey: 'UserManagement',
                 type: NAV_ITEM_TYPE_COLLAPSE,
-                authority: [],
+                authority: [ADMIN, USER],
                 subMenu: [
                     {
                         key: 'employeemaster',
                         path: '/employee',
                         title: 'Employee Master',
-                        translateKey: 'nav.employeemaster',
+                        translateKey: 'employeemaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                 ],
@@ -51,7 +51,7 @@ const navigationConfig = [
                 icon: 'FcSettings',
                 translateKey: 'nav.ChannelSettings',
                 type: NAV_ITEM_TYPE_COLLAPSE,
-                authority: [],
+                authority: [ADMIN, USER],
                 subMenu: [
                     {
                         key: 'channelmaster',
@@ -60,7 +60,7 @@ const navigationConfig = [
                         translateKey: 'nav.channelmaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                     {
@@ -70,7 +70,7 @@ const navigationConfig = [
                         translateKey: 'nav.entitymaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                     {
@@ -80,7 +80,7 @@ const navigationConfig = [
                         translateKey: 'nav.locationmaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                 ],
@@ -92,7 +92,7 @@ const navigationConfig = [
                 title: 'Common Master',
                 translateKey: 'nav.CommonManagement',
                 type: NAV_ITEM_TYPE_COLLAPSE,
-                authority: [],
+                authority: [ADMIN, USER],
                 subMenu: [
                     {
                         key: 'currencymaster',
@@ -101,7 +101,7 @@ const navigationConfig = [
                         translateKey: 'nav.currencymaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                     {
@@ -111,7 +111,7 @@ const navigationConfig = [
                         translateKey: 'nav.designationMaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                     {
@@ -121,7 +121,7 @@ const navigationConfig = [
                         translateKey: 'nav.departmentmaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
 
@@ -132,7 +132,7 @@ const navigationConfig = [
                         translateKey: 'nav.languagemaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
 
@@ -143,7 +143,7 @@ const navigationConfig = [
                         translateKey: 'nav.placemaster.item2',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                     {
@@ -153,7 +153,7 @@ const navigationConfig = [
                         translateKey: 'nav.timezonemaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
 
@@ -164,7 +164,7 @@ const navigationConfig = [
                         translateKey: 'nav.regionmaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                     {
@@ -174,7 +174,7 @@ const navigationConfig = [
                         translateKey: 'nav.statemaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                     {
@@ -184,7 +184,7 @@ const navigationConfig = [
                         translateKey: 'nav.zonemaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                 ],
@@ -196,7 +196,7 @@ const navigationConfig = [
                 title: 'System Settings',
                 translateKey: 'nav.SystemSettings',
                 type: NAV_ITEM_TYPE_COLLAPSE,
-                authority: [],
+                authority: [ADMIN, USER],
                 subMenu: [
                     {
                         key: 'formmaster',
@@ -205,7 +205,7 @@ const navigationConfig = [
                         translateKey: 'nav.formmaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                     {
@@ -215,7 +215,7 @@ const navigationConfig = [
                         translateKey: 'nav.modulemaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                     {
@@ -225,7 +225,7 @@ const navigationConfig = [
                         translateKey: 'nav.submodulemaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                 ],
@@ -239,7 +239,7 @@ const navigationConfig = [
         translateKey: 'nav.Programming',
         icon: 'singleMenu',
         type: NAV_ITEM_TYPE_COLLAPSE,
-        authority: [],
+        authority: [ADMIN, USER],
         subMenu: [
             {
                 key: 'suppliermastertable',
@@ -248,7 +248,7 @@ const navigationConfig = [
                 title: 'Content Management',
                 translateKey: 'nav.suppliermastertable',
                 type: NAV_ITEM_TYPE_COLLAPSE,
-                authority: [],
+                authority: [ADMIN, USER],
                 subMenu: [
                     {
                         key: 'viewmaster',
@@ -257,7 +257,7 @@ const navigationConfig = [
                         translateKey: 'nav.viewmaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                     {
@@ -267,7 +267,7 @@ const navigationConfig = [
                         translateKey: 'nav.aspectratiomaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                     {
@@ -277,7 +277,7 @@ const navigationConfig = [
                         translateKey: 'nav.awardmaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                     {
@@ -287,7 +287,7 @@ const navigationConfig = [
                         translateKey: 'nav.contenttypemaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                     {
@@ -297,7 +297,7 @@ const navigationConfig = [
                         translateKey: 'nav.contentsegmaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                     {
@@ -307,7 +307,7 @@ const navigationConfig = [
                         translateKey: 'nav.contentmaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                     {
@@ -317,7 +317,7 @@ const navigationConfig = [
                         translateKey: 'nav.commercialtypemaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                     {
@@ -327,7 +327,7 @@ const navigationConfig = [
                         translateKey: 'nav.Censorshipmaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                     {
@@ -337,7 +337,7 @@ const navigationConfig = [
                         translateKey: 'nav.fillertypemaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                     {
@@ -347,7 +347,7 @@ const navigationConfig = [
                         translateKey: 'nav.genremaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                     {
@@ -357,7 +357,7 @@ const navigationConfig = [
                         translateKey: 'nav.fpcorgrep',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                     {
@@ -367,7 +367,7 @@ const navigationConfig = [
                         translateKey: 'nav.starcasttype',
                         icon: 'singleMenu',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                     {
@@ -377,7 +377,7 @@ const navigationConfig = [
                         translateKey: 'nav.starcastmaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
 
@@ -388,7 +388,7 @@ const navigationConfig = [
                         translateKey: 'nav.SubGenreMaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
 
@@ -399,7 +399,7 @@ const navigationConfig = [
                         translateKey: 'nav.Telecastmaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
 
@@ -410,7 +410,7 @@ const navigationConfig = [
                         translateKey: 'nav.promotypemaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
 
@@ -421,7 +421,7 @@ const navigationConfig = [
                         translateKey: 'nav.patterMaster',
                         icon: 'FcFilingCabinet',
                         type: NAV_ITEM_TYPE_ITEM,
-                        authority: [],
+                        authority: [ADMIN, USER],
                         subMenu: [],
                     },
                 ],

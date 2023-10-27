@@ -15,6 +15,8 @@ import { Button } from 'components/ui'
 import { HiEye, HiLockClosed, HiOutlinePencil } from 'react-icons/hi'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
+import TableRowSkeleton from 'components/shared/loaders/TableRowSkeleton'
+
 const DisplayTable = ({
     data,
     columns,
@@ -31,6 +33,14 @@ const DisplayTable = ({
     //console.log(setGlobalFilter);
     const navigate = useNavigate()
     console.log(data)
+    const [isLoading, setIsLoading] = useState(true)
+    useEffect(() => {
+        if (data.length > 0) {
+            setTimeout(() => {
+                setIsLoading(false)
+            }, 200)
+        }
+    }, [])
     const table = useReactTable({
         data,
         columns,
@@ -116,25 +126,28 @@ const DisplayTable = ({
                         </Tr>
                     ))}
                 </THead>
-                <TBody>
-                    {table.getRowModel().rows.map((row) => {
-                        return (
-                            <Tr key={row.id}>
-                                {row.getVisibleCells().map((cell) => {
-                                    return (
-                                        <Td
-                                            key={cell.id}
-                                            className="text-xs text-black font-medium border "
-                                        >
-                                            {flexRender(
-                                                cell.column.columnDef.cell,
-                                                cell.getContext()
-                                            )}
-                                        </Td>
-                                    )
-                                })}
-                                <Td className="text-xs text-black font-medium border flex">
-                                    {/* <Button
+                {isLoading ? (
+                    <TableRowSkeleton columns={3} rows={5} />
+                ) : (
+                    <TBody>
+                        {table.getRowModel().rows.map((row) => {
+                            return (
+                                <Tr key={row.id}>
+                                    {row.getVisibleCells().map((cell) => {
+                                        return (
+                                            <Td
+                                                key={cell.id}
+                                                className="text-xs text-black font-medium border "
+                                            >
+                                                {flexRender(
+                                                    cell.column.columnDef.cell,
+                                                    cell.getContext()
+                                                )}
+                                            </Td>
+                                        )
+                                    })}
+                                    <Td className="text-xs text-black font-medium border flex">
+                                        {/* <Button
                                         size="xs"
                                         variant="twoTone"
                                         icon={<HiOutlinePencil />}
@@ -145,37 +158,38 @@ const DisplayTable = ({
                                         }}
                                         style={{ marginRight: '5px' }}
                                     ></Button> */}
-                                    <Link
-                                        to={'/editUser'}
-                                        state={{ editData: row.original }}
-                                        size="xs"
-                                        variant="twoTone"
-                                    >
-                                        <Button
+                                        <Link
+                                            to={'/editUser'}
+                                            state={{ editData: row.original }}
                                             size="xs"
                                             variant="twoTone"
-                                            icon={<HiOutlinePencil />}
-                                        ></Button>
-                                    </Link>
+                                        >
+                                            <Button
+                                                size="xs"
+                                                variant="twoTone"
+                                                icon={<HiOutlinePencil />}
+                                            ></Button>
+                                        </Link>
 
-                                    <Link
-                                        to={'/emp/EmplyeeView'}
-                                        state={{ editData: row.original }}
-                                        size="xs"
-                                        variant="twoTone"
-                                        className="ml-2"
-                                    >
-                                        <Button
+                                        <Link
+                                            to={'/emp/EmplyeeView'}
+                                            state={{ editData: row.original }}
                                             size="xs"
                                             variant="twoTone"
-                                            icon={<HiEye />}
-                                        ></Button>
-                                    </Link>
-                                </Td>
-                            </Tr>
-                        )
-                    })}
-                </TBody>
+                                            className="ml-2"
+                                        >
+                                            <Button
+                                                size="xs"
+                                                variant="twoTone"
+                                                icon={<HiEye />}
+                                            ></Button>
+                                        </Link>
+                                    </Td>
+                                </Tr>
+                            )
+                        })}
+                    </TBody>
+                )}
             </Table>
             <div className="flex  justify-end mt-2">
                 <h1 className="text-xs  font-light">Records : {data.length}</h1>

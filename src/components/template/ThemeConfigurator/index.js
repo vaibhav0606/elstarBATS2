@@ -5,6 +5,7 @@ import ThemeSwitcher from './ThemeSwitcher'
 import DirectionSwitcher from './DirectionSwitcher'
 import NavModeSwitcher from './NavModeSwitcher'
 import CopyButton from './CopyButton'
+import FontSize from './FontSize'
 
 const ThemeConfigurator = ({ callBackClose }) => {
     return (
@@ -27,6 +28,10 @@ const ThemeConfigurator = ({ callBackClose }) => {
                 <div>
                     <h6 className="mb-3">Nav Mode</h6>
                     <NavModeSwitcher />
+                </div>
+                <div>
+                    <h6 className="mb-3">Font Size Increse By %</h6>
+                    <FontSize />
                 </div>
                 <div>
                     <h6 className="mb-3">Theme</h6>

@@ -8,76 +8,30 @@ import {
 } from '@tanstack/react-table'
 //import { dataWithSubRows } from './data'
 import { HiOutlinePlusCircle, HiOutlineMinusCircle } from 'react-icons/hi'
+import { Checkbox } from 'components/ui'
+import { useSelector } from 'react-redux'
 
 const { Tr, Th, Td, THead, TBody } = Table
 const dataWithSubRows = [
     {
-        firstName: 'Maria',
-        lastName: 'Anders',
-        age: 24,
-        visits: 28,
-        progress: 56,
-        status: 'complicated',
-        subRows: [
-            {
-                firstName: 'newspaper',
-                lastName: 'dinner',
-                age: 25,
-                visits: 2,
-                progress: 78,
-                status: 'single',
-            },
-            {
-                firstName: 'whip',
-                lastName: 'marriage',
-                age: 3,
-                visits: 95,
-                progress: 65,
-                status: 'single',
-            },
-            {
-                firstName: 'bee',
-                lastName: 'invention',
-                age: 7,
-                visits: 83,
-                progress: 68,
-                status: 'complicated',
-            },
-        ],
+        module: 'DEAL',
+        modulecode: 1,
+        submodule: 'Master Data',
+        submodulecode: 2,
+        form: 'Agency Group Master',
+        formcode: 3,
+        read: 1,
+        write: 1,
     },
     {
-        firstName: 'Maria',
-        lastName: 'Anders',
-        age: 24,
-        visits: 28,
-        progress: 56,
-        status: 'complicated',
-        subRows: [
-            {
-                firstName: 'newspaper',
-                lastName: 'dinner',
-                age: 25,
-                visits: 2,
-                progress: 78,
-                status: 'single',
-            },
-            {
-                firstName: 'whip',
-                lastName: 'marriage',
-                age: 3,
-                visits: 95,
-                progress: 65,
-                status: 'single',
-            },
-            {
-                firstName: 'bee',
-                lastName: 'invention',
-                age: 7,
-                visits: 83,
-                progress: 68,
-                status: 'complicated',
-            },
-        ],
+        module: 'PROGRAMMING',
+        modulecode: 2,
+        submodule: 'Content Management',
+        submodulecode: 1,
+        form: 'Award Master',
+        formcode: 5,
+        read: 1,
+        write: 1,
     },
 ]
 function Exapanding() {
@@ -125,33 +79,54 @@ function Exapanding() {
                 },
             },
             {
-                header: 'First Name',
-                accessorKey: 'firstName',
+                header: 'Module',
+                accessorKey: 'module',
             },
             {
-                header: 'Last Name',
-                accessorKey: 'lastName',
+                header: 'submodule',
+                accessorKey: 'submodule',
             },
             {
-                header: 'Age',
-                accessorKey: 'age',
+                header: 'form',
+                accessorKey: 'form',
             },
             {
-                header: 'Visits',
-                accessorKey: 'visits',
+                header: 'read',
+                cell: (props) => {
+                    const row = props.row.original
+                    return (
+                        <div className="flex items-center">
+                            <Checkbox
+                                name="read"
+                                type="checkbox"
+                                // checked={true}
+                                onClick={(e) => console.log(row)}
+                            />
+                        </div>
+                    )
+                },
             },
             {
-                header: 'Status',
-                accessorKey: 'status',
-            },
-            {
-                header: 'Profile Progress',
-                accessorKey: 'progress',
+                header: 'write',
+                cell: (props) => {
+                    const row = props.row.original
+                    return (
+                        <div className="flex items-center">
+                            <Checkbox
+                                name="write"
+                                type="checkbox"
+                                // checked={true}
+                                onClick={(e) => console.log(row)}
+                            />
+                        </div>
+                    )
+                },
             },
         ],
         []
     )
-
+    const { LoginId } = useSelector((state) => state.auth.session)
+    console.log(LoginId)
     const [data] = useState(dataWithSubRows)
     const [expanded, setExpanded] = useState([])
 
