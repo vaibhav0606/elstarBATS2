@@ -10,6 +10,8 @@ import { HiOutlinePlusCircle, HiOutlineMinusCircle } from 'react-icons/hi'
 import {Checkbox,Button} from 'components/ui'
 import { useSelector } from 'react-redux'
 import {  apiGetrightsShowT } from 'services/MasterService'
+import DisplayTableEmpAccess  from '../../Controls/DisplayTableEmpAccess'
+import { PostRights, apiGetgetrights } from 'services/MasterService'
 const { Tr, Th, Td, THead, TBody } = Table
 
 const dataWithSubRows = [
@@ -2237,6 +2239,7 @@ const dataWithSubRows = [
 function Exapanding() {
     const { LoginId } = useSelector((state) => state.auth.session)
     const [data, setdata] = useState([''])
+    const tokenS = useSelector((state) => state.auth.session.token)
 
     useEffect(() => {
         ;(async (values) => {
@@ -2305,7 +2308,7 @@ function Exapanding() {
                 accessorKey: 'FormName',
             },
             {
-                header: 'CanRead',
+                header: 'Read',
                 cell: (props) => {
                     const row = props.row.original
                     return (
@@ -2313,7 +2316,7 @@ function Exapanding() {
                             <Checkbox
                                 name={row.FormCode && "read"}
                                 type="checkbox"
-                                checked={row.CanRead  && true}
+                                defaultChecked={row.CanRead  && true}
                                 data-FormCode={row.FormCode}
                                 data-FormName={row.FormName}
                                 // onClick={(e) => console.log(row)}
@@ -2323,7 +2326,7 @@ function Exapanding() {
                 },
             },
             {
-                header: 'CanWrite',
+                header: 'Write',
                 cell: (props) => {
                     const row = props.row.original
                     return (
@@ -2331,7 +2334,7 @@ function Exapanding() {
                             <Checkbox
                                 name={row.FormCode && "write"}
                                 type="checkbox"
-                                checked={row.CanWrite  && true}
+                                defaultChecked={row.CanWrite  && true}
                                 data-FormCode={row.FormCode}
                                 data-FormName={row.FormName}
                                 // onClick={(e) => console.log(row)}
@@ -2358,6 +2361,22 @@ function Exapanding() {
         getCoreRowModel: getCoreRowModel(),
         getExpandedRowModel: getExpandedRowModel(),
     })
+
+    const addRights = async (values, token) => {
+        try {
+            const resp = await PostRights(values, token)
+            if (resp.status === 200) {
+                alert('Data Inserted Successfully')
+                return
+            } else if (resp.status === 'Server Error') {
+                alert('error')
+                return
+            }
+        } catch (errors) {
+            return {}
+        }
+    }
+
 
     return (
         <>
@@ -2435,12 +2454,27 @@ function Exapanding() {
                             convertedData.push({
                             LoginCode: LoginId,
                             FormCode: formCode,
-                            CanRead: 1,
+                            CanRead: canRead,
                             CanWrite: canWrite,
                             });
                         });
+                        writes.forEach((formCode) => {
+                            if(! reads.includes(formCode)){
+                            const canWrite = writes.includes(formCode) ? 1 : 0;
+                            const canRead = reads.includes(formCode) ? 1 : 0;
+                            convertedData.push({
+                            LoginCode: LoginId,
+                            FormCode: formCode,
+                            CanRead: canRead,
+                            CanWrite: canWrite,
+                            });
+                        }
+                        });
+                        
                         
                         console.log(convertedData);
+                        
+                        addRights(convertedData, tokenS)
                 }}
             >
                   Save

@@ -42,7 +42,7 @@ const EmployeeView = () => {
                             <AdaptableCard>
                                 <Dataexpand/>{/* <CurrentSubscription />*/}
                                 {/* <Exapanding /> */}
-                                <EmpLoginRights />
+                                {/* <EmpLoginRights /> */}
                                 {/* <PaymentMethods data={data.paymentMethod} /> */}
                             </AdaptableCard>
                         </div>
