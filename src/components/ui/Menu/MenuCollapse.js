@@ -53,7 +53,11 @@ const MenuCollapse = (props) => {
 
     return (
         <div className="menu-collapse">
-            <div className={menuCollapseItemClass} onClick={toggleCollapse}>
+            <div
+                className={menuCollapseItemClass}
+                onClick={toggleCollapse}
+                style={{ height: 'auto' }}
+            >
                 <span className="flex items-center">{label}</span>
                 <motion.span
                     className="text-lg mt-1"
@@ -70,8 +74,13 @@ const MenuCollapse = (props) => {
             </div>
             <CollapseContextProvider value={isExpanded}>
                 <motion.ul
-                    className={direction === 'rtl' ? 'mr-5' : 'ml-5'}
-                    initial={{ opacity: 0, height: 0, overflow: 'hidden' }}
+                    className={direction === 'rtl' ? 'mr-5 mb-2' : 'ml-5 mb-2'}
+                    initial={{
+                        opacity: 0,
+                        height: 0,
+                        overflow: 'hidden',
+                        marginTop: '-5px',
+                    }}
                     animate={{
                         opacity: isExpanded ? 1 : 0,
                         height: isExpanded ? getChildrenHeight() : 0,

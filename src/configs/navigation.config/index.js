@@ -4,16 +4,16 @@ import {
 } from 'constants/navigation.constant'
 import { ADMIN, USER } from 'constants/roles.constant'
 const navigationConfig = [
-    // {
-    //     key: 'Dashboard',
-    //     path: '/Dashboard',
-    //     title: 'Home',
-    //     translateKey: 'nav.Dashboard',
-    //     icon: 'home',
-    //     type: NAV_ITEM_TYPE_ITEM,
-    //    authority: [ADMIN, USER],
-    //     subMenu: [],
-    // },
+    {
+        key: 'Dashboard',
+        path: '/Dashboard',
+        title: 'Home',
+        translateKey: 'nav.Dashboard',
+        icon: 'home',
+        type: NAV_ITEM_TYPE_ITEM,
+        authority: [ADMIN, USER],
+        subMenu: [],
+    },
     {
         key: 'Admin',
         path: '',

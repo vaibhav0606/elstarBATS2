@@ -25,7 +25,7 @@ const DefaultItem = ({ nav, onLinkClick, userAuthority }) => {
                                 //defaults={nav.title}
                                 defaults={
                                     <p
-                                        className=" font-normal"
+                                        className="font-normal"
                                         style={{
                                             fontSize: 12 + primaryFontLevel,
                                         }}
@@ -40,6 +40,7 @@ const DefaultItem = ({ nav, onLinkClick, userAuthority }) => {
                 key={nav.key}
                 eventKey={nav.key}
                 expanded={false}
+                className="mb-2"
             >
                 {nav.subMenu.map((subNav) => (
                     <AuthorityCheck
@@ -47,10 +48,7 @@ const DefaultItem = ({ nav, onLinkClick, userAuthority }) => {
                         authority={subNav.authority}
                         key={subNav.key}
                     >
-                        <MenuItem
-                            eventKey={subNav.key}
-                            style={{ marginBottom: 1 }}
-                        >
+                        <MenuItem eventKey={subNav.key}>
                             {subNav.path ? (
                                 <Link
                                     className="h-full w-full flex items-center"
@@ -68,7 +66,7 @@ const DefaultItem = ({ nav, onLinkClick, userAuthority }) => {
                                             i18nKey={subNav.translateKey}
                                             defaults={
                                                 <p
-                                                    className=" font-normal flex "
+                                                    className="font-normal flex "
                                                     style={{
                                                         fontSize:
                                                             10 +
@@ -76,7 +74,7 @@ const DefaultItem = ({ nav, onLinkClick, userAuthority }) => {
                                                         display: 'flex',
                                                     }}
                                                 >
-                                                    <p
+                                                    <span
                                                         style={{
                                                             marginTop: '2px',
                                                         }}
@@ -85,7 +83,7 @@ const DefaultItem = ({ nav, onLinkClick, userAuthority }) => {
                                                             navigationIcon[
                                                                 subNav.icon
                                                             ]}
-                                                    </p>
+                                                    </span>
                                                     &nbsp;
                                                     {subNav.title}
                                                 </p>

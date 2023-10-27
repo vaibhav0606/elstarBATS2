@@ -26,12 +26,12 @@ const ThemeConfigurator = ({ callBackClose }) => {
                     <DirectionSwitcher callBackClose={callBackClose} />
                 </div>
                 <div>
-                    <h6 className="mb-3">Nav Mode</h6>
-                    <NavModeSwitcher />
-                </div>
-                <div>
                     <h6 className="mb-3">Font Size Increse By %</h6>
                     <FontSize />
+                </div>
+                <div>
+                    <h6 className="mb-3">Nav Mode</h6>
+                    <NavModeSwitcher />
                 </div>
                 <div>
                     <h6 className="mb-3">Theme</h6>
