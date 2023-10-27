@@ -4,10 +4,15 @@ import { Link } from 'react-router-dom'
 import VerticalMenuIcon from './VerticalMenuIcon'
 import { Trans } from 'react-i18next'
 import { AuthorityCheck } from 'components/shared'
+import navigationIcon from 'configs/navigation-icon.config'
+import { useSelector } from 'react-redux'
 
 const { MenuItem, MenuCollapse } = Menu
 
 const DefaultItem = ({ nav, onLinkClick, userAuthority }) => {
+    const primaryFontLevel = useSelector(
+        (state) => state.theme.primaryFontLevel
+    )
     return (
         <AuthorityCheck userAuthority={userAuthority} authority={nav.authority}>
             <MenuCollapse
@@ -19,8 +24,13 @@ const DefaultItem = ({ nav, onLinkClick, userAuthority }) => {
                                 i18nKey={nav.translateKey}
                                 //defaults={nav.title}
                                 defaults={
-                                    <p className="text-sm font-normal">
-                                        --{nav.title}
+                                    <p
+                                        className="font-normal"
+                                        style={{
+                                            fontSize: 12 + primaryFontLevel,
+                                        }}
+                                    >
+                                        &nbsp;{nav.title}
                                     </p>
                                 }
                             />
@@ -55,8 +65,27 @@ const DefaultItem = ({ nav, onLinkClick, userAuthority }) => {
                                         <Trans
                                             i18nKey={subNav.translateKey}
                                             defaults={
-                                                <p className="text-xs font-normal">
-                                                    -- {subNav.title}
+                                                <p
+                                                    className="font-normal flex "
+                                                    style={{
+                                                        fontSize:
+                                                            10 +
+                                                            primaryFontLevel,
+                                                        display: 'flex',
+                                                    }}
+                                                >
+                                                    <span
+                                                        style={{
+                                                            marginTop: '2px',
+                                                        }}
+                                                    >
+                                                        {subNav.icon &&
+                                                            navigationIcon[
+                                                                subNav.icon
+                                                            ]}
+                                                    </span>
+                                                    &nbsp;
+                                                    {subNav.title}
                                                 </p>
                                             }
                                         />

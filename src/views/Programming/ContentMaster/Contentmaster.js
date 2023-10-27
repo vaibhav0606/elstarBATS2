@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Badge, Drawer, Input, Alert, Tabs } from 'components/ui'
 import {
     apiGetContentmaster,
@@ -26,7 +26,8 @@ import MapChannel from './MapChannel'
 import SeasonMapping from './SeasonMapping'
 import MapStarcast from './MapStarcast'
 import EpisodeRestrictions from './EpisodeRestrictions'
-import Synopsis from './Synopsis' 
+import Synopsis from './Synopsis'
+import { Link, useNavigate } from 'react-router-dom'
 
 const headerExtraContent = (
     openDrawer,
@@ -58,6 +59,18 @@ const headerExtraContent = (
                     Add Content
                 </Button>
             </span>
+            <span className="mr-1 font-semibold">
+                <Link to={'/addcontent'}>
+                    <Button
+                        block
+                        variant="solid"
+                        size="sm"
+                        icon={<HiPlusCircle />}
+                    >
+                        Add Employee
+                    </Button>
+                </Link>
+            </span>
         </span>
     )
 }
@@ -69,7 +82,6 @@ const Contentmaster = () => {
     const [sorting, setSorting] = useState([])
     const [data, setdata] = useState([''])
     const [ContentType, setContentType] = useState({ value: '', label: '' })
-    const [VideoType, setVideoType] = useState({ value: '', label: '' })
     const [Language, setLanguage] = useState({ value: '', label: '' })
     const [Genre, setGenre] = useState({ value: '', label: '' })
     const [SubGenre, setSubGenre] = useState({ value: '', label: '' })
@@ -123,14 +135,6 @@ const Contentmaster = () => {
                 label: option.ContentTypeName,
             }))
             setContentType(formattedOptions)
-        })()
-        ;(async (values) => {
-            const VideoType = await apiGetContentTypemaster(values)
-            const formattedOptions = VideoType.data.map((option) => ({
-                value: option.VideoTypeCode,
-                label: option.VideoTypeName,
-            }))
-            setVideoType(formattedOptions)
         })()
         ;(async (values) => {
             const Language = await apiGetLanguagemaster(values)
@@ -324,7 +328,6 @@ const Contentmaster = () => {
                                 setMessage={setMessage}
                                 setlog={setlog}
                                 ContentType={ContentType}
-                                VideoType={VideoType}
                                 Language={Language}
                                 Censorship={Censorship}
                                 Genre={Genre}

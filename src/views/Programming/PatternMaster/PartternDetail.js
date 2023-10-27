@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react'
-import { Checkbox, FormItemcompact, Input } from 'components/ui'
+import { Checkbox, FormItemcompact, Input, Radio } from 'components/ui'
 import { Field } from 'formik'
 import Select from 'components/ui/Select'
 import { useState } from 'react'
@@ -20,6 +20,7 @@ const colourOptions = [
 const PartternDetail = forwardRef((props, ref) => {
     const { values, touched, errors } = props
     const [checkboxs, setcheckboxs] = useState(false)
+
     const onCheck = (value, e) => {
         setcheckboxs(value)
     }
@@ -60,7 +61,7 @@ const PartternDetail = forwardRef((props, ref) => {
                     </FormItemcompact>
                 </div>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 sm:grid-cols-2 xs:grid-cols-2  md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 sm:grid-cols-2 xs:grid-cols-2  md:grid-cols-2 gap-4 mb-2">
                 <div className="lg:col-span-1">
                     <Checkbox onChange={onCheck}>Kill Date</Checkbox>
                     {checkboxs ? (
@@ -81,26 +82,11 @@ const PartternDetail = forwardRef((props, ref) => {
                         </>
                     ) : null}
                 </div>
+
                 <div className="lg:col-span-1">
                     <Checkbox onChange={onCheck}>Program Type</Checkbox>
                 </div>
             </div>
-            {/* <FormItemcompact
-                        asterisk
-                        label="Name"
-                        invalid={errors.Name && touched.Name}
-                        errorMessage={errors.Name}
-                    >
-                        <Field
-                            size="sm"
-                            type="time"
-                            autoComplete="off"
-                            name="Name"
-                            placeholder="Name"
-                            step="2"
-                            component={Input}
-                        />
-                    </FormItemcompact> */}
         </>
     )
 })

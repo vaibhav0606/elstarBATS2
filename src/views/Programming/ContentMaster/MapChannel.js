@@ -10,6 +10,7 @@ import Table from 'components/ui/Table'
 import Checkbox from 'components/ui/Checkbox'
 import { apiGetChannelmaster } from 'services/MasterService'
 import { ScrollBar } from 'components/ui'
+import { Affix } from 'components/shared'
 // import { data10 } from './data'
 
 const { Tr, Th, Td, THead, TBody } = Table
@@ -115,26 +116,28 @@ function MapChannel() {
             <div className="overflow-y-auto h-60 mb-6">
                 <ScrollBar>
                     <Table>
-                        <THead>
-                            {table.getHeaderGroups().map((headerGroup) => (
-                                <Tr key={headerGroup.id}>
-                                    {headerGroup.headers.map((header) => {
-                                        return (
-                                            <Th
-                                                key={header.id}
-                                                colSpan={header.colSpan}
-                                            >
-                                                {flexRender(
-                                                    header.column.columnDef
-                                                        .header,
-                                                    header.getContext()
-                                                )}
-                                            </Th>
-                                        )
-                                    })}
-                                </Tr>
-                            ))}
-                        </THead>
+                        <Affix className="z-50">
+                            <THead>
+                                {table.getHeaderGroups().map((headerGroup) => (
+                                    <Tr key={headerGroup.id}>
+                                        {headerGroup.headers.map((header) => {
+                                            return (
+                                                <Th
+                                                    key={header.id}
+                                                    colSpan={header.colSpan}
+                                                >
+                                                    {flexRender(
+                                                        header.column.columnDef
+                                                            .header,
+                                                        header.getContext()
+                                                    )}
+                                                </Th>
+                                            )
+                                        })}
+                                    </Tr>
+                                ))}
+                            </THead>
+                        </Affix>
                         <TBody>
                             {table.getRowModel().rows.map((row) => {
                                 return (

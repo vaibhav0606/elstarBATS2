@@ -18,7 +18,7 @@ import { useState } from 'react'
 import PartternDetail from './PartternDetail'
 import HeaderExtra from 'views/Controls/HeaderExtra'
 import HeaderDuration from './HeaderDuration'
-
+import TypeBox from './TypeBox'
 const validationSchema = Yup.object().shape({
     PatternName: Yup.string()
         .min(3, 'Too Short!')
@@ -126,44 +126,51 @@ const PromoTypeEdit = () => {
                 {({ values, touched, errors }) => (
                     <Form>
                         <FormContainer>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
-                                <Field
-                                    type="PromoTypeCode"
-                                    autoComplete="off"
-                                    name="PromoTypeCode"
-                                    placeholder="PromoTypeCode"
-                                    component={Input}
-                                    hidden
-                                />
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                                    <div className="lg:col-span-1">
-                                        <Card>
-                                            <h5>Details</h5>
-                                            <PartternDetail
-                                                values={values}
-                                                touched={touched}
-                                                errors={errors}
-                                            />
-                                        </Card>
-                                    </div>
-                                    <div className="lg:col-span-1">
-                                        <Card>
-                                            <h5>Header Duration</h5>
-                                            <HeaderDuration
-                                                values={values}
-                                                touched={touched}
-                                                errors={errors}
-                                            />
-                                        </Card>
-                                    </div>
+                            <Field
+                                type="PromoTypeCode"
+                                autoComplete="off"
+                                name="PromoTypeCode"
+                                placeholder="PromoTypeCode"
+                                component={Input}
+                                hidden
+                            />
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                <div className="lg:col-span-1">
+                                    <Card>
+                                        <h5>Details</h5>
+                                        <PartternDetail
+                                            values={values}
+                                            touched={touched}
+                                            errors={errors}
+                                        />
+                                    </Card>
+                                </div>
+                                <div className="lg:col-span-1">
+                                    <Card>
+                                        <h5>Header Duration</h5>
+                                        <HeaderDuration
+                                            values={values}
+                                            touched={touched}
+                                            errors={errors}
+                                        />
+                                    </Card>
                                 </div>
                             </div>
-
+                            <br></br>
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                                <div className="lg:col-span-2">
+                                    <Card>
+                                        {/* <h5>Details2</h5> */}
+                                        <br></br>
+                                        <TypeBox
+                                            values={values}
+                                            touched={touched}
+                                            errors={errors}
+                                        />
+                                    </Card>
+                                </div>
+                            </div>
+                            <br></br>
                             <FormItem>
                                 <Button variant="solid" type="submit">
                                     Submit

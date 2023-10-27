@@ -29,18 +29,16 @@ function useAuth() {
                 dispatch(setLoginId(LoginCode))
                 dispatch(setUsername(LoginName))
                 dispatch(onSignInSuccess(access_token))
-                // if (resp.data.user) {
-                //     dispatch(
-                //         setUser(
-                //             resp.data.user || {
-                //                 avatar: 'Anonymous',
-                //                 userName: 'Anonymous',
-                //                 authority: ['USER'],
-                //                 email: 'Anonymous',
-                //             }
-                //         )
-                //     )
-                // }
+                if (resp.data) {
+                    dispatch(
+                        setUser({
+                            avatar: 'Anonymous',
+                            userName: LoginName,
+                            authority: 'user',
+                            email: 'Anonymous',
+                        })
+                    )
+                }
                 const redirectUrl = query.get(REDIRECT_URL_KEY)
                 navigate(
                     redirectUrl ? redirectUrl : appConfig.authenticatedEntryPath

@@ -14,6 +14,9 @@ import { PostContent, PutContent } from 'services/ProgrammingService'
 import { useSelector } from 'react-redux'
 import { HiCake } from 'react-icons/hi'
 import React from 'react'
+import { useLocation } from 'react-router-dom'
+import Imgimdb from '../../../assets/img/imdb.png';
+import './img.css'
 
 const validationSchema = Yup.object().shape({
     ContentName: Yup.string()
@@ -34,7 +37,7 @@ const validationSchema = Yup.object().shape({
     //     .required('ContentType Required'),
     Audience: Yup.string().required('Audience Required'),
     ClassificationCode: Yup.string()
-        .min(1, 'Too Short!')
+        .min(3, 'Too Short!')
         .max(50, 'Too Long!')
         .required('ClassificationCode Required'),
     LanguageCode: Yup.string()
@@ -67,7 +70,6 @@ const validationSchema = Yup.object().shape({
     //     .required('TxMasterCode Required'),
 
     IsActive: Yup.string().required('IsActives Required'),
-
     rememberMe: Yup.bool(),
 })
 
@@ -93,28 +95,29 @@ const TxTypeName = [
 ]
 
 const ContentEdit = ({
-    onDrawerClose,
-    editData,
-    setMessage,
-    setlog,
-    ContentType,
-    Language,
-    Censorship,
-    Genre,
-    SubGenre,
+    // onDrawerClose,
+    // editData,
+    // setMessage,
+    // setlog,
+    // ContentType,
+    // Language,
+    // Censorship,
+    // Genre,
+    // SubGenre,
 }) => {
     const token = useSelector((state) => state.auth.session.token)
+    const { state } = useLocation()
 
     const AddContent = async (values, token) => {
         try {
             const resp = await PostContent(values, token)
             if (resp.data.msg === 'success') {
-                setlog('success')
-                setMessage('Data Inserted Successfully')
+                // setlog('success')
+                // setMessage('Data Inserted Successfully')
                 return
             } else if (resp.data.msg === 'Server Error') {
-                setlog('error')
-                setMessage('Server Error')
+                // setlog('error')
+                // setMessage('Server Error')
                 return
             }
         } catch (errors) {
@@ -126,12 +129,12 @@ const ContentEdit = ({
             const resp = await PutContent(values, token)
             console.log(resp)
             if (resp.data.msg === 'Updated') {
-                setlog('success')
-                setMessage('Data Updated Successfully')
+                // setlog('success')
+                // setMessage('Data Updated Successfully')
                 return
             } else if (resp.data.msg === 'Entity is Already Exists') {
-                setlog('warning')
-                setMessage(resp.data.msg)
+                // setlog('warning')
+                // setMessage(resp.data.msg)
                 return
             }
         } catch (errors) {
@@ -143,33 +146,35 @@ const ContentEdit = ({
         <div>
             <Formik
                 initialValues={{
-                    ContentCode: editData.ContentCode,
-                    ContentName: editData.ContentName,
-                    ShortName: editData.ShortName,
-                    ERPCode: editData.ERPCode,
+                    ContentCode: state?.editData.ContentCode || '',
+                    ContentName: state?.editData.ContentName || '',
+                    ShortName: state?.editData.ShortName || '',
+                    ERPCode: state?.editData.ERPCode || '',
                     ContentTypeCode:
-                        editData.ContentType?.ContentTypeCode || '',
-                    LanguageCode: editData.Language?.LanguageCode || '',
+                        state?.editData.ContentType?.ContentTypeCode || '',
+                    LanguageCode: state?.editData.Language?.LanguageCode || '',
                     ClassificationCode:
-                        editData.Classification?.ClassificationCode || '',
+                        state?.editData.Classification?.ClassificationCode || '',
                     FPCReleaseDate:
-                        editData.FPCReleaseDate?.FPCReleaseDate || '',
-                    SlotDuration: editData.SlotDuration,
-                    GenreCode: editData.Genre?.GenreCode || '',
-                    SubGenreCode: editData.SubGenre?.SubGenreCode || '',
-                    CensorshipCode: editData.Censorship?.CensorshipCode || '',
-                    TxMasterCode: editData.TxMasterCode,
-                    IsActive: editData.IsActive === 1 ? true : false,
+                        state?.editData.FPCReleaseDate?.FPCReleaseDate || '',
+                    SlotDuration: state?.editData.SlotDuration || '',
+                    GenreCode: state?.editData.Genre?.GenreCode || '',
+                    SubGenreCode: state?.editData.SubGenre?.SubGenreCode || '',
+
+                    CensorshipCode: state?.editData.Censorship?.CensorshipCode || '',
+                    TxMasterCode: state?.editData.TxMasterCode || '',
+
+                    IsActive: state?.editData.IsActive === 1 ? true : false,
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { resetForm, setSubmitting }) => {
                     setTimeout(() => {
                         alert('hh')
-                        if (!editData.ContentCode) {
+                        if (!state?.editData.ContentCode) {
                             new Promise((resolve, reject) => {
                                 AddContent(values, token)
                                     .then((response) => {
-                                        onDrawerClose(0, 0)
+                                        // onDrawerClose(0, 0)
                                         resolve(response)
                                     })
                                     .catch((errors) => {
@@ -181,7 +186,7 @@ const ContentEdit = ({
                                 setSubmitting(false)
                                 EditContent(values, token)
                                     .then((response) => {
-                                        onDrawerClose(0, 0)
+                                        // onDrawerClose(0, 0)
                                         resolve(response)
                                     })
                                     .catch((errors) => {
@@ -197,67 +202,80 @@ const ContentEdit = ({
                 {({ values, touched, errors }) => (
                     <Form>
                         <FormContainer>
-                            <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
-                                <Field
-                                    size="sm"
-                                    type="ContentCode"
-                                    autoComplete="off"
-                                    name="ContentCode"
-                                    placeholder="ContentCode name"
-                                    component={Input}
-                                    hidden
-                                />
-                                <FormItemcompact
-                                    asterisk
-                                    label="ContentName"
-                                    invalid={
-                                        errors.ContentName &&
-                                        touched.ContentName
-                                    }
-                                    errorMessage={errors.ContentName}
-                                >
-                                    <Field
-                                        type="ContentName"
-                                        autoComplete="off"
-                                        name="ContentName"
-                                        placeholder="Content Name"
-                                        component={Input}
-                                    />
-                                </FormItemcompact>
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <FormItemcompact
-                                    asterisk
-                                    label="ShortName"
-                                    invalid={
-                                        errors.ShortName && touched.ShortName
-                                    }
-                                    errorMessage={errors.ShortName}
-                                >
-                                    <Field
-                                        type="ShortName"
-                                        autoComplete="off"
-                                        name="ShortName"
-                                        placeholder="Short Name"
-                                        component={Input}
-                                    />
-                                </FormItemcompact>
 
-                                <FormItemcompact
-                                    label="ERPCode"
-                                    invalid={errors.ERPCode && touched.ERPCode}
-                                    errorMessage={errors.ERPCode}
-                                >
-                                    <Field
-                                        type="ERPCode"
-                                        autoComplete="off"
-                                        name="ERPCode"
-                                        placeholder="ERPCode"
-                                        component={Input}
-                                    />
-                                </FormItemcompact>
 
-                                <FormItemcompact
+                            <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
+                                <div className="grid grid-cols-4 md:grid-cols-4 gap-2">
+                                    <div className="col-span-2">
+                                        <Field
+                                            size="sm"
+                                            type="ContentCode"
+                                            autoComplete="off"
+                                            name="ContentCode"
+                                            placeholder="ContentCode name"
+                                            component={Input}
+                                            hidden
+                                        />
+                                        <FormItemcompact
+                                            asterisk
+                                            label="ContentName"
+                                            invalid={
+                                                errors.ContentName &&
+                                                touched.ContentName
+                                            }
+                                            errorMessage={errors.ContentName}
+                                        >
+                                            <Field
+                                                type="ContentName"
+                                                autoComplete="off"
+                                                name="ContentName"
+                                                placeholder="Content Name"
+                                                component={Input}
+                                            />
+                                        </FormItemcompact>
+                                    </div>
+                                    {/* loading={loading} onClick={onClick} */}
+                                    <div className="col-span-2">
+                                        <Button variant="solid" className="custom-button_img" >
+                                            <img src={Imgimdb} alt="Button Icon" />                                           
+                                        </Button>
+                                           
+                                    </div>
+
+                                    
+                                        <FormItemcompact
+                                            asterisk
+                                            label="ShortName"
+                                            invalid={
+                                                errors.ShortName && touched.ShortName
+                                            }
+                                            errorMessage={errors.ShortName}
+                                        >
+                                            <Field
+                                                type="ShortName"
+                                                autoComplete="off"
+                                                name="ShortName"
+                                                placeholder="Short Name"
+                                                component={Input}
+                                            />
+                                        </FormItemcompact>
+                                    
+
+                                    <FormItemcompact
+                                        label="ERPCode"
+                                        invalid={errors.ERPCode && touched.ERPCode}
+                                        errorMessage={errors.ERPCode}
+                                    >
+                                        <Field
+                                            type="ERPCode"
+                                            autoComplete="off"
+                                            name="ERPCode"
+                                            placeholder="ERPCode"
+                                            component={Input}
+                                        />
+                                    </FormItemcompact>
+
+                                    {/* <FormItemcompact
                                     asterisk
                                     label="ContentType"
                                     invalid={
@@ -292,9 +310,9 @@ const ContentEdit = ({
                                             />
                                         )}
                                     </Field>
-                                </FormItemcompact>
+                                </FormItemcompact> */}
 
-                                <FormItemcompact
+                                    {/* <FormItemcompact
                                     asterisk
                                     label="ContentClassification"
                                     invalid={
@@ -328,9 +346,9 @@ const ContentEdit = ({
                                             />
                                         )}
                                     </Field>
-                                </FormItemcompact>
+                                </FormItemcompact> */}
 
-                                <FormItemcompact
+                                    {/* <FormItemcompact
                                     asterisk
                                     label="Audience"
                                     invalid={
@@ -363,9 +381,9 @@ const ContentEdit = ({
                                             />
                                         )}
                                     </Field>
-                                </FormItemcompact>
+                                </FormItemcompact> */}
 
-                                <FormItemcompact
+                                    {/* <FormItemcompact
                                     asterisk
                                     label="Language"
                                     invalid={
@@ -400,9 +418,9 @@ const ContentEdit = ({
                                             />
                                         )}
                                     </Field>
-                                </FormItemcompact>
+                                </FormItemcompact> */}
 
-                                <FormItemcompact
+                                    {/* <FormItemcompact
                                     asterisk
                                     label="Censorship"
                                     invalid={
@@ -437,57 +455,58 @@ const ContentEdit = ({
                                             />
                                         )}
                                     </Field>
-                                </FormItemcompact>
+                                </FormItemcompact> */}
 
-                                <FormItemcompact
-                                    label="Content Release Date"
-                                    invalid={
-                                        errors.FPCReleaseDate &&
-                                        touched.FPCReleaseDate
-                                    }
-                                    errorMessage={errors.FPCReleaseDate}
-                                >
-                                    <Field
-                                        name="FPCReleaseDate"
-                                        placeholder="Date"
+                                    <FormItemcompact
+                                        label="Content Release Date"
+                                        invalid={
+                                            errors.FPCReleaseDate &&
+                                            touched.FPCReleaseDate
+                                        }
+                                        errorMessage={errors.FPCReleaseDate}
                                     >
-                                        {({ field, form }) => (
-                                            <DatePicker
-                                                field={field}
-                                                form={form}
-                                                value={field.value}
-                                                prefix={
-                                                    <HiCake className="text-xl" />
-                                                }
-                                                onChange={(date) => {
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        date
-                                                    )
-                                                }}
-                                            />
-                                        )}
-                                    </Field>
-                                </FormItemcompact>
-                                <FormItemcompact
-                                    asterisk
-                                    label="Slot Duration In Mins."
-                                    invalid={
-                                        errors.SlotDuration &&
-                                        touched.SlotDuration
-                                    }
-                                    errorMessage={errors.SlotDuration}
-                                >
-                                    <Field
-                                        type="SlotDuration"
-                                        autoComplete="off"
-                                        name="SlotDuration"
-                                        placeholder="Slot Duration"
-                                        component={Input}
-                                    />
-                                </FormItemcompact>
+                                        <Field
+                                            name="FPCReleaseDate"
+                                            placeholder="Date"
+                                        >
+                                            {({ field, form }) => (
+                                                <DatePicker
+                                                    field={field}
+                                                    form={form}
+                                                    value={field.value}
+                                                    prefix={
+                                                        <HiCake className="text-xl" />
+                                                    }
+                                                    onChange={(date) => {
+                                                        form.setFieldValue(
+                                                            field.name,
+                                                            date
+                                                        )
+                                                    }}
+                                                />
+                                            )}
+                                        </Field>
+                                    </FormItemcompact>
 
-                                <FormItemcompact
+                                    <FormItemcompact
+                                        asterisk
+                                        label="Slot Duration In Mins."
+                                        invalid={
+                                            errors.SlotDuration &&
+                                            touched.SlotDuration
+                                        }
+                                        errorMessage={errors.SlotDuration}
+                                    >
+                                        <Field
+                                            type="SlotDuration"
+                                            autoComplete="off"
+                                            name="SlotDuration"
+                                            placeholder="Slot Duration"
+                                            component={Input}
+                                        />
+                                    </FormItemcompact>
+
+                                    {/* <FormItemcompact
                                     label="Genre"
                                     invalid={
                                         errors.GenreCode && touched.GenreCode
@@ -520,9 +539,9 @@ const ContentEdit = ({
                                             />
                                         )}
                                     </Field>
-                                </FormItemcompact>
+                                </FormItemcompact> */}
 
-                                <FormItemcompact
+                                    {/* <FormItemcompact
                                     label="SubGenre"
                                     invalid={
                                         errors.SubGenreCode &&
@@ -556,32 +575,27 @@ const ContentEdit = ({
                                             />
                                         )}
                                     </Field>
-                                </FormItemcompact>
+                                </FormItemcompact> */}
+                                    <div className="col-span-2">
+                                        <FormItemcompact
+                                            label="TX Type name"
+                                            invalid={
+                                                errors.TxMasterCode &&
+                                                touched.TxMasterCode
+                                            }
+                                            errorMessage={errors.TxMasterCode}
+                                            style={{ width: '250px' }}
+                                        >
+                                            <Select
+                                                isMulti
+                                                placeholder="Please Select"
 
-                                <FormItemcompact
-                                    label="TX Type name"
-                                    invalid={
-                                        errors.TxMasterCode &&
-                                        touched.TxMasterCode
-                                    }
-                                    errorMessage={errors.TxMasterCode}
-                                    style={{ width: '250px' }}
-                                >
-                                    <Select
-                                        isMulti
-                                        placeholder="Please Select"
-                                        // value={TxTypeName.filter(
-                                        //     (option) =>
-                                        //         option.value ===
-                                        //         values.TxMasterCode
-                                        // )}
-                                        // defaultValue={[
-                                        //     TxTypeName[2],
-                                        //     TxTypeName[3],
-                                        // ]}
-                                        options={TxTypeName}
-                                    />
-                                </FormItemcompact>
+                                                options={TxTypeName}
+                                            />
+                                        </FormItemcompact>
+                                    </div>
+                                </div>
+
                             </div>
                             <div
                                 style={{
@@ -605,6 +619,8 @@ const ContentEdit = ({
                                     </div>
                                 </FormItemcompact>
                             </div>
+
+
                             <br></br>
                             <FormItemcompact>
                                 <Button variant="solid" type="submit">
@@ -617,6 +633,36 @@ const ContentEdit = ({
             </Formik>
         </div>
     )
-}
+
+    // return (
+    //     <div className="w-full max-w-md">
+    //       <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"  >
+    //         {/* Add your input fields here */}
+    //         <div className="mb-4">
+    //           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="ContentName">
+    //             Content Name
+    //           </label>
+    //           <input
+    //             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+    //             type="text"
+    //             placeholder="Content Name"
+    //             name="ContentName"
+    //             // onChange={handleChange}
+    //           />
+    //         </div>
+    //         {/* Add more input fields for other properties in your data */}
+    //         <div className="flex items-center justify-between">
+    //           <button
+    //             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+    //             type="submit"
+    //           >
+    //             Save
+    //           </button>
+    //         </div>
+    //       </form>
+    //     </div>
+    //   );
+};
+
 
 export default ContentEdit
