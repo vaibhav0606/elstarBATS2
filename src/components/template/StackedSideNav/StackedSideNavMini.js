@@ -104,7 +104,7 @@ const StackedSideNavMini = (props) => {
                                     eventKey={nav.key}
                                     className="mb-4 flex justify-center "
                                     style={{
-                                        padding: 22,
+                                        padding: 25,
                                     }}
                                     onSelect={() =>
                                         handleMenuItemSelect({
@@ -137,7 +137,9 @@ const StackedSideNavMini = (props) => {
                                     <Menu.MenuItem
                                         eventKey={nav.key}
                                         className="mb-4 flex justify-center "
-                                        style={{ padding: 22 }}
+                                        style={{
+                                            padding: 25,
+                                        }}
                                     >
                                         <center>
                                             <div className="text-2xl">
