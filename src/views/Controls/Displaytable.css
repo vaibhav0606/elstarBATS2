@@ -1,5 +1,5 @@
 /* Set a specific width for each header cell */
-th {
+.th {
     min-width: 150px; /* Adjust this width as needed */
 }
 
@@ -12,14 +12,14 @@ th {
 }
 
 /* Style the body of the table */
-tbody {
+.tbody {
     display: block;
     overflow-y: auto;
     height: 300px;
 }
 
 /* Style table rows */
-tr {
+.tr {
     display: table;
     width: 100%;
     table-layout: fixed;
@@ -27,7 +27,7 @@ tr {
 }
 
 /* Style table cells */
-td {
+.td {
     text-align: left;
     padding: 3px;
     border: 0.1px solid #e2e2e2;
@@ -37,15 +37,15 @@ td {
 }
 
 /* Center text in the "Actions" column */
-td.actions {
+.actions {
     text-align: left;
 }
 
 /* Style the scrollbar for the body */
-tbody::-webkit-scrollbar {
+.tbody::-webkit-scrollbar {
     width: 12px; /* Adjust the width of the scrollbar as needed */
 }
 
-tbody::-webkit-scrollbar-thumb {
+.tbody::-webkit-scrollbar-thumb {
     background-color: #d8d7d7; /* Customize the scrollbar thumb color */
 }

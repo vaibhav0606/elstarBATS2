@@ -21,6 +21,7 @@ const Grade = [
     { value: 'C', label: 'C' },
     { value: 'D', label: 'D' },
 ]
+const EmpDemo = [{ value: '', label: 'Data Not Found' }]
 const OrganizationFields = (props) => {
     const { values, touched, errors } = props
     const EmpDemo = [{ value: '', label: 'Data Not Found' }]

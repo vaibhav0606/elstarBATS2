@@ -28,6 +28,7 @@ import MapStarcast from './MapStarcast'
 import EpisodeRestrictions from './EpisodeRestrictions'
 import Synopsis from './Synopsis'
 import { Link, useNavigate } from 'react-router-dom'
+import DrawerFooter from 'views/Controls/DrawerFooter'
 
 const headerExtraContent = (
     openDrawer,
@@ -280,6 +281,12 @@ const Contentmaster = () => {
                     window.screen.width > 400
                         ? window.screen.width / 2.0
                         : window.screen.width / 1.5
+                }
+                footer={
+                    <DrawerFooter
+                        onCancel={onDrawerClose}
+                        onSaveClick={onDrawerClose}
+                    />
                 }
             >
                 <Tabs defaultValue="tab1">

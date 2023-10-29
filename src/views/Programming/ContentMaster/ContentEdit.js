@@ -7,16 +7,32 @@ import {
     Select,
     DatePicker,
     FormItemcompact,
+    Card,
 } from 'components/ui'
+import { apiGetLanguagemaster } from 'services/MasterService'
 import { Field, Form, Formik } from 'formik'
 import * as Yup from 'yup'
-import { PostContent, PutContent } from 'services/ProgrammingService'
+import {
+    PostContent,
+    PutContent,
+    apiGetContentmaster,
+    apiGetContentTypemaster,
+    apiGetCensorshipmaster,
+    apiGetGenremaster,
+    apiGetSubGenremaster,
+} from 'services/ProgrammingService'
+
 import { useSelector } from 'react-redux'
-import { HiCake } from 'react-icons/hi'
-import React from 'react'
-import { useLocation } from 'react-router-dom'
-import Imgimdb from '../../../assets/img/imdb.png';
+import { HiCake, HiOutlineSearch } from 'react-icons/hi'
+import React, { useState, useEffect } from 'react'
+import { Navigate, useLocation } from 'react-router-dom'
+import Imgimdb from '../../../assets/img/imdb.png'
 import './img.css'
+import { Container } from 'components/shared'
+import HeaderExtra from 'views/Controls/HeaderExtra'
+import { headerExtraContent } from 'views/Controls/HeaderBox'
+import SeasonMapping from './SeasonMapping'
+import MapChannel from './MapChannel'
 
 const validationSchema = Yup.object().shape({
     ContentName: Yup.string()
@@ -31,10 +47,10 @@ const validationSchema = Yup.object().shape({
     //     .min(3, 'Too Short!')
     //     .max(200, 'Too Long!')
     //     .required('ERPCode Required'),
-    // ContentTypeCode: Yup.string()
-    //     .min(1, 'Too Short!')
-    //     .max(50, 'Too Long!')
-    //     .required('ContentType Required'),
+    ContentTypeCode: Yup.string()
+        .min(1, 'Too Short!')
+        .max(50, 'Too Long!')
+        .required('ContentType Required'),
     Audience: Yup.string().required('Audience Required'),
     ClassificationCode: Yup.string()
         .min(3, 'Too Short!')
@@ -94,17 +110,21 @@ const TxTypeName = [
     { value: 'SUBTITLE', label: 'SUBTITLE' },
 ]
 
-const ContentEdit = ({
-    // onDrawerClose,
-    // editData,
-    // setMessage,
-    // setlog,
-    // ContentType,
-    // Language,
-    // Censorship,
-    // Genre,
-    // SubGenre,
-}) => {
+const ContentDemo = [{ value: '', label: 'Data Not Found' }]
+
+const ContentEdit = (
+    {
+        // onDrawerClose,
+        // editData,
+        // setMessage,
+        // setlog,
+        //ContentType,
+        // Language,
+        // Censorship,
+        // Genre,
+        // SubGenre,
+    }
+) => {
     const token = useSelector((state) => state.auth.session.token)
     const { state } = useLocation()
 
@@ -142,6 +162,58 @@ const ContentEdit = ({
         }
     }
 
+    const [data, setdata] = useState([''])
+    const [ContentType, setContentType] = useState({ value: '', label: '' })
+    const [Language, setLanguage] = useState({ value: '', label: '' })
+    const [Genre, setGenre] = useState({ value: '', label: '' })
+    const [SubGenre, setSubGenre] = useState({ value: '', label: '' })
+    const [Censorship, setCensorship] = useState({ value: '', label: '' })
+    const [editData, seteditData] = useState([''])
+    const [globalFilter, setGlobalFilter] = useState('')
+
+    useEffect(() => {
+        ;(async (values) => {
+            const Currency = await apiGetContentTypemaster(values)
+            const formattedOptions = Currency.data.map((option) => ({
+                value: option.ContentTypeCode,
+                label: option.ContentTypeName,
+            }))
+            setContentType(formattedOptions)
+        })()
+        ;(async (values) => {
+            const Language = await apiGetLanguagemaster(values)
+            const formattedOptions = Language.data.map((option) => ({
+                value: option.LanguageCode,
+                label: option.LanguageName,
+            }))
+            setLanguage(formattedOptions)
+        })()
+        ;(async (values) => {
+            const Censorship = await apiGetCensorshipmaster(values)
+            const formattedOptions = Censorship.data.map((option) => ({
+                value: option.CensorshipCode,
+                label: option.CensorshipName,
+            }))
+            setCensorship(formattedOptions)
+        })()
+        ;(async (values) => {
+            const Genre = await apiGetGenremaster(values)
+            const formattedOptions = Genre.data.map((option) => ({
+                value: option.GenreCode,
+                label: option.GenreName,
+            }))
+            setGenre(formattedOptions)
+        })()
+        ;(async (values) => {
+            const SubGenre = await apiGetSubGenremaster(values)
+            const formattedOptions = SubGenre.data.map((option) => ({
+                value: option.SubGenreCode,
+                label: option.SubGenreName,
+            }))
+            setSubGenre(formattedOptions)
+        })()
+    }, [])
+
     return (
         <div>
             <Formik
@@ -154,14 +226,16 @@ const ContentEdit = ({
                         state?.editData.ContentType?.ContentTypeCode || '',
                     LanguageCode: state?.editData.Language?.LanguageCode || '',
                     ClassificationCode:
-                        state?.editData.Classification?.ClassificationCode || '',
+                        state?.editData.Classification?.ClassificationCode ||
+                        '',
                     FPCReleaseDate:
                         state?.editData.FPCReleaseDate?.FPCReleaseDate || '',
                     SlotDuration: state?.editData.SlotDuration || '',
                     GenreCode: state?.editData.Genre?.GenreCode || '',
                     SubGenreCode: state?.editData.SubGenre?.SubGenreCode || '',
 
-                    CensorshipCode: state?.editData.Censorship?.CensorshipCode || '',
+                    CensorshipCode:
+                        state?.editData.Censorship?.CensorshipCode || '',
                     TxMasterCode: state?.editData.TxMasterCode || '',
 
                     IsActive: state?.editData.IsActive === 1 ? true : false,
@@ -201,468 +275,683 @@ const ContentEdit = ({
             >
                 {({ values, touched, errors }) => (
                     <Form>
-                        <FormContainer>
-
-
-                            <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
-                                <div className="grid grid-cols-4 md:grid-cols-4 gap-2">
-                                    <div className="col-span-2">
-                                        <Field
-                                            size="sm"
-                                            type="ContentCode"
-                                            autoComplete="off"
-                                            name="ContentCode"
-                                            placeholder="ContentCode name"
-                                            component={Input}
-                                            hidden
-                                        />
-                                        <FormItemcompact
-                                            asterisk
-                                            label="ContentName"
-                                            invalid={
-                                                errors.ContentName &&
-                                                touched.ContentName
-                                            }
-                                            errorMessage={errors.ContentName}
-                                        >
-                                            <Field
-                                                type="ContentName"
-                                                autoComplete="off"
-                                                name="ContentName"
-                                                placeholder="Content Name"
-                                                component={Input}
-                                            />
-                                        </FormItemcompact>
-                                    </div>
-                                    {/* loading={loading} onClick={onClick} */}
-                                    <div className="col-span-2">
-                                        <Button variant="solid" className="custom-button_img" >
-                                            <img src={Imgimdb} alt="Button Icon" />                                           
-                                        </Button>
-                                           
-                                    </div>
-
+                        {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-4"> */}
+                        <Card
+                            headerExtra={headerExtraContent(
+                                globalFilter,
+                                setGlobalFilter,
+                                Navigate,
+                                editData
+                            )}
+                        >
+                            <div className="inline-flex flex-wrap xl:flex gap-2">
+                                
+                                <FormContainer>
                                     
-                                        <FormItemcompact
-                                            asterisk
-                                            label="ShortName"
-                                            invalid={
-                                                errors.ShortName && touched.ShortName
-                                            }
-                                            errorMessage={errors.ShortName}
-                                        >
-                                            <Field
-                                                type="ShortName"
-                                                autoComplete="off"
-                                                name="ShortName"
-                                                placeholder="Short Name"
-                                                component={Input}
-                                            />
-                                        </FormItemcompact>
-                                    
-
-                                    <FormItemcompact
-                                        label="ERPCode"
-                                        invalid={errors.ERPCode && touched.ERPCode}
-                                        errorMessage={errors.ERPCode}
-                                    >
-                                        <Field
-                                            type="ERPCode"
-                                            autoComplete="off"
-                                            name="ERPCode"
-                                            placeholder="ERPCode"
-                                            component={Input}
-                                        />
-                                    </FormItemcompact>
-
-                                    {/* <FormItemcompact
-                                    asterisk
-                                    label="ContentType"
-                                    invalid={
-                                        errors.ContentTypeCode &&
-                                        touched.ContentTypeCode
-                                    }
-                                    errorMessage={errors.ContentTypeCode}
-                                    style={{ width: '250px' }}
-                                >
-                                    <Field
-                                        size="sm"
-                                        name="ContentTypeCode"
-                                        style={{ width: '250px' }}
-                                    >
-                                        {({ field, form }) => (
-                                            <Select
-                                                style={{ width: '250px' }}
-                                                field={field}
-                                                form={form}
-                                                options={ContentType}
-                                                value={ContentType.filter(
-                                                    (option) =>
-                                                        option.value ===
-                                                        values.ContentTypeCode
-                                                )}
-                                                onChange={(option) =>
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        option?.value
-                                                    )
-                                                }
-                                            />
-                                        )}
-                                    </Field>
-                                </FormItemcompact> */}
-
-                                    {/* <FormItemcompact
-                                    asterisk
-                                    label="ContentClassification"
-                                    invalid={
-                                        errors.ClassificationCode &&
-                                        touched.ClassificationCode
-                                    }
-                                    errorMessage={errors.ClassificationCode}
-                                    style={{ width: '250px' }}
-                                >
-                                    <Field
-                                        name="ClassificationCode"
-                                        style={{ width: '250px' }}
-                                    >
-                                        {({ field, form }) => (
-                                            <Select
-                                                style={{ width: '250px' }}
-                                                field={field}
-                                                form={form}
-                                                options={options2}
-                                                value={options2.filter(
-                                                    (option) =>
-                                                        option.value ===
-                                                        values.ClassificationCode
-                                                )}
-                                                onChange={(option) =>
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        option?.value
-                                                    )
-                                                }
-                                            />
-                                        )}
-                                    </Field>
-                                </FormItemcompact> */}
-
-                                    {/* <FormItemcompact
-                                    asterisk
-                                    label="Audience"
-                                    invalid={
-                                        errors.Audience && touched.Audience
-                                    }
-                                    errorMessage={errors.Audience}
-                                    style={{ width: '250px' }}
-                                >
-                                    <Field
-                                        name="Audience"
-                                        style={{ width: '250px' }}
-                                    >
-                                        {({ field, form }) => (
-                                            <Select
-                                                style={{ width: '250px' }}
-                                                field={field}
-                                                form={form}
-                                                options={options3}
-                                                value={options3.filter(
-                                                    (option) =>
-                                                        option.value ===
-                                                        values.Audience
-                                                )}
-                                                onChange={(option) =>
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        option?.value
-                                                    )
-                                                }
-                                            />
-                                        )}
-                                    </Field>
-                                </FormItemcompact> */}
-
-                                    {/* <FormItemcompact
-                                    asterisk
-                                    label="Language"
-                                    invalid={
-                                        errors.LanguageCode &&
-                                        touched.LanguageCode
-                                    }
-                                    errorMessage={errors.LanguageCode}
-                                    style={{ width: '250px' }}
-                                >
-                                    <Field
-                                        size="sm"
-                                        name="LanguageCode"
-                                        style={{ width: '250px' }}
-                                    >
-                                        {({ field, form }) => (
-                                            <Select
-                                                style={{ width: '250px' }}
-                                                field={field}
-                                                form={form}
-                                                options={Language}
-                                                value={Language.filter(
-                                                    (option) =>
-                                                        option.value ===
-                                                        values.LanguageCode
-                                                )}
-                                                onChange={(option) =>
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        option?.value
-                                                    )
-                                                }
-                                            />
-                                        )}
-                                    </Field>
-                                </FormItemcompact> */}
-
-                                    {/* <FormItemcompact
-                                    asterisk
-                                    label="Censorship"
-                                    invalid={
-                                        errors.CensorshipCode &&
-                                        touched.CensorshipCode
-                                    }
-                                    errorMessage={errors.CensorshipCode}
-                                    style={{ width: '250px' }}
-                                >
-                                    <Field
-                                        size="sm"
-                                        name="CensorshipCode"
-                                        style={{ width: '250px' }}
-                                    >
-                                        {({ field, form }) => (
-                                            <Select
-                                                style={{ width: '250px' }}
-                                                field={field}
-                                                form={form}
-                                                options={Censorship}
-                                                value={Censorship.filter(
-                                                    (option) =>
-                                                        option.value ===
-                                                        values.CensorshipCode
-                                                )}
-                                                onChange={(option) =>
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        option?.value
-                                                    )
-                                                }
-                                            />
-                                        )}
-                                    </Field>
-                                </FormItemcompact> */}
-
-                                    <FormItemcompact
-                                        label="Content Release Date"
-                                        invalid={
-                                            errors.FPCReleaseDate &&
-                                            touched.FPCReleaseDate
-                                        }
-                                        errorMessage={errors.FPCReleaseDate}
-                                    >
-                                        <Field
-                                            name="FPCReleaseDate"
-                                            placeholder="Date"
-                                        >
-                                            {({ field, form }) => (
-                                                <DatePicker
-                                                    field={field}
-                                                    form={form}
-                                                    value={field.value}
-                                                    prefix={
-                                                        <HiCake className="text-xl" />
-                                                    }
-                                                    onChange={(date) => {
-                                                        form.setFieldValue(
-                                                            field.name,
-                                                            date
-                                                        )
-                                                    }}
+                                    <div className="grid grid-cols-2 md:grid-cols-2 gap-4 ">
+                                        <Card>
+                                            <div className="grid grid-cols-4 md:grid-cols-4 gap-2">
+                                                <div className="col-span-2">
+                                                    <Field
+                                                        size="sm"
+                                                        type="ContentCode"
+                                                        autoComplete="off"
+                                                        name="ContentCode"
+                                                        placeholder="ContentCode name"
+                                                        component={Input}
+                                                        hidden
+                                                    />
+                                                    <FormItemcompact
+                                                        asterisk
+                                                        label="ContentName"
+                                                        invalid={
+                                                            errors.ContentName &&
+                                                            touched.ContentName
+                                                        }
+                                                        errorMessage={
+                                                            errors.ContentName
+                                                        }
+                                                    >
+                                                        <Field
+                                                            type="ContentName"
+                                                            autoComplete="off"
+                                                            name="ContentName"
+                                                            placeholder="Content Name"
+                                                            component={Input}
+                                                        />
+                                                    </FormItemcompact>
+                                                </div>
+                                                {/* loading={loading} onClick={onClick} */}
+                                                <div className="col-span-2">
+                                                    {/* <Button
+                                                variant="solid"
+                                                className="custom-button_img"
+                                            >
+                                                <img
+                                                    src={Imgimdb}
+                                                    alt="Button Icon"
                                                 />
-                                            )}
-                                        </Field>
-                                    </FormItemcompact>
+                                            </Button> */}
+                                                    <FormItemcompact
+                                                        label=""
+                                                        invalid={
+                                                            errors.ContentName &&
+                                                            touched.ContentName
+                                                        }
+                                                        errorMessage={
+                                                            errors.ContentName
+                                                        }
+                                                    >
+                                                        <Button
+                                                            className="mr-2 custom-button_img"
+                                                            variant="solid"
+                                                            icon={
+                                                                <HiOutlineSearch />
+                                                            }
+                                                        >
+                                                            <span>
+                                                                <span>
+                                                                    Search In IMDb
+                                                                </span>
+                                                            </span>
+                                                        </Button>
+                                                    </FormItemcompact>
+                                                </div>
 
-                                    <FormItemcompact
-                                        asterisk
-                                        label="Slot Duration In Mins."
-                                        invalid={
-                                            errors.SlotDuration &&
-                                            touched.SlotDuration
-                                        }
-                                        errorMessage={errors.SlotDuration}
-                                    >
-                                        <Field
-                                            type="SlotDuration"
-                                            autoComplete="off"
-                                            name="SlotDuration"
-                                            placeholder="Slot Duration"
-                                            component={Input}
-                                        />
-                                    </FormItemcompact>
+                                                <div className="col-span-2">
+                                                    <FormItemcompact
+                                                        asterisk
+                                                        label="ShortName"
+                                                        invalid={
+                                                            errors.ShortName &&
+                                                            touched.ShortName
+                                                        }
+                                                        errorMessage={
+                                                            errors.ShortName
+                                                        }
+                                                    >
+                                                        <Field
+                                                            type="ShortName"
+                                                            autoComplete="off"
+                                                            name="ShortName"
+                                                            placeholder="Short Name"
+                                                            component={Input}
+                                                        />
+                                                    </FormItemcompact>
 
-                                    {/* <FormItemcompact
-                                    label="Genre"
-                                    invalid={
-                                        errors.GenreCode && touched.GenreCode
-                                    }
-                                    errorMessage={errors.GenreCode}
-                                    style={{ width: '250px' }}
-                                >
-                                    <Field
-                                        size="sm"
-                                        name="GenreCode"
-                                        style={{ width: '250px' }}
-                                    >
-                                        {({ field, form }) => (
-                                            <Select
-                                                style={{ width: '250px' }}
-                                                field={field}
-                                                form={form}
-                                                options={Genre}
-                                                value={Genre.filter(
-                                                    (option) =>
-                                                        option.value ===
-                                                        values.GenreCode
-                                                )}
-                                                onChange={(option) =>
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        option?.value
-                                                    )
-                                                }
-                                            />
-                                        )}
-                                    </Field>
-                                </FormItemcompact> */}
+                                                    <FormItemcompact
+                                                        asterisk
+                                                        label="ContentType"
+                                                        invalid={
+                                                            errors.ContentTypeCode &&
+                                                            touched.ContentTypeCode
+                                                        }
+                                                        errorMessage={
+                                                            errors.ContentTypeCode
+                                                        }
+                                                        style={{
+                                                            width: '250px',
+                                                        }}
+                                                    >
+                                                        <Field
+                                                            size="sm"
+                                                            name="ContentTypeCode"
+                                                            style={{
+                                                                width: '250px',
+                                                            }}
+                                                        >
+                                                            {({ field, form }) => (
+                                                                <Select
+                                                                    style={{
+                                                                        width: '250px',
+                                                                    }}
+                                                                    field={field}
+                                                                    form={form}
+                                                                    options={
+                                                                        ContentType
+                                                                    }
+                                                                    value={
+                                                                        ContentType.length >
+                                                                            0
+                                                                            ? ContentType.filter(
+                                                                                (
+                                                                                    option
+                                                                                ) =>
+                                                                                    option.value ===
+                                                                                    values.ContentTypeCode
+                                                                            )
+                                                                            : ContentDemo.filter(
+                                                                                (
+                                                                                    option
+                                                                                ) =>
+                                                                                    option.value ===
+                                                                                    values.ReportingTo
+                                                                            )
+                                                                    }
+                                                                    onChange={(
+                                                                        option
+                                                                    ) =>
+                                                                        form.setFieldValue(
+                                                                            field.name,
+                                                                            option?.value
+                                                                        )
+                                                                    }
+                                                                />
+                                                            )}
+                                                        </Field>
+                                                    </FormItemcompact>
+                                                </div>
 
-                                    {/* <FormItemcompact
-                                    label="SubGenre"
-                                    invalid={
-                                        errors.SubGenreCode &&
-                                        touched.SubGenreCode
-                                    }
-                                    errorMessage={errors.SubGenreCode}
-                                    style={{ width: '250px' }}
-                                >
-                                    <Field
-                                        size="sm"
-                                        name="SubGenreCode"
-                                        style={{ width: '250px' }}
-                                    >
-                                        {({ field, form }) => (
-                                            <Select
-                                                style={{ width: '250px' }}
-                                                field={field}
-                                                form={form}
-                                                options={SubGenre}
-                                                value={SubGenre.filter(
-                                                    (option) =>
-                                                        option.value ===
-                                                        values.SubGenreCode
-                                                )}
-                                                onChange={(option) =>
-                                                    form.setFieldValue(
-                                                        field.name,
-                                                        option?.value
-                                                    )
-                                                }
-                                            />
-                                        )}
-                                    </Field>
-                                </FormItemcompact> */}
-                                    <div className="col-span-2">
-                                        <FormItemcompact
-                                            label="TX Type name"
-                                            invalid={
-                                                errors.TxMasterCode &&
-                                                touched.TxMasterCode
-                                            }
-                                            errorMessage={errors.TxMasterCode}
-                                            style={{ width: '250px' }}
+                                                <div className="col-span-2">
+                                                    <FormItemcompact
+                                                        label="ERP Code"
+                                                        invalid={
+                                                            errors.ERPCode &&
+                                                            touched.ERPCode
+                                                        }
+                                                        errorMessage={
+                                                            errors.ERPCode
+                                                        }
+                                                    >
+                                                        <Field
+                                                            type="ERPCode"
+                                                            autoComplete="off"
+                                                            name="ERPCode"
+                                                            placeholder="ERPCode"
+                                                            component={Input}
+                                                        />
+                                                    </FormItemcompact>
+                                                    <FormItemcompact
+                                                        asterisk
+                                                        label="Classification"
+                                                        invalid={
+                                                            errors.ClassificationCode &&
+                                                            touched.ClassificationCode
+                                                        }
+                                                        errorMessage={
+                                                            errors.ClassificationCode
+                                                        }
+                                                        style={{
+                                                            width: '250px',
+                                                        }}
+                                                    >
+                                                        <Field
+                                                            name="ClassificationCode"
+                                                            style={{
+                                                                width: '250px',
+                                                            }}
+                                                        >
+                                                            {({ field, form }) => (
+                                                                <Select
+                                                                    style={{
+                                                                        width: '250px',
+                                                                    }}
+                                                                    field={field}
+                                                                    form={form}
+                                                                    options={
+                                                                        options2
+                                                                    }
+                                                                    value={options2.filter(
+                                                                        (option) =>
+                                                                            option.value ===
+                                                                            values.ClassificationCode
+                                                                    )}
+                                                                    onChange={(
+                                                                        option
+                                                                    ) =>
+                                                                        form.setFieldValue(
+                                                                            field.name,
+                                                                            option?.value
+                                                                        )
+                                                                    }
+                                                                />
+                                                            )}
+                                                        </Field>
+                                                    </FormItemcompact>
+                                                </div>
+
+                                                <div className="col-span-2">
+                                                    <FormItemcompact
+                                                        asterisk
+                                                        label="Audience"
+                                                        invalid={
+                                                            errors.Audience &&
+                                                            touched.Audience
+                                                        }
+                                                        errorMessage={
+                                                            errors.Audience
+                                                        }
+                                                        style={{
+                                                            width: '250px',
+                                                        }}
+                                                    >
+                                                        <Field
+                                                            name="Audience"
+                                                            style={{
+                                                                width: '250px',
+                                                            }}
+                                                        >
+                                                            {({ field, form }) => (
+                                                                <Select
+                                                                    style={{
+                                                                        width: '250px',
+                                                                    }}
+                                                                    field={field}
+                                                                    form={form}
+                                                                    options={
+                                                                        options3
+                                                                    }
+                                                                    value={options3.filter(
+                                                                        (option) =>
+                                                                            option.value ===
+                                                                            values.Audience
+                                                                    )}
+                                                                    onChange={(
+                                                                        option
+                                                                    ) =>
+                                                                        form.setFieldValue(
+                                                                            field.name,
+                                                                            option?.value
+                                                                        )
+                                                                    }
+                                                                />
+                                                            )}
+                                                        </Field>
+                                                    </FormItemcompact>
+
+                                                    <FormItemcompact
+                                                        asterisk
+                                                        label="Dur In Mins."
+                                                        invalid={
+                                                            errors.SlotDuration &&
+                                                            touched.SlotDuration
+                                                        }
+                                                        errorMessage={
+                                                            errors.SlotDuration
+                                                        }
+                                                    >
+                                                        <Field
+                                                            type="SlotDuration"
+                                                            autoComplete="off"
+                                                            name="SlotDuration"
+                                                            placeholder="Slot Duration"
+                                                            component={Input}
+                                                        />
+                                                    </FormItemcompact>
+                                                </div>
+                                                <div className="col-span-2">
+                                                    <FormItemcompact
+                                                        asterisk
+                                                        label="Censorship"
+                                                        invalid={
+                                                            errors.CensorshipCode &&
+                                                            touched.CensorshipCode
+                                                        }
+                                                        errorMessage={
+                                                            errors.CensorshipCode
+                                                        }
+                                                        style={{
+                                                            width: '250px',
+                                                        }}
+                                                    >
+                                                        <Field
+                                                            size="sm"
+                                                            name="CensorshipCode"
+                                                            style={{
+                                                                width: '250px',
+                                                            }}
+                                                        >
+                                                            {({ field, form }) => (
+                                                                <Select
+                                                                    style={{
+                                                                        width: '250px',
+                                                                    }}
+                                                                    field={field}
+                                                                    form={form}
+                                                                    options={
+                                                                        Censorship
+                                                                    }
+                                                                    value={
+                                                                        ContentType.length >
+                                                                            0
+                                                                            ? ContentType.filter(
+                                                                                (
+                                                                                    option
+                                                                                ) =>
+                                                                                    option.value ===
+                                                                                    values.CensorshipCode
+                                                                            )
+                                                                            : ContentDemo.filter(
+                                                                                (
+                                                                                    option
+                                                                                ) =>
+                                                                                    option.value ===
+                                                                                    values.ReportingTo
+                                                                            )
+                                                                    }
+                                                                    onChange={(
+                                                                        option
+                                                                    ) =>
+                                                                        form.setFieldValue(
+                                                                            field.name,
+                                                                            option?.value
+                                                                        )
+                                                                    }
+                                                                />
+                                                            )}
+                                                        </Field>
+                                                    </FormItemcompact>
+
+                                                    <FormItemcompact
+                                                        label="Release Date"
+                                                        invalid={
+                                                            errors.FPCReleaseDate &&
+                                                            touched.FPCReleaseDate
+                                                        }
+                                                        errorMessage={
+                                                            errors.FPCReleaseDate
+                                                        }
+                                                    >
+                                                        <Field
+                                                            name="FPCReleaseDate"
+                                                            placeholder="Date"
+                                                        >
+                                                            {({ field, form }) => (
+                                                                <DatePicker
+                                                                    field={field}
+                                                                    form={form}
+                                                                    value={
+                                                                        field.value
+                                                                    }
+                                                                    prefix={
+                                                                        <HiCake className="text-xl" />
+                                                                    }
+                                                                    onChange={(
+                                                                        date
+                                                                    ) => {
+                                                                        form.setFieldValue(
+                                                                            field.name,
+                                                                            date
+                                                                        )
+                                                                    }}
+                                                                />
+                                                            )}
+                                                        </Field>
+                                                    </FormItemcompact>
+                                                </div>
+
+                                                <div className="col-span-2">
+                                                    <FormItemcompact
+                                                        label="Genre"
+                                                        invalid={
+                                                            errors.GenreCode &&
+                                                            touched.GenreCode
+                                                        }
+                                                        errorMessage={
+                                                            errors.GenreCode
+                                                        }
+                                                        style={{
+                                                            width: '250px',
+                                                        }}
+                                                    >
+                                                        <Field
+                                                            size="sm"
+                                                            name="GenreCode"
+                                                            style={{
+                                                                width: '250px',
+                                                            }}
+                                                        >
+                                                            {({ field, form }) => (
+                                                                <Select
+                                                                    style={{
+                                                                        width: '250px',
+                                                                    }}
+                                                                    field={field}
+                                                                    form={form}
+                                                                    options={Genre}
+                                                                    value={
+                                                                        ContentType.length >
+                                                                            0
+                                                                            ? ContentType.filter(
+                                                                                (
+                                                                                    option
+                                                                                ) =>
+                                                                                    option.value ===
+                                                                                    values.GenreCode
+                                                                            )
+                                                                            : ContentDemo.filter(
+                                                                                (
+                                                                                    option
+                                                                                ) =>
+                                                                                    option.value ===
+                                                                                    values.ReportingTo
+                                                                            )
+                                                                    }
+                                                                    onChange={(
+                                                                        option
+                                                                    ) =>
+                                                                        form.setFieldValue(
+                                                                            field.name,
+                                                                            option?.value
+                                                                        )
+                                                                    }
+                                                                />
+                                                            )}
+                                                        </Field>
+                                                    </FormItemcompact>
+
+                                                    <FormItemcompact
+                                                        asterisk
+                                                        label="Language"
+                                                        invalid={
+                                                            errors.LanguageCode &&
+                                                            touched.LanguageCode
+                                                        }
+                                                        errorMessage={
+                                                            errors.LanguageCode
+                                                        }
+                                                        style={{
+                                                            width: '250px',
+                                                        }}
+                                                    >
+                                                        <Field
+                                                            size="sm"
+                                                            name="LanguageCode"
+                                                            style={{
+                                                                width: '250px',
+                                                            }}
+                                                        >
+                                                            {({ field, form }) => (
+                                                                <Select
+                                                                    style={{
+                                                                        width: '250px',
+                                                                    }}
+                                                                    field={field}
+                                                                    form={form}
+                                                                    options={
+                                                                        Language
+                                                                    }
+                                                                    value={
+                                                                        ContentType.length >
+                                                                            0
+                                                                            ? ContentType.filter(
+                                                                                (
+                                                                                    option
+                                                                                ) =>
+                                                                                    option.value ===
+                                                                                    values.LanguageCode
+                                                                            )
+                                                                            : ContentDemo.filter(
+                                                                                (
+                                                                                    option
+                                                                                ) =>
+                                                                                    option.value ===
+                                                                                    values.ReportingTo
+                                                                            )
+                                                                    }
+                                                                    onChange={(
+                                                                        option
+                                                                    ) =>
+                                                                        form.setFieldValue(
+                                                                            field.name,
+                                                                            option?.value
+                                                                        )
+                                                                    }
+                                                                />
+                                                            )}
+                                                        </Field>
+                                                    </FormItemcompact>
+                                                </div>
+                                                <div className="col-span-2">
+                                                    <FormItemcompact
+                                                        label="SubGenre"
+                                                        invalid={
+                                                            errors.SubGenreCode &&
+                                                            touched.SubGenreCode
+                                                        }
+                                                        errorMessage={
+                                                            errors.SubGenreCode
+                                                        }
+                                                        style={{
+                                                            width: '250px',
+                                                        }}
+                                                    >
+                                                        <Field
+                                                            size="sm"
+                                                            name="SubGenreCode"
+                                                            style={{
+                                                                width: '250px',
+                                                            }}
+                                                        >
+                                                            {({ field, form }) => (
+                                                                <Select
+                                                                    style={{
+                                                                        width: '250px',
+                                                                    }}
+                                                                    field={field}
+                                                                    form={form}
+                                                                    options={
+                                                                        SubGenre
+                                                                    }
+                                                                    value={
+                                                                        ContentType.length >
+                                                                            0
+                                                                            ? ContentType.filter(
+                                                                                (
+                                                                                    option
+                                                                                ) =>
+                                                                                    option.value ===
+                                                                                    values.SubGenreCode
+                                                                            )
+                                                                            : ContentDemo.filter(
+                                                                                (
+                                                                                    option
+                                                                                ) =>
+                                                                                    option.value ===
+                                                                                    values.ReportingTo
+                                                                            )
+                                                                    }
+                                                                    onChange={(
+                                                                        option
+                                                                    ) =>
+                                                                        form.setFieldValue(
+                                                                            field.name,
+                                                                            option?.value
+                                                                        )
+                                                                    }
+                                                                />
+                                                            )}
+                                                        </Field>
+                                                    </FormItemcompact>
+
+                                                    <FormItemcompact
+                                                        label="TX Type name"
+                                                        invalid={
+                                                            errors.TxMasterCode &&
+                                                            touched.TxMasterCode
+                                                        }
+                                                        errorMessage={
+                                                            errors.TxMasterCode
+                                                        }
+                                                        style={{
+                                                            width: '250px',
+                                                        }}
+                                                    >
+                                                        <Select
+                                                            isMulti
+                                                            placeholder="Please Select"
+                                                            options={TxTypeName}
+                                                        />
+                                                    </FormItemcompact>
+                                                </div>
+                                            </div>
+                                        </Card>
+                                       
+                                        
+                                        <Card>
+                                      
+                                            <div className="grid grid-cols-2 md:grid-cols-1 gap-2">
+                                                <div className="col-span-2">
+                                                    <MapChannel>
+
+                                                    </MapChannel>
+                                                </div>
+                                                <div className="col-span-2">
+                                                    <SeasonMapping>
+
+                                                    </SeasonMapping>
+                                                </div>
+                                                
+                                            </div>
+                                        </Card>
+                                        
+                                        
+                                    </div>
+                                        <div
+                                            style={{
+                                                display: 'flex',
+                                                justifyContent: 'space-between',
+                                            }}
                                         >
-                                            <Select
-                                                isMulti
-                                                placeholder="Please Select"
+                                            <FormItemcompact
+                                                asterisk
+                                                label="IsActive"
+                                                invalid={
+                                                    errors.IsActive &&
+                                                    touched.IsActive
+                                                }
+                                                errorMessage={errors.IsActive}
+                                            >
+                                                <div>
+                                                    <Field
+                                                        name="IsActive"
+                                                        component={Switcher}
+                                                    />
+                                                </div>
+                                            </FormItemcompact>
+                                        </div>
 
-                                                options={TxTypeName}
-                                            />
+                                        <br></br>
+                                        <FormItemcompact>
+                                            <Button variant="solid" type="submit">
+                                                Submit
+                                            </Button>
                                         </FormItemcompact>
-                                    </div>
-                                </div>
 
+                                        <div className="grid grid-cols-4 md:grid-cols-4 gap-2"></div>
+                                   
+                                </FormContainer>
+                            
                             </div>
-                            <div
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                }}
-                            >
-                                <FormItemcompact
-                                    asterisk
-                                    label="IsActive"
-                                    invalid={
-                                        errors.IsActive && touched.IsActive
-                                    }
-                                    errorMessage={errors.IsActive}
-                                >
-                                    <div>
-                                        <Field
-                                            name="IsActive"
-                                            component={Switcher}
-                                        />
-                                    </div>
-                                </FormItemcompact>
-                            </div>
-
-
-                            <br></br>
-                            <FormItemcompact>
-                                <Button variant="solid" type="submit">
-                                    Submit
-                                </Button>
-                            </FormItemcompact>
-                        </FormContainer>
+                        </Card>
+                        {/* </div> */}
                     </Form>
                 )}
             </Formik>
         </div>
     )
 
-    // return (
-    //     <div className="w-full max-w-md">
-    //       <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"  >
-    //         {/* Add your input fields here */}
-    //         <div className="mb-4">
-    //           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="ContentName">
-    //             Content Name
-    //           </label>
-    //           <input
-    //             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-    //             type="text"
-    //             placeholder="Content Name"
-    //             name="ContentName"
-    //             // onChange={handleChange}
-    //           />
-    //         </div>
-    //         {/* Add more input fields for other properties in your data */}
-    //         <div className="flex items-center justify-between">
-    //           <button
-    //             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-    //             type="submit"
-    //           >
-    //             Save
-    //           </button>
-    //         </div>
-    //       </form>
-    //     </div>
-    //   );
-};
-
+    
+}
 
 export default ContentEdit
