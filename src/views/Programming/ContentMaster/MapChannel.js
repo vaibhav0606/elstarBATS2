@@ -45,7 +45,7 @@ function MapChannel() {
     
     const [rowSelection, setRowSelection] = useState({})
     const [data, setdata10] = useState({})
-     const [channelList, setChannelList] = useState(['ADD Channel', 'NEW Channel']);
+     const [channelList, setChannelList] = useState(['Map Channel', 'NEW Channel']);
      const [channelListColors, setchannelListColors] = useState({})
    
      const colorClasses = ['bg-rose-500', 'bg-indigo-500', 'bg-blue-500', 'bg-amber-400'];
@@ -200,7 +200,7 @@ function MapChannel() {
                             <Tag 
                             showCloseButton={false}
                              className="border-dashed cursor-pointer mr-2 rtl:ml-2">
-                                Add Channel
+                                Map Channel
                             </Tag>
                         }
                         placement="bottom-end"
