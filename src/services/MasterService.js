@@ -495,6 +495,14 @@ export async function apiGetSubModulemaster(data) {
     })
 }
 
+export async function apiGetrightsShowT(data) {
+    return ApiService.fetchData({
+        url: `/rights/showrights/${data}`,
+        method: 'get',
+    })
+}
+
+
 const PostRegion = (param, token) => {
     return new Promise((resolve, reject) => {
         console.log(param.IsActive ? 1 : 0)

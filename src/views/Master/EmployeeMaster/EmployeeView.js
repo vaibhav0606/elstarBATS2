@@ -8,13 +8,14 @@ import {
 import CustomerProfile from './CustomerProfile'
 // import PaymentHistory from './components/PaymentHistory'
 // import CurrentSubscription from './components/CurrentSubscription'
-// import PaymentMethods from './components/PaymentMethods'
-import Exapanding from 'views/Programming/PatternMaster/Exapanding'
+import Dataexpand from './dataexpand'
+// import Exapanding from 'views/Programming/PatternMaster/Exapanding'
 import isEmpty from 'lodash/isEmpty'
 import { apiGetEmpbyid } from 'services/MasterService'
 import { useLocation } from 'react-router'
 
 import EmpLoginRights from './PaymentHistory'
+import { Expanding } from '@tanstack/react-table'
 
 const EmployeeView = () => {
     const { state } = useLocation()
@@ -35,13 +36,13 @@ const EmployeeView = () => {
                 {!isEmpty(data) && (
                     <div className="grid grid-cols-7 md:grid-cols-7 gap-4">
                         <div className="col-span-2">
-                            <CustomerProfile data={data} />
+                            {/* <CustomerProfile data={data} /> */}
                         </div>
                         <div className="col-span-5">
                             <AdaptableCard>
-                                {/* <CurrentSubscription />*/}
-                                <Exapanding />
-                                <EmpLoginRights />
+                                <Dataexpand/>{/* <CurrentSubscription />*/}
+                                {/* <Exapanding /> */}
+                                {/* <EmpLoginRights /> */}
                                 {/* <PaymentMethods data={data.paymentMethod} /> */}
                             </AdaptableCard>
                         </div>
