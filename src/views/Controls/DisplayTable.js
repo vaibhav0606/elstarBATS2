@@ -256,7 +256,7 @@ const DisplayTable = ({
                                     )
                                 })}
                                 <Th className="actions">
-                                    <center className="text-black capitalize">
+                                    <center className="text-black capitalize font-bold ">
                                         Actions
                                     </center>
                                 </Th>

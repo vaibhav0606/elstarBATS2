@@ -12,8 +12,7 @@ import Checkbox from 'components/ui/Checkbox'
 import { apiGetChannelmaster } from 'services/MasterService'
 import { Badge, Dropdown, ScrollBar, Tag } from 'components/ui'
 import { Affix } from 'components/shared'
-import './img.css'
- import cloneDeep from 'lodash/cloneDeep'
+import cloneDeep from 'lodash/cloneDeep'
 //import { createUID, taskLabelColors, labelList } from './utils'
 
 const { Tr, Th, Td, THead, TBody } = Table

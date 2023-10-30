@@ -32,7 +32,7 @@ import { Container } from 'components/shared'
 import HeaderExtra from 'views/Controls/HeaderExtra'
 import { headerExtraContent } from 'views/Controls/HeaderBox'
 import SeasonMapping from './SeasonMapping'
-import MapChannel from './MapChannel'
+import MapChannel from '../../Controls/MapChannel'
 
 const validationSchema = Yup.object().shape({
     ContentName: Yup.string()
