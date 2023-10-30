@@ -61,7 +61,7 @@ function Exapanding() {
                         <>
                             {row.getCanExpand() ? (
                                 <button
-                                    className="text-xl"
+                                    className="text-xl "
                                     {...{
                                         onClick: row.getToggleExpandedHandler(),
                                     }}

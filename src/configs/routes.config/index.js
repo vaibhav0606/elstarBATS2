@@ -230,6 +230,12 @@ export const protectedRoutes = [
     },
     {
         key: '',
+        path: '/MovieShow',
+        component: React.lazy(() => import('views/MovieShowPage/Index')),
+        authority: [],
+    },
+    {
+        key: '',
         path: '/addcontent',
         component: React.lazy(() =>
             import('views/Programming/ContentMaster/ContentEdit')
