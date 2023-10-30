@@ -14,6 +14,7 @@ import {
     HiPlusCircle,
     HiOutlinePlus,
     HiPencilAlt,
+    HiDownload,
 } from 'react-icons/hi'
 import ContentEdit from './ContentEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
@@ -59,6 +60,7 @@ const headerExtraContent = (
                 >
                     Add Content
                 </Button>
+                
             </span>
             <span className="mr-1 font-semibold">
                 <Link to={'/addcontent'}>
