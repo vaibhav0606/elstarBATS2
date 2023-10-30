@@ -381,4 +381,12 @@ export const protectedRoutes = [
         ),
         authority: [],
     },
+    {
+        key: 'ftpsetting',
+        path: '/ftpsetting',
+        component: React.lazy(() =>
+            import('views/Master/FtpSetting/Ftpsetting')
+        ),
+        authority: [],
+    },
 ]

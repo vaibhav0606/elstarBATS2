@@ -14,6 +14,7 @@ import {
     HiPlusCircle,
     HiOutlinePlus,
     HiPencilAlt,
+    HiDownload,
 } from 'react-icons/hi'
 import ContentEdit from './ContentEdit'
 import useTimeOutMessage from 'utils/hooks/useTimeOutMessage'
@@ -28,6 +29,7 @@ import MapStarcast from './MapStarcast'
 import EpisodeRestrictions from './EpisodeRestrictions'
 import Synopsis from './Synopsis'
 import { Link, useNavigate } from 'react-router-dom'
+import DrawerFooter from 'views/Controls/DrawerFooter'
 
 const headerExtraContent = (
     openDrawer,
@@ -58,6 +60,7 @@ const headerExtraContent = (
                 >
                     Add Content
                 </Button>
+                
             </span>
             <span className="mr-1 font-semibold">
                 <Link to={'/addcontent'}>
@@ -280,6 +283,12 @@ const Contentmaster = () => {
                     window.screen.width > 400
                         ? window.screen.width / 2.0
                         : window.screen.width / 1.5
+                }
+                footer={
+                    <DrawerFooter
+                        onCancel={onDrawerClose}
+                        onSaveClick={onDrawerClose}
+                    />
                 }
             >
                 <Tabs defaultValue="tab1">

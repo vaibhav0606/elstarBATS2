@@ -1310,6 +1310,83 @@ const PostRights = (data, token) => {
     })
 }
 
+export async function apiGetftpsetting(data) {
+    //console.log(data);
+    return ApiService.fetchData({
+        url: '/ftpsetting/',
+        method: 'get',
+        data: data,
+    })
+}
+
+const Postftpsetting = (param, token) => {
+    return new Promise((resolve, reject) => {
+        //alert("hhhh");
+        let data = JSON.stringify({
+            SettingDesc: param.SettingDesc,
+            FTPLocation: param.FTPLocation,
+            FTP_UserID: param.FTP_UserID,
+            FTP_PWD: param.FTP_PWD,
+            FTP_Port: param.FTP_Port,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://103.14.97.155:3000/ftpsetting/',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+        //console.log(data);
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
+const Putftpsetting = (param, token) => {
+    return new Promise((resolve, reject) => {
+        let data = JSON.stringify({
+            SettingDesc: param.SettingDesc,
+            FTPLocation: param.FTPLocation,
+            FTP_UserID: param.FTP_UserID,
+            FTP_PWD: param.FTP_PWD,
+            FTP_Port: param.FTP_Port,
+            IsActive: param.IsActive ? 1 : 0,
+        })
+
+        let config = {
+            method: 'put',
+            maxBodyLength: Infinity,
+            url: `http://103.14.97.155:3000/ftpsetting/${param.FTPSettingCode}`,
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        }
+
+        axios
+            .request(config)
+            .then((response) => {
+                resolve(response)
+            })
+            .catch((errors) => {
+                reject(errors)
+            })
+    })
+}
+
 export {
     PostEntity,
     PutEntity,
@@ -1344,4 +1421,6 @@ export {
     Putstate,
     Poststate,
     PostRights,
+    Postftpsetting,
+    Putftpsetting,
 }
